@@ -1,11 +1,11 @@
-package quixotic.projects.cookbook.enums;
+package quixotic.projects.cookbook.security;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
 
-import static quixotic.projects.cookbook.enums.Permission.*;
+import static quixotic.projects.cookbook.security.Permission.*;
 
 @RequiredArgsConstructor
 @Getter

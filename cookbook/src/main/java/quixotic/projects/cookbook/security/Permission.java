@@ -1,4 +1,4 @@
-package quixotic.projects.cookbook.enums;
+package quixotic.projects.cookbook.security;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

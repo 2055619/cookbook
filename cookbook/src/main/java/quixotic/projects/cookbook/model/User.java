@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import quixotic.projects.cookbook.enums.Role;
+import quixotic.projects.cookbook.security.Role;
 import quixotic.projects.cookbook.enums.Unit;
 
 import java.util.Collection;
