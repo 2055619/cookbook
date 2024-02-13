@@ -1,6 +1,7 @@
 package quixotic.projects.cookbook.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import quixotic.projects.cookbook.enums.RecipeType;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Recipe {
     private String name;
     private String description;
