@@ -3,7 +3,7 @@ package quixotic.projects.cookbook.security;
 import io.jsonwebtoken.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import quixotic.personnal.porfolio.exceptions.badRequestException.InvalidJwtException;
+import quixotic.projects.cookbook.exception.badRequestException.InvalidJwtException;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider{
 	private final int expirationInMs = 86400000;
-	private final String SECRET_KEY = "2B7E151628AED2A6ABF7158809CF4F3C2B7E151628AED2A6ABF7158809CF4F3C";
+	private final String SECRET_KEY = "3F6A8D1B2C4E9F7A5D2B0E4C1F6A2D3B5E8C9F0A5D2B3E8A9D6C4F0A2A2D3B5E";
 	private final byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(SECRET_KEY);
 
 	public String generateToken(Authentication authentication){
