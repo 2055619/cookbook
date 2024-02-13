@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import quixotic.projects.cookbook.security.Role;
-import quixotic.projects.cookbook.enums.Unit;
+import quixotic.projects.cookbook.model.enums.Unit;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import java.util.Collections;
 @NoArgsConstructor
 @Builder
 @Entity
-public class User implements UserDetails {
+public class Cook implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

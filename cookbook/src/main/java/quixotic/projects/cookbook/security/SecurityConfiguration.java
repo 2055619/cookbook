@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import quixotic.projects.cookbook.repository.UserRepository;
+import quixotic.projects.cookbook.repository.CookRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -27,7 +27,7 @@ import quixotic.projects.cookbook.repository.UserRepository;
 public class SecurityConfiguration {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
+    private final CookRepository cookRepository;
     private final JwtAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
@@ -63,7 +63,7 @@ public class SecurityConfiguration {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
-        return new JwtAuthenticationFilter(jwtTokenProvider, userRepository);
+        return new JwtAuthenticationFilter(jwtTokenProvider, cookRepository);
     }
 
     @Bean

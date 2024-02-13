@@ -9,19 +9,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import quixotic.projects.cookbook.model.User;
-import quixotic.projects.cookbook.repository.UserRepository;
+import quixotic.projects.cookbook.model.Cook;
+import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.exception.goneRequestException.UserNotFoundException;
 
 import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	private final JwtTokenProvider tokenProvider;
-	private final UserRepository userRepository;
+	private final CookRepository cookRepository;
 
-	public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, UserRepository userRepository){
+	public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, CookRepository userRepository){
 		this.tokenProvider = tokenProvider;
-		this.userRepository = userRepository;
+		this.cookRepository = userRepository;
 	}
 
 	@Override
@@ -35,9 +35,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			try{
 				tokenProvider.validateToken(token);
 				String email = tokenProvider.getEmailFromJWT(token);
-				User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+				Cook cook = cookRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
 				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-						user.getEmail(), null, user.getAuthorities()
+						cook.getEmail(), null, cook.getAuthorities()
 				);
 				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authenticationToken);

@@ -9,40 +9,40 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import quixotic.projects.cookbook.exception.badRequestException.InvalidJwtException;
-import quixotic.projects.cookbook.model.User;
-import quixotic.projects.cookbook.repository.UserRepository;
+import quixotic.projects.cookbook.model.Cook;
+import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.exception.goneRequestException.UserNotFoundException;
 
 
 @Component
 @RequiredArgsConstructor
-public class AuthProvider implements AuthenticationProvider{
-	private final PasswordEncoder passwordEncoder;
-	private final UserRepository userRepository;
+public class AuthProvider implements AuthenticationProvider {
+    private final PasswordEncoder passwordEncoder;
+    private final CookRepository cookRepository;
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		User user = loadUserByEmail(authentication.getPrincipal().toString());
-		validateAuthentication(authentication, user);
-		return new UsernamePasswordAuthenticationToken(
-			user.getEmail(),
-			user.getPassword(),
-			user.getAuthorities()
-		);
-	}
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        Cook cook = loadUserByEmail(authentication.getPrincipal().toString());
+        validateAuthentication(authentication, cook);
+        return new UsernamePasswordAuthenticationToken(
+                cook.getEmail(),
+                cook.getPassword(),
+                cook.getAuthorities()
+        );
+    }
 
-	@Override
-	public boolean supports(Class<?> authentication){
-		return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
-	}
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
+    }
 
-	private User loadUserByEmail(String email) throws UsernameNotFoundException{
-		return userRepository.findByUsername(email)
-			.orElseThrow(UserNotFoundException::new);
-	}
+    private Cook loadUserByEmail(String email) throws UsernameNotFoundException {
+        return cookRepository.findByUsername(email)
+                .orElseThrow(UserNotFoundException::new);
+    }
 
-	private void validateAuthentication(Authentication authentication, User user){
-		if(!passwordEncoder.matches(authentication.getCredentials().toString(), user.getPassword()))
-			throw new InvalidJwtException("Incorrect username or password");
-	}
+    private void validateAuthentication(Authentication authentication, Cook cook) {
+        if (!passwordEncoder.matches(authentication.getCredentials().toString(), cook.getPassword()))
+            throw new InvalidJwtException("Incorrect username or password");
+    }
 }

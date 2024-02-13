@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import quixotic.projects.cookbook.enums.RecipeType;
+import quixotic.projects.cookbook.model.enums.RecipeType;
 
 import java.time.LocalDate;
 

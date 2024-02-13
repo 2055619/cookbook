@@ -1,4 +1,4 @@
-package quixotic.projects.cookbook.enums;
+package quixotic.projects.cookbook.model.enums;
 
 public enum Unit {
     TEASPOON,
