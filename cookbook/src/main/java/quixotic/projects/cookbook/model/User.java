@@ -1,5 +1,6 @@
 package quixotic.projects.cookbook.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,11 +18,15 @@ import java.util.Collections;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Entity
 public class User implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
     private String email;
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
     private String firstname;
     private String lastname;
