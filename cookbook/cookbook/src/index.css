@@ -1,3 +1,10 @@
+:root {
+  --cook-color: #00cc8e;
+  --cook-light-color: #8afdd4;
+  --cook-hover-color: #009d3b;
+  --bs-cook-rgb: 204, 142, 100;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +17,79 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.text-cook {
+  --bs-text-opacity: 1;
+  color: var(--cook-color);
+}
+
+.icon-btn {
+  --bs-text-opacity: 1;
+    color: var(--cook-color) !important;
+}
+
+.dark-hover:hover{
+  --bs-text-opacity: 1;
+   color: #212529 !important;
+}
+
+.arrow-btn {
+  --bs-text-opacity: 1;
+    color: var(--cook-color) !important;
+}
+
+danger-hover:hover{
+  --bs-text-opacity: 1;
+    color: #dc3545 !important;
+}
+
+.bg-cook {
+  background-color: var(--cook-color);
+}
+
+.bg-light-cook {
+  background-color: var(--cook-light-color);
+}
+
+.border-cook {
+  --bs-border-color: rgba(var(--bs-cook-rgb), 1) !important;
+}
+
+.btn-outline-cook {
+  --bs-btn-color: var(--cook-color) !important;
+  --bs-btn-border-color: var(--cook-color) !important;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--cook-color);
+  --bs-btn-hover-border-color: var(--cook-color);
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--cook-color);
+  --bs-btn-active-border-color: var(--cook-color);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: var(--cook-color);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: var(--cook-color);
+  --bs-gradient: none;
+}
+
+.btn-ose {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--cook-light-color) !important;
+  --bs-btn-border-color: var(--cook-light-color) !important;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--cook-color);
+  --bs-btn-hover-border-color: var(--cook-color);
+  --bs-btn-focus-shadow-rgb: 60, 153, 110;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--cook-color);
+  --bs-btn-active-border-color: var(--cook-color);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--cook-light-color) !important;
+  --bs-btn-disabled-border-color: var(--cook-light-color) !important;
+}
+
+.clickable {
+  cursor: pointer;
 }

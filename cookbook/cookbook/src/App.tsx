@@ -25,7 +25,7 @@ function App() {
             theme="colored"
         />
         <BrowserRouter>
-          <div className="min-vh-100 p-0 m-0 bg-success">
+          <div className="min-vh-100 p-0 m-0">
             <Header/>
             <Main/>
             <Footer/>

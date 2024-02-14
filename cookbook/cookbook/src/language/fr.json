@@ -1,8 +1,14 @@
 {
-  "pageNotFound": "Page non trouvée",
+  "name": "Cookbook",
+  "summedDescription": "Cookbook est la meilleure application pour trouver des recettes de cuisine.",
+  "copyright": "© Copyright 2022 - Made by LP-F",
   "pages": {
+    "home": {
+      "title": "Bienvenue sur Cookbook"
+    },
     "authentication": {
       "signInSuccess": "Vous êtes maintenant connecté!"
     }
-  }
+  },
+  "pageNotFound": "Page non trouvée"
 }
