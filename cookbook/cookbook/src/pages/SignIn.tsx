@@ -24,7 +24,7 @@ function SignIn() {
             })
             .catch((error) => {
                 console.log(error);
-                toast.error(t(error.data.error));
+                toast.error(t(error));
             });
     }
 

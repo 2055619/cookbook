@@ -9,9 +9,9 @@ function LanguageSelector() {
     };
 
     return (
-        <div className="me-5 col-1">
-            <button onClick={() => changeLanguage("fr")}>Français</button>
-            <button onClick={() => changeLanguage("en")}>English</button>
+        <div className="mt-1">
+            <button className={"btn btn-outline-cook my-1"} onClick={() => changeLanguage("fr")}>Français</button>
+            <button className={"btn btn-outline-cook"} onClick={() => changeLanguage("en")}>English</button>
             {/*<select className={"form-select clickable"} defaultValue={"fr"} onChange={(e) => changeLanguage(e.target.value)}>*/}
             {/*    <option value="fr">Français</option>*/}
             {/*    <option value="en">English</option>*/}

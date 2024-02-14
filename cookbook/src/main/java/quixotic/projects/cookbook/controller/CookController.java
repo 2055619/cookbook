@@ -18,16 +18,16 @@ import quixotic.projects.cookbook.service.CookService;
 public class CookController {
     private final CookService cookService;
 
-    @PostMapping("/login")
+    @PostMapping("/auth/signin")
     public ResponseEntity<CookDTO> authenticateCook(@RequestBody SignInDTO signInDTO){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.authenticateCook(signInDTO));
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<CookDTO> signinCook(@RequestBody SignUpDTO signInDTO){
+    @PostMapping("/auth/signup")
+    public ResponseEntity<CookDTO> signupCook(@RequestBody SignUpDTO signUpDTO){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.createCook(signInDTO));
+                .body(cookService.createCook(signUpDTO));
     }
 
 }

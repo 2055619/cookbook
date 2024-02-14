@@ -1,7 +1,8 @@
 {
   "name": "Cookbook",
   "summedDescription": "Cookbook est la meilleure application pour trouver des recettes de cuisine.",
-  "copyright": "© Copyright 2022 - Made by LP-F",
+  "copyright": "© Copyright 2024 - Made by LP-F",
+  "signin": "Se connecter",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"

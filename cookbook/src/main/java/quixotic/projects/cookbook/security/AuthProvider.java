@@ -22,10 +22,10 @@ public class AuthProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        Cook cook = loadUserByEmail(authentication.getPrincipal().toString());
+        Cook cook = loadUserByUsername(authentication.getPrincipal().toString());
         validateAuthentication(authentication, cook);
         return new UsernamePasswordAuthenticationToken(
-                cook.getEmail(),
+                cook.getUsername(),
                 cook.getPassword(),
                 cook.getAuthorities()
         );
@@ -36,8 +36,8 @@ public class AuthProvider implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
-    private Cook loadUserByEmail(String email) throws UsernameNotFoundException {
-        return cookRepository.findByUsername(email)
+    private Cook loadUserByUsername(String username) throws UsernameNotFoundException {
+        return cookRepository.findByUsername(username)
                 .orElseThrow(UserNotFoundException::new);
     }
 
