@@ -6,8 +6,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import quixotic.projects.cookbook.dto.CookDTO;
-import quixotic.projects.cookbook.dto.LoginDTO;
 import quixotic.projects.cookbook.dto.SignInDTO;
+import quixotic.projects.cookbook.dto.SignUpDTO;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
@@ -19,18 +19,18 @@ public class CookService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public CookDTO authenticateCook(LoginDTO loginDto){
+    public CookDTO authenticateCook(SignInDTO loginDto){
         return new CookDTO(
                 cookRepository.findByUsername(loginDto.getUsername()).orElseThrow(),
                 generateToken(loginDto.getUsername(), loginDto.getPassword())
         );
     }
 
-    public CookDTO createCook(SignInDTO signInDTO){
-        Cook cook = cookRepository.save(signInDTO.toCook());
+    public CookDTO createCook(SignUpDTO signUpDTO){
+        Cook cook = cookRepository.save(signUpDTO.toCook());
 
         return new CookDTO(
-                cookRepository.save(signInDTO.toCook()),
+                cookRepository.save(signUpDTO.toCook()),
                 generateToken(cook.getUsername(), cook.getPassword())
         );
     }

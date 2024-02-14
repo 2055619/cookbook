@@ -1,9 +1,8 @@
 package quixotic.projects.cookbook.validation;
 
-import quixotic.projects.cookbook.dto.SignInDTO;
+import quixotic.projects.cookbook.dto.SignUpDTO;
 import quixotic.projects.cookbook.exception.badRequestException.ValidationException;
 
-import java.util.regex.Pattern;
 import static quixotic.projects.cookbook.validation.ValidationPattern.*;
 
 public final class Validation{
@@ -29,7 +28,7 @@ public final class Validation{
 
 //	Validation of objects
 
-	public static void validateSignIn(SignInDTO signInDTO) {
+	public static void validateSignIn(SignUpDTO signInDTO) {
 		validatePassword(signInDTO.getPassword());
 		validateEmail(signInDTO.getEmail());
 	}

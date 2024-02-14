@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import quixotic.projects.cookbook.dto.SignInDTO;
+import quixotic.projects.cookbook.dto.SignUpDTO;
 import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.service.CookService;
 
@@ -20,7 +20,7 @@ public class CookbookApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         cookService.createCook(
-                SignInDTO.builder()
+                SignUpDTO.builder()
                         .username("TheChef")
                         .password("Password123")
                         .email("qwe@qwe.com")

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import quixotic.projects.cookbook.dto.CookDTO;
-import quixotic.projects.cookbook.dto.LoginDTO;
 import quixotic.projects.cookbook.dto.SignInDTO;
+import quixotic.projects.cookbook.dto.SignUpDTO;
 import quixotic.projects.cookbook.service.CookService;
 
 @Controller
@@ -19,13 +19,13 @@ public class CookController {
     private final CookService cookService;
 
     @PostMapping("/login")
-    public ResponseEntity<CookDTO> authenticateCook(@RequestBody LoginDTO loginDTO){
+    public ResponseEntity<CookDTO> authenticateCook(@RequestBody SignInDTO signInDTO){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.authenticateCook(loginDTO));
+                .body(cookService.authenticateCook(signInDTO));
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<CookDTO> signinCook(@RequestBody SignInDTO signInDTO){
+    public ResponseEntity<CookDTO> signinCook(@RequestBody SignUpDTO signInDTO){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.createCook(signInDTO));
     }

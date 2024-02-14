@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {ToastContainer} from 'react-toastify';
+import {BrowserRouter} from 'react-router-dom';
+import {I18nextProvider} from "react-i18next";
+import i18n from "./assets/utils/i18n";
+import axios from "axios";
+import Main from "./pages/Main";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <I18nextProvider i18n={i18n}>
+        <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            pauseOnHover
+            theme="colored"
+        />
+        <BrowserRouter>
+          <div className="min-vh-100 p-0 m-0">
+            {/*<Header/>*/}
+            <Main/>
+            {/*<Footer/>*/}
+          </div>
+        </BrowserRouter>
+      </I18nextProvider>
   );
 }
 
 export default App;
+
+export const cookServerInstance = axios.create({
+    baseURL: 'http://localhost:8080/api/v1/',
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    params: {}
+});

@@ -12,7 +12,7 @@ public class CookDTO {
     private String email;
     private String firstName;
     private String lastName;
-    private String preferedUnit;
+    private String preferredUnit;
     private String role;
     private String token;
 
@@ -21,7 +21,7 @@ public class CookDTO {
         this.email = cook.getEmail();
         this.firstName = cook.getFirstname();
         this.lastName = cook.getLastname();
-        this.preferedUnit = cook.getPreferedUnit().name();
+        this.preferredUnit = cook.getPreferedUnit().name();
         this.role = cook.getRole().name();
         this.token = token;
     }
