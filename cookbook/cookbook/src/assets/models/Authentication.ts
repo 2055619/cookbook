@@ -1,5 +1,5 @@
 
-export interface UserDTO {
+export interface IUserDTO {
     username: string;
     email: string;
     firstName: string;
@@ -9,12 +9,12 @@ export interface UserDTO {
     token: string;
 }
 
-export interface signIn {
+export interface IsignIn {
     username: string;
     password: string;
 }
 
-export interface signUp {
+export interface IsignUp {
     username: string;
     email: string;
     firstName: string;

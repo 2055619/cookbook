@@ -1,4 +1,5 @@
 import {cookServerInstance} from "../App";
+import {IsignIn, IsignUp} from "../assets/models/Authentication";
 
 export class CookBookService {
     async getRecipes() {
@@ -6,14 +7,17 @@ export class CookBookService {
         return recipes.json();
     }
 
-    async authenticate(username: string, password: string) {
-        return cookServerInstance.post('/authenticate', {
-            username: username,
-            password: password
-        }).then((response) => {
+    async signIn(user: IsignIn) {
+        return cookServerInstance.post<IsignIn>('/signin', user)
+            .then((response) => {
             return response.data;
-        }).catch((error) => {
-            return {error: error};
+        });
+    }
+
+    async signUp(user: IsignUp) {
+        return cookServerInstance.post<IsignUp>('/signup', user)
+            .then((response) => {
+            return response.data;
         });
     }
 }

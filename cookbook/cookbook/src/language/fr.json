@@ -1,3 +1,8 @@
 {
-  "pageNotFound": "Page non trouvée"
+  "pageNotFound": "Page non trouvée",
+  "pages": {
+    "authentication": {
+      "signInSuccess": "Vous êtes maintenant connecté!"
+    }
+  }
 }
