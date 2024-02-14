@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {CookBookService} from "../services/CookBookService";
 import {IsignIn} from "../assets/models/Authentication";
-import {toast} from "react-toast";
+import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 
 function SignIn() {

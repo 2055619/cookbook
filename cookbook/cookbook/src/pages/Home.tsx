@@ -1,8 +1,8 @@
 
 function Home() {
   return (
-    <div>
-      <h1>Home</h1>
+    <div className={"bg-dark"}>
+      <h1 className="text-danger">Home</h1>
       <p>Welcome to the home page</p>
     </div>
   );
