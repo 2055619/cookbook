@@ -10,13 +10,19 @@ public enum IngredientState {
     LIQUID,
     SOLID,
     COUNTABLE,
-    OTHER
+    OTHER("Other")
     ;
-    private final String description;
+    private String description;
     IngredientState(){
         if (this.name().equals("OTHER")){
             throw new IllegalArgumentException("Invalid MatterState: Please provide a description for this state.");
         }
         this.description = this.name();
+    }
+
+    public void setOtherDescription(String description){
+        if (this.name().equals("OTHER")){
+            this.description = description;
+        }
     }
 }

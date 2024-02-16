@@ -9,14 +9,11 @@ import quixotic.projects.cookbook.model.enums.DifficultyLevel;
 import quixotic.projects.cookbook.model.enums.Visibility;
 
 import java.time.LocalDate;
-import java.util.Set;
-
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public abstract class Publication {
     @Id
     @GeneratedValue
@@ -24,7 +21,7 @@ public abstract class Publication {
     private String title;
     private String description;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Cook author;
+    private Cook cook;
     private LocalDate creationDate;
     @Enumerated(EnumType.STRING)
     private Visibility visibility;

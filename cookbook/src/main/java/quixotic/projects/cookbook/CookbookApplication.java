@@ -26,7 +26,10 @@ public class CookbookApplication implements CommandLineRunner {
                         .email("qwe@qwe.com")
                         .firstName("John")
                         .lastName("Doe")
-                        .preferedUnit(Unit.CUP)
+                        .powderUnit(Unit.CUP)
+                        .liquidUnit(Unit.CUP)
+                        .solidUnit(Unit.GRAM)
+                        .otherUnit(Unit.CUP)
                         .build()
         );
     }
