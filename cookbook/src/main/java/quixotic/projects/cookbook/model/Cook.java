@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +14,8 @@ import quixotic.projects.cookbook.model.enums.Unit;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -34,6 +37,11 @@ public class Cook implements UserDetails {
     private String lastname;
     private Unit preferedUnit;
 
+    @OneToMany(mappedBy = "cook")
+    private Set<Publication> publications = new HashSet<>();
+//    @OneToMany(mappedBy = "cook")
+//    private Set<Reaction> reactions = new HashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role.name()));
@@ -50,7 +58,7 @@ public class Cook implements UserDetails {
     }
 
 
-    //	Non implémenté car non utilisé (Pour le moment) 2023-11-25
+    //	Non implémenté car non utilisé (Pour le moment) 2024-02-11
     @Override
     public boolean isAccountNonExpired() {
         return true;

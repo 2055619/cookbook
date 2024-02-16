@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import quixotic.projects.cookbook.model.enums.IngredientState;
 import quixotic.projects.cookbook.model.enums.Unit;
 
 @Data
@@ -12,14 +13,14 @@ import quixotic.projects.cookbook.model.enums.Unit;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Ingrediant {
+public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private float amount;
+    @Enumerated(EnumType.STRING)
     private Unit unit;
-
-    @ManyToOne
-    private Recipe recipe;
+    @Enumerated(EnumType.STRING)
+    private IngredientState ingredientState;
 }
