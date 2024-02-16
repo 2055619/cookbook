@@ -19,7 +19,10 @@ public class SignUpDTO {
     private String email;
     private String firstName;
     private String lastName;
-    private Unit preferedUnit;
+    private Unit powderUnit;
+    private Unit liquidUnit;
+    private Unit solidUnit;
+    private Unit otherUnit;
 
     public Cook toCook() {
         Validation.validateSignIn(this);
@@ -29,7 +32,10 @@ public class SignUpDTO {
                 .email(email)
                 .firstname(firstName)
                 .lastname(lastName)
-                .preferedUnit(preferedUnit)
+                .powderUnit(powderUnit)
+                .liquidUnit(liquidUnit)
+                .solidUnit(solidUnit)
+                .otherUnit(otherUnit)
                 .role(Role.COOK)
                 .build();
     }

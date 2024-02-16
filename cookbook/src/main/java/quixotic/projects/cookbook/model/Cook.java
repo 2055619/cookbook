@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import quixotic.projects.cookbook.model.enums.RecipeType;
 import quixotic.projects.cookbook.security.Role;
 import quixotic.projects.cookbook.model.enums.Unit;
 
@@ -35,7 +36,16 @@ public class Cook implements UserDetails {
     private Role role;
     private String firstname;
     private String lastname;
-    private Unit preferedUnit;
+    @Enumerated(EnumType.STRING)
+    private RecipeType recipeType;
+    @Enumerated(EnumType.STRING)
+    private Unit powderUnit;
+    @Enumerated(EnumType.STRING)
+    private Unit liquidUnit;
+    @Enumerated(EnumType.STRING)
+    private Unit solidUnit;
+    @Enumerated(EnumType.STRING)
+    private Unit otherUnit;
 
     @OneToMany(mappedBy = "cook")
     private Set<Publication> publications = new HashSet<>();

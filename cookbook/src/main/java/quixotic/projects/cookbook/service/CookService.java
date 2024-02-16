@@ -41,12 +41,13 @@ public class CookService {
                         .email(signUpDTO.getEmail())
                         .firstname(signUpDTO.getFirstName())
                         .lastname(signUpDTO.getLastName())
-                        .preferedUnit(signUpDTO.getPreferedUnit())
+                        .powderUnit(signUpDTO.getPowderUnit())
+                        .liquidUnit(signUpDTO.getLiquidUnit())
+                        .solidUnit(signUpDTO.getSolidUnit())
+                        .otherUnit(signUpDTO.getOtherUnit())
                         .role(Role.COOK)
                         .build()
         );
-
-//        return new CookDTO(cook, "asd");
 
         String token = generateToken(cook.getUsername(), signUpDTO.getPassword());
         return new CookDTO(cook, token);
