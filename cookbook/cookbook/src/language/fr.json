@@ -27,7 +27,13 @@
     }
   },
   "messages": {
-    "signInSuccess": "Vous êtes maintenant connecté!"
+    "signInSuccess": "Vous êtes maintenant connecté!",
+    "firstName": "Votre prénom doit être composé d'au moins 2 caractères",
+    "lastName": "Votre nom doit être composé d'au moins 2 caractères",
+    "username": "Votre nom d'utilisateur doit être composé d'au moins 4 caractères",
+    "email": "Votre adresse email est invalide",
+    "passwords": "Les mots de passe ne correspondent pas",
+    "password": "Votre mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre"
   },
   "pageNotFound": "Page non trouvée"
 }

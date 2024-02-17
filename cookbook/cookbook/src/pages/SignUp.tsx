@@ -52,38 +52,56 @@ function SignUp({setUser}: ISignUpProps) {
     function isValid() {
         let isValid = true;
 
+        if (creationForm.firstName.trim().length < 2) {
+            toast.error(t('messages.firstName'));
+            setCreateFromInfo(createFormInfo.map((formInfo) => {
+                if (formInfo.name === 'firstName')
+                    formInfo.warning = 'messages.firstName';
+                return formInfo;
+            }))
+            isValid = false;
+        }
+        if (creationForm.lastName.trim().length < 2) {
+            toast.error(t('messages.lastName'));
+            setCreateFromInfo(createFormInfo.map((formInfo) => {
+                if (formInfo.name === 'lastName')
+                    formInfo.warning = 'messages.lastName';
+                return formInfo;
+            }))
+            isValid = false;
+        }
         if (creationForm.username.trim().length < 4) {
-            toast.error(t('toast.error.username'));
+            toast.error(t('messages.username'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'username')
-                    formInfo.warning = 'errors.username';
+                    formInfo.warning = 'messages.username';
                 return formInfo;
             }))
             isValid = false;
         }
         if (!regEmail.test(creationForm.email)) {
-            toast.error(t('toast.error.email'));
+            toast.error(t('messages.email'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'email')
-                    formInfo.warning = 'errors.email';
+                    formInfo.warning = 'messages.email';
                 return formInfo;
             }))
             isValid = false;
         }
         if (!regPassword.test(creationForm.password)) {
-            toast.error(t('toast.error.password'));
+            toast.error(t('messages.password'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
-                if (formInfo.name === 'mdp')
-                    formInfo.warning = 'errors.password';
+                if (formInfo.name === 'password')
+                    formInfo.warning = 'messages.password';
                 return formInfo;
             }))
             isValid = false;
         }
         if (creationForm.password !== creationForm.confirmPassword) {
-            toast.error(t('toast.error.passwords'));
+            toast.error(t('messages.passwords'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
-                if (formInfo.name === 'mdp2')
-                    formInfo.warning = 'errors.passwords';
+                if (formInfo.name === 'confirmPassword')
+                    formInfo.warning = 'messages.passwords';
                 return formInfo;
             }))
             isValid = false;
@@ -115,7 +133,13 @@ function SignUp({setUser}: ISignUpProps) {
             toast.success(t("messages.signInSuccess"));
             navigate('/landing');
         }).catch((error) => {
-            console.log(error);
+            if (error.response.data.message === 'usernameTaken'){
+                setCreateFromInfo(createFormInfo.map((formInfo) => {
+                    if (formInfo.name === 'username')
+                        formInfo.warning = 'messages.usernameTaken';
+                    return formInfo;
+                }))
+            }
             toast.error(t(error.response.data.message));
         });
     };
@@ -133,31 +157,6 @@ function SignUp({setUser}: ISignUpProps) {
                         </Form.Group>
                     ))
                 }
-                {/*<Form.Group controlId="firstName" className={"my-2 col-4"}>*/}
-                {/*    <Form.Control type="text" value={firstName} placeholder={t('pages.auth.firstName')}*/}
-                {/*                  onChange={(e) => setFirstName(e.target.value)}/>*/}
-                {/*</Form.Group>*/}
-                {/*<Form.Group controlId="lastName" className={"my-2 col-4"}>*/}
-                {/*    <Form.Control type="text" value={lastName} placeholder={t('pages.auth.lastName')}*/}
-                {/*                  onChange={(e) => setLastName(e.target.value)}/>*/}
-                {/*</Form.Group>*/}
-                {/*<Form.Group controlId="email" className={"my-2 col-4"}>*/}
-                {/*    <Form.Control type="email" value={email} placeholder={t('pages.auth.email')}*/}
-                {/*                  onChange={(e) => setEmail(e.target.value)}/>*/}
-                {/*</Form.Group>*/}
-                {/*<Form.Group controlId="username" className={"my-2 col-4"}>*/}
-                {/*    <Form.Control type="text" value={username} placeholder={t('pages.auth.username')}*/}
-                {/*                  onChange={(e) => setUsername(e.target.value)}/>*/}
-                {/*</Form.Group>*/}
-                {/*<Form.Group controlId={"password"} className={"my-2 col-4"}>*/}
-                {/*    <Form.Control type="password" value={password} placeholder={t('pages.auth.password')}*/}
-                {/*                  onChange={(e) => setPassword(e.target.value)}/>*/}
-                {/*</Form.Group>*/}
-                {/*<Form.Group controlId={"confirmPassword"} className={"my-2 col-4"}>*/}
-                {/*    <Form.Control type="password" value={confirmPassword}*/}
-                {/*                  placeholder={t('pages.auth.confirmPassword')}*/}
-                {/*                  onChange={(e) => setConfirmPassword(e.target.value)}/>*/}
-                {/*</Form.Group>*/}
             </div>
             <div className="row mb-3">
                 <h1>{t('pages.auth.preference')}</h1>
