@@ -19,8 +19,6 @@ function Main() {
                     <Route path="/" element={<Home/>}/>
                     <Route path="/home" element={<Home/>}/>
                     <Route path="/authentication/*" element={<Authentication setUser={setUser}/>}/>
-                    {/*<Route path="/signin" element={<SignIn/>}/>*/}
-                    {/*<Route path="/signup" element={<SignUp/>}/>*/}
                     <Route path="/landing" element={<Landing/>}/>
 
                     <Route path="*" element={<PageNotFound/>}/>

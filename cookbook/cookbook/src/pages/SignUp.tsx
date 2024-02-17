@@ -1,11 +1,12 @@
-import {Button, Form} from "react-bootstrap";
-import React, {FormEvent, useState} from "react";
+import {Button, Form, FormSelect} from "react-bootstrap";
+import React, {FormEvent, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {IsignUp, IUser} from "../assets/models/Authentication";
+import {IsignUp} from "../assets/models/Authentication";
 import {CookBookService} from "../services/CookBookService";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import FormInput from "../assets/models/Form";
+import {UtilsService} from "../services/UtilsService";
 
 interface ISignUpProps {
     setUser: (user: any) => void;
@@ -14,14 +15,29 @@ interface ISignUpProps {
 function SignUp({setUser}: ISignUpProps) {
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
+    const utilsService = new UtilsService();
     const navigate = useNavigate();
-    const [solidUnit, setSolidUnit] = useState('');
-    const [liquidUnit, setLiquidUnit] = useState('');
-    const [powderUnit, setPowderUnit] = useState('');
-    const [otherUnit, setOtherUnit] = useState('');
 
-    const regEmail = new RegExp('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$');
-    const regPassword = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$');
+    const [emailReg, setEmailReg] = useState(new RegExp(''));
+    const [passwordReg, setPasswordReg] = useState(new RegExp(''));
+
+    const [units, setUnits] = useState({solidUnit: '', liquidUnit: '', powderUnit: '', otherUnit: ''});
+    const [ing, setIng] = useState({SOLID: [''], LIQUID: [''], POWDER: [''], OTHER: ['']});
+
+    useEffect(() => {
+        utilsService.getIngrediantStates().then((response) => {
+            setIng(response.data);
+        }).catch((error) => {
+            toast.error(t(error.response.data.message));
+        });
+
+        utilsService.getValidationPattern().then((response) => {
+            setEmailReg(new RegExp(response.data.EMAIL_PATTERN));
+            setPasswordReg(new RegExp(response.data.PASSWORD_PATTERN));
+        }).catch((error) => {
+            toast.error(t(error.response.data.message));
+        });
+    }, []);
 
     const [creationForm, setCreationForm] = useState({
         firstName: '',
@@ -32,10 +48,10 @@ function SignUp({setUser}: ISignUpProps) {
         confirmPassword: ''
     });
     const [createFormInfo, setCreateFromInfo] = useState([
-        new FormInput('firstName',  'text', 'pages.auth.firstName', ''),
+        new FormInput('firstName', 'text', 'pages.auth.firstName', ''),
         new FormInput('lastName', 'text', 'pages.auth.lastName', ''),
-        new FormInput('username',  'text', 'pages.auth.username', ''),
-        new FormInput('email',  'text', 'pages.auth.email', ''),
+        new FormInput('username', 'text', 'pages.auth.username', ''),
+        new FormInput('email', 'text', 'pages.auth.email', ''),
         new FormInput('password', 'password', 'pages.auth.password', ''),
         new FormInput('confirmPassword', 'password', 'pages.auth.confirmPassword', '')
     ])
@@ -79,7 +95,7 @@ function SignUp({setUser}: ISignUpProps) {
             }))
             isValid = false;
         }
-        if (!regEmail.test(creationForm.email)) {
+        if (!emailReg.test(creationForm.email)) {
             toast.error(t('messages.email'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'email')
@@ -88,7 +104,7 @@ function SignUp({setUser}: ISignUpProps) {
             }))
             isValid = false;
         }
-        if (!regPassword.test(creationForm.password)) {
+        if (!passwordReg.test(creationForm.password)) {
             toast.error(t('messages.password'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'password')
@@ -121,10 +137,7 @@ function SignUp({setUser}: ISignUpProps) {
             firstName: creationForm.firstName,
             lastName: creationForm.lastName,
             password: creationForm.password,
-            solidUnit: solidUnit,
-            liquidUnit: liquidUnit,
-            powderUnit: powderUnit,
-            otherUnit: otherUnit
+            ...units
         }
 
         cookbookService.signUp(signUpUser).then((response) => {
@@ -133,7 +146,7 @@ function SignUp({setUser}: ISignUpProps) {
             toast.success(t("messages.signInSuccess"));
             navigate('/landing');
         }).catch((error) => {
-            if (error.response.data.message === 'usernameTaken'){
+            if (error.response.data.value === '418') {
                 setCreateFromInfo(createFormInfo.map((formInfo) => {
                     if (formInfo.name === 'username')
                         formInfo.warning = 'messages.usernameTaken';
@@ -145,7 +158,7 @@ function SignUp({setUser}: ISignUpProps) {
     };
 
     return (
-        <Form onSubmit={handleSubmit} className={"pb-5"}>
+        <Form onSubmit={handleSubmit} className={"vh-100"}>
             <div className={"d-flex flex-column justify-content-center align-items-center mb-3"}>
                 {
                     createFormInfo.map((formInfo, index) => (
@@ -161,23 +174,51 @@ function SignUp({setUser}: ISignUpProps) {
             <div className="row mb-3">
                 <h1>{t('pages.auth.preference')}</h1>
                 <div className={"col-2"}></div>
-                <Form.Group controlId="solidUnit" className={"my-2 col-4"}>
-                    <Form.Control type="text" value={solidUnit} placeholder={t('pages.auth.solidUnit')}
-                                  onChange={(e) => setSolidUnit(e.target.value)}/>
+                <Form.Group controlId="solidUnitSelect" className={"my-2 col-4"}>
+                    <FormSelect aria-label="Default select example"
+                                onChange={(event) => {
+                                    setUnits({...units, solidUnit: event.target.value});
+                                }}>
+                        <option>{t('pages.auth.solidUnit')}</option>
+                        {ing["SOLID"].map((unit, index) => (
+                            <option key={index} value={unit}>{t(unit)}</option>
+                        ))}
+                    </FormSelect>
                 </Form.Group>
-                <Form.Group controlId="liquidUnit" className={"my-2 col-4"}>
-                    <Form.Control type="text" value={liquidUnit} placeholder={t('pages.auth.liquidUnit')}
-                                  onChange={(e) => setLiquidUnit(e.target.value)}/>
+                <Form.Group controlId="liquidUnitSelect" className={"my-2 col-4"}>
+                    <FormSelect aria-label="Default select example"
+                                onChange={(event) => {
+                                    setUnits({...units, liquidUnit: event.target.value});
+                                }}>
+                        <option>{t('pages.auth.liquidUnit')}</option>
+                        {ing["LIQUID"].map((unit, index) => (
+                            <option key={index} value={unit}>{t(unit)}</option>
+                        ))}
+                    </FormSelect>
                 </Form.Group>
                 <div className={"col-2"}></div>
                 <div className={"col-2"}></div>
-                <Form.Group controlId="powderUnit" className={"my-2 col-4"}>
-                    <Form.Control type="text" value={powderUnit} placeholder={t('pages.auth.powderUnit')}
-                                  onChange={(e) => setPowderUnit(e.target.value)}/>
+                <Form.Group controlId="powderUnitSelect" className={"my-2 col-4"}>
+                    <FormSelect aria-label="Default select example"
+                                onChange={(event) => {
+                                    setUnits({...units, powderUnit: event.target.value});
+                                }}>
+                        <option>{t('pages.auth.powderUnit')}</option>
+                        {ing["POWDER"].map((unit, index) => (
+                            <option key={index} value={unit}>{t(unit)}</option>
+                        ))}
+                    </FormSelect>
                 </Form.Group>
-                <Form.Group controlId="otherUnit" className={"my-2 col-4"}>
-                    <Form.Control type="text" value={otherUnit} placeholder={t('pages.auth.otherUnit')}
-                                  onChange={(e) => setOtherUnit(e.target.value)}/>
+                <Form.Group controlId="otherUnitSelect" className={"my-2 col-4"}>
+                    <FormSelect aria-label="Default select example"
+                                onChange={(event) => {
+                                    setUnits({...units, otherUnit: event.target.value});
+                                }}>
+                        <option>{t('pages.auth.otherUnit')}</option>
+                        {ing["OTHER"].map((unit, index) => (
+                            <option key={index} value={unit}>{t(unit)}</option>
+                        ))}
+                    </FormSelect>
                 </Form.Group>
             </div>
 

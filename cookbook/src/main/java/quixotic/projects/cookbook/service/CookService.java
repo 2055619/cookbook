@@ -1,6 +1,7 @@
 package quixotic.projects.cookbook.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import quixotic.projects.cookbook.dto.CookDTO;
 import quixotic.projects.cookbook.dto.SignInDTO;
 import quixotic.projects.cookbook.dto.SignUpDTO;
+import quixotic.projects.cookbook.exception.badRequestException.UsernameTakenException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
@@ -33,21 +35,27 @@ public class CookService {
 
     public CookDTO createCook(SignUpDTO signUpDTO) {
         Validation.validateSignIn(signUpDTO);
+        Cook cook;
+        try {
+            cook = cookRepository.save(
+                    Cook.builder()
+                            .username(signUpDTO.getUsername())
+                            .password(passwordEncoder.encode(signUpDTO.getPassword()))
+                            .email(signUpDTO.getEmail())
+                            .firstname(signUpDTO.getFirstName())
+                            .lastname(signUpDTO.getLastName())
+                            .powderUnit(signUpDTO.getPowderUnit())
+                            .liquidUnit(signUpDTO.getLiquidUnit())
+                            .solidUnit(signUpDTO.getSolidUnit())
+                            .otherUnit(signUpDTO.getOtherUnit())
+                            .role(Role.COOK)
+                            .build()
+            );
+        } catch (DataIntegrityViolationException e) {
+            System.out.println("Error: " + e);
+            throw new UsernameTakenException();
+        }
 
-        Cook cook = cookRepository.save(
-                Cook.builder()
-                        .username(signUpDTO.getUsername())
-                        .password(passwordEncoder.encode(signUpDTO.getPassword()))
-                        .email(signUpDTO.getEmail())
-                        .firstname(signUpDTO.getFirstName())
-                        .lastname(signUpDTO.getLastName())
-                        .powderUnit(signUpDTO.getPowderUnit())
-                        .liquidUnit(signUpDTO.getLiquidUnit())
-                        .solidUnit(signUpDTO.getSolidUnit())
-                        .otherUnit(signUpDTO.getOtherUnit())
-                        .role(Role.COOK)
-                        .build()
-        );
 
         String token = generateToken(cook.getUsername(), signUpDTO.getPassword());
         return new CookDTO(cook, token);

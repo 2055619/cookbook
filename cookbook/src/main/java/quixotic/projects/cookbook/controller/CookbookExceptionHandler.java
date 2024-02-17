@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import quixotic.projects.cookbook.exception.APIException;
 import quixotic.projects.cookbook.model.ErrorResponce;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -28,17 +29,28 @@ public class CookbookExceptionHandler {
         return ResponseEntity.status(ex.getStatus()).body(response);
     }
 
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<ErrorResponce> handleSQLException(SQLException ex) {
+        ErrorResponce response = ErrorResponce.builder()
+                .timestamp(LocalDateTime.now().toString())
+                .status(611)
+                .message("")
+                .path(request.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(611).body(response);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponce> handleOtherException(Exception ex) {
         ErrorResponce response = ErrorResponce.builder()
                 .timestamp(LocalDateTime.now().toString())
-                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .status(611)
                 .message(ex.getMessage())
                 .path(request.getRequestURI())
                 .build();
 
-        return ResponseEntity.status(673).body(response);
+        return ResponseEntity.status(611).body(response);
     }
 
 }

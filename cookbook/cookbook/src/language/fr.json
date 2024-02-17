@@ -5,6 +5,22 @@
   "signin": "Se connecter",
   "signup": "S'inscrire",
   "signout": "Se déconnecter",
+
+  "KILOGRAM": "Kilogramme (kg)",
+  "GRAM": "Gramme (g)",
+  "MILLIGRAM": "Milligramme (mg)",
+  "POUND": "Livre (lb)",
+  "OUNCE": "Once (oz)",
+  "LITER": "Litre (L)",
+  "MILLILITER": "Millilitre (mL)",
+  "CUP": "Tasse (T)",
+  "TABLESPOON": "Cuillère à soupe (CàS)",
+  "TEASPOON": "Cuillère à café (CàC)",
+  "PINCH": "Pincée",
+  "DASH": "Dash",
+  "EACH": "Chacun",
+  "NUMBER": "Nombre d'item(s)",
+
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"
@@ -17,9 +33,9 @@
       "confirmPassword": "Confirmer le mot de passe",
       "firstName": "Prénom",
       "lastName": "Nom",
-      "solidUnit": "Unité de mesure de Solide",
-      "liquidUnit": "Unité de mesure de Liquide",
-      "powderUnit": "Unité de mesure de Poudre",
+      "solidUnit": "Unité de mesure d'un Solide",
+      "liquidUnit": "Unité de mesure d'un Liquide",
+      "powderUnit": "Unité de mesure d'une Poudre",
       "otherUnit": "Unité de mesure des Autres",
       "forgotPassword": "Mot de passe oublié ?",
       "createAccount": "Créer mon compte",
@@ -27,6 +43,7 @@
     }
   },
   "messages": {
+    "usernameTaken": "Ce nom d'utilisateur est déjà pris",
     "signInSuccess": "Vous êtes maintenant connecté!",
     "firstName": "Votre prénom doit être composé d'au moins 2 caractères",
     "lastName": "Votre nom doit être composé d'au moins 2 caractères",

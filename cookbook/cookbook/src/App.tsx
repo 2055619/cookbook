@@ -35,10 +35,11 @@ function App() {
 export default App;
 
 export const cookServerInstance = axios.create({
-    baseURL: 'http://localhost:8080/api/v1/cook/',
+    baseURL: 'http://localhost:8080/api/v1/',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     },
     params: {}
 });
+export const cookbookServerStatus = 611;

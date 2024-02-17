@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
-import LanguageSelector from "../LanguageSelector";
-import {NavLink} from "react-router-dom";
+import LanguageSelector from "../Utils/LanguageSelector";
+import {NavLink, useNavigate} from "react-router-dom";
 import logo from "../../logo.svg";
 import {IUser} from "../../assets/models/Authentication";
 import {Button} from "react-bootstrap";
@@ -12,11 +12,12 @@ interface IHeaderProps {
 
 function Header({user, setUser}: IHeaderProps) {
     const {t} = useTranslation();
+    const navigate = useNavigate();
 
     function SignOut() {
         setUser(null);
         localStorage.clear();
-        window.location.href = '/';
+        navigate('/');
     }
 
     return (
@@ -33,10 +34,15 @@ function Header({user, setUser}: IHeaderProps) {
             <div className={"col-1"}>
                 <LanguageSelector/>
             </div>
-            { user === null ?
+            {user === null ?
                 <div className={"col-2  my-auto text-center"}>
-                    <a className="text-decoration-none text-cook m-2 display-6 fw-semibold"
-                       href="/authentication/signin">{t('signin')}</a>
+                    <Button className="btn btn-outline-cook "
+                            variant={"btn-outline-cook"}
+                            onClick={() => {
+                                navigate('/authentication/signin')
+                            }}>
+                        {t('signin')}
+                    </Button>
                 </div> :
                 <div className={"col-2 my-auto text-center"}>
                     <Button className="btn btn-outline-cook "

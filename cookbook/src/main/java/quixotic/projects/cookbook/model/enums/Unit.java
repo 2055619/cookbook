@@ -1,5 +1,12 @@
 package quixotic.projects.cookbook.model.enums;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+import java.util.List;
+
+@AllArgsConstructor
+@Getter
 public enum Unit {
     TEASPOON,
     TABLESPOON,
@@ -13,5 +20,6 @@ public enum Unit {
     PINCH,
     DASH,
     EACH,
-    NUMBER
+    NUMBER,
+    ;
 }

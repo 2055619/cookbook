@@ -28,13 +28,17 @@ public class Cook implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String username;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column(nullable = false)
     private String firstname;
+    @Column(nullable = false)
     private String lastname;
     @Enumerated(EnumType.STRING)
     private Unit powderUnit;
