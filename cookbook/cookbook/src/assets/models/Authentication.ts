@@ -4,7 +4,10 @@ export interface IUser {
     email: string;
     firstName: string;
     lastName: string;
-    preferredUnit: string;
+    solidUnit: string;
+    liquidUnit: string;
+    powderUnit: string;
+    otherUnit: string;
     role: string;
     token: string;
 }
@@ -20,5 +23,8 @@ export interface IsignUp {
     firstName: string;
     lastName: string;
     password: string;
-    preferredUnit: string;
+    solidUnit: string;
+    liquidUnit: string;
+    powderUnit: string;
+    otherUnit: string;
 }

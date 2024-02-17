@@ -7,12 +7,13 @@ import i18n from "./assets/utils/i18n";
 import axios from "axios";
 import Main from "./pages/Main";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
       <I18nextProvider i18n={i18n}>
         <ToastContainer
-            position="top-center"
+            position="top-left"
             autoClose={3000}
             hideProgressBar={false}
             newestOnTop={true}
@@ -34,7 +35,7 @@ function App() {
 export default App;
 
 export const cookServerInstance = axios.create({
-    baseURL: 'http://localhost:8080/api/v1/',
+    baseURL: 'http://localhost:8080/api/v1/cook/',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'

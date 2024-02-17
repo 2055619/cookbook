@@ -1,15 +1,33 @@
 {
   "name": "Cookbook",
   "summedDescription": "Cookbook est la meilleure application pour trouver des recettes de cuisine.",
-  "copyright": "© Copyright 2024 - Made by LP-F",
+  "copyright": "© Copyright 2024 - Fait par LP-F",
   "signin": "Se connecter",
+  "signup": "S'inscrire",
+  "signout": "Se déconnecter",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"
     },
-    "authentication": {
-      "signInSuccess": "Vous êtes maintenant connecté!"
+    "auth": {
+      "title": "Connexion",
+      "email": "Adresse email",
+      "username": "Nom d'utilisateur",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "solidUnit": "Unité de mesure de Solide",
+      "liquidUnit": "Unité de mesure de Liquide",
+      "powderUnit": "Unité de mesure de Poudre",
+      "otherUnit": "Unité de mesure des Autres",
+      "forgotPassword": "Mot de passe oublié ?",
+      "createAccount": "Créer mon compte",
+      "preference": "Préférences"
     }
+  },
+  "messages": {
+    "signInSuccess": "Vous êtes maintenant connecté!"
   },
   "pageNotFound": "Page non trouvée"
 }

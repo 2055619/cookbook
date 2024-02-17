@@ -1,7 +1,7 @@
 
 function Landing() {
   return (
-    <div>
+    <div className={"container"}>
       <h1>Landing</h1>
     </div>
   );

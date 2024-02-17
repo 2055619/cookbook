@@ -5,21 +5,23 @@ import React, {useState} from "react";
 import {IUser} from "../assets/models/Authentication";
 import Header from "../components/main/Header";
 import Footer from "../components/main/Footer";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
+import Authentication from "./Authentication";
+import Landing from "./Landing";
 
 function Main() {
     const [user, setUser] = useState<IUser | null>(null);
 
     return (
         <>
-            <Header/>
-            <main className="App-main min-vh-100 mx-auto">
+            <Header user={user} setUser={setUser}/>
+            <main className="App-main min-vh-100 mx-auto text-cook">
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/home" element={<Home/>}/>
-                    <Route path="/signin" element={<SignIn/>}/>
-                    <Route path="/signup" element={<SignUp/>}/>
+                    <Route path="/authentication/*" element={<Authentication setUser={setUser}/>}/>
+                    {/*<Route path="/signin" element={<SignIn/>}/>*/}
+                    {/*<Route path="/signup" element={<SignUp/>}/>*/}
+                    <Route path="/landing" element={<Landing/>}/>
 
                     <Route path="*" element={<PageNotFound/>}/>
                 </Routes>
