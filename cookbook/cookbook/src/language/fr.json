@@ -5,6 +5,7 @@
   "signin": "Se connecter",
   "signup": "S'inscrire",
   "signout": "Se déconnecter",
+  "welcome": "Bienvenue",
 
   "KILOGRAM": "Kilogramme (kg)",
   "GRAM": "Gramme (g)",
@@ -20,7 +21,6 @@
   "DASH": "Dash",
   "EACH": "Chacun",
   "NUMBER": "Nombre d'item(s)",
-
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"

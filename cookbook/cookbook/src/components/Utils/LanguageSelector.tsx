@@ -8,14 +8,13 @@ function LanguageSelector() {
         i18n.changeLanguage(lng).then(r => r);
     };
 
+    const currentLanguage = i18n.language;
+    const buttonLabel = currentLanguage === 'en' ? 'Français' : 'English';
+    const newLanguage = currentLanguage === 'en' ? 'fr' : 'en';
+
     return (
         <div className="mt-1">
-            <button className={"btn btn-outline-cook my-1"} onClick={() => changeLanguage("fr")}>Français</button>
-            <button className={"btn btn-outline-cook"} onClick={() => changeLanguage("en")}>English</button>
-            {/*<select className={"form-select clickable"} defaultValue={"fr"} onChange={(e) => changeLanguage(e.target.value)}>*/}
-            {/*    <option value="fr">Français</option>*/}
-            {/*    <option value="en">English</option>*/}
-            {/*</select>*/}
+            <button className={"btn btn-outline-cook mt-5"} onClick={() => changeLanguage(newLanguage)}>{buttonLabel}</button>
         </div>
     );
 }

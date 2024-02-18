@@ -21,14 +21,14 @@ function Header({user, setUser}: IHeaderProps) {
     }
 
     return (
-        <header className={"bg-light-cook mx-auto my-auto p-1 row "}>
-            <NavLink className="m-3 col-2 text-decoration-none text-white col-2" to="/">
-                <div className="d-flex icon-btn">
+        <header className={"bg-light-cook mx-auto row"}>
+            <NavLink className="m-3 text-decoration-none text-white col-3 p-0" to="/">
+                <div className="d-flex icon-btn p-0">
                     <img alt="Logo" className="col-4 d-none d-md-block" src={logo}/>
-                    <h1 className={"display-6 fw-semibold"}>{t('name')}</h1>
+                    <h1 className={"display-6 fw-semibold mt-4"}>{t('name')}</h1>
                 </div>
             </NavLink>
-            <div className={"text-center mx-auto my-auto col-5"}>
+            <div className={"text-center mx-auto my-auto col-4"}>
                 <p>{t('summedDescription')}</p>
             </div>
             <div className={"col-1"}>
@@ -45,7 +45,11 @@ function Header({user, setUser}: IHeaderProps) {
                     </Button>
                 </div> :
                 <div className={"col-2 my-auto text-center"}>
-                    <Button className="btn btn-outline-cook "
+                    <div className={"col-6 mx-auto"}>
+                        <p className={"h5 mx-0 p-0"}>{t('welcome') + " " + user.username}</p>
+                    </div>
+
+                    <Button className="btn btn-outline-cook"
                             variant={"btn-outline-cook"}
                             onClick={SignOut}>
                         {t('signout')}
