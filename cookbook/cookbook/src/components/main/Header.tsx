@@ -31,9 +31,7 @@ function Header({user, setUser}: IHeaderProps) {
             <div className={"text-center mx-auto my-auto col-4"}>
                 <p>{t('summedDescription')}</p>
             </div>
-            <div className={"col-1"}>
-                <LanguageSelector/>
-            </div>
+            <LanguageSelector/>
             {user === null ?
                 <div className={"col-2  my-auto text-center"}>
                     <Button className="btn btn-outline-cook "
@@ -45,10 +43,7 @@ function Header({user, setUser}: IHeaderProps) {
                     </Button>
                 </div> :
                 <div className={"col-2 my-auto text-center"}>
-                    <div className={"col-6 mx-auto"}>
-                        <p className={"h5 mx-0 p-0"}>{t('welcome') + " " + user.username}</p>
-                    </div>
-
+                    <p className={"h5 mx-0 p-0"}>{t('welcome') + " " + user.username}</p>
                     <Button className="btn btn-outline-cook"
                             variant={"btn-outline-cook"}
                             onClick={SignOut}>

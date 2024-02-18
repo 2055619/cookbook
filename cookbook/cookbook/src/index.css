@@ -55,6 +55,10 @@ danger-hover:hover{
   background-color: var(--cook-light-color);
 }
 
+.bg-second-cook {
+  background-color: var(--cook-color);
+}
+
 .border-cook {
   --bs-border-color: rgba(var(--bs-cook-rgb), 1) !important;
 }

@@ -13,7 +13,7 @@ function LanguageSelector() {
     const newLanguage = currentLanguage === 'en' ? 'fr' : 'en';
 
     return (
-        <div className="mt-1">
+        <div className="mx-auto col-1">
             <button className={"btn btn-outline-cook mt-5"} onClick={() => changeLanguage(newLanguage)}>{buttonLabel}</button>
         </div>
     );

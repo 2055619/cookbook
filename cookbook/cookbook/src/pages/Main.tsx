@@ -14,7 +14,7 @@ function Main() {
     return (
         <>
             <Header user={user} setUser={setUser}/>
-            <main className="App-main min-vh-100 mx-auto text-cook">
+            <main className="App-main min-vh-100 mx-auto text-cook bg-second-cook">
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/home" element={<Home/>}/>
