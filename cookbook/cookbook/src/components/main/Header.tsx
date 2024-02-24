@@ -24,8 +24,8 @@ function Header({user, setUser}: IHeaderProps) {
         <header className={"bg-light-cook mx-auto row"}>
             <NavLink className="m-3 text-decoration-none text-white col-3 p-0" to="/">
                 <div className="d-flex icon-btn p-0">
-                    <img alt="Logo" className="col-4 d-none d-md-block" src={logo}/>
-                    <h1 className={"display-6 fw-semibold mt-4"}>{t('name')}</h1>
+                    <img alt="Logo" className="col-3 d-none d-md-block" src={logo}/>
+                    <h1 className={"display-6 fw-semibold my-auto"}>{t('name')}</h1>
                 </div>
             </NavLink>
             <div className={"text-center mx-auto my-auto col-4"}>
