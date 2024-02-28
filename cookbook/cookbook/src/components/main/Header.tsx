@@ -33,7 +33,7 @@ function Header({user, setUser}: IHeaderProps) {
             </div>
             <LanguageSelector/>
             {user === null ?
-                <div className={"col-2  my-auto text-center"}>
+                <div className={"col-2 my-auto text-center"}>
                     <Button className="btn btn-outline-cook "
                             variant={"btn-outline-cook"}
                             onClick={() => {

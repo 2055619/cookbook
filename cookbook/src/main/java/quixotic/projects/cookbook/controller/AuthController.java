@@ -13,9 +13,21 @@ import quixotic.projects.cookbook.dto.SignUpDTO;
 import quixotic.projects.cookbook.service.CookService;
 
 @Controller
-@RequestMapping("/api/v1/cook")
+@RequestMapping("/api/v1/cook/auth")
 @RequiredArgsConstructor
-public class CookController {
+public class AuthController {
+
     private final CookService cookService;
 
+    @PostMapping("/auth/signin")
+    public ResponseEntity<CookDTO> authenticateCook(@RequestBody SignInDTO signInDTO){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.authenticateCook(signInDTO));
+    }
+
+    @PostMapping("/auth/signup")
+    public ResponseEntity<CookDTO> signupCook(@RequestBody SignUpDTO signUpDTO){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.createCook(signUpDTO));
+    }
 }
