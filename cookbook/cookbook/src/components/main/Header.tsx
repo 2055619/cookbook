@@ -3,7 +3,6 @@ import LanguageSelector from "../Utils/LanguageSelector";
 import {NavLink, useNavigate} from "react-router-dom";
 import logo from "../../logo.svg";
 import {IUser} from "../../assets/models/Authentication";
-import {Button} from "react-bootstrap";
 
 interface IHeaderProps {
     setUser: (user: IUser | null) => void;
@@ -21,36 +20,32 @@ function Header({user, setUser}: IHeaderProps) {
     }
 
     return (
-        <header className={"bg-light-cook mx-auto row"}>
-            <NavLink className="m-3 text-decoration-none text-white col-3 p-0" to="/">
-                <div className="d-flex icon-btn p-0">
-                    <img alt="Logo" className="col-3 d-none d-md-block" src={logo}/>
-                    <h1 className={"display-6 fw-semibold my-auto"}>{t('name')}</h1>
-                </div>
+        <header className="bg-light-cook mx-auto flex items-center justify-between font-bold p-2 text-cook">
+            <NavLink className="flex items-center" to="/">
+                <img alt="Logo" className="h-8 w-8 mr-2" src={logo}/>
+                <h1 className="text-xl font-semibold">{t('name')}</h1>
             </NavLink>
-            <div className={"text-center mx-auto my-auto col-4"}>
-                <p>{t('summedDescription')}</p>
+            <div className="text-center">
+                <p className="text-sm">{t('summedDescription')}</p>
             </div>
-            <LanguageSelector/>
-            {user === null ?
-                <div className={"col-2 my-auto text-center"}>
-                    <Button className="btn btn-outline-cook "
-                            variant={"btn-outline-cook"}
+            <div className="flex items-center space-x-4">
+                <LanguageSelector/>
+                {user === null ?
+                    <button className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook rounded transition ease-in duration-200 font-bold py-2 px-4"
                             onClick={() => {
                                 navigate('/authentication/signin')
                             }}>
                         {t('signin')}
-                    </Button>
-                </div> :
-                <div className={"col-2 my-auto text-center"}>
-                    <p className={"h5 mx-0 p-0"}>{t('welcome') + " " + user.username}</p>
-                    <Button className="btn btn-outline-cook"
-                            variant={"btn-outline-cook"}
-                            onClick={SignOut}>
-                        {t('signout')}
-                    </Button>
-                </div>
-            }
+                    </button> :
+                    <div className="flex flex-col items-center">
+                        <p className="text-sm mx-0 p-0">{t('welcome') + " " + user.username}</p>
+                        <button className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook rounded transition ease-in duration-200 font-bold py-2 px-4"
+                                onClick={SignOut}>
+                            {t('signout')}
+                        </button>
+                    </div>
+                }
+            </div>
         </header>
     );
 }

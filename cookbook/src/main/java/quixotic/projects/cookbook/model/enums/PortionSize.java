@@ -1,6 +1,6 @@
 package quixotic.projects.cookbook.model.enums;
 
-public enum PortionType {
+public enum PortionSize {
     VERY_SMALL,
     SMALL,
     MEDIUM,
