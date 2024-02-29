@@ -8,10 +8,10 @@ import quixotic.projects.cookbook.model.enums.Visibility;
 
 import java.time.LocalDate;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public abstract class Publication {
     @Id
     @GeneratedValue
@@ -23,7 +23,6 @@ public abstract class Publication {
     private LocalDate creationDate;
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
-
 //    @OneToMany(mappedBy = "publication")
 //    private Set<Reaction> reactions;
 }

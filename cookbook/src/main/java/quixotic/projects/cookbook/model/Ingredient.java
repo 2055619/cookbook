@@ -1,10 +1,7 @@
 package quixotic.projects.cookbook.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import quixotic.projects.cookbook.model.enums.IngredientState;
 import quixotic.projects.cookbook.model.enums.Unit;
 
@@ -23,4 +20,7 @@ public class Ingredient {
     private Unit unit;
     @Enumerated(EnumType.STRING)
     private IngredientState ingredientState;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private Recipe recipe;
 }

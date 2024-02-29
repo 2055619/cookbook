@@ -16,8 +16,11 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Embeddable
+@Entity
 public class Recipe extends Publication {
+    @Id
+    @GeneratedValue
+    private Long id;
     @ElementCollection
     private Set<String> instructions = new HashSet<>();
     @OneToMany(mappedBy = "recipe")
@@ -26,12 +29,12 @@ public class Recipe extends Publication {
     private RecipeType category;
     @Enumerated(EnumType.STRING)
     private DifficultyLevel difficulty;
+    private int serving;
     @Enumerated(EnumType.STRING)
     private PortionSize portionSize;
+    @ElementCollection
     @Enumerated(EnumType.STRING)
     private List<DietType> dietTypes;
     private float prepTime;
     private float cookTime;
-    private int serving;
-
 }

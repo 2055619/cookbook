@@ -11,23 +11,24 @@ import quixotic.projects.cookbook.dto.CookDTO;
 import quixotic.projects.cookbook.dto.SignInDTO;
 import quixotic.projects.cookbook.dto.SignUpDTO;
 import quixotic.projects.cookbook.service.CookService;
+import quixotic.projects.cookbook.service.UserService;
 
 @Controller
 @RequestMapping("/api/v1/cook/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final CookService cookService;
+    private final UserService userService;
 
-    @PostMapping("/auth/signin")
+    @PostMapping("/signin")
     public ResponseEntity<CookDTO> authenticateCook(@RequestBody SignInDTO signInDTO){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.authenticateCook(signInDTO));
+                .body(userService.authenticateCook(signInDTO));
     }
 
-    @PostMapping("/auth/signup")
+    @PostMapping("/signup")
     public ResponseEntity<CookDTO> signupCook(@RequestBody SignUpDTO signUpDTO){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.createCook(signUpDTO));
+                .body(userService.createCook(signUpDTO));
     }
 }
