@@ -3,13 +3,13 @@ import {CookBookService} from "../services/CookBookService";
 import {IsignIn, IUser} from "../assets/models/Authentication";
 import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
-import {Button, Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 
 
 interface SignInProps {
     setUser: (user: IUser) => void;
 }
+
 function SignIn({setUser}: SignInProps) {
     const cookbookService = new CookBookService();
     const {t} = useTranslation();
@@ -38,35 +38,43 @@ function SignIn({setUser}: SignInProps) {
     }
 
     return (
-        <Form autoComplete="false" onSubmit={handleSubmit} className={"vh-100"}>
-            <div className={"d-flex flex-column justify-content-center align-items-center mb-3"}>
-                <Form.Group className="mb-3 w-50" controlId="formBasicEmail">
-                    <Form.Label>{t('pages.auth.username')}</Form.Label>
-                    <Form.Control
+        <form autoComplete="false" onSubmit={handleSubmit} className="min-h-screen">
+            <div className="flex flex-col justify-center items-center mb-3">
+                <div className="mb-3 w-1/4" id="formBasicEmail">
+                    <label className="text-lg font-bold text-right my-auto w-full">{t('pages.auth.username')}</label>
+                    <input
                         type="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        className="form-input border border-gray-300 rounded-md p-2 w-full"
                     />
-                </Form.Group>
-                <Form.Group className="mb-3 w-50" controlId="formBasicPassword">
-                    <Form.Label>{t('pages.auth.password')}</Form.Label>
-                    <Form.Control
+                </div>
+                <div className="mb-3 w-1/4" id="formBasicPassword">
+                    <label className="text-lg font-bold text-right my-auto w-full">{t('pages.auth.password')}</label>
+                    <input
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        className="form-input border border-gray-300 rounded-md p-2 w-full"
                     />
-                </Form.Group>
+                </div>
             </div>
-            <Button type="button" variant={"btn-outline-cook"} className="btn btn-outline-cook" onClick={() => { navigate("/authentication/signup")}}>
+            <button type="button"
+                    className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 mx-5 p-2"
+                    onClick={() => {
+                        navigate("/authentication/signup")
+                    }}>
                 {t('pages.auth.createAccount')}
-            </Button>
-            <Button type="submit" variant={"btn-outline-cook"} className="btn btn-outline-cook mx-5">
+            </button>
+            <button type="submit"
+                    className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 mx-5 p-2">
                 {t('signin')}
-            </Button>
-            <Button type="button" variant={"btn-outline-cook"} className="btn btn-outline-cook">
+            </button>
+            <button type="button"
+                    className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
                 {t('pages.auth.forgotPassword')}
-            </Button>
-        </Form>
+            </button>
+        </form>
     );
 }
 

@@ -8,12 +8,10 @@ interface IAuthenticationProps {
 }
 function Authentication({setUser}: IAuthenticationProps) {
     const {t} = useTranslation();
-    const [tab, setTab] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     return (
-        <div className={"container text-center bg-cook vh-min-100"}>
-            <h1 className={"display-1 fw-semibold"}>{t('pages.auth.title')}</h1>
-            {/*<p>{t('signin')}</p>*/}
+        <div className="container text-center bg-cook-orange">
+            <h1 className="text-5xl font-semibold p-3">{t('pages.auth.title')}</h1>
             <Routes>
                 <Route path={"signin"} element={<SignIn setUser={setUser}/>}/>
                 <Route path={"signup"} element={<SignUp setUser={setUser}/>}/>

@@ -5,7 +5,7 @@ function PageNotFound() {
 
     return (
         <div className={"text-center"}>
-            <h1 className={"pt-5"}>{t('pageNotFound')}</h1>
+            <h1 className={"pt-5 text-9xl text-cook-red"}>{t('pageNotFound')}</h1>
         </div>
     );
 }

@@ -20,7 +20,7 @@ function Header({user, setUser}: IHeaderProps) {
     }
 
     return (
-        <header className="bg-light-cook mx-auto flex items-center justify-between font-bold p-2 text-cook">
+        <header className="bg-cook-light mx-auto flex items-center justify-between font-bold p-2 text-cook">
             <NavLink className="flex items-center" to="/">
                 <img alt="Logo" className="h-8 w-8 mr-2" src={logo}/>
                 <h1 className="text-xl font-semibold">{t('name')}</h1>

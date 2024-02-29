@@ -16,10 +16,10 @@ function Main() {
     return (
         <>
             <Header user={user} setUser={setUser}/>
-            <main className="App-main min-vh-100 mx-auto text-cook bg-second-cook">
-                <div className="row">
+            <main className="min-h-screen mx-auto bg-cook">
+                <div className="flex">
                     <LeftAside />
-                    <div className="col">
+                    <div className="w-3/4">
                         <Routes>
                             <Route path="/" element={<Home/>}/>
                             <Route path="/home" element={<Home/>}/>

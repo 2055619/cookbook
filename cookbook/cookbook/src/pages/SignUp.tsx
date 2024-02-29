@@ -1,4 +1,3 @@
-import {Button, Form, FormSelect} from "react-bootstrap";
 import React, {FormEvent, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {IsignUp} from "../assets/models/Authentication";
@@ -158,72 +157,129 @@ function SignUp({setUser}: ISignUpProps) {
     };
 
     return (
-        <Form onSubmit={handleSubmit} className={"vh-100"}>
-            <div className={"d-flex flex-column justify-content-center align-items-center mb-3"}>
+        <form onSubmit={handleSubmit} className="h-screen">
+            <div className="flex flex-col justify-center items-center mb-3">
                 {
                     createFormInfo.map((formInfo, index) => (
-                        <Form.Group key={index} className="my-2 col-4" controlId={formInfo.name}>
-                            <Form.Control className={`${formInfo.warning !== '' ? "is-invalid" : ""}`}
-                                          onChange={handleCreationChange} type={formInfo.type}
-                                          placeholder={t(formInfo.placeholder)}/>
-                            <h5 className="text-danger">{t(formInfo.warning)}</h5>
-                        </Form.Group>
+                        <div key={index} className="my-2 w-1/3" id={formInfo.name}>
+                            <input
+                                className={`${formInfo.warning !== '' ? "border-red-500" : ""} form-input border border-gray-300 rounded-md p-2 w-full`}
+                                onChange={handleCreationChange} type={formInfo.type}
+                                placeholder={t(formInfo.placeholder)}/>
+                            <h5 className="text-red-500">{t(formInfo.warning)}</h5>
+                        </div>
                     ))
                 }
             </div>
             <div className="row mb-3">
                 <h1>{t('pages.auth.preference')}</h1>
-                <div className={"col-2"}></div>
-                <Form.Group controlId="solidUnitSelect" className={"my-2 col-4"}>
-                    <FormSelect aria-label="Default select example"
+                <div className="grid grid-cols-2 gap-4 mb-3">
+                    <div className="my-1 ml-auto w-2/3" id="solidUnitSelect">
+                        <select aria-label="Default select example"
                                 onChange={(event) => {
                                     setUnits({...units, solidUnit: event.target.value});
-                                }}>
-                        <option>{t('pages.auth.solidUnit')}</option>
-                        {ing["SOLID"].map((unit, index) => (
-                            <option key={index} value={unit}>{t(unit)}</option>
-                        ))}
-                    </FormSelect>
-                </Form.Group>
-                <Form.Group controlId="liquidUnitSelect" className={"my-2 col-4"}>
-                    <FormSelect aria-label="Default select example"
+                                }}
+                                className="form-select border border-gray-300 rounded-md p-2 w-full">
+                            <option>{t('pages.auth.solidUnit')}</option>
+                            {ing["SOLID"].map((unit, index) => (
+                                <option key={index} value={unit}>{t(unit)}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="my-1 mr-auto w-2/3" id="liquidUnitSelect">
+                        <select aria-label="Default select example"
                                 onChange={(event) => {
                                     setUnits({...units, liquidUnit: event.target.value});
-                                }}>
-                        <option>{t('pages.auth.liquidUnit')}</option>
-                        {ing["LIQUID"].map((unit, index) => (
-                            <option key={index} value={unit}>{t(unit)}</option>
-                        ))}
-                    </FormSelect>
-                </Form.Group>
-                <div className={"col-2"}></div>
-                <div className={"col-2"}></div>
-                <Form.Group controlId="powderUnitSelect" className={"my-2 col-4"}>
-                    <FormSelect aria-label="Default select example"
+                                }}
+                                className="form-select border border-gray-300 rounded-md p-2 w-full">
+                            <option>{t('pages.auth.liquidUnit')}</option>
+                            {ing["LIQUID"].map((unit, index) => (
+                                <option key={index} value={unit}>{t(unit)}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="my-1 ml-auto w-2/3" id="powderUnitSelect">
+                        <select aria-label="Default select example"
                                 onChange={(event) => {
                                     setUnits({...units, powderUnit: event.target.value});
-                                }}>
-                        <option>{t('pages.auth.powderUnit')}</option>
-                        {ing["POWDER"].map((unit, index) => (
-                            <option key={index} value={unit}>{t(unit)}</option>
-                        ))}
-                    </FormSelect>
-                </Form.Group>
-                <Form.Group controlId="otherUnitSelect" className={"my-2 col-4"}>
-                    <FormSelect aria-label="Default select example"
+                                }}
+                                className="form-select border border-gray-300 rounded-md p-2 w-full">
+                            <option>{t('pages.auth.powderUnit')}</option>
+                            {ing["POWDER"].map((unit, index) => (
+                                <option key={index} value={unit}>{t(unit)}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className="my-1 mr-auto w-2/3" id="otherUnitSelect">
+                        <select aria-label="Default select example"
                                 onChange={(event) => {
                                     setUnits({...units, otherUnit: event.target.value});
-                                }}>
-                        <option>{t('pages.auth.otherUnit')}</option>
-                        {ing["OTHER"].map((unit, index) => (
-                            <option key={index} value={unit}>{t(unit)}</option>
-                        ))}
-                    </FormSelect>
-                </Form.Group>
+                                }}
+                                className="form-select border border-gray-300 rounded-md p-2 w-full">
+                            <option>{t('pages.auth.otherUnit')}</option>
+                            {ing["OTHER"].map((unit, index) => (
+                                <option key={index} value={unit}>{t(unit)}</option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+                {/*<div className="flex flex-wrap justify-between items-center mb-3">*/}
+                {/*    <div className="my-2 w-1/3" id="solidUnitSelect">*/}
+                {/*        <select aria-label="Default select example"*/}
+                {/*                onChange={(event) => {*/}
+                {/*                    setUnits({...units, solidUnit: event.target.value});*/}
+                {/*                }}*/}
+                {/*                className="form-select border border-gray-300 rounded-md p-2 w-full">*/}
+                {/*            <option>{t('pages.auth.solidUnit')}</option>*/}
+                {/*            {ing["SOLID"].map((unit, index) => (*/}
+                {/*                <option key={index} value={unit}>{t(unit)}</option>*/}
+                {/*            ))}*/}
+                {/*        </select>*/}
+                {/*    </div>*/}
+                {/*    <div className="my-2 w-1/3" id="liquidUnitSelect">*/}
+                {/*        <select aria-label="Default select example"*/}
+                {/*                onChange={(event) => {*/}
+                {/*                    setUnits({...units, liquidUnit: event.target.value});*/}
+                {/*                }}*/}
+                {/*                className="form-select border border-gray-300 rounded-md p-2 w-full">*/}
+                {/*            <option>{t('pages.auth.liquidUnit')}</option>*/}
+                {/*            {ing["LIQUID"].map((unit, index) => (*/}
+                {/*                <option key={index} value={unit}>{t(unit)}</option>*/}
+                {/*            ))}*/}
+                {/*        </select>*/}
+                {/*    </div>*/}
+                {/*    <div className="my-2 w-1/3" id="powderUnitSelect">*/}
+                {/*        <select aria-label="Default select example"*/}
+                {/*                onChange={(event) => {*/}
+                {/*                    setUnits({...units, powderUnit: event.target.value});*/}
+                {/*                }}*/}
+                {/*                className="form-select border border-gray-300 rounded-md p-2 w-full">*/}
+                {/*            <option>{t('pages.auth.powderUnit')}</option>*/}
+                {/*            {ing["POWDER"].map((unit, index) => (*/}
+                {/*                <option key={index} value={unit}>{t(unit)}</option>*/}
+                {/*            ))}*/}
+                {/*        </select>*/}
+                {/*    </div>*/}
+                {/*    <div className="my-2 w-1/3" id="otherUnitSelect">*/}
+                {/*        <select aria-label="Default select example"*/}
+                {/*                onChange={(event) => {*/}
+                {/*                    setUnits({...units, otherUnit: event.target.value});*/}
+                {/*                }}*/}
+                {/*                className="form-select border border-gray-300 rounded-md p-2 w-full">*/}
+                {/*            <option>{t('pages.auth.otherUnit')}</option>*/}
+                {/*            {ing["OTHER"].map((unit, index) => (*/}
+                {/*                <option key={index} value={unit}>{t(unit)}</option>*/}
+                {/*            ))}*/}
+                {/*        </select>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
             </div>
 
-            <Button type="submit" variant={"btn-outline-cook"} className={"btn btn-outline-cook"}>{t('signup')}</Button>
-        </Form>
+            <button type="submit"
+                    className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2 mx-5">
+                {t('signup')}
+            </button>
+        </form>
     );
 }
 

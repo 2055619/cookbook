@@ -1,6 +1,7 @@
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {CookBookService} from "../services/CookBookService";
+import Loading from "../components/Utils/Loading";
 
 function Landing() {
     const {t} = useTranslation();
@@ -10,8 +11,9 @@ function Landing() {
 
 
     return (
-        <div className={"container bg-cook min-vh-100"}>
+        <div className={"container text-center bg-cook-orange min-h-screen"}>
             <h1>Middle Section</h1>
+            <Loading />
         </div>
     );
 }

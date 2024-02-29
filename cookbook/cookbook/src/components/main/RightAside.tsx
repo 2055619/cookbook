@@ -1,6 +1,6 @@
 function RightAside() {
     return (
-        <div className="col-md-3 text-white">
+        <div className="w-1/4 text-white text-end me-2">
             <h1>Right Aside</h1>
         </div>
     );
