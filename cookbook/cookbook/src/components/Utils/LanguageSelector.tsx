@@ -14,7 +14,7 @@ function LanguageSelector() {
 
     return (
         <button
-            className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook rounded transition ease-in duration-200 py-2 px-4"
+            className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook rounded transition ease-in duration-200 py-1 px-4"
             onClick={() => changeLanguage(newLanguage)}>
             {buttonLabel}
         </button>
