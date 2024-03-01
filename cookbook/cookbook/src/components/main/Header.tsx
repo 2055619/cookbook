@@ -16,7 +16,7 @@ function Header({user, setUser}: IHeaderProps) {
     function SignOut() {
         setUser(null);
         localStorage.clear();
-        navigate('/');
+        navigate('/a/');
     }
 
     return (

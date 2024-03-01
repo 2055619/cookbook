@@ -34,10 +34,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 		if(StringUtils.hasText(token)){
 			try{
 				tokenProvider.validateToken(token);
-				String email = tokenProvider.getEmailFromJWT(token);
-				Cook cook = cookRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+				String username = tokenProvider.getUsernameFromJWT(token);
+				Cook cook = cookRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
 				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-						cook.getEmail(), null, cook.getAuthorities()
+						cook.getUsername(), null, cook.getAuthorities()
 				);
 				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				SecurityContextHolder.getContext().setAuthentication(authenticationToken);

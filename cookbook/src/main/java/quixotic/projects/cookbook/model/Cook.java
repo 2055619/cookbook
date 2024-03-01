@@ -53,7 +53,6 @@ public class Cook implements UserDetails {
 //    private Set<Reaction> reactions = new HashSet<>();
 
     public void addPublication(Publication publication) {
-        System.out.println(publications.size());
         publications.add(publication);
     }
 

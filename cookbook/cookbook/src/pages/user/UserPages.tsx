@@ -1,10 +1,10 @@
 import {Route, Routes, useNavigate} from "react-router-dom";
-import Home from "./Home";
-import Authentication from "./Authentication";
+import Home from "../any/Home";
+import Authentication from "../any/Authentication";
 import Landing from "./Landing";
-import PageNotFound from "./PageNotFound";
+import PageNotFound from "../any/PageNotFound";
 import React, {useEffect} from "react";
-import {IUser} from "../assets/models/Authentication";
+import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
 import { useTranslation } from "react-i18next";
 
@@ -18,7 +18,7 @@ function UserPages({user}: IUserPage) {
 
     useEffect(() => {
         if (user === null) {
-            toast.error(t('message.userNotLoggedIn'));
+            toast.error(t('messages.userNotLoggedIn'));
             navigate('/authentication/signin');
         }
 

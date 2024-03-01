@@ -23,4 +23,10 @@ export class CookBookService {
                 return response.data;
             });
     }
+
+    async getUser() {
+        return cookServerInstance.get<IUser>('/cook/auth/me').then((response) => {
+            return response.data;
+        });
+    }
 }

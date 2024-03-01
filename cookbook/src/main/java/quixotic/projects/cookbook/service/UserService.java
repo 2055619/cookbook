@@ -65,4 +65,8 @@ public class UserService {
         return jwtTokenProvider.generateToken(authentication);
     }
 
+    public CookDTO getMe(String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        return new CookDTO(cookRepository.findByUsername(username).orElseThrow());
+    }
 }

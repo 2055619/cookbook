@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
-import SignIn from "./SignIn";
+import SignIn from "../../components/auth/SignIn";
 import {Route, Routes} from "react-router-dom";
-import SignUp from "./SignUp";
+import SignUp from "../../components/auth/SignUp";
 
 interface IAuthenticationProps {
     setUser: (user: any) => void;

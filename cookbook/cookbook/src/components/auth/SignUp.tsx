@@ -1,11 +1,11 @@
 import React, {FormEvent, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {IsignUp} from "../assets/models/Authentication";
-import {CookBookService} from "../services/CookBookService";
+import {IsignUp} from "../../assets/models/Authentication";
+import {CookBookService} from "../../services/CookBookService";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
-import FormInput from "../assets/models/Form";
-import {UtilsService} from "../services/UtilsService";
+import FormInput from "../../assets/models/Form";
+import {UtilsService} from "../../services/UtilsService";
 
 interface ISignUpProps {
     setUser: (user: any) => void;

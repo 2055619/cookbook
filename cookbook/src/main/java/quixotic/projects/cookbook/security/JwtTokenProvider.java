@@ -29,15 +29,6 @@ public class JwtTokenProvider{
 		return builder.compact();
 	}
 
-	public String getEmailFromJWT(String token){
-		return Jwts.parserBuilder()
-			.setSigningKey(apiKeySecretBytes)
-			.build()
-			.parseClaimsJws(token)
-			.getBody()
-			.getSubject();
-	}
-
 	public void validateToken(String token){
 		try{
 			Jwts.parserBuilder().setSigningKey(apiKeySecretBytes).build().parseClaimsJws(token);
@@ -52,5 +43,14 @@ public class JwtTokenProvider{
 		}catch(IllegalArgumentException ex){
 			throw new InvalidJwtException("JWT claims string is empty");
 		}
+	}
+
+    public String getUsernameFromJWT(String token) {
+		return Jwts.parserBuilder()
+				.setSigningKey(apiKeySecretBytes)
+				.build()
+				.parseClaimsJws(token)
+				.getBody()
+				.getSubject();
 	}
 }

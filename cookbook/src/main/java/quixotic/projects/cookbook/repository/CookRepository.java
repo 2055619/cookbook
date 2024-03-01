@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface CookRepository extends JpaRepository<Cook, Long> {
     Optional<Cook> findByUsername(String username);
-    Optional<Cook> findByEmail(String email);
 }
