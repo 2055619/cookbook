@@ -3,6 +3,8 @@ package quixotic.projects.cookbook.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import quixotic.projects.cookbook.dto.RecipeDTO;
+import quixotic.projects.cookbook.model.Cook;
+import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
 
@@ -16,7 +18,15 @@ public class CookService {
 
 //    Recipes
     public RecipeDTO createRecipe(RecipeDTO recipeDTO){
-        return new RecipeDTO(recipeRepository.save(recipeDTO.toEntity()));
+        Cook cook = cookRepository.findByUsername(recipeDTO.getCookUsername()).orElseThrow();
+        Recipe recipe = recipeDTO.toEntity();
+        recipe.setCook(cook);
+        recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
+        cook.addPublication(recipe);
+
+        cook = cookRepository.save(cook);
+        return new RecipeDTO(recipe);
+//        return new RecipeDTO(recipeRepository.save(recipe));
     }
 
     public List<RecipeDTO> getRecipes() {

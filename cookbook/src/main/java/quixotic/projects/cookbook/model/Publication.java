@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import quixotic.projects.cookbook.model.enums.Visibility;
 
 import java.time.LocalDate;
@@ -16,11 +17,13 @@ public abstract class Publication {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(unique = true, nullable = false)
     private String title;
     private String description;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Cook cook;
-    private LocalDate creationDate;
+    private LocalDate creationDate = LocalDate.now();
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
 //    @OneToMany(mappedBy = "publication")

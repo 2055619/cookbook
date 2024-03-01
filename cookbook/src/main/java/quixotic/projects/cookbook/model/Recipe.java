@@ -7,6 +7,7 @@ import quixotic.projects.cookbook.model.enums.DifficultyLevel;
 import quixotic.projects.cookbook.model.enums.PortionSize;
 import quixotic.projects.cookbook.model.enums.RecipeType;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +25,7 @@ public class Recipe extends Publication {
     @ElementCollection
     private Set<String> instructions = new HashSet<>();
     @OneToMany(mappedBy = "recipe")
-    private Set<Ingredient> ingredients;
+    private Set<Ingredient> ingredients = new HashSet<>();
     @Enumerated(EnumType.STRING)
     private RecipeType category;
     @Enumerated(EnumType.STRING)
@@ -34,7 +35,7 @@ public class Recipe extends Publication {
     private PortionSize portionSize;
     @ElementCollection
     @Enumerated(EnumType.STRING)
-    private List<DietType> dietTypes;
+    private List<DietType> dietTypes = new ArrayList<>();
     private float prepTime;
     private float cookTime;
 }

@@ -31,4 +31,15 @@ public class CookDTO {
         this.role = cook.getRole().name();
         this.token = token;
     }
+    public CookDTO(Cook cook){
+        this.username = cook.getUsername();
+        this.email = cook.getEmail();
+        this.firstName = cook.getFirstname();
+        this.lastName = cook.getLastname();
+        this.powderUnit = cook.getPowderUnit().name();
+        this.liquidUnit = cook.getLiquidUnit().name();
+        this.solidUnit = cook.getSolidUnit().name();
+        this.otherUnit = cook.getOtherUnit().name();
+        this.role = cook.getRole().name();
+    }
 }

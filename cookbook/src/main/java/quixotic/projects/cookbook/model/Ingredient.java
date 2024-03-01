@@ -20,7 +20,8 @@ public class Ingredient {
     private Unit unit;
     @Enumerated(EnumType.STRING)
     private IngredientState ingredientState;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Recipe recipe;
 }
