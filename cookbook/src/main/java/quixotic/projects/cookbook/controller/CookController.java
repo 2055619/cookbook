@@ -1,6 +1,8 @@
 package quixotic.projects.cookbook.controller;
 
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,9 +28,9 @@ public class CookController {
     }
 
     @GetMapping("/recipes")
-    public ResponseEntity<List<RecipeDTO>> getRecipes(){
+    public ResponseEntity<List<RecipeDTO>> getRecipes(@PathParam("page") int page, @PathParam("size") int size){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getRecipes());
+                .body(cookService.getRecipes(page, size));
     }
 
     @GetMapping("/recipe/{title}")

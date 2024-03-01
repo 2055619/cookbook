@@ -143,7 +143,7 @@ function SignUp({setUser}: ISignUpProps) {
             setUser(response);
             sessionStorage.setItem('token', response.token);
             toast.success(t("messages.signInSuccess"));
-            navigate('/landing');
+            navigate('/u/landing');
         }).catch((error) => {
             if (error.response.data.value === '418') {
                 setCreateFromInfo(createFormInfo.map((formInfo) => {

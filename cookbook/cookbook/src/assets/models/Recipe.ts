@@ -3,7 +3,7 @@ import {IUser} from "./Authentication";
 export interface IRecipe {
     title: string;
     description: string;
-    cook: IUser;
+    cookUsername: string;
     visibility: string;
     instructions: string[];
     ingredients: string[];

@@ -42,7 +42,6 @@ public class CookService {
     public List<RecipeDTO> getRecipes(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Recipe> recipePage = recipeRepository.findAll(pageable);
-        System.out.println(recipePage.getContent());
         return recipePage.map(RecipeDTO::new).stream().toList();
     }
     public RecipeDTO getRecipe(String title) {

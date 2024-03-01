@@ -9,6 +9,7 @@ import Authentication from "./Authentication";
 import Landing from "./Landing";
 import LeftAside from "../components/main/LeftAside";
 import RightAside from "../components/main/RightAside";
+import UserPages from "./UserPages";
 
 function Main() {
     const [user, setUser] = useState<IUser | null>(null);
@@ -24,7 +25,7 @@ function Main() {
                             <Route path="/" element={<Home/>}/>
                             <Route path="/home" element={<Home/>}/>
                             <Route path="/authentication/*" element={<Authentication setUser={setUser}/>}/>
-                            <Route path="/landing" element={<Landing/>}/>
+                            <Route path="/u/*" element={<UserPages user={user}/>}/>
                             <Route path="*" element={<PageNotFound/>}/>
                         </Routes>
                     </div>

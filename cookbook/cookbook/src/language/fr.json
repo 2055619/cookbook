@@ -46,6 +46,7 @@
     "usernameTaken": "Ce nom d'utilisateur est déjà pris",
     "RecipeNotFound": "Cette recette n'existe pas",
 
+    "userNotLoggedIn": "Veuillez vous connecter pour accéder à cette page",
 
     "signInSuccess": "Vous êtes maintenant connecté!",
     "firstName": "Votre prénom doit être composé d'au moins 2 caractères",

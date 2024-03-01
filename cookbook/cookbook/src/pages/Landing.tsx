@@ -2,9 +2,10 @@ import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {CookBookService} from "../services/CookBookService";
 import Loading from "../components/Utils/Loading";
-import { useEffect, useState, useRef, useCallback } from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {IRecipe} from "../assets/models/Recipe";
 import {toast} from "react-toastify";
+import RecipeComponent from "../components/RecipeComponent";
 
 function Landing() {
     const {t} = useTranslation();
@@ -56,13 +57,17 @@ function Landing() {
 
             {recipes.map((recipe, index) => {
                 if (recipes.length === index + 1) {
-                    return <div ref={lastRecipeElementRef} key={index}>{recipe.title}</div>
+                    return <div className={`flex justify-center`} ref={lastRecipeElementRef} key={index}>
+                        <RecipeComponent recipe={recipe} key={index}/>
+                    </div>
                 } else {
-                    return <div key={index}>{recipe.title}</div>
+                    return <div className={`flex justify-center`} key={index}>
+                        <RecipeComponent recipe={recipe} key={index}/>
+                    </div>
                 }
             })}
 
-            <Loading />
+            <Loading/>
         </div>
     );
 }

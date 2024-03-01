@@ -29,7 +29,7 @@ function SignIn({setUser}: SignInProps) {
                 setUser(response);
                 sessionStorage.setItem('token', response.token);
                 toast.success(t("messages.signInSuccess"));
-                navigate('/landing');
+                navigate('/u/landing');
             })
             .catch((error) => {
                 console.log(error);
