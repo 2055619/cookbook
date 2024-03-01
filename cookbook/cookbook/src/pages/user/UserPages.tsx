@@ -17,13 +17,16 @@ function UserPages({user}: IUserPage) {
     const {t} = useTranslation();
 
     useEffect(() => {
-        if (user === null) {
+        const token = sessionStorage.getItem('token');
+        if (token === null) {
             toast.error(t('messages.userNotLoggedIn'));
             navigate('/authentication/signin');
+        } else {
+            navigate('/u/landing');
         }
+    }, [user]);
 
-    }, []);
-
+    // TODO: Add other pages
     return (
         <div>
             <Routes>

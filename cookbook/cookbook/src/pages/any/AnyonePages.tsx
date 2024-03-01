@@ -12,27 +12,6 @@ interface AnyonePagesProps {
 }
 
 function AnyonePages({setUser}: AnyonePagesProps) {
-
-    const cookbookService = new CookBookService();
-
-    useEffect(() => {
-        const token = sessionStorage.getItem('token');
-        if (token) {
-            cookServerInstance.defaults.headers.common['Authorization'] = token;
-
-            cookbookService.getUser()
-                .then((response) => {
-                    setUser(response);
-                })
-                .catch((error) => {
-                    toast.error(error.response.data.message);
-                    console.log(error);
-                });
-        }
-
-    }, []);
-
-
     return (
         <div className={"min-h-screen mx-auto bg-cook-orange"}>
             <Routes>

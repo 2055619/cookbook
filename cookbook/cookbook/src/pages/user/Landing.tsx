@@ -1,5 +1,4 @@
 import {useTranslation} from "react-i18next";
-import {useNavigate} from "react-router-dom";
 import {CookBookService} from "../../services/CookBookService";
 import Loading from "../../components/Utils/Loading";
 import {useCallback, useEffect, useRef, useState} from 'react';
@@ -9,7 +8,6 @@ import RecipeComponent from "../../components/RecipeComponent";
 
 function Landing() {
     const {t} = useTranslation();
-    const navigate = useNavigate();
     const cookbookService = new CookBookService();
 
     const [recipes, setRecipes] = useState<IRecipe[]>([]);
@@ -44,17 +42,12 @@ function Landing() {
                 .filter(recipe => recipe !== undefined) as IRecipe[];
 
             setRecipes(uniqueRecipes!);
-
-            // setRecipes(prevRecipes => [...prevRecipes, ...newRecipes]);
         };
-        toast.info("Loading Recipes")
         loadRecipes();
     }, [page]);
 
     return (
         <div className={"container text-center bg-cook-orange min-h-screen"}>
-            <h1>Middle Section</h1>
-
             {recipes.map((recipe, index) => {
                 if (recipes.length === index + 1) {
                     return <div className={`flex justify-center`} ref={lastRecipeElementRef} key={index}>
