@@ -164,6 +164,7 @@ function SignUp({setUser}: ISignUpProps) {
                         <div key={index} className="my-2 w-1/3" id={formInfo.name}>
                             <input
                                 className={`${formInfo.warning !== '' ? "border-red-500" : ""} form-input border border-gray-300 rounded-md p-2 w-full`}
+                                id={formInfo.name}
                                 onChange={handleCreationChange} type={formInfo.type}
                                 placeholder={t(formInfo.placeholder)}/>
                             <h5 className="text-red-500">{t(formInfo.warning)}</h5>
