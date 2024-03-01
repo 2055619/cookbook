@@ -2,13 +2,16 @@ package quixotic.projects.cookbook.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import quixotic.projects.cookbook.dto.IngredientDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
+import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -34,16 +37,31 @@ public class CookService {
 
     }
 
-    public RecipeDTO getRecipe(Long id) {
-        return new RecipeDTO(recipeRepository.findById(id).orElseThrow());
+    public RecipeDTO getRecipe(String title) {
+        return new RecipeDTO(recipeRepository.findByTitle(title).orElseThrow());
     }
 
-    // TODO: 2024-02-28 Double check this method
     public RecipeDTO updateRecipe(RecipeDTO recipeDTO) {
-        return new RecipeDTO(recipeRepository.save(recipeDTO.toEntity()));
+        Recipe recipe = recipeRepository.findByTitle(recipeDTO.getTitle())
+                .orElseThrow(RecipeNotFoundException::new);
+
+        recipe.setInstructions(recipeDTO.getInstructions());
+        recipe.setIngredients(recipeDTO.getIngredients().stream().map(IngredientDTO::toEntity).collect(Collectors.toSet()));
+        recipe.setCategory(recipeDTO.getCategory());
+        recipe.setDifficulty(recipeDTO.getDifficulty());
+        recipe.setServing(recipeDTO.getServing());
+        recipe.setPortionSize(recipeDTO.getPortionSize());
+        recipe.setDietTypes(recipeDTO.getDietTypes());
+        recipe.setPrepTime(recipeDTO.getPrepTime());
+        recipe.setCookTime(recipeDTO.getCookTime());
+
+        return new RecipeDTO(recipeRepository.save(recipe));
     }
 
     public void deleteRecipe(Long id) {
         recipeRepository.deleteById(id);
+    }
+    public void deleteRecipe(String title) {
+        recipeRepository.deleteByTitle(title);
     }
 }

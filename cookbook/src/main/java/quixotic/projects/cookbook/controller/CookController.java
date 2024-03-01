@@ -31,10 +31,10 @@ public class CookController {
                 .body(cookService.getRecipes());
     }
 
-    @GetMapping("/recipe/{id}")
-    public ResponseEntity<RecipeDTO> getRecipes(@PathVariable Long id){
+    @GetMapping("/recipe/{title}")
+    public ResponseEntity<RecipeDTO> getRecipes(@PathVariable String title){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getRecipe(id));
+                .body(cookService.getRecipe(title));
     }
 
     @PutMapping("/recipe")
@@ -43,9 +43,9 @@ public class CookController {
                 .body(cookService.updateRecipe(recipeDTO));
     }
 
-    @DeleteMapping("/recipe/{id}")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable Long id){
-        cookService.deleteRecipe(id);
+    @DeleteMapping("/recipe/{title}")
+    public ResponseEntity<Void> deleteRecipe(@PathVariable String title){
+        cookService.deleteRecipe(title);
         return ResponseEntity.noContent().build();
     }
 }
