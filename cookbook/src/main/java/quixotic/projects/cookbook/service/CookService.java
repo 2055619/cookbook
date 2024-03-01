@@ -1,6 +1,9 @@
 package quixotic.projects.cookbook.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import quixotic.projects.cookbook.dto.IngredientDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
@@ -10,6 +13,7 @@ import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,9 +38,13 @@ public class CookService {
 
     public List<RecipeDTO> getRecipes() {
         return recipeRepository.findAll().stream().map(RecipeDTO::new).toList();
-
     }
-
+    public List<RecipeDTO> getRecipes(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Recipe> recipePage = recipeRepository.findAll(pageable);
+        System.out.println(recipePage.getContent());
+        return recipePage.map(RecipeDTO::new).stream().toList();
+    }
     public RecipeDTO getRecipe(String title) {
         return new RecipeDTO(recipeRepository.findByTitle(title).orElseThrow());
     }

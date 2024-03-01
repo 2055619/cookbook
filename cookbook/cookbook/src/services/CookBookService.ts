@@ -1,5 +1,6 @@
 import {cookServerInstance} from "../App";
 import {IsignIn, IsignUp, IUser} from "../assets/models/Authentication";
+import {IRecipe} from "../assets/models/Recipe";
 
 export class CookBookService {
     async signIn(user: IsignIn) {
@@ -14,5 +15,12 @@ export class CookBookService {
             .then((response) => {
             return response.data;
         });
+    }
+
+    async getRecipes(page: number) {
+        return cookServerInstance.get<IRecipe[]>('/cook/recipes?page=' + page + '&size=10')
+            .then((response) => {
+                return response.data;
+            });
     }
 }

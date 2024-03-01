@@ -13,7 +13,7 @@ function RecipeComponent({recipe}: RecipeCardProps) {
                 <h3 className="font-bold text-lg">Diet Types:</h3>
                 <ul>
                     {recipe.dietTypes.map((dietType, index) => (
-                        <li key={index} className="text-gray-700 text-sm">{dietType}</li>
+                        <li key={index} className=" text-sm">{dietType}</li>
                     ))}
                 </ul>
             </div>

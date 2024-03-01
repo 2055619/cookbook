@@ -7,7 +7,7 @@ function Home() {
     return (
         <div className={"container"}>
             <div id="intro">
-                <div className="flex h-screen bg-cook-orange">
+                <div className="flex h-screen bg-cook-orange justify-center">
                     <div className="my-5 text-center">
                         <h1 className="text-4xl text-capitalize fw-bold">{t('pages.home.title')}</h1>
                     </div>

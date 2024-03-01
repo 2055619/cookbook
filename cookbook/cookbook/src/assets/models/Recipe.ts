@@ -1,7 +1,6 @@
 import {IUser} from "./Authentication";
 
 export interface IRecipe {
-    id: number;
     title: string;
     description: string;
     cook: IUser;
