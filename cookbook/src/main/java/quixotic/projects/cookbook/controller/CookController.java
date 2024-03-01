@@ -11,6 +11,7 @@ import quixotic.projects.cookbook.dto.CookDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.dto.SignInDTO;
 import quixotic.projects.cookbook.dto.SignUpDTO;
+import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.service.CookService;
 
 import java.util.List;
@@ -37,6 +38,12 @@ public class CookController {
     public ResponseEntity<RecipeDTO> getRecipes(@PathVariable String title){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.getRecipe(title));
+    }
+
+    @GetMapping("/recipes/title")
+    public ResponseEntity<List<RecipeSummary>> getRecipesByTitle(@PathParam("title") String title){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getRecipesByTitle(title));
     }
 
     @PutMapping("/recipe")

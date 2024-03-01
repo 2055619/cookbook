@@ -10,6 +10,7 @@ import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Recipe;
+import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
 
@@ -70,5 +71,9 @@ public class CookService {
     }
     public void deleteRecipe(String title) {
         recipeRepository.deleteByTitle(title);
+    }
+
+    public List<RecipeSummary> getRecipesByTitle(String title) {
+        return recipeRepository.findAllByTitleContainsIgnoreCase(title);
     }
 }

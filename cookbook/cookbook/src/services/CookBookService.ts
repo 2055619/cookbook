@@ -29,4 +29,11 @@ export class CookBookService {
             return response.data;
         });
     }
+
+    async getRecipeByTitle(searchValue: string) {
+        return cookServerInstance.get<IRecipe[]>('/cook/recipes/title?title=' + searchValue)
+            .then((response) => {
+                return response.data;
+            });
+    }
 }
