@@ -28,10 +28,9 @@ public class SignUpDTO {
         Validation.validateSignIn(this);
         return Cook.builder()
                 .username(username)
-                .password(password)
                 .email(email)
-                .firstname(firstName)
-                .lastname(lastName)
+                .firstName(firstName)
+                .lastName(lastName)
                 .powderUnit(powderUnit)
                 .liquidUnit(liquidUnit)
                 .solidUnit(solidUnit)

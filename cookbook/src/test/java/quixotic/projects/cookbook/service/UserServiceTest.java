@@ -1,22 +1,23 @@
 package quixotic.projects.cookbook.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import quixotic.projects.cookbook.dto.CookDTO;
 import quixotic.projects.cookbook.dto.SignInDTO;
 import quixotic.projects.cookbook.dto.SignUpDTO;
 import quixotic.projects.cookbook.exception.badRequestException.UsernameTakenException;
 import quixotic.projects.cookbook.model.Cook;
+import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
 
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
     @InjectMocks
@@ -42,11 +44,31 @@ public class UserServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
+    private static final Cook cook = Cook.builder()
+            .id(1L)
+            .username("testCook")
+            .email("asd@asd.com")
+            .password("Nonne123!")
+            .publications(new HashSet<>())
+            .firstName("BlaBla")
+            .lastName("BlaBlaLast")
+            .powderUnit(Unit.GRAM)
+            .liquidUnit(Unit.LITER)
+            .solidUnit(Unit.KILOGRAM)
+            .otherUnit(Unit.CUP)
+            .build();
 
+    SignUpDTO validSignUp = SignUpDTO.builder()
+            .username("SignUp")
+            .password("Nonne123!")
+            .email("email@email.com")
+            .firstName("BlaBla")
+            .lastName("BlaBlaLast")
+            .powderUnit(Unit.GRAM)
+            .liquidUnit(Unit.LITER)
+            .solidUnit(Unit.KILOGRAM)
+            .otherUnit(Unit.CUP)
+            .build();
     @Test
     public void authenticateCook_whenCookExists() {
         SignInDTO signInDTO = new SignInDTO();
@@ -76,15 +98,12 @@ public class UserServiceTest {
 
     @Test
     public void createCook_whenUsernameIsNotTaken() {
-        SignUpDTO signUpDTO = new SignUpDTO();
-        signUpDTO.setUsername("testCook");
-        signUpDTO.setPassword("testPassword");
 
         when(cookRepository.save(any())).thenReturn(new Cook());
-        when(passwordEncoder.encode(signUpDTO.getPassword())).thenReturn("encodedPassword");
+        when(passwordEncoder.encode(validSignUp.getPassword())).thenReturn("encodedPassword");
         when(jwtTokenProvider.generateToken(any())).thenReturn("testToken");
 
-        CookDTO result = userService.createCook(signUpDTO);
+        CookDTO result = userService.createCook(validSignUp);
 
         assertEquals("testCook", result.getUsername());
         assertEquals("testToken", result.getToken());
@@ -92,13 +111,9 @@ public class UserServiceTest {
 
     @Test
     public void createCook_whenUsernameIsTaken() {
-        SignUpDTO signUpDTO = new SignUpDTO();
-        signUpDTO.setUsername("testCook");
-        signUpDTO.setPassword("testPassword");
-
         when(cookRepository.save(any())).thenThrow(new DataIntegrityViolationException(""));
 
-        assertThrows(UsernameTakenException.class, () -> userService.createCook(signUpDTO));
+        assertThrows(UsernameTakenException.class, () -> userService.createCook(validSignUp));
     }
 
     @Test

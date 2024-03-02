@@ -35,9 +35,9 @@ public class Cook implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     @Column(nullable = false)
-    private String firstname;
+    private String firstName;
     @Column(nullable = false)
-    private String lastname;
+    private String lastName;
     @Enumerated(EnumType.STRING)
     private Unit powderUnit;
     @Enumerated(EnumType.STRING)

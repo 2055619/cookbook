@@ -20,10 +20,11 @@ public class CookDTO {
     private String token;
 
     public CookDTO(Cook cook, String token){
+//        System.out.println("CookDTO: " + cook);
         this.username = cook.getUsername();
         this.email = cook.getEmail();
-        this.firstName = cook.getFirstname();
-        this.lastName = cook.getLastname();
+        this.firstName = cook.getFirstName();
+        this.lastName = cook.getLastName();
         this.powderUnit = cook.getPowderUnit().name();
         this.liquidUnit = cook.getLiquidUnit().name();
         this.solidUnit = cook.getSolidUnit().name();
@@ -34,8 +35,8 @@ public class CookDTO {
     public CookDTO(Cook cook){
         this.username = cook.getUsername();
         this.email = cook.getEmail();
-        this.firstName = cook.getFirstname();
-        this.lastName = cook.getLastname();
+        this.firstName = cook.getFirstName();
+        this.lastName = cook.getLastName();
         this.powderUnit = cook.getPowderUnit().name();
         this.liquidUnit = cook.getLiquidUnit().name();
         this.solidUnit = cook.getSolidUnit().name();

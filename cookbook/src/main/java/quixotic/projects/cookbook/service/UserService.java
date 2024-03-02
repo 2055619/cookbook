@@ -25,35 +25,23 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    public CookDTO authenticateCook(SignInDTO loginDto) {
+    public CookDTO authenticateCook(SignInDTO signInDTO) {
         return new CookDTO(
-                cookRepository.findByUsername(loginDto.getUsername()).orElseThrow(),
-                generateToken(loginDto.getUsername(), loginDto.getPassword())
+                cookRepository.findByUsername(signInDTO.getUsername()).orElseThrow(),
+                generateToken(signInDTO.getUsername(), signInDTO.getPassword())
         );
     }
     public CookDTO createCook(SignUpDTO signUpDTO) {
         Validation.validateSignIn(signUpDTO);
-        Cook cook;
+        Cook cook = signUpDTO.toCook();
+        cook.setPassword(passwordEncoder.encode(signUpDTO.getPassword()));
+
         try {
-            cook = cookRepository.save(
-                    Cook.builder()
-                            .username(signUpDTO.getUsername())
-                            .password(passwordEncoder.encode(signUpDTO.getPassword()))
-                            .email(signUpDTO.getEmail())
-                            .firstname(signUpDTO.getFirstName())
-                            .lastname(signUpDTO.getLastName())
-                            .powderUnit(signUpDTO.getPowderUnit())
-                            .liquidUnit(signUpDTO.getLiquidUnit())
-                            .solidUnit(signUpDTO.getSolidUnit())
-                            .otherUnit(signUpDTO.getOtherUnit())
-                            .role(Role.COOK)
-                            .build()
-            );
+            cook = cookRepository.save(cook);
         } catch (DataIntegrityViolationException e) {
             System.out.println("Error: " + e);
             throw new UsernameTakenException();
         }
-
 
         String token = generateToken(cook.getUsername(), signUpDTO.getPassword());
         return new CookDTO(cook, token);
