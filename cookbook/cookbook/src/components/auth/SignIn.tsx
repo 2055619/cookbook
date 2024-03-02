@@ -40,7 +40,7 @@ function SignIn({setUser}: SignInProps) {
     return (
         <form autoComplete="false" onSubmit={handleSubmit} className="min-h-screen">
             <div className="flex flex-col justify-center items-center mb-3">
-                <div className="mb-3 w-1/4" id="formBasicEmail">
+                <div className="mb-3 lg:w-1/2 md:w-1/2 w-11/12" id="formBasicEmail">
                     <label className="text-lg font-bold text-right my-auto w-full">{t('pages.auth.username')}</label>
                     <input
                         type="username"
@@ -49,7 +49,7 @@ function SignIn({setUser}: SignInProps) {
                         className="form-input border border-gray-300 rounded-md p-2 w-full"
                     />
                 </div>
-                <div className="mb-3 w-1/4" id="formBasicPassword">
+                <div className="mb-3 lg:w-1/3 md:w-1/2 w-11/12" id="formBasicPassword">
                     <label className="text-lg font-bold text-right my-auto w-full">{t('pages.auth.password')}</label>
                     <input
                         type="password"
@@ -59,20 +59,20 @@ function SignIn({setUser}: SignInProps) {
                     />
                 </div>
             </div>
+            <button type="submit"
+                    className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 m-5 p-2">
+                {t('signin')}
+            </button>
+            <button type="button"
+                    className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 mb-5 p-2">
+                {t('pages.auth.forgotPassword')}
+            </button>
             <button type="button"
                     className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 mx-5 p-2"
                     onClick={() => {
                         navigate("/authentication/signup")
                     }}>
                 {t('pages.auth.createAccount')}
-            </button>
-            <button type="submit"
-                    className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 mx-5 p-2">
-                {t('signin')}
-            </button>
-            <button type="button"
-                    className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
-                {t('pages.auth.forgotPassword')}
             </button>
         </form>
     );

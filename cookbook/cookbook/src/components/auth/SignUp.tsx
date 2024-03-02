@@ -161,7 +161,7 @@ function SignUp({setUser}: ISignUpProps) {
             <div className="flex flex-col justify-center items-center mb-3">
                 {
                     createFormInfo.map((formInfo, index) => (
-                        <div key={index} className="my-2 lg:w-1/2 md:w-3/4 w-11/12" id={formInfo.name}>
+                        <div key={index} className="my-2 xl:w-1/3 lg:w-1/2 md:w-3/4 w-11/12" id={formInfo.name}>
                             <input
                                 className={`${formInfo.warning !== '' ? "border-cook-red" : "border-cook-light"} form-input border rounded-md p-2 w-full`}
                                 id={formInfo.name}
@@ -174,49 +174,49 @@ function SignUp({setUser}: ISignUpProps) {
             </div>
             <div className="row mb-3">
                 <h1>{t('pages.auth.preference')}</h1>
-                <div className="grid grid-cols-2 gap-4 mb-3">
-                    <div className="my-1 ml-auto w-2/3" id="solidUnitSelect">
+                <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-4 gap-1 mb-3 ">
+                    <div className="my-1 lg:mr-0 mx-auto w-2/3" id="solidUnitSelect">
                         <select aria-label="Default select example"
                                 onChange={(event) => {
                                     setUnits({...units, solidUnit: event.target.value});
                                 }}
-                                className="form-select border border-gray-300 rounded-md p-2 w-full">
+                                className="form-select border border-cook-light rounded-md p-2 mx-auto w-11/12">
                             <option>{t('pages.auth.solidUnit')}</option>
                             {ing["SOLID"].map((unit, index) => (
                                 <option key={index} value={unit}>{t(unit)}</option>
                             ))}
                         </select>
                     </div>
-                    <div className="my-1 mr-auto w-2/3" id="liquidUnitSelect">
+                    <div className="my-1 mx-auto lg:mx-0 w-2/3" id="liquidUnitSelect">
                         <select aria-label="Default select example"
                                 onChange={(event) => {
                                     setUnits({...units, liquidUnit: event.target.value});
                                 }}
-                                className="form-select border border-gray-300 rounded-md p-2 w-full">
+                                className="form-select border border-cook-light rounded-md p-2 w-11/12">
                             <option>{t('pages.auth.liquidUnit')}</option>
                             {ing["LIQUID"].map((unit, index) => (
                                 <option key={index} value={unit}>{t(unit)}</option>
                             ))}
                         </select>
                     </div>
-                    <div className="my-1 ml-auto w-2/3" id="powderUnitSelect">
+                    <div className="my-1 lg:mr-0 mx-auto w-2/3" id="powderUnitSelect">
                         <select aria-label="Default select example"
                                 onChange={(event) => {
                                     setUnits({...units, powderUnit: event.target.value});
                                 }}
-                                className="form-select border border-gray-300 rounded-md p-2 w-full">
+                                className="form-select border border-cook-light rounded-md p-2 w-11/12">
                             <option>{t('pages.auth.powderUnit')}</option>
                             {ing["POWDER"].map((unit, index) => (
                                 <option key={index} value={unit}>{t(unit)}</option>
                             ))}
                         </select>
                     </div>
-                    <div className="my-1 mr-auto w-2/3" id="otherUnitSelect">
+                    <div className="my-1 mx-auto lg:mx-0 w-2/3" id="otherUnitSelect">
                         <select aria-label="Default select example"
                                 onChange={(event) => {
                                     setUnits({...units, otherUnit: event.target.value});
                                 }}
-                                className="form-select border border-gray-300 rounded-md p-2 w-full">
+                                className="form-select border border-cook-light rounded-md p-2 w-11/12">
                             <option>{t('pages.auth.otherUnit')}</option>
                             {ing["OTHER"].map((unit, index) => (
                                 <option key={index} value={unit}>{t(unit)}</option>
@@ -224,56 +224,6 @@ function SignUp({setUser}: ISignUpProps) {
                         </select>
                     </div>
                 </div>
-                {/*<div className="flex flex-wrap justify-between items-center mb-3">*/}
-                {/*    <div className="my-2 w-1/3" id="solidUnitSelect">*/}
-                {/*        <select aria-label="Default select example"*/}
-                {/*                onChange={(event) => {*/}
-                {/*                    setUnits({...units, solidUnit: event.target.value});*/}
-                {/*                }}*/}
-                {/*                className="form-select border border-gray-300 rounded-md p-2 w-full">*/}
-                {/*            <option>{t('pages.auth.solidUnit')}</option>*/}
-                {/*            {ing["SOLID"].map((unit, index) => (*/}
-                {/*                <option key={index} value={unit}>{t(unit)}</option>*/}
-                {/*            ))}*/}
-                {/*        </select>*/}
-                {/*    </div>*/}
-                {/*    <div className="my-2 w-1/3" id="liquidUnitSelect">*/}
-                {/*        <select aria-label="Default select example"*/}
-                {/*                onChange={(event) => {*/}
-                {/*                    setUnits({...units, liquidUnit: event.target.value});*/}
-                {/*                }}*/}
-                {/*                className="form-select border border-gray-300 rounded-md p-2 w-full">*/}
-                {/*            <option>{t('pages.auth.liquidUnit')}</option>*/}
-                {/*            {ing["LIQUID"].map((unit, index) => (*/}
-                {/*                <option key={index} value={unit}>{t(unit)}</option>*/}
-                {/*            ))}*/}
-                {/*        </select>*/}
-                {/*    </div>*/}
-                {/*    <div className="my-2 w-1/3" id="powderUnitSelect">*/}
-                {/*        <select aria-label="Default select example"*/}
-                {/*                onChange={(event) => {*/}
-                {/*                    setUnits({...units, powderUnit: event.target.value});*/}
-                {/*                }}*/}
-                {/*                className="form-select border border-gray-300 rounded-md p-2 w-full">*/}
-                {/*            <option>{t('pages.auth.powderUnit')}</option>*/}
-                {/*            {ing["POWDER"].map((unit, index) => (*/}
-                {/*                <option key={index} value={unit}>{t(unit)}</option>*/}
-                {/*            ))}*/}
-                {/*        </select>*/}
-                {/*    </div>*/}
-                {/*    <div className="my-2 w-1/3" id="otherUnitSelect">*/}
-                {/*        <select aria-label="Default select example"*/}
-                {/*                onChange={(event) => {*/}
-                {/*                    setUnits({...units, otherUnit: event.target.value});*/}
-                {/*                }}*/}
-                {/*                className="form-select border border-gray-300 rounded-md p-2 w-full">*/}
-                {/*            <option>{t('pages.auth.otherUnit')}</option>*/}
-                {/*            {ing["OTHER"].map((unit, index) => (*/}
-                {/*                <option key={index} value={unit}>{t(unit)}</option>*/}
-                {/*            ))}*/}
-                {/*        </select>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </div>
 
             <button type="submit"
