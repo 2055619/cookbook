@@ -38,7 +38,7 @@ function SignIn({setUser}: SignInProps) {
     }
 
     return (
-        <form autoComplete="false" onSubmit={handleSubmit} className="min-h-screen">
+        <form autoComplete="false" onSubmit={handleSubmit} className="">
             <div className="flex flex-col justify-center items-center mb-3">
                 <div className="mb-3 lg:w-1/2 md:w-1/2 w-11/12" id="formBasicEmail">
                     <label className="text-lg font-bold text-right my-auto w-full">{t('pages.auth.username')}</label>
@@ -47,6 +47,7 @@ function SignIn({setUser}: SignInProps) {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         className="form-input border border-gray-300 rounded-md p-2 w-full"
+                        placeholder={t('pages.auth.username')}
                     />
                 </div>
                 <div className="mb-3 lg:w-1/3 md:w-1/2 w-11/12" id="formBasicPassword">
@@ -56,6 +57,7 @@ function SignIn({setUser}: SignInProps) {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="form-input border border-gray-300 rounded-md p-2 w-full"
+                        placeholder={t('pages.auth.password')}
                     />
                 </div>
             </div>

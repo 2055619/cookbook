@@ -36,10 +36,10 @@ function Main() {
     return (
         <>
             <Header user={user} setUser={setUser}/>
-            <main className="min-h-screen mx-auto bg-cook">
+            <main className="min-h-screen bg-cook text-cook font-semibold">
                 <div className="flex">
                     <LeftAside />
-                    <div className="w-3/4">
+                    <div className="w-full md:w-3/4 ">
                         <Routes>
                             <Route path="/*" element={<AnyonePages setUser={setUser}/>}/>
                             <Route path="/u/*" element={<UserPages user={user}/>}/>

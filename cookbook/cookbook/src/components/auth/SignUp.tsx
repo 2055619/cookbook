@@ -173,7 +173,7 @@ function SignUp({setUser}: ISignUpProps) {
                 }
             </div>
             <div className="row mb-3">
-                <h1>{t('pages.auth.preference')}</h1>
+                <h1 className={"text-3xl"}>{t('pages.auth.preference')}</h1>
                 <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-4 gap-1 mb-3 ">
                     <div className="my-1 lg:mr-0 mx-auto w-2/3" id="solidUnitSelect">
                         <select aria-label="Default select example"

@@ -13,7 +13,7 @@ interface AnyonePagesProps {
 
 function AnyonePages({setUser}: AnyonePagesProps) {
     return (
-        <div className={"min-h-screen mx-auto bg-cook-orange"}>
+        <div className={"min-h-screen bg-cook-orange text-center"}>
             <Routes>
                 <Route path="" element={<Home/>}/>
                 <Route path="authentication/*" element={<Authentication setUser={setUser}/>}/>

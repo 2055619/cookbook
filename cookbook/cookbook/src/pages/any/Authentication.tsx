@@ -10,7 +10,7 @@ function Authentication({setUser}: IAuthenticationProps) {
     const {t} = useTranslation();
 
     return (
-        <div className="container text-center bg-cook-orange">
+        <div className="">
             <h1 className="text-5xl font-semibold p-3">{t('pages.auth.title')}</h1>
             <Routes>
                 <Route path={"signin"} element={<SignIn setUser={setUser}/>}/>

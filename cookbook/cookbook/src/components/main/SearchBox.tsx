@@ -2,11 +2,13 @@ import {useState, useEffect, useRef} from 'react';
 import {CookBookService} from "../../services/CookBookService";
 import {toast} from "react-toastify";
 import {IRecipe} from "../../assets/models/Recipe";
+import {useTranslation} from "react-i18next";
 
 function SearchBox() {
     const [showPopup, setShowPopup] = useState(false);
     const [recipesTitle, setRecipesTitle] = useState<IRecipe[]>([]);
     const cookbookService = new CookBookService();
+    const {t} = useTranslation();
     const popupRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -50,7 +52,7 @@ function SearchBox() {
             <input
                 className="w-full px-8 rounded-lg"
                 type="text"
-                placeholder="Search recipes..."
+                placeholder={t('input.search')}
                 onChange={handleInputChange}
                 onClick={() => setShowPopup(true)}
             />
