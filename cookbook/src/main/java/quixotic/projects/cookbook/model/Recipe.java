@@ -38,4 +38,5 @@ public class Recipe extends Publication {
     private List<DietType> dietTypes = new ArrayList<>();
     private float prepTime;
     private float cookTime;
+//    private String image;
 }
