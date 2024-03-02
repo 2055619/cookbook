@@ -7,6 +7,10 @@
   "signout": "Se déconnecter",
   "welcome": "Bienvenue",
   "profile": "Profile",
+  "createRecipe": "Créer une nouvelle recette",
+  "title": "Titre",
+  "description": "Description",
+  "visibility": "Visibilité",
 
   "KILOGRAM": "Kilogramme (kg)",
   "GRAM": "Gramme (g)",

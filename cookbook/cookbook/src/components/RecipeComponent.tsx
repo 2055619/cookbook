@@ -24,7 +24,7 @@ function RecipeComponent({recipe}: RecipeCardProps) {
             <h6 className="card-subtitle mb-2 text-muted">Ingredients:</h6>
             <ul>
                 {recipe.ingredients.map((ingredient, index) => (
-                    <li key={index} className=" text-sm">{ingredient}</li>
+                    <li key={index} className=" text-sm">{ingredient.name}</li>
                 ))}
             </ul>
             <h6 className="card-subtitle mb-2 text-muted">Instructions:</h6>

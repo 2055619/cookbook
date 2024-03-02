@@ -6,7 +6,7 @@ export interface IRecipe {
     cookUsername: string;
     visibility: string;
     instructions: string[];
-    ingredients: string[];
+    ingredients: IIngredient[];
     category: string;
     difficulty: string;
     serving: number;
@@ -14,4 +14,11 @@ export interface IRecipe {
     dietTypes: string[];
     prepTime: number;
     cookTime: number;
+}
+
+export interface IIngredient {
+    name: string;
+    amount: number;
+    unit: string;
+    state: string;
 }

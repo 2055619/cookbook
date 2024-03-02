@@ -25,14 +25,14 @@ function SignUp({setUser}: ISignUpProps) {
 
     useEffect(() => {
         utilsService.getIngrediantStates().then((response) => {
-            setIng(response.data);
+            setIng(response);
         }).catch((error) => {
             toast.error(t(error.response.data.message));
         });
 
         utilsService.getValidationPattern().then((response) => {
-            setEmailReg(new RegExp(response.data.EMAIL_PATTERN));
-            setPasswordReg(new RegExp(response.data.PASSWORD_PATTERN));
+            setEmailReg(new RegExp(response.EMAIL_PATTERN));
+            setPasswordReg(new RegExp(response.PASSWORD_PATTERN));
         }).catch((error) => {
             toast.error(t(error.response.data.message));
         });

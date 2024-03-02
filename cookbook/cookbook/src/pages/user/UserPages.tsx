@@ -1,6 +1,4 @@
 import {Route, Routes, useNavigate} from "react-router-dom";
-import Home from "../any/Home";
-import Authentication from "../any/Authentication";
 import Landing from "./Landing";
 import PageNotFound from "../any/PageNotFound";
 import React, {useEffect} from "react";
@@ -22,17 +20,15 @@ function UserPages({user}: IUserPage) {
         if (token === null) {
             toast.error(t('messages.userNotLoggedIn'));
             navigate('/authentication/signin');
-        } else {
-            navigate('/u/landing');
         }
     }, [user]);
 
     // TODO: Add other pages
     return (
-        <div>
+        <div className={"bg-cook-orange min-h-screen"}>
             <Routes>
                 <Route path="landing" element={<Landing/>}/>
-                <Route path="recipesCreation" element={<RecipeCreation/>}/>
+                <Route path="recipesCreation" element={<RecipeCreation user={user!}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
         </div>
