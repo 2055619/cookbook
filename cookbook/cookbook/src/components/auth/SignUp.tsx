@@ -161,9 +161,9 @@ function SignUp({setUser}: ISignUpProps) {
             <div className="flex flex-col justify-center items-center mb-3">
                 {
                     createFormInfo.map((formInfo, index) => (
-                        <div key={index} className="my-2 w-1/3" id={formInfo.name}>
+                        <div key={index} className="my-2 lg:w-1/2 md:w-3/4 w-11/12" id={formInfo.name}>
                             <input
-                                className={`${formInfo.warning !== '' ? "border-red-500" : ""} form-input border border-gray-300 rounded-md p-2 w-full`}
+                                className={`${formInfo.warning !== '' ? "border-cook-red" : "border-cook-light"} form-input border rounded-md p-2 w-full`}
                                 id={formInfo.name}
                                 onChange={handleCreationChange} type={formInfo.type}
                                 placeholder={t(formInfo.placeholder)}/>
