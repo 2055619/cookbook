@@ -16,6 +16,7 @@ import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
+import quixotic.projects.cookbook.security.Role;
 
 import java.util.HashSet;
 import java.util.NoSuchElementException;
@@ -56,6 +57,7 @@ public class UserServiceTest {
             .liquidUnit(Unit.LITER)
             .solidUnit(Unit.KILOGRAM)
             .otherUnit(Unit.CUP)
+            .role(Role.COOK)
             .build();
 
     SignUpDTO validSignUp = SignUpDTO.builder()
@@ -75,7 +77,7 @@ public class UserServiceTest {
         signInDTO.setUsername("testCook");
         signInDTO.setPassword("testPassword");
 
-        when(cookRepository.findByUsername(signInDTO.getUsername())).thenReturn(Optional.of(new Cook()));
+        when(cookRepository.findByUsername(signInDTO.getUsername())).thenReturn(Optional.of(cook));
         when(authenticationManager.authenticate(any())).thenReturn(null);
         when(jwtTokenProvider.generateToken(any())).thenReturn("testToken");
 
@@ -99,7 +101,7 @@ public class UserServiceTest {
     @Test
     public void createCook_whenUsernameIsNotTaken() {
 
-        when(cookRepository.save(any())).thenReturn(new Cook());
+        when(cookRepository.save(any())).thenReturn(cook);
         when(passwordEncoder.encode(validSignUp.getPassword())).thenReturn("encodedPassword");
         when(jwtTokenProvider.generateToken(any())).thenReturn("testToken");
 
@@ -120,7 +122,7 @@ public class UserServiceTest {
     public void getMe_whenCookExists() {
         String token = "testToken";
         when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("testCook");
-        when(cookRepository.findByUsername("testCook")).thenReturn(Optional.of(new Cook()));
+        when(cookRepository.findByUsername("testCook")).thenReturn(Optional.of(cook));
 
         CookDTO result = userService.getMe(token);
 

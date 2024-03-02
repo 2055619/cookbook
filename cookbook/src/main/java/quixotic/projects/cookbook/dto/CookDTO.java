@@ -20,7 +20,6 @@ public class CookDTO {
     private String token;
 
     public CookDTO(Cook cook, String token){
-//        System.out.println("CookDTO: " + cook);
         this.username = cook.getUsername();
         this.email = cook.getEmail();
         this.firstName = cook.getFirstName();

@@ -49,7 +49,6 @@ public class UserService {
     private String generateToken(String username, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
-
         return jwtTokenProvider.generateToken(authentication);
     }
 
