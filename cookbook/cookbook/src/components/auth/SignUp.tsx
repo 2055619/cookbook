@@ -68,55 +68,55 @@ function SignUp({setUser}: ISignUpProps) {
         let isValid = true;
 
         if (creationForm.firstName.trim().length < 2) {
-            toast.error(t('messages.firstName'));
+            toast.error(t('message.firstName'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'firstName')
-                    formInfo.warning = 'messages.firstName';
+                    formInfo.warning = 'message.firstName';
                 return formInfo;
             }))
             isValid = false;
         }
         if (creationForm.lastName.trim().length < 2) {
-            toast.error(t('messages.lastName'));
+            toast.error(t('message.lastName'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'lastName')
-                    formInfo.warning = 'messages.lastName';
+                    formInfo.warning = 'message.lastName';
                 return formInfo;
             }))
             isValid = false;
         }
         if (creationForm.username.trim().length < 4) {
-            toast.error(t('messages.username'));
+            toast.error(t('message.username'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'username')
-                    formInfo.warning = 'messages.username';
+                    formInfo.warning = 'message.username';
                 return formInfo;
             }))
             isValid = false;
         }
         if (!emailReg.test(creationForm.email)) {
-            toast.error(t('messages.email'));
+            toast.error(t('message.email'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'email')
-                    formInfo.warning = 'messages.email';
+                    formInfo.warning = 'message.email';
                 return formInfo;
             }))
             isValid = false;
         }
         if (!passwordReg.test(creationForm.password)) {
-            toast.error(t('messages.password'));
+            toast.error(t('message.password'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'password')
-                    formInfo.warning = 'messages.password';
+                    formInfo.warning = 'message.password';
                 return formInfo;
             }))
             isValid = false;
         }
         if (creationForm.password !== creationForm.confirmPassword) {
-            toast.error(t('messages.passwords'));
+            toast.error(t('message.passwords'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'confirmPassword')
-                    formInfo.warning = 'messages.passwords';
+                    formInfo.warning = 'message.passwords';
                 return formInfo;
             }))
             isValid = false;
@@ -142,13 +142,13 @@ function SignUp({setUser}: ISignUpProps) {
         cookbookService.signUp(signUpUser).then((response) => {
             setUser(response);
             sessionStorage.setItem('token', response.token);
-            toast.success(t("messages.signInSuccess"));
+            toast.success(t("message.signInSuccess"));
             navigate('/u/landing');
         }).catch((error) => {
             if (error.response.data.value === '418') {
                 setCreateFromInfo(createFormInfo.map((formInfo) => {
                     if (formInfo.name === 'username')
-                        formInfo.warning = 'messages.usernameTaken';
+                        formInfo.warning = 'message.usernameTaken';
                     return formInfo;
                 }))
             }

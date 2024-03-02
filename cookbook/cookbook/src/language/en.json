@@ -64,7 +64,7 @@
     "ingredient": "Name the Ingredient",
     "instruction": "Write the instruction"
   },
-  "messages": {
+  "message": {
     "usernameTaken": "This username is already taken",
     "RecipeNotFound": "This recipe does not exist",
     "userNotLoggedIn": "Please log in to access this page",

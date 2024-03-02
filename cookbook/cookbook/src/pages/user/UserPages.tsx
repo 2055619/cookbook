@@ -19,7 +19,7 @@ function UserPages({user}: IUserPage) {
     useEffect(() => {
         const token = sessionStorage.getItem('token');
         if (token === null) {
-            toast.error(t('messages.userNotLoggedIn'));
+            toast.error(t('message.userNotLoggedIn'));
             navigate('/authentication/signin');
         }
     }, [user]);

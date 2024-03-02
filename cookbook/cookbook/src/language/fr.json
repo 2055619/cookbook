@@ -64,7 +64,18 @@
     "ingredient": "Nommer l'Ingrédient",
     "instruction": "Inscrivez l'instruction"
   },
-  "messages": {
+  "message": {
+    "titleLength": "Le titre doit être composé d'au moins 3 caractères",
+    "descriptionLength": "La description doit être composée d'au moins 10 caractères",
+    "preparationTime": "Le temps de préparation doit être supérieur à 0",
+    "cookingTime": "Le temps de cuisson doit être supérieur à 0",
+    "portionSize": "La taille des portions doit être supérieure à 0",
+    "ingredientsLength": "La recette doit contenir au moins 1 ingrédient",
+    "instructionsLength": "La recette doit contenir au moins 1 instruction",
+    "dietTypesLength": "La recette doit contenir au moins 1 type de régime",
+    "recipeCreated": "Votre recette a été créée avec succès",
+    "recipeUpdated": "Votre recette a été mise à jour avec succès",
+    "recipeDeleted": "Votre recette a été supprimée avec succès",
     "usernameTaken": "Ce nom d'utilisateur est déjà pris",
     "RecipeNotFound": "Cette recette n'existe pas",
     "userNotLoggedIn": "Veuillez vous connecter pour accéder à cette page",

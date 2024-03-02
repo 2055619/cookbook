@@ -39,6 +39,12 @@ function RecipeCreation({user}: RecipeCreationProps) {
 
     const [units, setUnits] = useState({SOLID: [''], LIQUID: [''], POWDER: [''], OTHER: ['']});
 
+    const [titleWarning, setTitleWarning] = useState('');
+    const [descriptionWarning, setDescriptionWarning] = useState('');
+    const [instructionsWarning, setInstructionsWarning] = useState('');
+    const [ingredientsWarning, setIngredientsWarning] = useState('');
+    const [dietTypeWarning, setDietTypeWarning] = useState('');
+
     useEffect(() => {
         utilsService.getCategories()
             .then((response) => {
@@ -87,36 +93,45 @@ function RecipeCreation({user}: RecipeCreationProps) {
         });
     }, []);
 
-    const validate = () => {
+    const isValid = () => {
+        let isValid = true;
+
         if (title.length < 3) {
-            toast.error(t('message.titleLength'));
-            return true;
+            setTitleWarning('message.titleLength');
+            isValid = false;
+        } else {
+            setTitleWarning('');
         }
-        if (description.length < 1) {
-            toast.error(t('message.descriptionLength'));
-            return true;
+
+        if (description.length < 10) {
+            setDescriptionWarning('message.descriptionLength');
+            isValid = false;
+        } else {
+            setDescriptionWarning('');
         }
+
         if (instructions.length < 1) {
-            toast.error(t('message.instructionsLength'));
-            return true;
+            setInstructionsWarning('message.instructionsLength');
+            isValid = false;
+        } else {
+            setInstructionsWarning('');
         }
+
         if (ingredients.length < 1) {
-            toast.error(t('message.ingredientsLength'));
-            return true;
+            setIngredientsWarning('message.ingredientsLength');
+            isValid = false;
+        } else {
+            setIngredientsWarning('');
         }
-        if (serving < 0) {
-            toast.error(t('message.serving'));
-            return true;
+
+        if (dietTypes.length < 1) {
+            setDietTypeWarning('message.dietTypesLength');
+            isValid = false;
+        } else {
+            setDietTypeWarning('');
         }
-        if (prepTime < 0) {
-            toast.error(t('message.prepTime'));
-            return true;
-        }
-        if (cookTime < 1) {
-            toast.error(t('message.cookTime'));
-            return true;
-        }
-        return false;
+
+        return isValid;
     }
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -138,7 +153,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
             cookTime,
         };
 
-        if (validate()) {
+        if (!isValid()) {
             return;
         }
 
@@ -225,29 +240,31 @@ function RecipeCreation({user}: RecipeCreationProps) {
                     className="flex flex-col space-y-1 w-full">
                     <span className="font-medium">{t('title')}</span>
                     <input type="text" value={title} onChange={e => setTitle(e.target.value)}
-                           className="border-2 border-cook-light p-2 rounded"/>
+                           className={`border-2 p-2 rounded ${titleWarning !== '' ? "border-cook-red" : "border-cook-light"}`}/>
+                    <h5 className="text-red-500">{t(titleWarning)}</h5>
                 </label>
                 <label className="flex flex-col space-y-1 w-full">
                     <span className="font-medium">{t('description')}</span>
                     <textarea value={description} onChange={e => setDescription(e.target.value)}
-                              className="border-2 border-cook-light p-2 rounded"/>
+                              className={`border-2 p-2 rounded ${descriptionWarning !== '' ? "border-cook-red" : "border-cook-light"}`}/>
+                    <h5 className="text-red-500">{t(descriptionWarning)}</h5>
                 </label>
 
                 <div className="grid grid-cols-2 gap-4 w-full">
-                    <label className="flex flex-col space-y-1">
+                <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('prepTime')}</span>
                         <input type="number" value={prepTime} onChange={e => setPrepTime(Number(e.target.value))}
-                               className="border-2 border-cook-light p-2 rounded"/>
+                               className="border-2 border-cook-light p-2 rounded" min={`0`}/>
                     </label>
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('cookTime')}</span>
                         <input type="number" value={cookTime} onChange={e => setCookTime(Number(e.target.value))}
-                               className="border-2 border-cook-light p-2 rounded"/>
+                               className="border-2 border-cook-light p-2 rounded" min={`0`}/>
                     </label>
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('serving')}</span>
                         <input type="number" value={serving} onChange={e => setServing(Number(e.target.value))}
-                               className="border-2 border-cook-light p-2 rounded"/>
+                               className="border-2 border-cook-light p-2 rounded" min={`1`}/>
                     </label>
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('portionSize')}</span>
@@ -275,6 +292,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                             </button>
                         </div>
                     ))}
+                    <h5 className="text-red-500">{t(instructionsWarning)}</h5>
                     <button type="button" onClick={addInstruction}
                             className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
                         {t('addInstruction')}
@@ -312,6 +330,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                             </button>
                         </div>
                     ))}
+                    <h5 className="text-red-500">{t(ingredientsWarning)}</h5>
                     <button type="button" onClick={addIngredient}
                             className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
                         {t('addIngredient')}
@@ -358,6 +377,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                         </label>
                     ))}
                 </div>
+                <h5 className="text-red-500">{dietTypeWarning}</h5>
 
                 <button type="submit" onClick={handleSubmit}
                         className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
