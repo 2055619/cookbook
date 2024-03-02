@@ -26,6 +26,13 @@ public abstract class Publication {
     private LocalDate creationDate = LocalDate.now();
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
+
+    public Publication(String title, String description, Visibility visibility, Cook cook) {
+        this.title = title;
+        this.description = description;
+        this.visibility = visibility;
+        this.cook = cook;
+    }
 //    @OneToMany(mappedBy = "publication")
 //    private Set<Reaction> reactions;
 }

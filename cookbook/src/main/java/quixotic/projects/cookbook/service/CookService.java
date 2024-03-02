@@ -28,8 +28,8 @@ public class CookService {
 //    Recipes
     public RecipeDTO createRecipe(RecipeDTO recipeDTO){
         Cook cook = cookRepository.findByUsername(recipeDTO.getCookUsername()).orElseThrow(UserNotFoundException::new);
-        Recipe recipe = recipeDTO.toEntity();
-        recipe.setCook(cook);
+        Recipe recipe = recipeDTO.toEntity(cook);
+
         recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
         cook.addPublication(recipe);
 
@@ -54,6 +54,10 @@ public class CookService {
         Recipe recipe = recipeRepository.findByTitle(recipeDTO.getTitle())
                 .orElseThrow(RecipeNotFoundException::new);
 
+        recipe.setTitle(recipeDTO.getTitle());
+        recipe.setDescription(recipeDTO.getDescription());
+        recipe.setVisibility(recipeDTO.getVisibility());
+        recipe.setCook(cookRepository.findByUsername(recipeDTO.getCookUsername()).orElseThrow(UserNotFoundException::new));
         recipe.setInstructions(recipeDTO.getInstructions());
         recipe.setIngredients(recipeDTO.getIngredients().stream().map(IngredientDTO::toEntity).collect(Collectors.toSet()));
         recipe.setCategory(recipeDTO.getCategory());
@@ -64,14 +68,20 @@ public class CookService {
         recipe.setPrepTime(recipeDTO.getPrepTime());
         recipe.setCookTime(recipeDTO.getCookTime());
 
+        System.out.println("Recipe: " + recipe);
+
         return new RecipeDTO(recipeRepository.save(recipe));
     }
 
     public void deleteRecipe(Long id) {
-        recipeRepository.deleteById(id);
+        if (recipeRepository.existsById(id))
+            recipeRepository.deleteById(id);
+        else throw new RecipeNotFoundException();
     }
     public void deleteRecipe(String title) {
-        recipeRepository.deleteByTitle(title);
+        if (recipeRepository.existsByTitle(title))
+            recipeRepository.deleteByTitle(title);
+        else throw new RecipeNotFoundException();
     }
 
     public List<RecipeSummary> getRecipesByTitle(String title) {

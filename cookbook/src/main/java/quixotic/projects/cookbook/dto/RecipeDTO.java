@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Ingredient;
 import quixotic.projects.cookbook.model.Publication;
 import quixotic.projects.cookbook.model.Recipe;
@@ -50,8 +51,12 @@ public class RecipeDTO {
         this.cookTime = recipe.getCookTime();
     }
 
-    public Recipe toEntity() {
-        Recipe recipe = Recipe.builder()
+    public Recipe toEntity(Cook cook) {
+        return Recipe.builder()
+                .title(this.title)
+                .description(this.description)
+                .visibility(this.visibility)
+                .cook(cook)
                 .instructions(this.instructions)
                 .ingredients(this.ingredients.stream().map(IngredientDTO::toEntity).collect(Collectors.toSet()))
                 .category(this.category)
@@ -62,9 +67,5 @@ public class RecipeDTO {
                 .prepTime(this.prepTime)
                 .cookTime(this.cookTime)
                 .build();
-        recipe.setTitle(this.title);
-        recipe.setDescription(this.description);
-        recipe.setVisibility(this.visibility);
-        return recipe;
     }
 }
