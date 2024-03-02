@@ -43,4 +43,11 @@ export class CookBookService {
                 return response.data;
             });
     }
+
+    async getUserRecipes() {
+        return cookServerInstance.get('/cook/usr/recipe',)
+            .then((response) => {
+                return response.data;
+            });
+    }
 }

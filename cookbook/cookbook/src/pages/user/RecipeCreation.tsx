@@ -138,7 +138,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
             cookTime,
         };
 
-        if (validate()){
+        if (validate()) {
             return;
         }
 
@@ -220,38 +220,39 @@ function RecipeCreation({user}: RecipeCreationProps) {
         <div className={""}>
             <h1 className="text-3xl font-bold text-center">{t('createRecipe')}</h1>
             <form onSubmit={handleSubmit}
-                  className="flex flex-col items-center space-y-4 w-2/3 max-w-full mx-auto p-4">
-                <label className="flex flex-col space-y-1 w-full">
+                  className="flex flex-col items-center space-y-4 md:w-full lg:w-3/4 max-w-full mx-auto p-4">
+                <label
+                    className="flex flex-col space-y-1 w-full">
                     <span className="font-medium">{t('title')}</span>
                     <input type="text" value={title} onChange={e => setTitle(e.target.value)}
-                           className="border-2 border-gray-200 p-2 rounded"/>
+                           className="border-2 border-cook-light p-2 rounded"/>
                 </label>
                 <label className="flex flex-col space-y-1 w-full">
                     <span className="font-medium">{t('description')}</span>
                     <textarea value={description} onChange={e => setDescription(e.target.value)}
-                              className="border-2 border-gray-200 p-2 rounded"/>
+                              className="border-2 border-cook-light p-2 rounded"/>
                 </label>
 
                 <div className="grid grid-cols-2 gap-4 w-full">
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('prepTime')}</span>
                         <input type="number" value={prepTime} onChange={e => setPrepTime(Number(e.target.value))}
-                               className="border-2 border-gray-200 p-2 rounded"/>
+                               className="border-2 border-cook-light p-2 rounded"/>
                     </label>
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('cookTime')}</span>
                         <input type="number" value={cookTime} onChange={e => setCookTime(Number(e.target.value))}
-                               className="border-2 border-gray-200 p-2 rounded"/>
+                               className="border-2 border-cook-light p-2 rounded"/>
                     </label>
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('serving')}</span>
                         <input type="number" value={serving} onChange={e => setServing(Number(e.target.value))}
-                               className="border-2 border-gray-200 p-2 rounded"/>
+                               className="border-2 border-cook-light p-2 rounded"/>
                     </label>
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('portionSize')}</span>
                         <select value={portionSize} onChange={e => setPortionSize(e.target.value)}
-                                className="border-2 border-gray-200 p-2 rounded">
+                                className="border-2 border-cook-light p-2 rounded">
                             {allPortionSizes.map((portion, index) => (
                                 <option key={index} value={portion}>{t(portion)}</option>
                             ))}
@@ -266,8 +267,8 @@ function RecipeCreation({user}: RecipeCreationProps) {
                             <span>{index + 1}.</span>
                             <input type="text" value={instruction}
                                    onChange={e => handleInstructionChange(index, e.target.value)}
-                                   placeholder={t('input.ingredient')}
-                                   className="border-2 border-gray-200 p-2 rounded flex-grow"/>
+                                   placeholder={t('input.instruction')}
+                                   className="border-2 border-cook-light p-2 rounded flex-grow"/>
                             <button type="button" onClick={() => removeInstruction(index)}
                                     className="border-2 border-cook-red text-cook-red hover:bg-cook-red hover:text-cook rounded transition ease-in duration-200 p-1">
                                 {t('input.delete')}
@@ -280,28 +281,28 @@ function RecipeCreation({user}: RecipeCreationProps) {
                     </button>
                 </div>
 
-                <div className="flex flex-col space-y-1 w-full">
+                <div className="flex flex-col space-y-1 md:w-full max-w-full mx-auto">
                     <span className="font-medium">{t('ingredients')}</span>
                     {ingredients.map((ingredient, index) => (
                         <div key={index} className="flex space-x-2 items-center">
                             <input type="text" value={ingredient.name}
                                    onChange={e => handleIngredientChange(index, e.target.value)}
-                                   placeholder={t('input.instruction')}
-                                   className="border-2 border-gray-200 p-2 rounded flex-grow"/>
+                                   placeholder={t('input.ingredient')}
+                                   className="border-2 border-cook-light p-2 rounded flex-grow"/>
                             <input type="number" value={ingredient.quantity}
                                    onChange={e => handleIngredientQuantityChange(index, Number(e.target.value))}
-                                   className="border-2 border-gray-200 p-2 rounded w-20"
+                                   className="border-2 border-cook-light p-2 rounded w-20 md:w-16 sm:w-12"
                                    min="0" step="0.01"/>
                             <select value={ingredient.state}
                                     onChange={e => handleIngredientStateChange(index, e.target.value)}
-                                    className="border-2 border-gray-200 p-2 rounded">
+                                    className="border-2 border-cook-light p-2 rounded sm:w-20">
                                 {Object.keys(units).map((state, stateIndex) => (
                                     <option key={stateIndex} value={state}>{t(state)}</option>
                                 ))}
                             </select>
                             <select value={ingredient.unit}
                                     onChange={e => handleIngredientUnitChange(index, e.target.value)}
-                                    className="border-2 border-gray-200 p-2 rounded">
+                                    className="border-2 border-cook-light p-2 rounded sm:w-20">
                                 {units[ingredient.state as 'SOLID' | 'LIQUID' | 'POWDER' | 'OTHER'].map((unit, unitIndex) => (
                                     <option key={unitIndex} value={unit}>{t(unit)}</option>
                                 ))}
@@ -311,7 +312,8 @@ function RecipeCreation({user}: RecipeCreationProps) {
                             </button>
                         </div>
                     ))}
-                    <button type="button" onClick={addIngredient} className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
+                    <button type="button" onClick={addIngredient}
+                            className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
                         {t('addIngredient')}
                     </button>
                 </div>
@@ -320,7 +322,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('category')}</span>
                         <select value={category} onChange={e => setCategory(e.target.value)}
-                                className="border-2 border-gray-200 p-2 rounded">
+                                className="border-2 border-cook-light p-2 rounded">
                             {allCategories.map((cat, index) => (
                                 <option key={index} value={cat}>{t(cat)}</option>
                             ))}
@@ -329,7 +331,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('difficulty')}</span>
                         <select value={difficulty} onChange={e => setDifficulty(e.target.value)}
-                                className="border-2 border-gray-200 p-2 rounded">
+                                className="border-2 border-cook-light p-2 rounded">
                             {allDifficulties.map((diff, index) => (
                                 <option key={index} value={diff}>{t(diff)}</option>
                             ))}
@@ -338,7 +340,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('visibility')}</span>
                         <select value={visibility} onChange={e => setVisibility(e.target.value)}
-                                className="border-2 border-gray-200 p-2 rounded">
+                                className="border-2 border-cook-light p-2 rounded">
                             {allVisibility.map((vis, index) => (
                                 <option key={index} value={vis}>{t(vis)}</option>
                             ))}
