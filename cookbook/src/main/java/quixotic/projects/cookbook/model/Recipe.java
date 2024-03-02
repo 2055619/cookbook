@@ -24,7 +24,7 @@ public class Recipe extends Publication {
     private Long id;
     @ElementCollection
     private Set<String> instructions = new HashSet<>();
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Ingredient> ingredients = new HashSet<>();
     @Enumerated(EnumType.STRING)
     private RecipeType category;

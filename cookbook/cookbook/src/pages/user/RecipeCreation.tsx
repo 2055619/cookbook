@@ -5,6 +5,7 @@ import {CookBookService} from "../../services/CookBookService";
 import {UtilsService} from "../../services/UtilsService";
 import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 interface RecipeCreationProps {
     user: IUser;
@@ -14,6 +15,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
     const utilsService = new UtilsService();
+    const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -23,10 +25,10 @@ function RecipeCreation({user}: RecipeCreationProps) {
     const [prepTime, setPrepTime] = useState(0);
     const [cookTime, setCookTime] = useState(0);
 
-    const [category, setCategory] = useState('');
-    const [difficulty, setDifficulty] = useState('');
+    const [category, setCategory] = useState('MAIN');
+    const [difficulty, setDifficulty] = useState('MEDIUM');
     const [visibility, setVisibility] = useState('SECRET');
-    const [portionSize, setPortionSize] = useState('');
+    const [portionSize, setPortionSize] = useState('MEDIUM');
     const [dietTypes, setDietTypes] = useState<string[]>([]);
 
     const [allCategories, setAllCategories] = useState<string[]>([]);
@@ -85,6 +87,38 @@ function RecipeCreation({user}: RecipeCreationProps) {
         });
     }, []);
 
+    const validate = () => {
+        if (title.length < 3) {
+            toast.error(t('message.titleLength'));
+            return true;
+        }
+        if (description.length < 1) {
+            toast.error(t('message.descriptionLength'));
+            return true;
+        }
+        if (instructions.length < 1) {
+            toast.error(t('message.instructionsLength'));
+            return true;
+        }
+        if (ingredients.length < 1) {
+            toast.error(t('message.ingredientsLength'));
+            return true;
+        }
+        if (serving < 0) {
+            toast.error(t('message.serving'));
+            return true;
+        }
+        if (prepTime < 0) {
+            toast.error(t('message.prepTime'));
+            return true;
+        }
+        if (cookTime < 1) {
+            toast.error(t('message.cookTime'));
+            return true;
+        }
+        return false;
+    }
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const cookUsername = user.username;
@@ -105,6 +139,10 @@ function RecipeCreation({user}: RecipeCreationProps) {
             cookTime,
         };
 
+        if (validate()){
+            return;
+        }
+
         cookbookService.createRecipe(newRecipe)
             .then(() => {
                 toast.success(t('recipeCreated'));
@@ -112,6 +150,8 @@ function RecipeCreation({user}: RecipeCreationProps) {
             .catch((error) => {
                 toast.error(t(error.response.data.message));
             });
+
+        navigate('/u/landing');
     };
 
     const handleDietTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -228,13 +268,13 @@ function RecipeCreation({user}: RecipeCreationProps) {
                                    onChange={e => handleInstructionChange(index, e.target.value)}
                                    placeholder={t('input.ingredient')}
                                    className="border-2 border-gray-200 p-2 rounded flex-grow"/>
-                            <button onClick={() => removeInstruction(index)}
+                            <button type="button" onClick={() => removeInstruction(index)}
                                     className="border-2 border-cook-red text-cook-red hover:bg-cook-red hover:text-cook rounded transition ease-in duration-200 p-1">
                                 {t('input.delete')}
                             </button>
                         </div>
                     ))}
-                    <button onClick={addInstruction}
+                    <button type="button" onClick={addInstruction}
                             className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
                         {t('addInstruction')}
                     </button>
@@ -266,12 +306,12 @@ function RecipeCreation({user}: RecipeCreationProps) {
                                     <option key={unitIndex} value={unit}>{t(unit)}</option>
                                 ))}
                             </select>
-                            <button onClick={() => removeIngredient(index)}
+                            <button type="button" onClick={() => removeIngredient(index)}
                                     className="border-2 border-cook-red text-cook-red hover:bg-cook-red hover:text-cook rounded transition ease-in duration-200 p-1">{t('input.delete')}
                             </button>
                         </div>
                     ))}
-                    <button onClick={addIngredient} className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
+                    <button type="button" onClick={addIngredient} className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
                         {t('addIngredient')}
                     </button>
                 </div>
@@ -317,8 +357,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                     ))}
                 </div>
 
-
-                <button type="submit"
+                <button type="submit" onClick={handleSubmit}
                         className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
                     {t('createRecipe')}
                 </button>

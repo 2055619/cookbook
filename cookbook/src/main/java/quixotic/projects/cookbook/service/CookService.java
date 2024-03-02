@@ -32,7 +32,7 @@ public class CookService {
         recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
         cook.addPublication(recipe);
 
-        cook = cookRepository.save(cook);
+        cookRepository.save(cook);
         return new RecipeDTO(recipe);
 //        return new RecipeDTO(recipeRepository.save(recipe));
     }
