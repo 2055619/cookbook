@@ -14,23 +14,21 @@ import quixotic.projects.cookbook.model.enums.Unit;
 @Builder
 public class IngredientDTO {
     private String name;
-    private float amount;
+    private float quantity;
     private Unit unit;
     private IngredientState ingredientState;
-    private String recipeTitle;
 
     public IngredientDTO(Ingredient ingredient) {
         this.name = ingredient.getName();
-        this.amount = ingredient.getAmount();
+        this.quantity = ingredient.getQuantity();
         this.unit = ingredient.getUnit();
         this.ingredientState = ingredient.getIngredientState();
-        this.recipeTitle = ingredient.getRecipe().getTitle();
     }
 
     public Ingredient toEntity() {
         return Ingredient.builder()
                 .name(this.name)
-                .amount(this.amount)
+                .quantity(this.quantity)
                 .unit(this.unit)
                 .ingredientState(this.ingredientState)
                 .build();

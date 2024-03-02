@@ -36,4 +36,11 @@ export class CookBookService {
                 return response.data;
             });
     }
+
+    async createRecipe(newRecipe: IRecipe) {
+        return cookServerInstance.post('/cook/recipe', newRecipe)
+            .then((response) => {
+                return response.data;
+            });
+    }
 }

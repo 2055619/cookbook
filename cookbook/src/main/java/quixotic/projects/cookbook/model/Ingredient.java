@@ -15,7 +15,7 @@ public class Ingredient {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private float amount;
+    private float quantity;
     @Enumerated(EnumType.STRING)
     private Unit unit;
     @Enumerated(EnumType.STRING)

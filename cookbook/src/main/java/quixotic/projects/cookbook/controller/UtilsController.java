@@ -39,7 +39,7 @@ public class UtilsController {
     }
 
     @GetMapping("/ingredient-states")
-    public ResponseEntity<Map<String, List<Unit>>> getUnits() {
+    public ResponseEntity<Map<String, List<Unit>>> getIngrediantStates() {
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(utilsService.getIngredientStates());
     }

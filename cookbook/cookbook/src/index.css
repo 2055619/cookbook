@@ -49,3 +49,7 @@ danger-hover:hover{
 .clickable {
   cursor: pointer;
 }
+
+input[type="checkbox"]:checked ~ div {
+  background-color: var(--cook-light-color); /* Change this to your preferred color */
+}

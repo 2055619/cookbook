@@ -18,7 +18,7 @@ export interface IRecipe {
 
 export interface IIngredient {
     name: string;
-    amount: number;
+    quantity: number;
     unit: string;
     state: string;
 }

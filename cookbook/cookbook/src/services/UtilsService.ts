@@ -35,4 +35,10 @@ export class UtilsService {
         return cookServerInstance.get('/utils/diet-types')
             .then((response) => response.data);
     }
+
+    async getUnits() {
+        return cookServerInstance.get('/utils/units')
+            .then((response) => response.data);
+
+    }
 }

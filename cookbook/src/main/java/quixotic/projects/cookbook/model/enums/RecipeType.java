@@ -2,6 +2,7 @@ package quixotic.projects.cookbook.model.enums;
 
 public enum RecipeType {
     APPETIZER,
+    ENTREE,
     BREAD,
     BREAKFAST,
     DESSERT,
@@ -10,5 +11,6 @@ public enum RecipeType {
     SALAD,
     SIDE,
     SOUP,
+    SNACK,
     OTHER
 }
