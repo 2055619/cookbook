@@ -35,9 +35,9 @@ function SearchBox() {
 
 
     return (
-        <div className="relative flex justify-center">
+        <div className="relative flex w-1/3 mx-auto">
             <input
-                className="w-96 px-8 rounded-lg"
+                className="w-full px-8 rounded-lg"
                 type="text"
                 placeholder="Search recipes..."
                 onChange={handleInputChange}

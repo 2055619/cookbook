@@ -5,6 +5,8 @@ import logo from "../../logo.svg";
 import {IUser} from "../../assets/models/Authentication";
 import ProfileSummary from "./ProfileSummary";
 import SearchBox from "./SearchBox";
+import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface IHeaderProps {
     setUser: (user: IUser | null) => void;
@@ -48,7 +50,9 @@ function Header({user, setUser}: IHeaderProps) {
                             <h1 className="text-xl font-semibold">{t('name')}</h1>
                         </NavLink>
                         <SearchBox/>
-                        <div className="flex items-center space-x-4">
+                        <div className="flex w-52 justify-end items-center space-x-4">
+                            <FontAwesomeIcon className={"clickable"} icon={faPlus}
+                                             onClick={() => navigate('/u/recipesCreation')}/>
                             <ProfileSummary setUser={setUser} user={user}/>
                         </div>
                     </>

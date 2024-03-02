@@ -48,6 +48,7 @@ function Landing() {
 
     return (
         <div className={"container text-center bg-cook-orange min-h-screen"}>
+
             {recipes.map((recipe, index) => {
                 if (recipes.length === index + 1) {
                     return <div className={`flex justify-center`} ref={lastRecipeElementRef} key={index}>
