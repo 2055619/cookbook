@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import quixotic.projects.cookbook.dto.IngredientDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
+import quixotic.projects.cookbook.exception.goneRequestException.UserNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.summary.RecipeSummary;
@@ -26,7 +27,7 @@ public class CookService {
 
 //    Recipes
     public RecipeDTO createRecipe(RecipeDTO recipeDTO){
-        Cook cook = cookRepository.findByUsername(recipeDTO.getCookUsername()).orElseThrow();
+        Cook cook = cookRepository.findByUsername(recipeDTO.getCookUsername()).orElseThrow(UserNotFoundException::new);
         Recipe recipe = recipeDTO.toEntity();
         recipe.setCook(cook);
         recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
@@ -46,7 +47,7 @@ public class CookService {
         return recipePage.map(RecipeDTO::new).stream().toList();
     }
     public RecipeDTO getRecipe(String title) {
-        return new RecipeDTO(recipeRepository.findByTitle(title).orElseThrow());
+        return new RecipeDTO(recipeRepository.findByTitle(title).orElseThrow(RecipeNotFoundException::new));
     }
 
     public RecipeDTO updateRecipe(RecipeDTO recipeDTO) {
