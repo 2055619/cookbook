@@ -50,4 +50,16 @@ public class UtilsController {
                 .body(utilsService.getVisibility());
     }
 
+    @GetMapping("portion-sizes")
+    public ResponseEntity<List<String>> getPortionSizes() {
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(utilsService.getPortionSizes());
+    }
+
+    @GetMapping("diet-types")
+    public ResponseEntity<List<String>> getDietTypes() {
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(utilsService.getDietTypes());
+    }
+
 }

@@ -53,4 +53,20 @@ public class UtilsService {
         }
         return visibilities;
     }
+
+    public List<String> getPortionSizes() {
+        List<String> portionSizes = new ArrayList<>();
+        for (PortionSize size: PortionSize.values()) {
+            portionSizes.add(size.name());
+        }
+        return portionSizes;
+    }
+
+    public List<String> getDietTypes() {
+        List<String> dietTypes = new ArrayList<>();
+        for (DietType type: DietType.values()) {
+            dietTypes.add(type.name());
+        }
+        return dietTypes;
+    }
 }

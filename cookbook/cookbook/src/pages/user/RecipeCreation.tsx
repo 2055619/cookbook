@@ -9,6 +9,7 @@ import {toast} from "react-toastify";
 interface RecipeCreationProps {
     user: IUser;
 }
+
 function RecipeCreation({user}: RecipeCreationProps) {
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
@@ -107,6 +108,23 @@ function RecipeCreation({user}: RecipeCreationProps) {
         }
     };
 
+    const handleInstructionChange = (index: number, newInstruction: string) => {
+        const newInstructions = [...instructions];
+        newInstructions[index] = newInstruction;
+        setInstructions(newInstructions);
+    };
+
+    const addInstruction = () => {
+        setInstructions([...instructions, '']);
+    };
+
+    const removeInstruction = (index: number) => {
+        const newInstructions = [...instructions];
+        newInstructions.splice(index, 1);
+        setInstructions(newInstructions);
+    };
+
+
     return (
         <>
             <h1 className="text-3xl font-bold text-center">{t('createRecipe')}</h1>
@@ -122,13 +140,36 @@ function RecipeCreation({user}: RecipeCreationProps) {
                               className="border-2 border-gray-200 p-2 rounded"/>
                 </label>
 
-                <label className="flex flex-col space-y-1 w-full">
+                <div className="flex flex-col space-y-1 w-full">
                     <span className="font-medium">{t('instructions')}</span>
-                    <textarea value={instructions.join('\n')} onChange={e => setInstructions(e.target.value.split('\n'))}
-                              className="border-2 border-gray-200 p-2 rounded"/>
+                    {instructions.map((instruction, index) => (
+                        <div key={index} className="flex space-x-2 items-center">
+                            <span>{index + 1}.</span>
+                            <input type="text" value={instruction}
+                                   onChange={e => handleInstructionChange(index, e.target.value)}
+                                   className="border-2 border-gray-200 p-2 rounded flex-grow"/>
+                            <button onClick={() => removeInstruction(index)}
+                                    className="border-2 border-cook-red text-cook-red hover:bg-cook-red hover:text-cook rounded transition ease-in duration-200 p-1">Remove
+                            </button>
+                        </div>
+                    ))}
+                    <button onClick={addInstruction} className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">Add
+                        Instruction
+                    </button>
+                </div>
+
+                <label className="flex flex-col space-y-1 w-full">
+                    <span className="font-medium">{t('ingredients')}</span>
+                    <textarea
+                        value={ingredients.map(ingredient => ingredient.name + ' ' + ingredient.amount + ' ' + ingredient.unit).join('\n')}
+                        onChange={e => {
+                            setIngredients(e.target.value.split('\n').map((ingredient) => {
+                                const [name, amount, unit] = ingredient.split(' ');
+                                return {name, amount: Number(amount), unit, state: ''};
+                            }));
+                        }}
+                        className="border-2 border-gray-200 p-2 rounded"/>
                 </label>
-
-
 
                 <div className="grid grid-cols-2 gap-4 w-full">
                     <label className="flex flex-col space-y-1">
