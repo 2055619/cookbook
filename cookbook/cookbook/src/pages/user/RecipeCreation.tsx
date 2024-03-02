@@ -121,12 +121,11 @@ function RecipeCreation({user}: RecipeCreationProps) {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const cookUsername = user.username;
 
         const newRecipe: IRecipe = {
             title,
             description,
-            cookUsername,
+            cookUsername: user.username,
             visibility,
             instructions,
             ingredients,
@@ -154,6 +153,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
         navigate('/u/landing');
     };
 
+    // Diet
     const handleDietTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             setDietTypes([...dietTypes, event.target.value]);
@@ -162,7 +162,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
         }
     };
 
-
+    // Instructions
     const handleInstructionChange = (index: number, newInstruction: string) => {
         const newInstructions = [...instructions];
         newInstructions[index] = newInstruction;
@@ -179,7 +179,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
         setInstructions(newInstructions);
     };
 
-
+    // Ingredients
     const handleIngredientChange = (index: number, newIngredient: string) => {
         const newIngredients = [...ingredients];
         newIngredients[index] = {...newIngredients[index], name: newIngredient};
