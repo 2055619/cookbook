@@ -3,7 +3,7 @@ import LanguageSelector from "../Utils/LanguageSelector";
 import {NavLink, useNavigate} from "react-router-dom";
 import logo from "../../logo.svg";
 import {IUser} from "../../assets/models/Authentication";
-import ProfileSummary from "./ProfileSummary";
+import ProfileSummary from "../ProfileSummary";
 import SearchBox from "./SearchBox";
 import {faPlus, faScroll, faUtensils, faConciergeBell} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

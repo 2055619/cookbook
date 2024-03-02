@@ -47,7 +47,7 @@ function Landing() {
     }, [page]);
 
     return (
-        <div className={"container text-center bg-cook-orange min-h-screen"}>
+        <div className={""}>
 
             {recipes.map((recipe, index) => {
                 if (recipes.length === index + 1) {

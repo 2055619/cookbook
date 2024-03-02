@@ -26,7 +26,7 @@ function UserPages({user}: IUserPage) {
 
     // TODO: Add other pages
     return (
-        <div className={""}>
+        <div className={"min-h-screen bg-cook-orange text-center"}>
             <Routes>
                 <Route path="landing" element={<Landing/>}/>
                 <Route path="usrRecipes" element={<ViewRecipe/>}/>

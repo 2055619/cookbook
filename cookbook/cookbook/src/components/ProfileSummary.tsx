@@ -1,8 +1,8 @@
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
-import avatar from "../../assets/image/avatar.jpg";
-import LanguageSelector from "../Utils/LanguageSelector";
+import avatar from "../assets/image/avatar.jpg";
+import LanguageSelector from "./Utils/LanguageSelector";
 
 interface IProfileSummaryProps {
     setUser: (user: any) => void;

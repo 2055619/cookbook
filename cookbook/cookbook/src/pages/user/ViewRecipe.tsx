@@ -28,8 +28,8 @@ function ViewRecipe(){
     }, []);
 
     return (
-        <div className={"container text-center bg-cook-orange min-h-screen"}>
-
+        <div className={""}>
+            <h1 className={"text-white"}>TEST</h1>
             {recipes.map((recipe, index) => {
                 return <div className={`flex justify-center`} key={index}>
                     <RecipeComponent recipe={recipe} key={index}/>
