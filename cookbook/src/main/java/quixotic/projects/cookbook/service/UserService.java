@@ -32,7 +32,6 @@ public class UserService {
         );
     }
     public CookDTO createCook(SignUpDTO signUpDTO) {
-        Validation.validateSignIn(signUpDTO);
         Cook cook = signUpDTO.toCook();
         cook.setPassword(passwordEncoder.encode(signUpDTO.getPassword()));
 
