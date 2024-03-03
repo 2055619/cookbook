@@ -6,19 +6,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
-import quixotic.projects.cookbook.exception.goneRequestException.UserNotFoundException;
+import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.enums.*;
 import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
+import quixotic.projects.cookbook.security.Role;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,6 +40,7 @@ public class CookServiceTest {
             .liquidUnit(Unit.LITER)
             .solidUnit(Unit.KILOGRAM)
             .otherUnit(Unit.CUP)
+            .role(Role.COOK)
             .build();
     private static final List<RecipeDTO> recipeDTOS = new ArrayList<>(List.of(
             RecipeDTO.builder()

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import quixotic.projects.cookbook.exception.badRequestException.InvalidJwtException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.repository.CookRepository;
-import quixotic.projects.cookbook.exception.goneRequestException.UserNotFoundException;
+import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 
 
 @Component

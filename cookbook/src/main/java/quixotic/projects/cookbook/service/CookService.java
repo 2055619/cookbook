@@ -8,14 +8,13 @@ import org.springframework.stereotype.Service;
 import quixotic.projects.cookbook.dto.IngredientDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
-import quixotic.projects.cookbook.exception.goneRequestException.UserNotFoundException;
+import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

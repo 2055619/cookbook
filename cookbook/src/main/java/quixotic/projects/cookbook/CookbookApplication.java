@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import quixotic.projects.cookbook.dto.IngredientDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.dto.SignUpDTO;
-import quixotic.projects.cookbook.model.Ingredient;
 import quixotic.projects.cookbook.model.enums.*;
 import quixotic.projects.cookbook.service.CookService;
 import quixotic.projects.cookbook.service.UserService;
@@ -37,6 +36,17 @@ public class CookbookApplication implements CommandLineRunner {
                 .powderUnit(Unit.CUP)
                 .liquidUnit(Unit.CUP)
                 .solidUnit(Unit.GRAM)
+                .otherUnit(Unit.CUP)
+                .build());
+        userService.createCook(SignUpDTO.builder()
+                .username("testCook")
+                .email("asd@asd.com")
+                .password("Nonne123!")
+                .firstName("BlaBla")
+                .lastName("BlaBlaLast")
+                .powderUnit(Unit.GRAM)
+                .liquidUnit(Unit.LITER)
+                .solidUnit(Unit.KILOGRAM)
                 .otherUnit(Unit.CUP)
                 .build());
 

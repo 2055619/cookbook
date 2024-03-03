@@ -20,6 +20,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import quixotic.projects.cookbook.repository.CookRepository;
 
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -36,8 +39,16 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/**").permitAll()
-                        .anyRequest().denyAll()
+//                        .requestMatchers("/api/v1/**").permitAll()
+                                .requestMatchers(GET, "/api/v1/utils/**").permitAll()
+
+                                .requestMatchers(POST, "/api/v1/cook/auth/signin").permitAll()
+                                .requestMatchers(POST, "/api/v1/cook/auth/signup").permitAll()
+                                .requestMatchers(GET, "/api/v1/cook/auth/me").hasAnyAuthority("COOK")
+
+                                .requestMatchers("/api/v1/cook/**").hasAnyAuthority("COOK")
+
+                                .anyRequest().denyAll()
                 )
                 .sessionManagement((secuManagement) -> {
                     secuManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -50,7 +61,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public CorsFilter corsFilter(){
+    public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
@@ -69,12 +80,12 @@ public class SecurityConfiguration {
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration
-    ) throws Exception{
+    ) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }

@@ -10,10 +10,12 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import quixotic.projects.cookbook.model.Cook;
+import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.repository.CookRepository;
-import quixotic.projects.cookbook.exception.goneRequestException.UserNotFoundException;
+import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
 	private final JwtTokenProvider tokenProvider;
@@ -36,6 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 				tokenProvider.validateToken(token);
 				String username = tokenProvider.getUsernameFromJWT(token);
 				Cook cook = cookRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+
 				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 						cook.getUsername(), null, cook.getAuthorities()
 				);
