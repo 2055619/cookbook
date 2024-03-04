@@ -27,7 +27,7 @@ public final class Validation{
 
 	public static void validateRecipe(RecipeDTO recipeDTO){
 		validateName(recipeDTO.getTitle());
-		validateName(recipeDTO.getDescription());
+		validateDescription(recipeDTO.getDescription());
 
 		recipeDTO.getInstructions().forEach(Validation::validateName);
 		recipeDTO.getIngredients().forEach(ingredient -> {
@@ -91,5 +91,11 @@ public final class Validation{
 		if(name.matches(NAME_PATTERN.toString()))
 			return;
 		exception(ValidationMessage.NAME_MESSAGE.toString());
+	}
+
+	private static void validateDescription(String description) {
+		if(description.matches(DESCRIPTION_PATTERN.toString()))
+			return;
+		exception(ValidationMessage.DESCRIPTION_MESSAGE.toString());
 	}
 }

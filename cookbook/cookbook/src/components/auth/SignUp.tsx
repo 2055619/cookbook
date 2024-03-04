@@ -19,6 +19,9 @@ function SignUp({setUser}: ISignUpProps) {
 
     const [emailReg, setEmailReg] = useState(new RegExp(''));
     const [passwordReg, setPasswordReg] = useState(new RegExp(''));
+    const [usernameReg, setUsernameReg] = useState(new RegExp(''));
+    const [descReg, setDescReg] = useState(new RegExp(''));
+    const [nameReg, setNameReg] = useState(new RegExp(''));
 
     const [units, setUnits] = useState({solidUnit: '', liquidUnit: '', powderUnit: '', otherUnit: ''});
     const [ing, setIng] = useState({SOLID: [''], LIQUID: [''], POWDER: [''], OTHER: ['']});
@@ -33,6 +36,9 @@ function SignUp({setUser}: ISignUpProps) {
         utilsService.getValidationPattern().then((response) => {
             setEmailReg(new RegExp(response.EMAIL_PATTERN));
             setPasswordReg(new RegExp(response.PASSWORD_PATTERN));
+            setUsernameReg(new RegExp(response.USERNAME_PATTERN));
+            setDescReg(new RegExp(response.DESCRIPTION_PATTERN));
+            setNameReg(new RegExp(response.NAME_PATTERN));
         }).catch((error) => {
             toast.error(t(error.response?.data.message));
         });
@@ -67,7 +73,7 @@ function SignUp({setUser}: ISignUpProps) {
     function isValid() {
         let isValid = true;
 
-        if (creationForm.firstName.trim().length < 2) {
+        if (!nameReg.test(creationForm.firstName.trim())) {
             toast.error(t('message.firstName'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'firstName')
@@ -76,7 +82,7 @@ function SignUp({setUser}: ISignUpProps) {
             }))
             isValid = false;
         }
-        if (creationForm.lastName.trim().length < 2) {
+        if (!nameReg.test(creationForm.lastName.trim())) {
             toast.error(t('message.lastName'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'lastName')
@@ -85,7 +91,7 @@ function SignUp({setUser}: ISignUpProps) {
             }))
             isValid = false;
         }
-        if (creationForm.username.trim().length < 4) {
+        if (!usernameReg.test(creationForm.username.trim())) {
             toast.error(t('message.username'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'username')
@@ -94,7 +100,7 @@ function SignUp({setUser}: ISignUpProps) {
             }))
             isValid = false;
         }
-        if (!emailReg.test(creationForm.email)) {
+        if (!emailReg.test(creationForm.email.trim())) {
             toast.error(t('message.email'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'email')
@@ -103,7 +109,7 @@ function SignUp({setUser}: ISignUpProps) {
             }))
             isValid = false;
         }
-        if (!passwordReg.test(creationForm.password)) {
+        if (!passwordReg.test(creationForm.password.trim())) {
             toast.error(t('message.password'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'password')
@@ -112,7 +118,7 @@ function SignUp({setUser}: ISignUpProps) {
             }))
             isValid = false;
         }
-        if (creationForm.password !== creationForm.confirmPassword) {
+        if (creationForm.password.trim() !== creationForm.confirmPassword.trim()) {
             toast.error(t('message.passwords'));
             setCreateFromInfo(createFormInfo.map((formInfo) => {
                 if (formInfo.name === 'confirmPassword')
@@ -131,11 +137,11 @@ function SignUp({setUser}: ISignUpProps) {
             return;
 
         const signUpUser: IsignUp = {
-            username: creationForm.username,
-            email: creationForm.email,
-            firstName: creationForm.firstName,
-            lastName: creationForm.lastName,
-            password: creationForm.password,
+            username: creationForm.username.trim(),
+            email: creationForm.email.trim(),
+            firstName: creationForm.firstName.trim(),
+            lastName: creationForm.lastName.trim(),
+            password: creationForm.password.trim(),
             ...units
         }
 
