@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static quixotic.projects.cookbook.validation.Validation.validateRecipe;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -52,6 +54,7 @@ public class RecipeDTO {
     }
 
     public Recipe toEntity(Cook cook) {
+        validateRecipe(this);
         return Recipe.builder()
                 .title(this.title)
                 .description(this.description)

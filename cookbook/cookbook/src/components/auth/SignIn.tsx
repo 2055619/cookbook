@@ -32,8 +32,7 @@ function SignIn({setUser}: SignInProps) {
                 navigate('/u/landing');
             })
             .catch((error) => {
-                console.log(error);
-                toast.error(t(error.response.data.message));
+                toast.error(t(error.response?.data.message));
             });
     }
 

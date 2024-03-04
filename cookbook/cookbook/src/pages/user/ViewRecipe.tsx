@@ -20,7 +20,7 @@ function ViewRecipe(){
                     setRecipes(response);
                 })
                 .catch((error) => {
-                    toast.error(t(error.response.data.message));
+                    toast.error(t(error.response?.data.message));
                     return [];
                 });
         };

@@ -31,7 +31,7 @@ function Landing() {
                     return response;
                 })
                 .catch((error) => {
-                    toast.error(t(error.response.data.message));
+                    toast.error(t(error.response?.data.message));
                     return [];
                 });
 

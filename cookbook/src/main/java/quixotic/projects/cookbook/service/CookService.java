@@ -41,6 +41,8 @@ public class CookService {
         return recipeRepository.findAll().stream().map(RecipeDTO::new).toList();
     }
     public List<RecipeDTO> getRecipes(int page, int size) {
+        if (page < 0 || size < 0)
+            throw new IllegalArgumentException("Page and size must be greater than 0");
         Pageable pageable = PageRequest.of(page, size);
         Page<Recipe> recipePage = recipeRepository.findAll(pageable);
         return recipePage.map(RecipeDTO::new).stream().toList();

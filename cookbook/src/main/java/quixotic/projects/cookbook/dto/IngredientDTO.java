@@ -8,6 +8,8 @@ import quixotic.projects.cookbook.model.Ingredient;
 import quixotic.projects.cookbook.model.enums.IngredientState;
 import quixotic.projects.cookbook.model.enums.Unit;
 
+import static quixotic.projects.cookbook.validation.Validation.validateIngredient;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,6 +28,7 @@ public class IngredientDTO {
     }
 
     public Ingredient toEntity() {
+        validateIngredient(this);
         return Ingredient.builder()
                 .name(this.name)
                 .quantity(this.quantity)

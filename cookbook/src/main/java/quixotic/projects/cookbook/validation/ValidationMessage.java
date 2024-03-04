@@ -5,6 +5,13 @@ public enum ValidationMessage{
 	EMAIL_MESSAGE("message.invalidEmail"),
 	USERNAME_MESSAGE("message.invalidUsername"),
 	NAME_MESSAGE("message.invalidName"),
+	SERVING_MESSAGE("message.invalidServing"),
+	COOKTIME_MESSAGE("message.invalidCookTime"),
+	PREPTIME_MESSAGE("message.invalidPrepTime"),
+	QUANTITY_MESSAGE("message.invalidQuantity"),
+
+
+
 	;
 	private final String string;
 	ValidationMessage(String string){

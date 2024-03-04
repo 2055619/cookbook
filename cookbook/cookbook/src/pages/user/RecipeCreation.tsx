@@ -51,7 +51,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                 setAllCategories(response);
             })
             .catch((error) => {
-                toast.error(t(error.response.data.message));
+                toast.error(t(error.response?.data.message));
             });
 
         utilsService.getDifficultyLevels()
@@ -59,7 +59,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                 setAllDifficulties(response);
             })
             .catch((error) => {
-                toast.error(t(error.response.data.message));
+                toast.error(t(error.response?.data.message));
             });
 
         utilsService.getVisibility()
@@ -67,7 +67,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                 setAllVisibility(response);
             })
             .catch((error) => {
-                toast.error(t(error.response.data.message));
+                toast.error(t(error.response?.data.message));
             });
 
         utilsService.getPortionSizes()
@@ -75,7 +75,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                 setAllPortionSizes(response);
             })
             .catch((error) => {
-                toast.error(t(error.response.data.message));
+                toast.error(t(error.response?.data.message));
             });
 
         utilsService.getDietTypes()
@@ -83,13 +83,13 @@ function RecipeCreation({user}: RecipeCreationProps) {
                 setAllDietTypes(response);
             })
             .catch((error) => {
-                toast.error(t(error.response.data.message));
+                toast.error(t(error.response?.data.message));
             });
 
         utilsService.getIngrediantStates().then((response) => {
             setUnits(response);
         }).catch((error) => {
-            toast.error(t(error.response.data.message));
+            toast.error(t(error.response?.data.message));
         });
     }, []);
 
@@ -162,7 +162,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                 toast.success(t('recipeCreated'));
             })
             .catch((error) => {
-                toast.error(t(error.response.data.message));
+                toast.error(t(error.response?.data.message));
             });
 
         navigate('/u/landing');

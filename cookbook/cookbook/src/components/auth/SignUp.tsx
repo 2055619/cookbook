@@ -27,14 +27,14 @@ function SignUp({setUser}: ISignUpProps) {
         utilsService.getIngrediantStates().then((response) => {
             setIng(response);
         }).catch((error) => {
-            toast.error(t(error.response.data.message));
+            toast.error(t(error.response?.data.message));
         });
 
         utilsService.getValidationPattern().then((response) => {
             setEmailReg(new RegExp(response.EMAIL_PATTERN));
             setPasswordReg(new RegExp(response.PASSWORD_PATTERN));
         }).catch((error) => {
-            toast.error(t(error.response.data.message));
+            toast.error(t(error.response?.data.message));
         });
     }, []);
 
@@ -145,14 +145,14 @@ function SignUp({setUser}: ISignUpProps) {
             toast.success(t("message.signInSuccess"));
             navigate('/u/landing');
         }).catch((error) => {
-            if (error.response.data.value === '418') {
+            if (error.response.data?.value === '418') {
                 setCreateFromInfo(createFormInfo.map((formInfo) => {
                     if (formInfo.name === 'username')
                         formInfo.warning = 'message.usernameTaken';
                     return formInfo;
                 }))
             }
-            toast.error(t(error.response.data.message));
+            toast.error(t(error.response?.data.message));
         });
     };
 
