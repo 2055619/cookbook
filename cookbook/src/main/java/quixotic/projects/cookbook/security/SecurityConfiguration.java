@@ -39,16 +39,15 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/api/v1/**").permitAll()
-                                .requestMatchers(GET, "/api/v1/utils/**").permitAll()
+                        .requestMatchers(GET, "/api/v1/utils/**").permitAll()
 
-                                .requestMatchers(POST, "/api/v1/cook/auth/signin").permitAll()
-                                .requestMatchers(POST, "/api/v1/cook/auth/signup").permitAll()
-                                .requestMatchers(GET, "/api/v1/cook/auth/me").hasAnyAuthority("COOK")
+                        .requestMatchers(POST, "/api/v1/cook/auth/signin").permitAll()
+                        .requestMatchers(POST, "/api/v1/cook/auth/signup").permitAll()
+                        .requestMatchers(GET, "/api/v1/cook/auth/me").hasAnyAuthority("COOK")
 
-                                .requestMatchers("/api/v1/cook/**").hasAnyAuthority("COOK")
+                        .requestMatchers("/api/v1/cook/**").hasAnyAuthority("COOK")
 
-                                .anyRequest().denyAll()
+                        .anyRequest().denyAll()
                 )
                 .sessionManagement((secuManagement) -> {
                     secuManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -66,6 +65,7 @@ public class SecurityConfiguration {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("*");
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
         source.registerCorsConfiguration("/**", config);

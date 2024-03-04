@@ -4,6 +4,7 @@ import {IsignIn, IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
+import {cookServerInstance} from "../../App";
 
 
 interface SignInProps {
@@ -28,6 +29,7 @@ function SignIn({setUser}: SignInProps) {
             .then((response) => {
                 setUser(response);
                 sessionStorage.setItem('token', response.token);
+                cookServerInstance.defaults.headers.common['Authorization'] = response.token;
                 toast.success(t("message.signInSuccess"));
                 navigate('/u/landing');
             })

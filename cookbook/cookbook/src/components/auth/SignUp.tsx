@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 import FormInput from "../../assets/models/Form";
 import {UtilsService} from "../../services/UtilsService";
+import {cookServerInstance} from "../../App";
 
 interface ISignUpProps {
     setUser: (user: any) => void;
@@ -148,6 +149,7 @@ function SignUp({setUser}: ISignUpProps) {
         cookbookService.signUp(signUpUser).then((response) => {
             setUser(response);
             sessionStorage.setItem('token', response.token);
+            cookServerInstance.defaults.headers.common['Authorization'] = response.token;
             toast.success(t("message.signInSuccess"));
             navigate('/u/landing');
         }).catch((error) => {
