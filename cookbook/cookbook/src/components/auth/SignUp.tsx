@@ -21,7 +21,6 @@ function SignUp({setUser}: ISignUpProps) {
     const [emailReg, setEmailReg] = useState(new RegExp(''));
     const [passwordReg, setPasswordReg] = useState(new RegExp(''));
     const [usernameReg, setUsernameReg] = useState(new RegExp(''));
-    const [descReg, setDescReg] = useState(new RegExp(''));
     const [nameReg, setNameReg] = useState(new RegExp(''));
 
     const [units, setUnits] = useState({solidUnit: '', liquidUnit: '', powderUnit: '', otherUnit: ''});
@@ -38,7 +37,6 @@ function SignUp({setUser}: ISignUpProps) {
             setEmailReg(new RegExp(response.EMAIL_PATTERN));
             setPasswordReg(new RegExp(response.PASSWORD_PATTERN));
             setUsernameReg(new RegExp(response.USERNAME_PATTERN));
-            setDescReg(new RegExp(response.DESCRIPTION_PATTERN));
             setNameReg(new RegExp(response.NAME_PATTERN));
         }).catch((error) => {
             toast.error(t(error.response?.data.message));

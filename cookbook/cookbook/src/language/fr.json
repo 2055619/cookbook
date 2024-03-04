@@ -25,6 +25,7 @@
   "serving": "Nombre de portions",
   "addInstruction": "Ajouter une instruction",
   "addIngredient": "Ajouter un ingrédient",
+  "minutes": "minutes",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"
