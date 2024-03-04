@@ -34,7 +34,7 @@ public class CookbookExceptionHandler {
         ErrorResponce response = ErrorResponce.builder()
                 .timestamp(LocalDateTime.now().toString())
                 .status(611)
-                .message("")
+                .message("SQL Exception")
                 .path(request.getRequestURI())
                 .build();
 

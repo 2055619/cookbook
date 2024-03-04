@@ -42,7 +42,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         SecurityConfiguration.class, JwtTokenProvider.class, JwtAuthenticationEntryPoint.class})
 @WebMvcTest(CookController.class)
 public class CookControllerTest {
-
     private final Cook cook = Cook.builder()
             .id(1L)
             .username("testCook")
@@ -61,13 +60,7 @@ public class CookControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
-    private UserService userService;
-    @MockBean
     private CookRepository cookRepository;
-    @MockBean
-    private AuthenticationManager authenticationManager;
-    @MockBean
-    private PasswordEncoder passwordEncoder;
     @MockBean
     private CookService cookService;
     @Autowired
