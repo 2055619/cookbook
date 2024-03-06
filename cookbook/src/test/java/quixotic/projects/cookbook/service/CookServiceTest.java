@@ -70,7 +70,7 @@ public class CookServiceTest {
                     .portionSize(PortionSize.SMALL)
                     .dietTypes(List.of(DietType.VEGAN, DietType.GLUTEN_FREE))
                     .prepTime(10)
-                    .cookTime(0)
+                    .cookTime(100)
                     .cookUsername(cook.getUsername())
                     .build(),
             RecipeDTO.builder()
@@ -85,7 +85,7 @@ public class CookServiceTest {
                     .portionSize(PortionSize.MEDIUM)
                     .dietTypes(List.of(DietType.GLUTEN_FREE))
                     .prepTime(15)
-                    .cookTime(120)
+                    .cookTime(30)
                     .cookUsername(cook.getUsername())
                     .build()
     ));
@@ -129,6 +129,12 @@ public class CookServiceTest {
 
         cookService.getRecipes(0, 10);
     }
+
+    @Test
+    public void getRecipes_NegativePage() {
+        assertThrows(IllegalArgumentException.class, () -> cookService.getRecipes(-1, 10));
+    }
+
 
     @Test
     public void getRecipe_whenRecipeExists() {
