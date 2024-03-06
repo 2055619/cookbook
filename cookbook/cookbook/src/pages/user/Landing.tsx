@@ -4,7 +4,7 @@ import Loading from "../../components/Utils/Loading";
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {IRecipe} from "../../assets/models/Recipe";
 import {toast} from "react-toastify";
-import RecipeComponent from "../../components/RecipeComponent";
+import RecipeComponent from "../../components/recipes/RecipeComponent";
 
 function Landing() {
     const {t} = useTranslation();

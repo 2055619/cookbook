@@ -26,6 +26,7 @@
   "addInstruction": "Ajouter une instruction",
   "addIngredient": "Ajouter un ingrédient",
   "minutes": "minutes",
+  "modifyRecipes": "Modifier mes recettes",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"

@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
-import {IRecipe} from "../assets/models/Recipe";
-import pastaImg from "../assets/image/red-sauce-pasta-recipe.jpg";
+import {IRecipe} from "../../assets/models/Recipe";
+import pastaImg from "../../assets/image/red-sauce-pasta-recipe.jpg";
 import React from "react";
 import ReactionFooter from "./ReactionFooter";
 
@@ -34,13 +34,13 @@ function RecipeComponent({recipe}: RecipeCardProps) {
                 </div>
 
                 {/*<h1 className="mb-2 text-muted">Diet Types:</h1>*/}
-                <div className={`grid grid-cols-${Math.min(recipe.dietTypes.length, 5)} gap-2 mt-1`}>
+                <div className={`grid grid-cols-${Math.min(recipe.dietTypes.length, 5)} gap-1 mt-1`}>
                     {recipe.dietTypes.map((dietType, index) => (
                         <p key={index} className="">{t(dietType)}</p>
                     ))}
                 </div>
 
-                <img className={""} src={pastaImg} alt="Pasta"/>
+                <img className={"w-full md:w-3/5 mx-auto"} src={pastaImg} alt={recipe.title}/>
             </div>
 
             <footer className={"py-2"}>

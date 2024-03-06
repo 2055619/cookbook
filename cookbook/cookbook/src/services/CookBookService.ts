@@ -45,7 +45,7 @@ export class CookBookService {
     }
 
     async getUserRecipes() {
-        return cookServerInstance.get('/cook/usr/recipe',)
+        return cookServerInstance.get('/cook/usr/recipes',)
             .then((response) => {
                 return response.data;
             });

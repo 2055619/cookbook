@@ -46,6 +46,12 @@ public class CookController {
                 .body(cookService.getRecipesByTitle(title));
     }
 
+    @GetMapping("usr/recipes")
+    public ResponseEntity<List<RecipeDTO>> getRecipesByUser(@RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getRecipesByUser(token));
+    }
+
     @PutMapping("/recipe")
     public ResponseEntity<RecipeDTO> updateRecipe(@RequestBody RecipeDTO recipeDTO){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)

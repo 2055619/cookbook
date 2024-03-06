@@ -14,6 +14,7 @@ import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
+import quixotic.projects.cookbook.security.JwtTokenProvider;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,8 +24,9 @@ import java.util.stream.Collectors;
 public class CookService {
     private final CookRepository cookRepository;
     private final RecipeRepository recipeRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
-//    Recipes
+    //    Recipes
     public RecipeDTO createRecipe(RecipeDTO recipeDTO){
         Cook cook = cookRepository.findByUsername(recipeDTO.getCookUsername()).orElseThrow(UserNotFoundException::new);
         Recipe recipe = recipeDTO.toEntity(cook);
@@ -87,5 +89,10 @@ public class CookService {
 
     public List<RecipeSummary> getRecipesByTitle(String title) {
         return recipeRepository.findAllByTitleContainsIgnoreCase(title);
+    }
+
+    public List<RecipeDTO> getRecipesByUser(String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        return recipeRepository.findAllByCookUsername(username).stream().map(RecipeDTO::new).toList();
     }
 }

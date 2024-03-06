@@ -1,10 +1,9 @@
 import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {IRecipe} from "../../assets/models/Recipe";
 import {toast} from "react-toastify";
-import RecipeComponent from "../../components/RecipeComponent";
-import Loading from "../../components/Utils/Loading";
+import UserRecipeComponent from "../../components/recipes/UserRecipeComponent";
 
 function ViewRecipe(){
     const {t} = useTranslation();
@@ -29,14 +28,13 @@ function ViewRecipe(){
 
     return (
         <div className={""}>
-            <h1 className={"text-white"}>TEST</h1>
+            <h1 className={"text-4xl"}>{t('modifyRecipes')}</h1>
             {recipes.map((recipe, index) => {
                 return <div className={`flex justify-center`} key={index}>
-                    <RecipeComponent recipe={recipe} key={index}/>
+                    <UserRecipeComponent recipe={recipe} key={index}/>
                 </div>
             })}
 
-            <Loading/>
         </div>
     );
 }
