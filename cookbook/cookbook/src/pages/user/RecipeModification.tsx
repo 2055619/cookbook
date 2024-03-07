@@ -21,11 +21,11 @@ function RecipeModification({user}: RecipeModificationProps) {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [instructions, setInstructions] = useState<string[]>( []);
+    const [instructions, setInstructions] = useState<string[]>([]);
     const [ingredients, setIngredients] = useState<IIngredient[]>([]);
     const [serving, setServing] = useState(1);
     const [prepTime, setPrepTime] = useState(0);
-    const [cookTime, setCookTime] = useState( 0);
+    const [cookTime, setCookTime] = useState(0);
 
     const [category, setCategory] = useState('MAIN');
     const [difficulty, setDifficulty] = useState('EASY');
@@ -58,7 +58,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                     setTitle(response.title);
                     setDescription(response.description);
                     setInstructions(response.instructions);
-                    // setIngredients(response.ingredients);
+                    setIngredients(response.ingredients);
                     setServing(response.serving);
                     setPrepTime(response.prepTime);
                     setCookTime(response.cookTime);
@@ -72,7 +72,6 @@ function RecipeModification({user}: RecipeModificationProps) {
                 })
                 .catch((error) => {
                     toast.error("error")
-                    console.log(error)
                     toast.error(t(error.response?.data.message));
                 });
         }
@@ -190,14 +189,24 @@ function RecipeModification({user}: RecipeModificationProps) {
             return;
         }
 
-        cookbookService.createRecipe(newRecipe)
-            .then(() => {
-                toast.success(t('recipeCreated'));
-            })
-            .catch((error) => {
-                toast.error(t(error.response?.data.message));
-            });
+        if (recipe !== undefined) {
+            cookbookService.updateRecipe(newRecipe)
+                .then(() => {
+                    toast.success(t('recipeUpdated'));
+                })
+                .catch((error) => {
+                    toast.error(t(error.response?.data.message));
+                });
 
+        } else {
+            cookbookService.createRecipe(newRecipe)
+                .then(() => {
+                    toast.success(t('recipeCreated'));
+                })
+                .catch((error) => {
+                    toast.error(t(error.response?.data.message));
+                });
+        }
         navigate('/u/landing');
     };
 
@@ -235,7 +244,7 @@ function RecipeModification({user}: RecipeModificationProps) {
     };
 
     const addIngredient = () => {
-        setIngredients([...ingredients, {name: '', quantity: 0, unit: 'CUP', state: 'OTHER'}]);
+        setIngredients([...ingredients, {name: '', quantity: 0, unit: 'CUP', ingredientState: 'OTHER'}]);
     };
 
     const removeIngredient = (index: number) => {
@@ -254,7 +263,7 @@ function RecipeModification({user}: RecipeModificationProps) {
 
     function handleIngredientStateChange(index: number, value: string) {
         const newIngredients = [...ingredients];
-        newIngredients[index] = {...newIngredients[index], state: value};
+        newIngredients[index] = {...newIngredients[index], ingredientState: value};
         setIngredients(newIngredients);
     }
 
@@ -285,7 +294,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                 </label>
 
                 <div className="grid grid-cols-2 gap-4 w-full">
-                <label className="flex flex-col space-y-1">
+                    <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('prepTime')}</span>
                         <input type="number" value={prepTime} onChange={e => setPrepTime(Number(e.target.value))}
                                className="border-2 border-cook-light p-2 rounded" min={`0`}/>
@@ -345,17 +354,17 @@ function RecipeModification({user}: RecipeModificationProps) {
                                    onChange={e => handleIngredientQuantityChange(index, Number(e.target.value))}
                                    className="border-2 border-cook-light p-2 rounded w-20 md:w-16 sm:w-12"
                                    min="0" step="0.01"/>
-                            <select value={ingredient.state}
+                            <select value={ingredient.ingredientState}
                                     onChange={e => handleIngredientStateChange(index, e.target.value)}
                                     className="border-2 border-cook-light p-2 rounded sm:w-20">
-                                {Object.keys(units).map((state, stateIndex) => (
-                                    <option key={stateIndex} value={state}>{t(state)}</option>
+                                {Object.keys(units).map((ingredientState, stateIndex) => (
+                                    <option key={stateIndex} value={ingredientState}>{t(ingredientState)}</option>
                                 ))}
                             </select>
                             <select value={ingredient.unit}
                                     onChange={e => handleIngredientUnitChange(index, e.target.value)}
                                     className="border-2 border-cook-light p-2 rounded sm:w-20">
-                                {units[ingredient.state as 'SOLID' | 'LIQUID' | 'POWDER' | 'OTHER'].map((unit, unitIndex) => (
+                                {units[ingredient.ingredientState as 'SOLID' | 'LIQUID' | 'POWDER' | 'OTHER'].map((unit, unitIndex) => (
                                     <option key={unitIndex} value={unit}>{t(unit)}</option>
                                 ))}
                             </select>

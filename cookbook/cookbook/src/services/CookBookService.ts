@@ -57,4 +57,12 @@ export class CookBookService {
                 return response.data;
             });
     }
+
+    async updateRecipe(newRecipe: IRecipe) {
+        return cookServerInstance.put('/cook/recipe', newRecipe)
+            .then((response) => {
+                return response.data;
+            });
+
+    }
 }
