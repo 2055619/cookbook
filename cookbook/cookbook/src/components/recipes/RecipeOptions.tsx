@@ -4,6 +4,7 @@ import {faEllipsisV} from "@fortawesome/free-solid-svg-icons/faEllipsisV";
 import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {IRecipe} from "../../assets/models/Recipe";
+import {useNavigate} from "react-router-dom";
 
 interface IRecipeOptionsProps {
     username: string;
@@ -13,6 +14,7 @@ interface IRecipeOptionsProps {
 function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
     const {t} = useTranslation();
     const [showPopup, setShowPopup] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         document.addEventListener('click', closePopup);
@@ -36,6 +38,7 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
 
     function handleEdit() {
         toast.info("Edit");
+        navigate(`/u/recipesModification?title=${recipe.title}`);
     }
 
     function handleDelete() {

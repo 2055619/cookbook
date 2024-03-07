@@ -35,7 +35,7 @@ public class CookController {
     }
 
     @GetMapping("/recipe/{title}")
-    public ResponseEntity<RecipeDTO> getRecipes(@PathVariable String title){
+    public ResponseEntity<RecipeDTO> getRecipe(@PathVariable String title){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.getRecipe(title));
     }

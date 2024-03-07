@@ -5,7 +5,7 @@ import React, {useEffect} from "react";
 import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
 import { useTranslation } from "react-i18next";
-import RecipeCreation from "./RecipeCreation";
+import RecipeModification from "./RecipeModification";
 import ViewRecipe from "./ViewRecipe";
 
 interface IUserPage {
@@ -30,7 +30,7 @@ function UserPages({user}: IUserPage) {
             <Routes>
                 <Route path="landing" element={<Landing/>}/>
                 <Route path="usrRecipes" element={<ViewRecipe user={user}/>}/>
-                <Route path="recipesCreation" element={<RecipeCreation user={user!}/>}/>
+                <Route path="recipesModification" element={<RecipeModification user={user!}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
         </div>

@@ -50,4 +50,11 @@ export class CookBookService {
                 return response.data;
             });
     }
+
+    async getRecipe(title: string) {
+        return cookServerInstance.get<IRecipe>(`/cook/recipe/${title.trim()}`,)
+            .then((response) => {
+                return response.data;
+            });
+    }
 }

@@ -7,28 +7,30 @@ import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 
-interface RecipeCreationProps {
+interface RecipeModificationProps {
     user: IUser;
 }
 
-function RecipeCreation({user}: RecipeCreationProps) {
+function RecipeModification({user}: RecipeModificationProps) {
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
     const utilsService = new UtilsService();
     const navigate = useNavigate();
+    const [recipe, setRecipe] = useState<IRecipe>();
+
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [instructions, setInstructions] = useState<string[]>([]);
+    const [instructions, setInstructions] = useState<string[]>( []);
     const [ingredients, setIngredients] = useState<IIngredient[]>([]);
-    const [serving, setServing] = useState(0);
+    const [serving, setServing] = useState(1);
     const [prepTime, setPrepTime] = useState(0);
-    const [cookTime, setCookTime] = useState(0);
+    const [cookTime, setCookTime] = useState( 0);
 
     const [category, setCategory] = useState('MAIN');
-    const [difficulty, setDifficulty] = useState('MEDIUM');
-    const [visibility, setVisibility] = useState('SECRET');
-    const [portionSize, setPortionSize] = useState('MEDIUM');
+    const [difficulty, setDifficulty] = useState('EASY');
+    const [visibility, setVisibility] = useState('PUBLIC');
+    const [portionSize, setPortionSize] = useState('CUP');
     const [dietTypes, setDietTypes] = useState<string[]>([]);
 
     const [allCategories, setAllCategories] = useState<string[]>([]);
@@ -44,6 +46,37 @@ function RecipeCreation({user}: RecipeCreationProps) {
     const [instructionsWarning, setInstructionsWarning] = useState('');
     const [ingredientsWarning, setIngredientsWarning] = useState('');
     const [dietTypeWarning, setDietTypeWarning] = useState('');
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const title = urlParams.get('title');
+        if (title !== null) {
+            cookbookService.getRecipe(title)
+                .then((response) => {
+                    setRecipe(response);
+
+                    setTitle(response.title);
+                    setDescription(response.description);
+                    setInstructions(response.instructions);
+                    // setIngredients(response.ingredients);
+                    setServing(response.serving);
+                    setPrepTime(response.prepTime);
+                    setCookTime(response.cookTime);
+                    setCategory(response.category);
+                    setDifficulty(response.difficulty);
+                    setVisibility(response.visibility);
+                    setPortionSize(response.portionSize);
+                    setDietTypes(response.dietTypes);
+
+                    toast.info("Load Recipe " + response.title);
+                })
+                .catch((error) => {
+                    toast.error("error")
+                    console.log(error)
+                    toast.error(t(error.response?.data.message));
+                });
+        }
+    }, []);
 
     useEffect(() => {
         utilsService.getCategories()
@@ -240,6 +273,7 @@ function RecipeCreation({user}: RecipeCreationProps) {
                     className="flex flex-col space-y-1 w-full">
                     <span className="font-medium">{t('title')}</span>
                     <input type="text" value={title} onChange={e => setTitle(e.target.value)}
+                           placeholder={recipe?.title || t('input.title')}
                            className={`border-2 p-2 rounded ${titleWarning !== '' ? "border-cook-red" : "border-cook-light"}`}/>
                     <h5 className="text-red-500">{t(titleWarning)}</h5>
                 </label>
@@ -386,6 +420,6 @@ function RecipeCreation({user}: RecipeCreationProps) {
             </form>
         </div>
     );
-};
+}
 
-export default RecipeCreation;
+export default RecipeModification;
