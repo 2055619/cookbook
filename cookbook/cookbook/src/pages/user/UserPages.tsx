@@ -29,7 +29,7 @@ function UserPages({user}: IUserPage) {
         <div className={"min-h-screen bg-cook-orange text-center"}>
             <Routes>
                 <Route path="landing" element={<Landing/>}/>
-                <Route path="usrRecipes" element={<ViewRecipe/>}/>
+                <Route path="usrRecipes" element={<ViewRecipe user={user}/>}/>
                 <Route path="recipesCreation" element={<RecipeCreation user={user!}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>

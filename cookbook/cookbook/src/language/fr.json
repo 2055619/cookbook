@@ -64,7 +64,8 @@
     "yes": "Oui",
     "no": "Non",
     "ingredient": "Nommer l'Ingrédient",
-    "instruction": "Inscrivez l'instruction"
+    "instruction": "Inscrivez l'instruction",
+    "report": "Signaler"
   },
   "message": {
     "titleLength": "Le titre doit être composé d'au moins 3 caractères",

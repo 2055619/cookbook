@@ -3,9 +3,13 @@ import {CookBookService} from "../../services/CookBookService";
 import {useEffect, useState} from "react";
 import {IRecipe} from "../../assets/models/Recipe";
 import {toast} from "react-toastify";
-import UserRecipeComponent from "../../components/recipes/UserRecipeComponent";
+import RecipeComponent from "../../components/recipes/RecipeComponent";
+import {IUser} from "../../assets/models/Authentication";
 
-function ViewRecipe(){
+interface IViewRecipeProps {
+    user: IUser | null;
+}
+function ViewRecipe({user}: IViewRecipeProps){
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
 
@@ -31,7 +35,7 @@ function ViewRecipe(){
             <h1 className={"text-4xl"}>{t('modifyRecipes')}</h1>
             {recipes.map((recipe, index) => {
                 return <div className={`flex justify-center`} key={index}>
-                    <UserRecipeComponent recipe={recipe} key={index}/>
+                    <RecipeComponent recipe={recipe} username={user?.username} key={index}/>
                 </div>
             })}
 

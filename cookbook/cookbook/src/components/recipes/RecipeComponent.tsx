@@ -3,12 +3,14 @@ import {IRecipe} from "../../assets/models/Recipe";
 import pastaImg from "../../assets/image/red-sauce-pasta-recipe.jpg";
 import React from "react";
 import ReactionFooter from "./ReactionFooter";
+import RecipeOptions from "./RecipeOptions";
 
 interface RecipeCardProps {
     recipe: IRecipe;
+    username?: string;
 }
 
-function RecipeComponent({recipe}: RecipeCardProps) {
+function RecipeComponent({recipe, username}: RecipeCardProps) {
     const {t} = useTranslation();
 
     const recipeEstimatedTimeInHours = () => {
@@ -22,7 +24,7 @@ function RecipeComponent({recipe}: RecipeCardProps) {
     return (
         <div className="border rounded-lg px-4 my-2 lg:w-3/5 w-full flex flex-col h-full justify-between">
             <div className={""}>
-                <p className="text-left font-normal mb-0 pb-0">{recipe.cookUsername}</p>
+                <RecipeOptions username={username!} recipe={recipe} />
                 <h1 className="text-5xl font-semibold mt-0 pt-0">{recipe.title}</h1>
                 <p className="text-2xl">{recipe.description}</p>
 
