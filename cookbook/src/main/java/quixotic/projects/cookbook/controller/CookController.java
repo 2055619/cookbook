@@ -46,7 +46,7 @@ public class CookController {
                 .body(cookService.getRecipesByTitle(title));
     }
 
-    @GetMapping("usr/recipes")
+    @GetMapping("/usr/recipes")
     public ResponseEntity<List<RecipeDTO>> getRecipesByUser(@RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.getRecipesByUser(token));

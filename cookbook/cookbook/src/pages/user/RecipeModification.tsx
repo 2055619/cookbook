@@ -291,6 +291,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                 <label className="flex flex-col space-y-1 w-full">
                     <span className="font-medium">{t('description')}</span>
                     <textarea value={description} onChange={e => setDescription(e.target.value)}
+                              placeholder={recipe?.description || t('input.description')}
                               className={`border-2 p-2 rounded ${descriptionWarning !== '' ? "border-cook-red" : "border-cook-light"}`}/>
                     <h5 className="text-red-500">{t(descriptionWarning)}</h5>
                 </label>

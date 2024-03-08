@@ -6,7 +6,7 @@ import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
 import { useTranslation } from "react-i18next";
 import RecipeModification from "./RecipeModification";
-import ViewRecipe from "./ViewRecipe";
+import UserRecipes from "./UserRecipes";
 
 interface IUserPage {
     user: IUser | null;
@@ -29,7 +29,7 @@ function UserPages({user}: IUserPage) {
         <div className={"min-h-screen bg-cook-orange text-center"}>
             <Routes>
                 <Route path="landing" element={<Landing/>}/>
-                <Route path="usrRecipes" element={<ViewRecipe user={user}/>}/>
+                <Route path="usrRecipes" element={<UserRecipes user={user}/>}/>
                 <Route path="recipesModification" element={<RecipeModification user={user!}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>

@@ -63,6 +63,8 @@
     "remove": "Retirer",
     "yes": "Oui",
     "no": "Non",
+    "title": "Ajoutez un titre",
+    "description": "Ajoutez une description",
     "ingredient": "Nommer l'Ingrédient",
     "instruction": "Inscrivez l'instruction",
     "report": "Signaler"

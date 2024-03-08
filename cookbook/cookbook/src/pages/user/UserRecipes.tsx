@@ -6,10 +6,10 @@ import {toast} from "react-toastify";
 import RecipeComponent from "../../components/recipes/RecipeComponent";
 import {IUser} from "../../assets/models/Authentication";
 
-interface IViewRecipeProps {
+interface IUserRecipesProps {
     user: IUser | null;
 }
-function ViewRecipe({user}: IViewRecipeProps){
+function UserRecipes({user}: IUserRecipesProps){
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
 
@@ -24,6 +24,7 @@ function ViewRecipe({user}: IViewRecipeProps){
                 })
                 .catch((error) => {
                     toast.error(t(error.response?.data.message));
+                    toast.error(error.response);
                     return [];
                 });
         };
@@ -43,4 +44,4 @@ function ViewRecipe({user}: IViewRecipeProps){
     );
 }
 
-export default ViewRecipe;
+export default UserRecipes;
