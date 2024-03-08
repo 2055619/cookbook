@@ -6,6 +6,8 @@ import {UtilsService} from "../../services/UtilsService";
 import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
 
 interface RecipeModificationProps {
     user: IUser;
@@ -331,7 +333,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                                    className="border-2 border-cook-light p-2 rounded flex-grow"/>
                             <button type="button" onClick={() => removeInstruction(index)}
                                     className="border-2 border-cook-red text-cook-red hover:bg-cook-red hover:text-cook rounded transition ease-in duration-200 p-1">
-                                {t('input.delete')}
+                                <span className={"hidden lg:inline-block"}>{t('input.delete')}</span>
+                                <FontAwesomeIcon icon={faTrash} className={"mx-1"}/>
                             </button>
                         </div>
                     ))}
@@ -342,34 +345,36 @@ function RecipeModification({user}: RecipeModificationProps) {
                     </button>
                 </div>
 
-                <div className="flex flex-col space-y-1 md:w-full max-w-full mx-auto">
+                <div className="flex flex-col space-y-1 md:w-full w-full max-w-full mx-auto">
                     <span className="font-medium">{t('ingredients')}</span>
                     {ingredients.map((ingredient, index) => (
-                        <div key={index} className="flex space-x-2 items-center">
+                        <div key={index} className="grid grid-cols-2 gap-4 w-full py-1">
                             <input type="text" value={ingredient.name}
                                    onChange={e => handleIngredientChange(index, e.target.value)}
                                    placeholder={t('input.ingredient')}
-                                   className="border-2 border-cook-light p-2 rounded flex-grow"/>
+                                   className="border-2 border-cook-light p-2 rounded "/>
                             <input type="number" value={ingredient.quantity}
                                    onChange={e => handleIngredientQuantityChange(index, Number(e.target.value))}
-                                   className="border-2 border-cook-light p-2 rounded w-20 md:w-16 sm:w-12"
+                                   className="border-2 border-cook-light p-2 rounded"
                                    min="0" step="0.01"/>
                             <select value={ingredient.ingredientState}
                                     onChange={e => handleIngredientStateChange(index, e.target.value)}
-                                    className="border-2 border-cook-light p-2 rounded sm:w-20">
+                                    className="border-2 border-cook-light p-2 rounded">
                                 {Object.keys(units).map((ingredientState, stateIndex) => (
                                     <option key={stateIndex} value={ingredientState}>{t(ingredientState)}</option>
                                 ))}
                             </select>
                             <select value={ingredient.unit}
                                     onChange={e => handleIngredientUnitChange(index, e.target.value)}
-                                    className="border-2 border-cook-light p-2 rounded sm:w-20">
+                                    className="border-2 border-cook-light p-2 rounded ">
                                 {units[ingredient.ingredientState as 'SOLID' | 'LIQUID' | 'POWDER' | 'OTHER'].map((unit, unitIndex) => (
                                     <option key={unitIndex} value={unit}>{t(unit)}</option>
                                 ))}
                             </select>
                             <button type="button" onClick={() => removeIngredient(index)}
-                                    className="border-2 border-cook-red text-cook-red hover:bg-cook-red hover:text-cook rounded transition ease-in duration-200 p-1">{t('input.delete')}
+                                    className="col-span-2 border-2 border-cook-red text-cook-red hover:bg-cook-red hover:text-cook rounded transition ease-in duration-200 p-1">
+                                <span className={""}>{t('input.delete')}</span>
+                                <FontAwesomeIcon icon={faTrash} className={"mx-1"}/>
                             </button>
                         </div>
                     ))}
@@ -420,7 +425,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                         </label>
                     ))}
                 </div>
-                <h5 className="text-red-500">{dietTypeWarning}</h5>
+                <h5 className="text-red-500">{t(dietTypeWarning)}</h5>
 
                 <button type="submit" onClick={handleSubmit}
                         className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
