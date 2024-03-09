@@ -5,6 +5,7 @@ import React from "react";
 import ReactionFooter from "./ReactionFooter";
 import RecipeOptions from "./RecipeOptions";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 interface RecipeCardProps {
     recipe: IRecipe;
@@ -13,6 +14,7 @@ interface RecipeCardProps {
 
 function RecipeComponent({recipe, username}: RecipeCardProps) {
     const {t} = useTranslation();
+    const navigate = useNavigate()
 
     const recipeEstimatedTimeInHours = () => {
         const time = recipe.prepTime + recipe.cookTime;
@@ -24,7 +26,7 @@ function RecipeComponent({recipe, username}: RecipeCardProps) {
 
     return (
         <div className="border rounded-lg px-4 my-2 lg:w-3/5 w-full flex flex-col h-full justify-between" >
-            <div className={""} onClick={() => toast.info("RECIPE")}>
+            <div className={""} onClick={() => navigate('/u/recipeDetail?title=' + recipe.title)}>
                 <RecipeOptions username={username!} recipe={recipe} />
                 <h1 className="text-3xl font-semibold mt-0 pt-0">{recipe.title}</h1>
                 <p className="text-2xl">{recipe.description}</p>

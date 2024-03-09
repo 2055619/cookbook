@@ -43,7 +43,7 @@ function UserPages({user, setUser}: IUserPage) {
             <Routes>
                 <Route path="landing" element={<Landing/>}/>
                 <Route path="recipes" element={<UserRecipes user={user!}/>}/>
-                <Route path="RecipeDetail" element={<RecipeDetails user={user!}/>}/>
+                <Route path="recipeDetail" element={<RecipeDetails user={user!}/>}/>
                 <Route path="recipesModification" element={<RecipeModification user={user!}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>

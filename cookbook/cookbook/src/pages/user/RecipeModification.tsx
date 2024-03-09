@@ -5,7 +5,6 @@ import {CookBookService} from "../../services/CookBookService";
 import {UtilsService} from "../../services/UtilsService";
 import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
-import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 
@@ -17,7 +16,6 @@ function RecipeModification({user}: RecipeModificationProps) {
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
     const utilsService = new UtilsService();
-    const navigate = useNavigate();
     const [recipe, setRecipe] = useState<IRecipe>();
 
 
@@ -206,7 +204,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                     toast.error(t(error.response?.data.message));
                 });
         }
-        navigate('/u/landing');
+        window.history.back();
     };
 
     // Diet
