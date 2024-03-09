@@ -57,7 +57,7 @@ function UserProfile() {
             <h2 className={"text-7xl text-center mt-4"}>{t('publication')}</h2>
 
             {/*TODO: Add filter for the user only */}
-            <Landing/>
+            <Landing username={user.username}/>
         </div>
     );
 }

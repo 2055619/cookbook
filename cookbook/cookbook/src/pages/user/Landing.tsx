@@ -6,7 +6,11 @@ import {IRecipe} from "../../assets/models/Recipe";
 import {toast} from "react-toastify";
 import RecipeComponent from "../../components/recipes/RecipeComponent";
 
-function Landing() {
+interface ILandingProps {
+    username?: string;
+}
+
+function Landing({username}: ILandingProps) {
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
 
@@ -39,12 +43,12 @@ function Landing() {
                 .map(title => {
                     return [...recipes, ...newRecipes].find(recipe => recipe.title === title)!
                 })
-                .filter(recipe => recipe !== undefined) as IRecipe[];
+                .filter(recipe => !username || username === recipe.cookUsername) as IRecipe[];
 
             setRecipes(uniqueRecipes!);
         };
         loadRecipes();
-    }, [page]);
+    }, [page, username]);
 
     return (
         <div className={"text-center"}>
