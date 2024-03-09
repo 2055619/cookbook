@@ -14,9 +14,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class Recipe extends Publication {
-    @Id
-    @GeneratedValue
-    private Long id;
     @ElementCollection
     private Set<String> instructions = new HashSet<>();
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

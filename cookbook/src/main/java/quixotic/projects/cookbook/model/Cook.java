@@ -66,7 +66,7 @@ public class Cook implements UserDetails {
     // TODO: 2024-03-01 Fix the Stack overflow error (infinite getter loop)
     public Set<Publication> getPublications() {
         for (Publication publication : publications) {
-            System.out.println(publication);
+            System.out.println(publication.getId());
         }
         return Set.of();
     }

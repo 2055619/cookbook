@@ -23,6 +23,7 @@ import static quixotic.projects.cookbook.validation.Validation.validateRecipe;
 @NoArgsConstructor
 @Builder
 public class RecipeDTO {
+    private Long id;
     private String title;
     private String description;
     private String cookUsername;
@@ -38,6 +39,7 @@ public class RecipeDTO {
     private float cookTime;
 
     public RecipeDTO(Recipe recipe) {
+        this.id = recipe.getId();
         this.title = recipe.getTitle();
         this.description = recipe.getDescription();
         this.cookUsername = recipe.getCook().getUsername();

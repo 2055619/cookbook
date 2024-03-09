@@ -127,12 +127,12 @@ public class CookServiceTest {
         Page<Recipe> recipePage = Page.empty();
         when(recipeRepository.findAll(pageable)).thenReturn(recipePage);
 
-        cookService.getRecipes(0, 10, "testCook");
+        cookService.getRecipesByPage(0, 10, "testCook");
     }
 
     @Test
     public void getRecipes_NegativePage() {
-        assertThrows(IllegalArgumentException.class, () -> cookService.getRecipes(-1, 10, "testCook"));
+        assertThrows(IllegalArgumentException.class, () -> cookService.getRecipesByPage(-1, 10, "testCook"));
     }
 
 
@@ -141,7 +141,7 @@ public class CookServiceTest {
         String title = recipeDTOS.get(0).getTitle();
         when(recipeRepository.findByTitle(title)).thenReturn(Optional.of(recipeDTOS.get(0).toEntity(cook)));
 
-        cookService.getRecipe(title);
+        cookService.getRecipeByTitle(title);
     }
 
     @Test
@@ -149,7 +149,7 @@ public class CookServiceTest {
         String title = recipeDTOS.get(0).getTitle();
         when(recipeRepository.findByTitle(title)).thenReturn(Optional.empty());
 
-        assertThrows(RecipeNotFoundException.class, () -> cookService.getRecipe(title));
+        assertThrows(RecipeNotFoundException.class, () -> cookService.getRecipeByTitle(title));
     }
 
     @Test
@@ -179,7 +179,7 @@ public class CookServiceTest {
         Long id = 1L;
         when(recipeRepository.existsById(id)).thenReturn(true);
 
-        cookService.deleteRecipe(id);
+        cookService.deleteRecipeById(id);
     }
 
     @Test
@@ -187,7 +187,7 @@ public class CookServiceTest {
         Long id = 1L;
         when(recipeRepository.existsById(id)).thenReturn(false);
 
-        assertThrows(RecipeNotFoundException.class, () -> cookService.deleteRecipe(id));
+        assertThrows(RecipeNotFoundException.class, () -> cookService.deleteRecipeById(id));
     }
 
     @Test
@@ -211,7 +211,7 @@ public class CookServiceTest {
         doNothing().when(recipeRepository).deleteByTitle(title);
 
         // Act
-        cookService.deleteRecipe(title);
+        cookService.deleteRecipeByTitle(title);
 
         // Assert
         verify(recipeRepository, times(1)).deleteByTitle(title);
@@ -224,7 +224,7 @@ public class CookServiceTest {
         when(recipeRepository.existsByTitle(title)).thenReturn(false);
 
         // Act & Then
-        assertThrows(RecipeNotFoundException.class, () -> cookService.deleteRecipe(title));
+        assertThrows(RecipeNotFoundException.class, () -> cookService.deleteRecipeByTitle(title));
     }
 
     @Test
@@ -235,7 +235,7 @@ public class CookServiceTest {
         when(recipeRepository.findAllByTitleContainsIgnoreCase(title)).thenReturn(recipes);
 
         // Act
-        List<RecipeSummary> result = cookService.getRecipesByTitle(title);
+        List<RecipeSummary> result = cookService.getRecipesSummaryByTitle(title);
 
         // Assert
         assertEquals(recipes.size(), result.size());
@@ -248,7 +248,7 @@ public class CookServiceTest {
         when(recipeRepository.findAllByTitleContainsIgnoreCase(title)).thenReturn(Collections.emptyList());
 
         // Act
-        List<RecipeSummary> result = cookService.getRecipesByTitle(title);
+        List<RecipeSummary> result = cookService.getRecipesSummaryByTitle(title);
 
         // Assert
         assertTrue(result.isEmpty());

@@ -10,6 +10,7 @@ import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
+import quixotic.projects.cookbook.model.Ingredient;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.model.summary.UserProfile;
@@ -43,7 +44,7 @@ public class CookService {
     public List<RecipeDTO> getRecipes() {
         return recipeRepository.findAll().stream().map(RecipeDTO::new).toList();
     }
-    public List<RecipeDTO> getRecipes(int page, int size, String token) {
+    public List<RecipeDTO> getRecipesByPage(int page, int size, String token) {
         if (page < 0 || size < 0)
             throw new IllegalArgumentException("Page and size must be greater than 0");
         String username = jwtTokenProvider.getUsernameFromJWT(token);
@@ -63,12 +64,16 @@ public class CookService {
                 .collect(Collectors.toList());
     }
 
-    public RecipeDTO getRecipe(String title) {
+    public RecipeDTO getRecipeById(Long id) {
+        return new RecipeDTO(recipeRepository.findById(id).orElseThrow(RecipeNotFoundException::new));
+    }
+
+    public RecipeDTO getRecipeByTitle(String title) {
         return new RecipeDTO(recipeRepository.findByTitle(title).orElseThrow(RecipeNotFoundException::new));
     }
 
     public RecipeDTO updateRecipe(RecipeDTO recipeDTO) {
-        Recipe recipe = recipeRepository.findByTitle(recipeDTO.getTitle())
+        Recipe recipe = recipeRepository.findById(recipeDTO.getId())
                 .orElseThrow(RecipeNotFoundException::new);
 
         recipe.setTitle(recipeDTO.getTitle());
@@ -85,23 +90,27 @@ public class CookService {
         recipe.setPrepTime(recipeDTO.getPrepTime());
         recipe.setCookTime(recipeDTO.getCookTime());
 
-        System.out.println("Recipe: " + recipe);
+        for (Ingredient ingredient: recipe.getIngredients()){
+            ingredient.setRecipe(recipe);
+        }
+
+//        System.out.println("Recipe: " + recipe);
 
         return new RecipeDTO(recipeRepository.save(recipe));
     }
 
-    public void deleteRecipe(Long id) {
+    public void deleteRecipeById(Long id) {
         if (recipeRepository.existsById(id))
             recipeRepository.deleteById(id);
         else throw new RecipeNotFoundException();
     }
-    public void deleteRecipe(String title) {
+    public void deleteRecipeByTitle(String title) {
         if (recipeRepository.existsByTitle(title))
             recipeRepository.deleteByTitle(title);
         else throw new RecipeNotFoundException();
     }
 
-    public List<RecipeSummary> getRecipesByTitle(String title) {
+    public List<RecipeSummary> getRecipesSummaryByTitle(String title) {
         return recipeRepository.findAllByTitleContainsIgnoreCase(title);
     }
 

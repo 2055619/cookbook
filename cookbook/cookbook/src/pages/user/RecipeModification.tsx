@@ -167,6 +167,7 @@ function RecipeModification({user}: RecipeModificationProps) {
         e.preventDefault();
 
         const newRecipe: IRecipe = {
+            id: recipe?.id,
             title,
             description,
             cookUsername: user.username,

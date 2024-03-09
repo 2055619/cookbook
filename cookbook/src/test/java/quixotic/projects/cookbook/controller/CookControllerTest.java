@@ -80,7 +80,7 @@ public class CookControllerTest {
     public void getRecipesByTitle_ValidTitleProvided_returnsAccepted() throws Exception {
         List<RecipeSummary> recipeSummaries = new ArrayList<>();
 
-        when(cookService.getRecipesByTitle(anyString())).thenReturn(recipeSummaries);
+        when(cookService.getRecipesSummaryByTitle(anyString())).thenReturn(recipeSummaries);
 
         mockMvc.perform(get("/api/v1/cook/recipes/title")
                         .header("Authorization", token)
@@ -93,7 +93,7 @@ public class CookControllerTest {
     public void getRecipes_ValidPageAndSizeProvided_returnsAccepted() throws Exception {
         List<RecipeDTO> recipeDTOS = new ArrayList<>();
 
-        when(cookService.getRecipes(0, 10, "testCook")).thenReturn(recipeDTOS);
+        when(cookService.getRecipesByPage(0, 10, "testCook")).thenReturn(recipeDTOS);
 
         mockMvc.perform(get("/api/v1/cook/recipes")
                         .header("Authorization", token)
@@ -105,7 +105,7 @@ public class CookControllerTest {
 
     @Test
     public void getRecipes_InvalidPageAndSizeProvided_returnsBadRequest() throws Exception {
-        doThrow(new IllegalArgumentException()).when(cookService).getRecipes(-1, -1, "testCook");
+        doThrow(new IllegalArgumentException()).when(cookService).getRecipesByPage(-1, -1, "testCook");
         mockMvc.perform(get("/api/v1/cook/recipes")
                         .header("Authorization", token)
                         .param("page", "-1")
@@ -117,7 +117,7 @@ public class CookControllerTest {
     public void getRecipe_ValidTitleProvided_returnsAccepted() throws Exception {
         RecipeDTO recipeDTO = new RecipeDTO();
 
-        when(cookService.getRecipe("Test Recipe")).thenReturn(recipeDTO);
+        when(cookService.getRecipeByTitle("Test Recipe")).thenReturn(recipeDTO);
 
         mockMvc.perform(get("/api/v1/cook/recipe/Test Recipe")
                         .header("Authorization", token))
@@ -127,7 +127,7 @@ public class CookControllerTest {
 
     @Test
     public void getRecipeByTitle_InvalidTitleProvided_returnsBadRequest() throws Exception {
-        doThrow(new RecipeNotFoundException()).when(cookService).getRecipe(anyString());
+        doThrow(new RecipeNotFoundException()).when(cookService).getRecipeByTitle(anyString());
 
         mockMvc.perform(get("/api/v1/cook/recipe/title")
                         .header("Authorization", token))

@@ -1,6 +1,7 @@
 package quixotic.projects.cookbook.controller;
 
 import jakarta.websocket.server.PathParam;
+import lombok.Lombok;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -32,19 +33,25 @@ public class CookController {
     @GetMapping("/recipes")
     public ResponseEntity<List<RecipeDTO>> getRecipes(@PathParam("page") int page, @PathParam("size") int size, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getRecipes(page, size, token));
+                .body(cookService.getRecipesByPage(page, size, token));
+    }
+
+    @GetMapping("/recipe")
+    public ResponseEntity<RecipeDTO> getRecipeById(@PathParam("id") Long id){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getRecipeById(id));
     }
 
     @GetMapping("/recipe/{title}")
-    public ResponseEntity<RecipeDTO> getRecipe(@PathVariable String title){
+    public ResponseEntity<RecipeDTO> getRecipeByTitle(@PathVariable String title){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getRecipe(title));
+                .body(cookService.getRecipeByTitle(title));
     }
 
     @GetMapping("/recipes/title")
     public ResponseEntity<List<RecipeSummary>> getRecipesByTitle(@PathParam("title") String title){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getRecipesByTitle(title));
+                .body(cookService.getRecipesSummaryByTitle(title));
     }
 
     @GetMapping("/usr/recipes")
@@ -59,12 +66,17 @@ public class CookController {
                 .body(cookService.updateRecipe(recipeDTO));
     }
 
-    @DeleteMapping("/recipe/{title}")
-    public ResponseEntity<Void> deleteRecipe(@PathVariable String title){
-        cookService.deleteRecipe(title);
+    @DeleteMapping("/recipe")
+    public ResponseEntity<Void> deleteRecipeById(@PathParam("id") Long id){
+        cookService.deleteRecipeById(id);
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/recipe/{title}")
+    public ResponseEntity<Void> deleteRecipeByTitle(@PathVariable String title){
+        cookService.deleteRecipeByTitle(title);
+        return ResponseEntity.noContent().build();
+    }
 
     @GetMapping("/usr/profile")
     public ResponseEntity<UserProfile> getUserProfile(@PathParam("username") String username){

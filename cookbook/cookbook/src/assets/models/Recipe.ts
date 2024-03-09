@@ -1,6 +1,7 @@
 import {IUser} from "./Authentication";
 
 export interface IRecipe {
+    id?: number;
     title: string;
     description: string;
     cookUsername: string;
@@ -17,6 +18,7 @@ export interface IRecipe {
 }
 
 export interface IIngredient {
+    id?: number;
     name: string;
     quantity: number;
     unit: string;

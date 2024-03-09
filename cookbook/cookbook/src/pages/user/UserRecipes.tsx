@@ -9,6 +9,7 @@ import {IUser} from "../../assets/models/Authentication";
 interface IUserRecipesProps {
     user: IUser;
 }
+// TODO: Maybe delete it???
 function UserRecipes({user}: IUserRecipesProps){
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
