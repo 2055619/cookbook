@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import avatar from "../assets/image/avatar.jpg";
 import LanguageSelector from "./Utils/LanguageSelector";
+import {toast} from "react-toastify";
 
 interface IProfileSummaryProps {
     setUser: (user: any) => void;
@@ -13,10 +14,11 @@ function ProfileSummary({setUser, user}: IProfileSummaryProps) {
     const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
 
+    // TODO: Add sign out Page
     function SignOut() {
         sessionStorage.clear();
         setUser(null);
-        navigate("/")
+        navigate("/");
         window.location.reload();
     }
 
