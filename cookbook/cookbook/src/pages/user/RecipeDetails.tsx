@@ -5,6 +5,8 @@ import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
 import {IUser} from "../../assets/models/Authentication";
 import pastaImg from "../../assets/image/red-sauce-pasta-recipe.jpg";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
 interface IRecipeDetailsProps {
     user: IUser;
@@ -60,6 +62,12 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
 
     return (
         <div className="w-full flex flex-col h-full justify-between pb-5">
+            <div className={"text-start ms-1 sticky top-14"}>
+                <button onClick={() => window.history.back()}
+                        className="clickable hover:bg-cook-red hover:rounded-full px-2 py-1">
+                    <FontAwesomeIcon icon={faArrowLeft}/>
+                </button>
+            </div>
 
             <div className={"w-11/12 mx-auto"}>
                 <h1 className="text-8xl font-semibold mt-0 pt-0">{recipe?.title}</h1>
