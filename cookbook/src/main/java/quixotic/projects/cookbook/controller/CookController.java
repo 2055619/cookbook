@@ -29,9 +29,9 @@ public class CookController {
     }
 
     @GetMapping("/recipes")
-    public ResponseEntity<List<RecipeDTO>> getRecipes(@PathParam("page") int page, @PathParam("size") int size){
+    public ResponseEntity<List<RecipeDTO>> getRecipes(@PathParam("page") int page, @PathParam("size") int size, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getRecipes(page, size));
+                .body(cookService.getRecipes(page, size, token));
     }
 
     @GetMapping("/recipe/{title}")

@@ -27,6 +27,54 @@ public class CookbookApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        createCooks();
+        createRecipes();
+    }
+
+    private void createRecipes() {
+        cookService.createRecipe(RecipeDTO.builder()
+                .title("Pancakes")
+                .description("The best pancakes you'll ever eat")
+                .cookUsername("TheChef")
+                .visibility(Visibility.PUBLIC)
+                .instructions(Set.of("Mix the ingredients", "Cook the pancakes"))
+                .ingredients(Set.of(IngredientDTO.builder()
+                        .name("Flour")
+                        .quantity(2).ingredientState(IngredientState.LIQUID)
+                        .unit(Unit.CUP)
+                        .build()))
+                .category(RecipeType.BREAKFAST)
+                .serving(4)
+                .prepTime(10)
+                .cookTime(10)
+                .difficulty(DifficultyLevel.EASY)
+                .portionSize(PortionSize.SMALL)
+                .dietTypes(List.of(DietType.CARNIVORE))
+                .build());
+
+        cookService.createRecipe(RecipeDTO.builder()
+                .title("Pasta")
+                .description("The best Pasta you'll ever eat")
+                .cookUsername("testCook")
+                .visibility(Visibility.SECRET)
+                .instructions(Set.of("Mix the ingredients", "Cook the pancakes"))
+                .ingredients(Set.of(IngredientDTO.builder()
+                        .name("Flour")
+                        .quantity(2).ingredientState(IngredientState.LIQUID)
+                        .unit(Unit.CUP)
+                        .build()))
+                .category(RecipeType.BREAKFAST)
+                .serving(4)
+                .prepTime(10)
+                .cookTime(10)
+                .difficulty(DifficultyLevel.EASY)
+                .portionSize(PortionSize.SMALL)
+                .dietTypes(List.of(DietType.CARNIVORE))
+                .build());
+
+    }
+
+    private void createCooks() {
         userService.createCook(SignUpDTO.builder()
                 .username("TheChef")
                 .password("Password123")
@@ -48,26 +96,6 @@ public class CookbookApplication implements CommandLineRunner {
                 .liquidUnit(Unit.LITER)
                 .solidUnit(Unit.KILOGRAM)
                 .otherUnit(Unit.CUP)
-                .build());
-
-        cookService.createRecipe(RecipeDTO.builder()
-                .title("Pancakes")
-                .description("The best pancakes you'll ever eat")
-                .cookUsername("TheChef")
-                .visibility(Visibility.PUBLIC)
-                .instructions(Set.of("Mix the ingredients", "Cook the pancakes"))
-                .ingredients(Set.of(IngredientDTO.builder()
-                        .name("Flour")
-                        .quantity(2).ingredientState(IngredientState.LIQUID)
-                        .unit(Unit.CUP)
-                        .build()))
-                .category(RecipeType.BREAKFAST)
-                .serving(4)
-                .prepTime(10)
-                .cookTime(10)
-                .difficulty(DifficultyLevel.EASY)
-                .portionSize(PortionSize.SMALL)
-                .dietTypes(List.of(DietType.CARNIVORE))
                 .build());
     }
 }

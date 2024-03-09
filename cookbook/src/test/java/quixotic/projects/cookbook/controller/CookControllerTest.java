@@ -93,7 +93,7 @@ public class CookControllerTest {
     public void getRecipes_ValidPageAndSizeProvided_returnsAccepted() throws Exception {
         List<RecipeDTO> recipeDTOS = new ArrayList<>();
 
-        when(cookService.getRecipes(0, 10)).thenReturn(recipeDTOS);
+        when(cookService.getRecipes(0, 10, "testCook")).thenReturn(recipeDTOS);
 
         mockMvc.perform(get("/api/v1/cook/recipes")
                         .header("Authorization", token)
@@ -105,7 +105,7 @@ public class CookControllerTest {
 
     @Test
     public void getRecipes_InvalidPageAndSizeProvided_returnsBadRequest() throws Exception {
-        doThrow(new IllegalArgumentException()).when(cookService).getRecipes(-1, -1);
+        doThrow(new IllegalArgumentException()).when(cookService).getRecipes(-1, -1, "testCook");
         mockMvc.perform(get("/api/v1/cook/recipes")
                         .header("Authorization", token)
                         .param("page", "-1")

@@ -42,13 +42,26 @@ public class CookService {
     public List<RecipeDTO> getRecipes() {
         return recipeRepository.findAll().stream().map(RecipeDTO::new).toList();
     }
-    public List<RecipeDTO> getRecipes(int page, int size) {
+    public List<RecipeDTO> getRecipes(int page, int size, String token) {
         if (page < 0 || size < 0)
             throw new IllegalArgumentException("Page and size must be greater than 0");
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+
+        Cook user = cookRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
         Pageable pageable = PageRequest.of(page, size);
         Page<Recipe> recipePage = recipeRepository.findAll(pageable);
-        return recipePage.map(RecipeDTO::new).stream().toList();
+
+        return recipePage.stream()
+                .filter(recipe -> switch (recipe.getVisibility()) {
+                    case PUBLIC -> true;
+                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
+                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
+                    case SECRET -> user.equals(recipe.getCook());
+                })
+                .map(RecipeDTO::new)
+                .collect(Collectors.toList());
     }
+
     public RecipeDTO getRecipe(String title) {
         return new RecipeDTO(recipeRepository.findByTitle(title).orElseThrow(RecipeNotFoundException::new));
     }

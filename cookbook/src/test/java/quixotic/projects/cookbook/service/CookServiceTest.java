@@ -127,12 +127,12 @@ public class CookServiceTest {
         Page<Recipe> recipePage = Page.empty();
         when(recipeRepository.findAll(pageable)).thenReturn(recipePage);
 
-        cookService.getRecipes(0, 10);
+        cookService.getRecipes(0, 10, "testCook");
     }
 
     @Test
     public void getRecipes_NegativePage() {
-        assertThrows(IllegalArgumentException.class, () -> cookService.getRecipes(-1, 10));
+        assertThrows(IllegalArgumentException.class, () -> cookService.getRecipes(-1, 10, "testCook"));
     }
 
 

@@ -47,6 +47,9 @@ public class Cook implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Unit otherUnit;
 
+    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Cook> followers = new HashSet<>();
+
     @OneToMany(mappedBy = "cook", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Publication> publications = new HashSet<>();
 //    @OneToMany(mappedBy = "cook")
@@ -66,6 +69,24 @@ public class Cook implements UserDetails {
             System.out.println(publication);
         }
         return Set.of();
+    }
+
+    public void addFollower(Cook cook) {
+        followers.add(cook);
+    }
+
+    public void removeFollower(Cook cook) {
+        followers.remove(cook);
+    }
+
+    public Set<Cook> getFriends() {
+        Set<Cook> friends = new HashSet<>();
+        for (Cook cook : followers) {
+            if (cook.getFollowers().contains(this)) {
+                friends.add(cook);
+            }
+        }
+        return friends;
     }
 
     @Override
