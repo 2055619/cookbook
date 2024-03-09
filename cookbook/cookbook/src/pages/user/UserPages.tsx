@@ -46,11 +46,11 @@ function UserPages({user, setUser}: IUserPage) {
     return (
         <div className={"min-h-screen bg-cook-orange text-center"}>
             <Routes>
-                <Route path="landing" element={<Landing/>}/>
+                <Route path="landing" element={<Landing user={user!}/>}/>
                 <Route path="recipes" element={<UserRecipes user={user!}/>}/>
                 <Route path="recipeDetail" element={<RecipeDetails user={user!}/>}/>
                 <Route path="recipesModification" element={<RecipeModification user={user!}/>}/>
-                <Route path="profile" element={<UserProfile/>}/>
+                <Route path="profile" element={<UserProfile user={user!}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
         </div>
