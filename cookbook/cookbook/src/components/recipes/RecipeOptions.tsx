@@ -5,6 +5,7 @@ import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {IRecipe} from "../../assets/models/Recipe";
 import {useNavigate} from "react-router-dom";
+import {CookBookService} from "../../services/CookBookService";
 
 interface IRecipeOptionsProps {
     username: string;
@@ -13,8 +14,12 @@ interface IRecipeOptionsProps {
 
 function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
     const {t} = useTranslation();
-    const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
+    const cookbookService = new CookBookService();
+    const [showPopup, setShowPopup] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+
 
     useEffect(() => {
         document.addEventListener('click', closePopup);
@@ -37,12 +42,11 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
     }
 
     function handleEdit() {
-        toast.info("Edit");
         navigate(`/u/recipesModification?title=${recipe.title}`);
     }
 
     function handleDelete() {
-        toast.info("Delete");
+        setShowDeleteModal(true); // Open the delete confirmation modal
     }
 
     function handleSave() {
@@ -58,8 +62,26 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
         navigate('/u/profile?username=' + recipe.cookUsername)
     }
 
+    function handleConfirmDelete() {
+        cookbookService.deleteRecipeById(recipe.id!)
+            .then(r => {
+                toast.info("Delete")
+                setShowDeleteModal(false);
+                window.location.reload();
+            })
+            .catch(e => {
+                toast.error(t(e.response?.data.message));
+                setShowDeleteModal(false);
+            });
+
+    }
+
+    function handleOptionClick(e: React.MouseEvent) {
+        e.stopPropagation();
+    }
+
     return (
-        <div className={"relative text-end pb-0"}>
+        <div className={"relative text-end pb-0"} onClick={handleOptionClick}>
             <div className={"flex justify-between items-center"}>
                 <button className="mb-0 pb-0 clickable"
                    onClick={handleViewProfile} >{recipe.cookUsername}</button>
@@ -97,6 +119,45 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
                     </button>
                 </div>
             )}
+
+            {showDeleteModal && (
+                <div className="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center text-cook">
+                    <div className="fixed inset-0 bg-cook opacity-50" onClick={() => setShowDeleteModal(false)}></div> {/* This line adds the grayed out background */}
+                    <div
+                        className="rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                        <div
+                            className="inline-block align-bottom bg-cook rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                            <div className="bg-cook-orange px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div className="sm:flex sm:items-start">
+                                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                        <h3 className="text-lg leading-6 font-medium">
+                                            {t('confirmDelete')}
+                                        </h3>
+                                        <div className="mt-2">
+                                            <p className="text-sm text-gray-500">
+                                                {t('confirmDeleteDescription')}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="bg-cook-orange opacity-90 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <button type="button"
+                                        onClick={handleConfirmDelete}
+                                        className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2 ms-5">
+                                    {t('input.confirm')}
+                                </button>
+                                <button type="button"
+                                        onClick={() => setShowDeleteModal(false)}
+                                        className="border-2 border-cook-red text-cook-red hover:bg-cook-red hover:text-cook rounded transition ease-in duration-200 p-2 ms-5">
+                                    {t('input.cancel')}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 }

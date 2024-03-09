@@ -38,7 +38,6 @@ public class CookService {
 
         cookRepository.save(cook);
         return new RecipeDTO(recipe);
-//        return new RecipeDTO(recipeRepository.save(recipe));
     }
 
     public List<RecipeDTO> getRecipes() {

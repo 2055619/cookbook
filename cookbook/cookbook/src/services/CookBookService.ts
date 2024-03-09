@@ -66,6 +66,20 @@ export class CookBookService {
 
     }
 
+    async deleteRecipeByTitle(title: string) {
+        return cookServerInstance.delete(`/cook/recipe/${title.trim()}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async deleteRecipeById(id: number) {
+        return cookServerInstance.delete(`/cook/recipe?id=${id}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
     async getUserProfile(username: string) {
         return cookServerInstance.get<IUser>(`/cook/usr/profile?username=${username}`)
             .then((response) => {
