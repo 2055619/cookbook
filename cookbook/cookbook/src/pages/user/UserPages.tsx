@@ -34,6 +34,10 @@ function UserPages({user, setUser}: IUserPage) {
                     toast.error(error.response?.data.message);
                     navigate('/authentication/signin');
                 });
+        } else {
+            toast.error("message.userNotLoggedIn");
+
+            navigate('/authentication/signin');
         }
     }, [user]);
 

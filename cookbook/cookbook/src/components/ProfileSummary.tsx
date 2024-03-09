@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import avatar from "../assets/image/avatar.jpg";
 import LanguageSelector from "./Utils/LanguageSelector";
 
@@ -16,7 +16,8 @@ function ProfileSummary({setUser, user}: IProfileSummaryProps) {
     function SignOut() {
         sessionStorage.clear();
         setUser(null);
-        navigate('/authentication/signin');
+        navigate("/")
+        window.location.reload();
     }
 
     useEffect(() => {
