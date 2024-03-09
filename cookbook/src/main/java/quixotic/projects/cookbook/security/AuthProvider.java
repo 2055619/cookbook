@@ -37,7 +37,7 @@ public class AuthProvider implements AuthenticationProvider {
     }
 
     private Cook loadUserByUsername(String username) throws UsernameNotFoundException {
-        return cookRepository.findByUsername(username)
+        return cookRepository.findCookByUsername(username)
                 .orElseThrow(UserNotFoundException::new);
     }
 

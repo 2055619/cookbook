@@ -24,11 +24,16 @@ function RecipeComponent({recipe, username}: RecipeCardProps) {
         return time + " " + t('minutes');
     }
 
+    function handleViewDetails(e: React.MouseEvent<HTMLDivElement>) {
+        e.stopPropagation();
+        navigate('/u/recipeDetail?title=' + recipe.title)
+    }
+
     return (
         <div className="border rounded-lg px-4 my-2 lg:w-3/5 w-full flex flex-col h-full justify-between" >
-            <div className={""} onClick={() => navigate('/u/recipeDetail?title=' + recipe.title)}>
+            <div className={""} onClick={handleViewDetails}>
                 <RecipeOptions username={username!} recipe={recipe} />
-                <h1 className="text-3xl font-semibold mt-0 pt-0">{recipe.title}</h1>
+                <h1 className="text-3xl font-semibold mt-0 pt-0 clickable">{recipe.title}</h1>
                 <p className="text-2xl">{recipe.description}</p>
 
                 <div className="grid grid-cols-4 gap-2 mt-1">

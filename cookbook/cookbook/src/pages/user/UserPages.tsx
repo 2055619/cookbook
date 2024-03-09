@@ -10,6 +10,7 @@ import UserRecipes from "./UserRecipes";
 import RecipeDetails from "./RecipeDetails";
 import {cookServerInstance} from "../../App";
 import {CookBookService} from "../../services/CookBookService";
+import UserProfile from "./UserProfile";
 
 interface IUserPage {
     user: IUser | null;
@@ -49,6 +50,7 @@ function UserPages({user, setUser}: IUserPage) {
                 <Route path="recipes" element={<UserRecipes user={user!}/>}/>
                 <Route path="recipeDetail" element={<RecipeDetails user={user!}/>}/>
                 <Route path="recipesModification" element={<RecipeModification user={user!}/>}/>
+                <Route path="profile" element={<UserProfile/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
         </div>

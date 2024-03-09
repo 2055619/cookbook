@@ -77,7 +77,7 @@ public class UserServiceTest {
         signInDTO.setUsername("testCook");
         signInDTO.setPassword("testPassword");
 
-        when(cookRepository.findByUsername(signInDTO.getUsername())).thenReturn(Optional.of(cook));
+        when(cookRepository.findCookByUsername(signInDTO.getUsername())).thenReturn(Optional.of(cook));
         when(authenticationManager.authenticate(any())).thenReturn(null);
         when(jwtTokenProvider.generateToken(any())).thenReturn("testToken");
 
@@ -93,7 +93,7 @@ public class UserServiceTest {
         signInDTO.setUsername("testCook");
         signInDTO.setPassword("testPassword");
 
-        when(cookRepository.findByUsername(signInDTO.getUsername())).thenReturn(Optional.empty());
+        when(cookRepository.findCookByUsername(signInDTO.getUsername())).thenReturn(Optional.empty());
 
         assertThrows(NoSuchElementException.class, () -> userService.authenticateCook(signInDTO));
     }
@@ -122,7 +122,7 @@ public class UserServiceTest {
     public void getMe_whenCookExists() {
         String token = "testToken";
         when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("testCook");
-        when(cookRepository.findByUsername("testCook")).thenReturn(Optional.of(cook));
+        when(cookRepository.findCookByUsername("testCook")).thenReturn(Optional.of(cook));
 
         CookDTO result = userService.getMe(token);
 
@@ -133,7 +133,7 @@ public class UserServiceTest {
     public void getMe_whenCookDoesNotExist() {
         String token = "testToken";
         when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("testCook");
-        when(cookRepository.findByUsername("testCook")).thenReturn(Optional.empty());
+        when(cookRepository.findCookByUsername("testCook")).thenReturn(Optional.empty());
 
         assertThrows(NoSuchElementException.class, () -> userService.getMe(token));
     }

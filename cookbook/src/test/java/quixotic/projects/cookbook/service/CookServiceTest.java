@@ -106,7 +106,7 @@ public class CookServiceTest {
         RecipeDTO recipeDTO = recipeDTOS.get(0);
         recipeDTO.setCookUsername(cook.getUsername());
 
-        when(cookRepository.findByUsername(recipeDTO.getCookUsername())).thenReturn(Optional.of(cook));
+        when(cookRepository.findCookByUsername(recipeDTO.getCookUsername())).thenReturn(Optional.of(cook));
 
         cookService.createRecipe(recipeDTO);
     }
@@ -116,7 +116,7 @@ public class CookServiceTest {
         RecipeDTO recipeDTO = recipeDTOS.get(0);
         recipeDTO.setCookUsername("testCook");
 
-        when(cookRepository.findByUsername(recipeDTO.getCookUsername())).thenReturn(Optional.empty());
+        when(cookRepository.findCookByUsername(recipeDTO.getCookUsername())).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> cookService.createRecipe(recipeDTO));
     }
@@ -158,7 +158,7 @@ public class CookServiceTest {
         recipeDTO.setCookTime(55);
 
         when(recipeRepository.findByTitle(recipeDTO.getTitle())).thenReturn(Optional.of(recipeDTOS.get(2).toEntity(cook)));
-        when(cookRepository.findByUsername(recipeDTO.getCookUsername())).thenReturn(Optional.of(cook));
+        when(cookRepository.findCookByUsername(recipeDTO.getCookUsername())).thenReturn(Optional.of(cook));
         when(recipeRepository.save(recipeDTO.toEntity(cook))).thenReturn(recipeDTO.toEntity(cook));
 
         cookService.updateRecipe(recipeDTO);

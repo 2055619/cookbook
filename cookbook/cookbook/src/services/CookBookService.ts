@@ -65,4 +65,11 @@ export class CookBookService {
             });
 
     }
+
+    async getUserProfile(username: string) {
+        return cookServerInstance.get<IUser>(`/cook/usr/profile?username=${username}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
 }

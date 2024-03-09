@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 			try{
 				tokenProvider.validateToken(token);
 				String username = tokenProvider.getUsernameFromJWT(token);
-				Cook cook = cookRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+				Cook cook = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
 
 				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 						cook.getUsername(), null, cook.getAuthorities()

@@ -53,10 +53,16 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
         toast.info("Report");
     }
 
+    function handleViewProfile(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        event.stopPropagation();
+        navigate('/u/profile?username=' + recipe.cookUsername)
+    }
+
     return (
         <div className={"relative text-end pb-0"}>
             <div className={"flex justify-between items-center"}>
-                <p className="mb-0 pb-0">{recipe.cookUsername}</p>
+                <button className="mb-0 pb-0 clickable"
+                   onClick={handleViewProfile} >{recipe.cookUsername}</button>
                 <FontAwesomeIcon className={"mt-2 px-2 clickable hover:bg-cook-red hover:rounded-full p-2"}
                                  onClick={togglePopup} icon={faEllipsisV}/>
             </div>

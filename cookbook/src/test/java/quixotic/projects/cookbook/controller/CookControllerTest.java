@@ -72,7 +72,7 @@ public class CookControllerTest {
     public void setup() {
         MockitoAnnotations.openMocks(this);
         objectMapper = new ObjectMapper();
-        when(cookRepository.findByUsername(anyString())).thenReturn(Optional.of(cook));
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
         this.token = jwtTokenProvider.generateToken(new UsernamePasswordAuthenticationToken("testCook", "Nonne123!"));
     }
 

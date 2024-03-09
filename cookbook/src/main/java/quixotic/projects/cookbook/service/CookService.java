@@ -12,6 +12,7 @@ import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundExce
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.summary.RecipeSummary;
+import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
@@ -28,7 +29,7 @@ public class CookService {
 
     //    Recipes
     public RecipeDTO createRecipe(RecipeDTO recipeDTO){
-        Cook cook = cookRepository.findByUsername(recipeDTO.getCookUsername()).orElseThrow(UserNotFoundException::new);
+        Cook cook = cookRepository.findCookByUsername(recipeDTO.getCookUsername()).orElseThrow(UserNotFoundException::new);
         Recipe recipe = recipeDTO.toEntity(cook);
 
         recipe.getIngredients().forEach(ingredient -> ingredient.setRecipe(recipe));
@@ -47,7 +48,7 @@ public class CookService {
             throw new IllegalArgumentException("Page and size must be greater than 0");
         String username = jwtTokenProvider.getUsernameFromJWT(token);
 
-        Cook user = cookRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+        Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
         Pageable pageable = PageRequest.of(page, size);
         Page<Recipe> recipePage = recipeRepository.findAll(pageable);
 
@@ -73,7 +74,7 @@ public class CookService {
         recipe.setTitle(recipeDTO.getTitle());
         recipe.setDescription(recipeDTO.getDescription());
         recipe.setVisibility(recipeDTO.getVisibility());
-        recipe.setCook(cookRepository.findByUsername(recipeDTO.getCookUsername()).orElseThrow(UserNotFoundException::new));
+        recipe.setCook(cookRepository.findCookByUsername(recipeDTO.getCookUsername()).orElseThrow(UserNotFoundException::new));
         recipe.setInstructions(recipeDTO.getInstructions());
         recipe.setIngredients(recipeDTO.getIngredients().stream().map(IngredientDTO::toEntity).collect(Collectors.toSet()));
         recipe.setCategory(recipeDTO.getCategory());
@@ -107,5 +108,9 @@ public class CookService {
     public List<RecipeDTO> getRecipesByUser(String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
         return recipeRepository.findAllByCookUsername(username).stream().map(RecipeDTO::new).toList();
+    }
+
+    public UserProfile getUserProfile(String username) {
+        return cookRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 }

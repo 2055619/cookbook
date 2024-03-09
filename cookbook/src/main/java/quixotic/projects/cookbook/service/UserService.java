@@ -27,7 +27,7 @@ public class UserService {
 
     public CookDTO authenticateCook(SignInDTO signInDTO) {
         return new CookDTO(
-                cookRepository.findByUsername(signInDTO.getUsername()).orElseThrow(),
+                cookRepository.findCookByUsername(signInDTO.getUsername()).orElseThrow(),
                 generateToken(signInDTO.getUsername(), signInDTO.getPassword())
         );
     }
@@ -53,6 +53,6 @@ public class UserService {
 
     public CookDTO getMe(String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
-        return new CookDTO(cookRepository.findByUsername(username).orElseThrow());
+        return new CookDTO(cookRepository.findCookByUsername(username).orElseThrow());
     }
 }

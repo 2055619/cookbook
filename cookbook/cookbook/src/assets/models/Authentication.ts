@@ -12,6 +12,17 @@ export interface IUser {
     token: string;
 }
 
+export interface IUserProfile {
+    username: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    solidUnit: string;
+    liquidUnit: string;
+    powderUnit: string;
+    otherUnit: string;
+}
+
 export interface IsignIn {
     username: string;
     password: string;

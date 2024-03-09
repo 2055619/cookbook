@@ -47,7 +47,7 @@ function Landing() {
     }, [page]);
 
     return (
-        <div className={""}>
+        <div className={"text-center"}>
 
             {recipes.map((recipe, index) => {
                 if (recipes.length === index + 1) {

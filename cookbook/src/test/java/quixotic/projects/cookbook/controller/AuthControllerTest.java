@@ -76,7 +76,7 @@ public class AuthControllerTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         objectMapper = new ObjectMapper();
-        when(cookRepository.findByUsername(anyString())).thenReturn(Optional.of(cook));
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
         this.token = jwtTokenProvider.generateToken(new UsernamePasswordAuthenticationToken("testCook", "Nonne123!"));
     }
 
@@ -93,7 +93,7 @@ public class AuthControllerTest {
 
     @Test
     public void getMe_AuthorizationHeaderDoesNotExist_returnsUnauthorized() throws Exception {
-        when(cookRepository.findByUsername(anyString())).thenReturn(Optional.of(cook));
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
 
         mockMvc.perform(get("/api/v1/cook/auth/me"))
                 .andExpect(status().isUnauthorized());

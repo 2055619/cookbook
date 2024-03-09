@@ -28,6 +28,11 @@
   "minutes": "minutes",
   "modifyRecipes": "Modifier mes recettes",
   "updateRecipe": "Mettre à jour la recette",
+  "publication": "Publication",
+  "solidUnit": "Unité de mesure des Solide",
+  "liquidUnit": "Unité de mesure des Liquide",
+  "powderUnit": "Unité de mesure des Poudre",
+  "otherUnit": "Unité de mesure des Autres",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"

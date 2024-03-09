@@ -12,6 +12,7 @@ import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.dto.SignInDTO;
 import quixotic.projects.cookbook.dto.SignUpDTO;
 import quixotic.projects.cookbook.model.summary.RecipeSummary;
+import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.service.CookService;
 
 import java.util.List;
@@ -62,5 +63,12 @@ public class CookController {
     public ResponseEntity<Void> deleteRecipe(@PathVariable String title){
         cookService.deleteRecipe(title);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @GetMapping("/usr/profile")
+    public ResponseEntity<UserProfile> getUserProfile(@PathParam("username") String username){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getUserProfile(username));
     }
 }
