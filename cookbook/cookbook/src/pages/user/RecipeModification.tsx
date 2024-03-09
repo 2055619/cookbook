@@ -69,11 +69,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                     setVisibility(response.visibility);
                     setPortionSize(response.portionSize);
                     setDietTypes(response.dietTypes);
-
-                    toast.info("Load Recipe " + response.title);
                 })
                 .catch((error) => {
-                    toast.error("error")
                     toast.error(t(error.response?.data.message));
                 });
         }
@@ -420,6 +417,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                     {allDietTypes.map((dietType, index) => (
                         <label key={index} className="inline-flex items-center">
                             <input type="checkbox" value={dietType} onChange={handleDietTypeChange}
+                                  checked={dietTypes.includes(dietType)}
                                    className="form-checkbox sr-only"/>
                             <div className="w-4 h-4 border-2 border-gray-300 rounded-md mr-2"></div>
                             <span className="ml-2">{t(dietType)}</span>
@@ -430,7 +428,7 @@ function RecipeModification({user}: RecipeModificationProps) {
 
                 <button type="submit" onClick={handleSubmit}
                         className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2">
-                    {t('createRecipe')}
+                    {recipe !== undefined ? t('updateRecipe') : t('createRecipe')}
                 </button>
             </form>
         </div>

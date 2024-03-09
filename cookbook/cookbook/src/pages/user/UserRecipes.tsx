@@ -7,7 +7,7 @@ import RecipeComponent from "../../components/recipes/RecipeComponent";
 import {IUser} from "../../assets/models/Authentication";
 
 interface IUserRecipesProps {
-    user: IUser | null;
+    user: IUser;
 }
 function UserRecipes({user}: IUserRecipesProps){
     const {t} = useTranslation();
@@ -24,7 +24,7 @@ function UserRecipes({user}: IUserRecipesProps){
                 })
                 .catch((error) => {
                     toast.error(t(error.response?.data.message));
-                    toast.error(error.response);
+                    // toast.error(error.response);
                     return [];
                 });
         };

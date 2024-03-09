@@ -51,10 +51,10 @@ function Header({user, setUser}: IHeaderProps) {
                 <SearchBox/>
                 <div className="flex justify-end items-center space-x-3">
                     <div className={"flex items-center clickable"}
-                         onClick={() => navigate('/u/usrRecipes')}>
+                         onClick={() => navigate('/u/recipes')}>
                         <h1 className={"lg:block hidden"}>{t('usrRecipes')}</h1>
                         <FontAwesomeIcon className={"clickable ml-2 md:w-8 md:h-8"} icon={faScroll}
-                                         onClick={() => navigate('/u/usrRecipes')}/>
+                                         onClick={() => navigate('/u/recipes')}/>
                     </div>
                     <div className="flex items-center clickable"
                          onClick={() => navigate('/u/recipesModification')}>

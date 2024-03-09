@@ -4,23 +4,36 @@ import PageNotFound from "../any/PageNotFound";
 import React, {useEffect} from "react";
 import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import RecipeModification from "./RecipeModification";
 import UserRecipes from "./UserRecipes";
+import RecipeDetails from "./RecipeDetails";
+import {cookServerInstance} from "../../App";
+import {CookBookService} from "../../services/CookBookService";
 
 interface IUserPage {
     user: IUser | null;
+    setUser: (user: IUser) => void;
 }
 
-function UserPages({user}: IUserPage) {
+function UserPages({user, setUser}: IUserPage) {
+    const cookbookService = new CookBookService();
     const navigate = useNavigate();
-    const {t} = useTranslation();
 
     useEffect(() => {
         const token = sessionStorage.getItem('token');
-        if (token === null) {
-            toast.error(t('message.userNotLoggedIn'));
-            navigate('/authentication/signin');
+
+        if (token) {
+            cookServerInstance.defaults.headers.common['Authorization'] = token;
+
+            cookbookService.getUser()
+                .then((response) => {
+                    setUser(response);
+                })
+                .catch((error) => {
+                    toast.error(error.response?.data.message);
+                    navigate('/authentication/signin');
+                });
         }
     }, [user]);
 
@@ -29,7 +42,8 @@ function UserPages({user}: IUserPage) {
         <div className={"min-h-screen bg-cook-orange text-center"}>
             <Routes>
                 <Route path="landing" element={<Landing/>}/>
-                <Route path="usrRecipes" element={<UserRecipes user={user}/>}/>
+                <Route path="recipes" element={<UserRecipes user={user!}/>}/>
+                <Route path="RecipeDetail" element={<RecipeDetails user={user!}/>}/>
                 <Route path="recipesModification" element={<RecipeModification user={user!}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
