@@ -21,7 +21,7 @@ public abstract class Publication {
     @Column(unique = true, nullable = false)
     private String title;
     private String description;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @ToString.Exclude
     private Cook cook;
     private LocalDate creationDate = LocalDate.now();
