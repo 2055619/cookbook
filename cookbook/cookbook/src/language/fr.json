@@ -35,6 +35,7 @@
   "otherUnit": "Unité de mesure des Autres",
   "confirmDeleteDescription": "Êtes-vous sûr de vouloir supprimer cette recette ?",
   "confirmDelete": "Confirmer la suppression",
+  "concoct": "Concocter",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"

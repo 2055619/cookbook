@@ -11,6 +11,7 @@ import RecipeDetails from "./RecipeDetails";
 import {cookServerInstance} from "../../App";
 import {CookBookService} from "../../services/CookBookService";
 import UserProfile from "./UserProfile";
+import ConcoctRecipe from "./ConcoctRecipe";
 
 interface IUserPage {
     user: IUser | null;
@@ -49,6 +50,7 @@ function UserPages({user, setUser}: IUserPage) {
                 <Route path="landing" element={<Landing user={user!}/>}/>
                 <Route path="recipes" element={<UserRecipes user={user!}/>}/>
                 <Route path="recipeDetail" element={<RecipeDetails user={user!}/>}/>
+                <Route path="concoct" element={<ConcoctRecipe />}/>
                 <Route path="recipesModification" element={<RecipeModification user={user!}/>}/>
                 <Route path="profile" element={<UserProfile user={user!}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
