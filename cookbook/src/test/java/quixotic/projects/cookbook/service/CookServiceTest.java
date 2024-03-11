@@ -1,14 +1,17 @@
 package quixotic.projects.cookbook.service;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
@@ -18,6 +21,7 @@ import quixotic.projects.cookbook.model.enums.*;
 import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
+import quixotic.projects.cookbook.security.JwtTokenProvider;
 import quixotic.projects.cookbook.security.Role;
 
 import java.util.*;
@@ -96,9 +100,17 @@ public class CookServiceTest {
     @Mock
     private RecipeRepository recipeRepository;
 
+    private String token = "";
+
     @BeforeAll
     public static void init() {
         cook.setPublications(recipeDTOS.stream().map((recipeDTO -> recipeDTO.toEntity(cook))).collect(Collectors.toSet()));
+    }
+
+    @BeforeEach
+    public void setUp() {
+        // TODO: 2024-03-11 Add token generation
+        this.token = "Tester";
     }
 
     @Test
@@ -141,7 +153,7 @@ public class CookServiceTest {
         String title = recipeDTOS.get(0).getTitle();
         when(recipeRepository.findByTitle(title)).thenReturn(Optional.of(recipeDTOS.get(0).toEntity(cook)));
 
-        cookService.getRecipeByTitle(title);
+        cookService.getRecipeByTitle(title, token);
     }
 
     @Test
@@ -149,7 +161,7 @@ public class CookServiceTest {
         String title = recipeDTOS.get(0).getTitle();
         when(recipeRepository.findByTitle(title)).thenReturn(Optional.empty());
 
-        assertThrows(RecipeNotFoundException.class, () -> cookService.getRecipeByTitle(title));
+        assertThrows(RecipeNotFoundException.class, () -> cookService.getRecipeByTitle(title, token));
     }
 
     @Test
@@ -161,7 +173,7 @@ public class CookServiceTest {
         when(cookRepository.findCookByUsername(recipeDTO.getCookUsername())).thenReturn(Optional.of(cook));
         when(recipeRepository.save(recipeDTO.toEntity(cook))).thenReturn(recipeDTO.toEntity(cook));
 
-        cookService.updateRecipe(recipeDTO);
+        cookService.updateRecipe(recipeDTO, token);
     }
 
     @Test
@@ -171,7 +183,7 @@ public class CookServiceTest {
 
         when(recipeRepository.findByTitle(recipeDTO.getTitle())).thenReturn(Optional.empty());
 
-        assertThrows(RecipeNotFoundException.class, () -> cookService.updateRecipe(recipeDTO));
+        assertThrows(RecipeNotFoundException.class, () -> cookService.updateRecipe(recipeDTO, token));
     }
 
     @Test
@@ -179,7 +191,7 @@ public class CookServiceTest {
         Long id = 1L;
         when(recipeRepository.existsById(id)).thenReturn(true);
 
-        cookService.deleteRecipeById(id);
+        cookService.deleteRecipeById(id, token);
     }
 
     @Test
@@ -187,20 +199,7 @@ public class CookServiceTest {
         Long id = 1L;
         when(recipeRepository.existsById(id)).thenReturn(false);
 
-        assertThrows(RecipeNotFoundException.class, () -> cookService.deleteRecipeById(id));
-    }
-
-    @Test
-    public void getRecipes_returnsAllRecipes() {
-        // Arrange
-        when(recipeRepository.findAll()).thenReturn(recipeDTOS.stream()
-                .map((recipeDTO -> recipeDTO.toEntity(cook))).collect(Collectors.toList()));
-
-        // Act
-        List<RecipeDTO> result = cookService.getRecipes();
-
-        // Assert
-        assertEquals(recipeDTOS.size(), result.size());
+        assertThrows(RecipeNotFoundException.class, () -> cookService.deleteRecipeById(id, token));
     }
 
     @Test
@@ -211,7 +210,7 @@ public class CookServiceTest {
         doNothing().when(recipeRepository).deleteByTitle(title);
 
         // Act
-        cookService.deleteRecipeByTitle(title);
+        cookService.deleteRecipeByTitle(title, token);
 
         // Assert
         verify(recipeRepository, times(1)).deleteByTitle(title);
@@ -224,18 +223,18 @@ public class CookServiceTest {
         when(recipeRepository.existsByTitle(title)).thenReturn(false);
 
         // Act & Then
-        assertThrows(RecipeNotFoundException.class, () -> cookService.deleteRecipeByTitle(title));
+        assertThrows(RecipeNotFoundException.class, () -> cookService.deleteRecipeByTitle(title, token));
     }
 
     @Test
     public void getRecipesByTitle_whenRecipesExist_returnsRecipes() {
         // Arrange
         String title = "testRecipe";
-        List<RecipeSummary> recipes = List.of();
+        List<Recipe> recipes = List.of();
         when(recipeRepository.findAllByTitleContainsIgnoreCase(title)).thenReturn(recipes);
 
         // Act
-        List<RecipeSummary> result = cookService.getRecipesSummaryByTitle(title);
+        List<RecipeDTO> result = cookService.getRecipesSummaryByTitle(title, token);
 
         // Assert
         assertEquals(recipes.size(), result.size());
@@ -248,7 +247,7 @@ public class CookServiceTest {
         when(recipeRepository.findAllByTitleContainsIgnoreCase(title)).thenReturn(Collections.emptyList());
 
         // Act
-        List<RecipeSummary> result = cookService.getRecipesSummaryByTitle(title);
+        List<RecipeDTO> result = cookService.getRecipesSummaryByTitle(title, token);
 
         // Assert
         assertTrue(result.isEmpty());

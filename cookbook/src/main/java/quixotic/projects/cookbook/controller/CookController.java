@@ -1,18 +1,12 @@
 package quixotic.projects.cookbook.controller;
 
 import jakarta.websocket.server.PathParam;
-import lombok.Lombok;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import quixotic.projects.cookbook.dto.CookDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
-import quixotic.projects.cookbook.dto.SignInDTO;
-import quixotic.projects.cookbook.dto.SignUpDTO;
-import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.service.CookService;
 
@@ -37,21 +31,21 @@ public class CookController {
     }
 
     @GetMapping("/recipe")
-    public ResponseEntity<RecipeDTO> getRecipeById(@PathParam("id") Long id){
+    public ResponseEntity<RecipeDTO> getRecipeById(@PathParam("id") Long id, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getRecipeById(id));
+                .body(cookService.getRecipeById(id, token));
     }
 
     @GetMapping("/recipe/{title}")
-    public ResponseEntity<RecipeDTO> getRecipeByTitle(@PathVariable String title){
+    public ResponseEntity<RecipeDTO> getRecipeByTitle(@PathVariable String title, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getRecipeByTitle(title));
+                .body(cookService.getRecipeByTitle(title, token));
     }
 
     @GetMapping("/recipes/title")
-    public ResponseEntity<List<RecipeSummary>> getRecipesByTitle(@PathParam("title") String title){
+    public ResponseEntity<List<RecipeDTO>> getRecipesByTitle(@PathParam("title") String title, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getRecipesSummaryByTitle(title));
+                .body(cookService.getRecipesSummaryByTitle(title, token));
     }
 
     @GetMapping("/usr/recipes")
@@ -61,20 +55,20 @@ public class CookController {
     }
 
     @PutMapping("/recipe")
-    public ResponseEntity<RecipeDTO> updateRecipe(@RequestBody RecipeDTO recipeDTO){
+    public ResponseEntity<RecipeDTO> updateRecipe(@RequestBody RecipeDTO recipeDTO, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.updateRecipe(recipeDTO));
+                .body(cookService.updateRecipe(recipeDTO, token));
     }
 
     @DeleteMapping("/recipe")
-    public ResponseEntity<Void> deleteRecipeById(@PathParam("id") Long id){
-        cookService.deleteRecipeById(id);
+    public ResponseEntity<Void> deleteRecipeById(@PathParam("id") Long id, @RequestHeader("Authorization") String token){
+        cookService.deleteRecipeById(id, token);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/recipe/{title}")
-    public ResponseEntity<Void> deleteRecipeByTitle(@PathVariable String title){
-        cookService.deleteRecipeByTitle(title);
+    public ResponseEntity<Void> deleteRecipeByTitle(@PathVariable String title, @RequestHeader("Authorization") String token){
+        cookService.deleteRecipeByTitle(title, token);
         return ResponseEntity.noContent().build();
     }
 

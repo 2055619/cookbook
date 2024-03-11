@@ -78,9 +78,9 @@ public class CookControllerTest {
 
     @Test
     public void getRecipesByTitle_ValidTitleProvided_returnsAccepted() throws Exception {
-        List<RecipeSummary> recipeSummaries = new ArrayList<>();
+        List<RecipeDTO> recipeSummaries = new ArrayList<>();
 
-        when(cookService.getRecipesSummaryByTitle(anyString())).thenReturn(recipeSummaries);
+        when(cookService.getRecipesSummaryByTitle(anyString(), token)).thenReturn(recipeSummaries);
 
         mockMvc.perform(get("/api/v1/cook/recipes/title")
                         .header("Authorization", token)
@@ -117,7 +117,7 @@ public class CookControllerTest {
     public void getRecipe_ValidTitleProvided_returnsAccepted() throws Exception {
         RecipeDTO recipeDTO = new RecipeDTO();
 
-        when(cookService.getRecipeByTitle("Test Recipe")).thenReturn(recipeDTO);
+        when(cookService.getRecipeByTitle("Test Recipe", token)).thenReturn(recipeDTO);
 
         mockMvc.perform(get("/api/v1/cook/recipe/Test Recipe")
                         .header("Authorization", token))
@@ -127,7 +127,7 @@ public class CookControllerTest {
 
     @Test
     public void getRecipeByTitle_InvalidTitleProvided_returnsBadRequest() throws Exception {
-        doThrow(new RecipeNotFoundException()).when(cookService).getRecipeByTitle(anyString());
+        doThrow(new RecipeNotFoundException()).when(cookService).getRecipeByTitle(anyString(), token);
 
         mockMvc.perform(get("/api/v1/cook/recipe/title")
                         .header("Authorization", token))
@@ -168,7 +168,7 @@ public class CookControllerTest {
     public void updateRecipe_ValidRecipeDTOProvided_returnsAccepted() throws Exception {
         RecipeDTO recipeDTO = new RecipeDTO();
 
-        when(cookService.updateRecipe(recipeDTO)).thenReturn(recipeDTO);
+        when(cookService.updateRecipe(recipeDTO, token)).thenReturn(recipeDTO);
 
         mockMvc.perform(put("/api/v1/cook/recipe")
                         .header("Authorization", token)

@@ -13,7 +13,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     void deleteByTitle(String title);
 
-    List<RecipeSummary> findAllByTitleContainsIgnoreCase(String title);
+    List<Recipe> findAllByTitleContainsIgnoreCase(String title);
 
     boolean existsByTitle(String title);
 

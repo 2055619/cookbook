@@ -9,15 +9,16 @@ import quixotic.projects.cookbook.dto.IngredientDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
+import quixotic.projects.cookbook.exception.badRequestException.WrongUserException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Ingredient;
 import quixotic.projects.cookbook.model.Recipe;
-import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class CookService {
     private final JwtTokenProvider jwtTokenProvider;
 
     //    Recipes
-    public RecipeDTO createRecipe(RecipeDTO recipeDTO){
+    public RecipeDTO createRecipe(RecipeDTO recipeDTO) {
         Cook cook = cookRepository.findCookByUsername(recipeDTO.getCookUsername()).orElseThrow(UserNotFoundException::new);
         Recipe recipe = recipeDTO.toEntity(cook);
 
@@ -40,9 +41,6 @@ public class CookService {
         return new RecipeDTO(recipe);
     }
 
-    public List<RecipeDTO> getRecipes() {
-        return recipeRepository.findAll().stream().map(RecipeDTO::new).toList();
-    }
     public List<RecipeDTO> getRecipesByPage(int page, int size, String token) {
         if (page < 0 || size < 0)
             throw new IllegalArgumentException("Page and size must be greater than 0");
@@ -52,28 +50,35 @@ public class CookService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Recipe> recipePage = recipeRepository.findAll(pageable);
 
-        return recipePage.stream()
-                .filter(recipe -> switch (recipe.getVisibility()) {
-                    case PUBLIC -> true;
-                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
-                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
-                    case SECRET -> user.equals(recipe.getCook());
-                })
-                .map(RecipeDTO::new)
-                .collect(Collectors.toList());
+        return filterRecipesByVisibility(recipePage.getContent(), user);
     }
 
-    public RecipeDTO getRecipeById(Long id) {
-        return new RecipeDTO(recipeRepository.findById(id).orElseThrow(RecipeNotFoundException::new));
+    public RecipeDTO getRecipeById(Long id, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        return filterRecipesByVisibility(new ArrayList<>(List.of(recipeRepository.findById(id)
+                        .orElseThrow(RecipeNotFoundException::new))),
+                user).stream().findFirst().orElseThrow(RecipeNotFoundException::new);
     }
 
-    public RecipeDTO getRecipeByTitle(String title) {
-        return new RecipeDTO(recipeRepository.findByTitle(title).orElseThrow(RecipeNotFoundException::new));
+    public RecipeDTO getRecipeByTitle(String title, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        return filterRecipesByVisibility(new ArrayList<>(List.of(recipeRepository.findByTitle(title)
+                .orElseThrow(RecipeNotFoundException::new))),
+                user).stream().findFirst().orElseThrow(RecipeNotFoundException::new);
     }
 
-    public RecipeDTO updateRecipe(RecipeDTO recipeDTO) {
+    public RecipeDTO updateRecipe(RecipeDTO recipeDTO, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+
         Recipe recipe = recipeRepository.findById(recipeDTO.getId())
                 .orElseThrow(RecipeNotFoundException::new);
+
+        if (!recipe.getCook().getUsername().equals(username))
+            throw new WrongUserException();
 
         recipe.setTitle(recipeDTO.getTitle());
         recipe.setDescription(recipeDTO.getDescription());
@@ -89,36 +94,55 @@ public class CookService {
         recipe.setPrepTime(recipeDTO.getPrepTime());
         recipe.setCookTime(recipeDTO.getCookTime());
 
-        for (Ingredient ingredient: recipe.getIngredients()){
+        for (Ingredient ingredient : recipe.getIngredients()) {
             ingredient.setRecipe(recipe);
         }
-
-//        System.out.println("Recipe: " + recipe);
 
         return new RecipeDTO(recipeRepository.save(recipe));
     }
 
-    public void deleteRecipeById(Long id) {
-        if (recipeRepository.existsById(id))
+    public void deleteRecipeById(Long id, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+
+        if (recipeRepository.existsById(id) && recipeRepository.findById(id).get().getCook().getUsername().equals(username))
             recipeRepository.deleteById(id);
         else throw new RecipeNotFoundException();
     }
-    public void deleteRecipeByTitle(String title) {
-        if (recipeRepository.existsByTitle(title))
+
+    public void deleteRecipeByTitle(String title, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+
+        if (recipeRepository.existsByTitle(title) && recipeRepository.findByTitle(title).get().getCook().getUsername().equals(username))
             recipeRepository.deleteByTitle(title);
         else throw new RecipeNotFoundException();
     }
 
-    public List<RecipeSummary> getRecipesSummaryByTitle(String title) {
-        return recipeRepository.findAllByTitleContainsIgnoreCase(title);
+    public List<RecipeDTO> getRecipesSummaryByTitle(String title, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        return filterRecipesByVisibility(recipeRepository.findAllByTitleContainsIgnoreCase(title), user);
     }
 
     public List<RecipeDTO> getRecipesByUser(String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
+
         return recipeRepository.findAllByCookUsername(username).stream().map(RecipeDTO::new).toList();
     }
 
     public UserProfile getUserProfile(String username) {
         return cookRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+    }
+
+    private List<RecipeDTO> filterRecipesByVisibility(List<Recipe> recipes, Cook user) {
+        return recipes.stream()
+                .filter(recipe -> switch (recipe.getVisibility()) {
+                    case PUBLIC -> true;
+                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
+                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
+                    case SECRET -> user.equals(recipe.getCook());
+                })
+                .map(RecipeDTO::new)
+                .collect(Collectors.toList());
     }
 }
