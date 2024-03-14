@@ -18,6 +18,8 @@ function SignUp({setUser}: ISignUpProps) {
     const utilsService = new UtilsService();
     const navigate = useNavigate();
 
+    const [lawCheck, setLawCheck] = useState(false);
+
     const [emailReg, setEmailReg] = useState(new RegExp(''));
     const [passwordReg, setPasswordReg] = useState(new RegExp(''));
     const [usernameReg, setUsernameReg] = useState(new RegExp(''));
@@ -230,6 +232,11 @@ function SignUp({setUser}: ISignUpProps) {
                         </select>
                     </div>
                 </div>
+                <div className="" onClick={() => setLawCheck(!lawCheck)}>
+                    <input type={"checkbox"} checked={lawCheck} className={"mx-2"} />
+                    <label>{t('pages.auth.law25')}</label>
+                </div>
+                <span className={"clickable "} onClick={() => navigate("/policies")}>{t('seePolicy')}</span>
             </div>
 
             <button type="submit"

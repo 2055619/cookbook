@@ -36,6 +36,7 @@
   "confirmDeleteDescription": "Êtes-vous sûr de vouloir supprimer cette recette ?",
   "confirmDelete": "Confirmer la suppression",
   "concoct": "Concocter",
+  "seePolicy": "Clicker ici pour voir la politique de confidentialité",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"
@@ -54,7 +55,26 @@
       "otherUnit": "Unité de mesure des Autres",
       "forgotPassword": "Mot de passe oublié ?",
       "createAccount": "Créer mon compte",
-      "preference": "Préférences"
+      "preference": "Préférences",
+      "law25": "J'ai lu et j'accepte les conditions d'utilisation énumérées dans la politique de confidentialité"
+    },
+    "policy": {
+      "title": "Politique de confidentialité",
+      "RGPD": {
+        "title": "Cookbook et la Protection des Renseignements : Garantir la Confidentialité de nos Recettes",
+        "intro": "Introduction",
+        "introDesc": "Chez Cookbook, notre priorité absolue est de préserver l'intégrité et la confidentialité de nos recettes innovantes. Nous comprenons l'importance cruciale de protéger nos renseignements, tant pour maintenir notre avantage concurrentiel que pour respecter les attentes de nos clients en matière de confidentialité. C'est pourquoi nous nous engageons fermement à respecter et à appliquer les lois et réglementations pertinentes, en particulier en ce qui concerne la protection des renseignements. Dans ce texte, nous explorerons en détail la loi sur la protection des renseignements et son impact sur notre entreprise.",
+        "law25": "Loi sur la Protection des Renseignements",
+        "law25Desc": "La loi sur la protection des renseignements est une législation cruciale qui régit la collecte, l'utilisation, le stockage et la divulgation des informations sensibles. Elle vise à protéger la vie privée  des individus et à assurer la sécurité des données, en imposant des normes strictes aux entreprises et aux  organisations qui traitent des renseignements personnels. Cette loi s'applique à toutes les entreprises, y  compris Cookbook, quel que soit leur domaine d'activité.",
+        "collect": "Collecte et Traitement des Renseignements",
+        "collectDesc": "En tant qu'entreprise spécialisée dans la création de recettes uniques et innovantes, Cookbook collecte et traite une variété de renseignements sensibles. Cela inclut non seulement les recettes elles-mêmes, mais  aussi les données des clients, telles que les préférences alimentaires et les informations de contact. En  vertu de la loi sur la protection des renseignements, nous sommes tenus de garantir que ces informations  sont traitées de manière sécurisée et confidentielle.",
+        "conformity": "Mesures de Conformité",
+        "conformityDesc": "Pour assurer notre conformité à la loi sur la protection des renseignements, Cookbook a mis en place une série de mesures rigoureuses. Tout d'abord, nous avons mis en œuvre des protocoles de sécurité informatique  avancés pour protéger nos bases de données contre les intrusions et les violations. De plus, nous avons mis  en place des politiques strictes en matière d'accès aux informations, garantissant que seules les personnes  autorisées ont accès aux données sensibles. Nous fournissons également une formation régulière à notre personnel sur les meilleures pratiques en matière de protection des renseignements.",
+        "transparency": "Transparence et Responsabilité",
+        "transparencyDesc": "Chez Cookbook, nous croyons fermement en la transparence et la responsabilité en matière de protection des renseignements. Nous nous engageons à informer nos clients de la manière dont leurs données sont collectées,  utilisées et stockées, et à répondre rapidement et efficacement à toute demande de renseignements ou de  suppression de données. De plus, nous nommons un responsable de la protection des renseignements au sein de  notre entreprise, chargé de superviser notre conformité et de répondre aux préoccupations des clients.",
+        "conclusion": "Conclusion",
+        "conclusionDesc": "La protection des renseignements est une priorité absolue pour Cookbook. En respectant scrupuleusement la loi sur la protection des renseignements et en mettant en place des mesures de sécurité et des politiques  robustes, nous garantissons la confidentialité et la sécurité des informations sensibles de nos clients.  Grâce à notre engagement envers la transparence et la responsabilité, nos clients peuvent avoir confiance en  notre capacité à protéger leurs données tout en continuant à leur offrir des recettes exceptionnelles et un  service de qualité."
+      }
     }
   },
   "input": {
