@@ -1,11 +1,13 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {CookBookService} from "../../services/CookBookService";
 import {useTranslation} from "react-i18next";
 import {IIngredient, IRecipe} from "../../assets/models/Recipe";
+import {UtilsService} from "../../services/UtilsService";
 
 function ConcoctRecipe() {
     const cookbookService = new CookBookService();
+    const utilsService = new UtilsService();
     const {t} = useTranslation();
     const [recipe, setRecipe] = useState<IRecipe>(
         {
@@ -25,8 +27,9 @@ function ConcoctRecipe() {
         }
     );
 
-    const [ingredientUnits, setIngredientUnits] = useState<{[key: string]: string}>({});
     const [checkedIngredients, setCheckedIngredients] = useState<string[]>([]);
+
+    const [ing, setIng] = useState({SOLID: [''], LIQUID: [''], POWDER: [''], OTHER: ['']});
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -38,33 +41,57 @@ function ConcoctRecipe() {
                     setRecipe(response);
                 })
                 .catch((error) => {
-                    toast.error("error")
+                    // toast.error("error")
                     toast.error(t(error.response?.data.message));
                 });
         } else {
             toast.error(t('noRecipeTitle'));
             window.history.back();
         }
+
+        utilsService.getIngrediantStates().then((response) => {
+            setIng(response);
+        }).catch((error) => {
+            toast.error(t(error.response?.data.message));
+        });
     }, []);
 
-    const handleUnitChange = (ingredient: IIngredient, unit: string) => {
+    async function handleUnitChange(ingredient: IIngredient, unit: string) {
         // Here you can add the logic to calculate the equivalent amount in the selected unit
         // For simplicity, let's assume that the equivalent amount is the same as the original amount
-        const equivalentAmount = ingredient.quantity;
 
-        setIngredientUnits(prevState => ({
-            ...prevState,
-            [ingredient.name]: `${equivalentAmount} ${unit}`
-        }));
-    };
+        // const [ingredientUnits, setIngredientUnits] = useState<{ [key: string]: string }>({});
 
-    const handleCheck = (ingredient: IIngredient) => {
+        // const equivalentAmount = ingredient.quantity;
+        //
+        // setIngredientUnits(prevState => ({
+        //     ...prevState,
+        //     [ingredient.name]: `${equivalentAmount} ${unit}`
+        // }));
+        let qty = ingredient.quantity;
+        await utilsService.convert(ingredient.quantity, ingredient.unit, unit)
+            .then((response) => {
+                console.log(response);
+                qty = parseFloat(response.toFixed(2));
+            })
+            .catch((error) => {
+                toast.error(t(error.response?.data.message));
+            });
+
+
+        setRecipe({
+            ...recipe,
+            ingredients: recipe.ingredients.map(i => i.name === ingredient.name ? {...i, unit: unit, quantity: qty} : i)
+        });
+    }
+
+    function handleCheck(ingredient: IIngredient) {
         if (checkedIngredients.includes(ingredient.name)) {
             setCheckedIngredients(checkedIngredients.filter(i => i !== ingredient.name));
         } else {
             setCheckedIngredients([...checkedIngredients, ingredient.name]);
         }
-    };
+    }
 
     return (
         <div>
@@ -74,24 +101,48 @@ function ConcoctRecipe() {
                 {recipe.ingredients.filter(ingredient => !checkedIngredients.includes(ingredient.name)).map((ingredient, index) => (
                     <li key={index}>
                         <input type="checkbox" id={`ingredient-${index}`} onChange={() => handleCheck(ingredient)}/>
-                        <label htmlFor={`ingredient-${index}`}>{ingredient.name}</label>
-                        {/* Rest of the ingredient item */}
+                        <span className={"mx-1 text-2xl"}>{ingredient.name}</span>
+                        <span className={"mx-1 text-3xl"}>{ingredient.quantity}</span>
+                        <select
+                            className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base"}
+                            defaultValue={ingredient.unit}
+                            onChange={(e) => handleUnitChange(ingredient, e.target.value)}>
+                            {
+                                ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"].map((unit, index) => (
+                                    <option key={index} value={unit}>{t(unit)}</option>
+                                ))
+                            }
+                        </select>
                     </li>
                 ))}
             </ul>
             <div className="mt-4">
-                <h2>Checked Ingredients</h2>
+                <h2>{t('usedIngredients')}</h2>
                 <ul>
                     {recipe.ingredients.filter(ingredient => checkedIngredients.includes(ingredient.name)).map((ingredient, index) => (
-                        <li key={index} className="text-gray-500">
+                        <li key={index} className="text-cook opacity-80">
                             <input type="checkbox" id={`ingredient-${index}`} checked
                                    onChange={() => handleCheck(ingredient)}/>
-                            <label htmlFor={`ingredient-${index}`}>{ingredient.name}</label>
-                            {/* Rest of the ingredient item */}
+                            <span className={"mx-1"}>{ingredient.name}</span>
+                            <span className={"mx-1"}>{ingredient.quantity}</span>
+                            <select
+                                className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base"}
+                                defaultValue={ingredient.unit}
+                                disabled={true}
+                                onChange={(e) => handleUnitChange(ingredient, e.target.value)}>
+                                {
+                                    ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"].map((unit, index) => (
+                                        <option key={index} defaultValue={ingredient.unit}
+                                                value={unit}>{t(unit)}</option>
+                                    ))
+                                }
+                            </select>
                         </li>
+
                     ))}
                 </ul>
             </div>
+
 
         </div>
     );

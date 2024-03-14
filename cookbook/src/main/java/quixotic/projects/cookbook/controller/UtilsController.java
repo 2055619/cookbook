@@ -1,12 +1,12 @@
 package quixotic.projects.cookbook.controller;
 
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import quixotic.projects.cookbook.model.enums.IngredientState;
 import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.service.UtilsService;
 
@@ -60,6 +60,12 @@ public class UtilsController {
     public ResponseEntity<List<String>> getDietTypes() {
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(utilsService.getDietTypes());
+    }
+
+    @GetMapping("conversion")
+    public ResponseEntity<Float> getConversion(@PathParam("quantity") Float quantity, @PathParam("from") Unit from, @PathParam("to") Unit to) {
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(utilsService.convert(quantity, from, to));
     }
 
 }

@@ -41,4 +41,9 @@ export class UtilsService {
             .then((response) => response.data);
 
     }
+
+    async convert(quantity: number, from: string, to: string) {
+        return cookServerInstance.get(`/utils/conversion?quantity=${quantity}&from=${from}&to=${to}`)
+            .then((response) => response.data);
+    }
 }
