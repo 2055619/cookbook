@@ -3,18 +3,19 @@ import {IsignIn, IsignUp, IUser} from "../assets/models/Authentication";
 import {IRecipe} from "../assets/models/Recipe";
 
 export class CookBookService {
+
     async signIn(user: IsignIn) {
         return cookServerInstance.post<IUser>('/cook/auth/signin', user)
             .then((response) => {
-            return response.data;
-        });
+                return response.data;
+            })
     }
 
     async signUp(user: IsignUp) {
         return cookServerInstance.post<IUser>('/cook/auth/signup', user)
             .then((response) => {
-            return response.data;
-        });
+                return response.data;
+            });
     }
 
     async getRecipes(page: number) {

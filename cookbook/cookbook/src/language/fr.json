@@ -36,6 +36,7 @@
   "confirmDeleteDescription": "Êtes-vous sûr de vouloir supprimer cette recette ?",
   "confirmDelete": "Confirmer la suppression",
   "concoct": "Concocter",
+  "usedIngredients": "Ingrédients utilisés",
   "seePolicy": "Clicker ici pour voir la politique de confidentialité",
   "pages": {
     "home": {
