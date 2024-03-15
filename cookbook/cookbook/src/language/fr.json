@@ -37,6 +37,8 @@
   "confirmDelete": "Confirmer la suppression",
   "concoct": "Concocter",
   "usedIngredients": "Ingrédients utilisés",
+  "otherInfo": "Autres informations",
+  "choosePortion": "Choisissez le nombre et la taille des portions",
   "seePolicy": "Clicker ici pour voir la politique de confidentialité",
   "pages": {
     "home": {

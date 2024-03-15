@@ -5,8 +5,13 @@ import {useTranslation} from "react-i18next";
 import {IIngredient, IRecipe} from "../../assets/models/Recipe";
 import {UtilsService} from "../../services/UtilsService";
 import InstructionCard from "../../components/recipes/InstructionCard";
+import {IUser} from "../../assets/models/Authentication";
+import OtherInfo from "../../components/recipes/OtherInfo";
 
-function ConcoctRecipe() {
+interface IConcoctRecipeProps {
+    user: IUser;
+}
+function ConcoctRecipe({user}: IConcoctRecipeProps) {
     const cookbookService = new CookBookService();
     const utilsService = new UtilsService();
     const {t} = useTranslation();
@@ -121,9 +126,26 @@ function ConcoctRecipe() {
         });
     }
 
+    function getUnit(ingredient: IIngredient) {
+        switch (ingredient.ingredientState) {
+            case "SOLID":
+                return user.solidUnit;
+            case "LIQUID":
+                return user.liquidUnit;
+            case "POWDER":
+                return user.powderUnit
+            case "OTHER":
+                return user.otherUnit;
+            default:
+                return ingredient.unit;
+        }
+    }
+
     return (
         <div>
             <h1 className={"text-9xl"}>{recipe.title}</h1>
+
+            <p className={"text-2xl my-2"}>{t('prepTime') + ": " + recipe.prepTime}, {t('cookTime') + ": " + recipe.cookTime}</p>
 
             <h1 className={"text-3xl"}>{t('choosePortion')}</h1>
             <form onSubmit={(e) => e.preventDefault()}>
@@ -148,7 +170,7 @@ function ConcoctRecipe() {
                 </select>
             </form>
 
-            <p>{t('prepTime') + ": " + recipe.prepTime}, {t('cookTime') + ": " + recipe.cookTime}</p>
+            <h1 className={"text-4xl"}>{t('ingredients')}</h1>
             <div>
                 <ul>
                     {recipe.ingredients.filter(ingredient => !checkedIngredients.includes(ingredient.name)).map((ingredient, index) => (
@@ -180,12 +202,12 @@ function ConcoctRecipe() {
                                 <span className={"mx-1"}>{ingredient.quantity}</span>
                                 <select
                                     className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base"}
-                                    defaultValue={ingredient.unit}
+                                    value={getUnit(ingredient)}
                                     disabled={true}
                                     onChange={(e) => handleUnitChange(ingredient, e.target.value)}>
                                     {
                                         ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"].map((unit, index) => (
-                                            <option key={index} defaultValue={ingredient.unit}
+                                            <option key={index}
                                                     value={unit}>{t(unit)}</option>
                                         ))
                                     }
@@ -199,20 +221,7 @@ function ConcoctRecipe() {
 
             <InstructionCard recipe={recipe}/>
 
-            <div>
-                <h1 className={"text-5xl my-3"}>{t('otherInfo')}</h1>
-                <h3 className={"text-2xl mb-2"}>{recipe.description}</h3>
-                <div className={"grid grid-cols-5 gap-y-3"}>
-                    <p>{t('category') + ": " + t(recipe.category)}</p>
-                    <p>{t('difficulty') + ": " + t(recipe.difficulty)}</p>
-                    <p>{t('portionSize') + ": " + t(recipe.portionSize)}</p>
-                    <p>{t('serving') + ": " + recipe.serving}</p>
-                    <p>{t('visibility') + ": " + t(recipe.visibility)}</p>
-                    <p className={"col-span-5"}>{t('dietTypes') + ": " + recipe.dietTypes.map(dietType => t(dietType)).join(", ")}</p>
-                </div>
-
-            </div>
-
+            <OtherInfo recipe={recipe}/>
         </div>
     );
 }
