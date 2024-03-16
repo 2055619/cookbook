@@ -71,6 +71,7 @@ public class UtilsService {
     }
 
     public Float convert(Float quantity, Unit from, Unit to) {
+        if (quantity == null || quantity <= 0.0f || from == null || to == null) throw new IllegalArgumentException("message.invalid-arguments");
         return switch (to) {
             case TEASPOON -> quantity * from.getTeaspoon();
             case TABLESPOON -> quantity * from.getTablespoon();
@@ -83,7 +84,6 @@ public class UtilsService {
             case LITER -> quantity * from.getLiter();
             case PINCH -> quantity * from.getPinch();
             case DASH -> quantity * from.getDash();
-            case EACH -> quantity * from.getEach();
             case NUMBER -> quantity * from.getNumber();
         };
     }

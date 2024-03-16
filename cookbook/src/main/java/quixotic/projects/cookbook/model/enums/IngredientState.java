@@ -10,9 +10,9 @@ import java.util.List;
 public enum IngredientState {
     POWDER(List.of(Unit.TEASPOON, Unit.TABLESPOON, Unit.CUP, Unit.OUNCE, Unit.POUND, Unit.GRAM, Unit.KILOGRAM, Unit.PINCH, Unit.DASH)),
     LIQUID(List.of(Unit.TEASPOON, Unit.TABLESPOON, Unit.CUP, Unit.OUNCE, Unit.LITER, Unit.MILLILITER, Unit.DASH)),
-    SOLID(List.of(Unit.GRAM, Unit.KILOGRAM, Unit.POUND, Unit.PINCH, Unit.EACH, Unit.NUMBER)),
-    COUNTABLE(List.of(Unit.EACH, Unit.NUMBER)),
-    OTHER("Other", List.of(Unit.TEASPOON, Unit.TABLESPOON, Unit.CUP, Unit.OUNCE, Unit.POUND, Unit.GRAM, Unit.KILOGRAM, Unit.MILLILITER, Unit.LITER, Unit.PINCH, Unit.DASH, Unit.EACH, Unit.NUMBER));
+    SOLID(List.of(Unit.GRAM, Unit.KILOGRAM, Unit.POUND, Unit.PINCH, Unit.NUMBER)),
+    COUNTABLE(List.of(Unit.NUMBER)),
+    OTHER("Other", List.of(Unit.TEASPOON, Unit.TABLESPOON, Unit.CUP, Unit.OUNCE, Unit.POUND, Unit.GRAM, Unit.KILOGRAM, Unit.MILLILITER, Unit.LITER, Unit.PINCH, Unit.DASH, Unit.NUMBER));
     ;
     private String description;
     private final List<Unit> units;

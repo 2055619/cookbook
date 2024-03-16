@@ -7,6 +7,8 @@ import {UtilsService} from "../../services/UtilsService";
 import InstructionCard from "../../components/recipes/InstructionCard";
 import {IUser} from "../../assets/models/Authentication";
 import OtherInfo from "../../components/recipes/OtherInfo";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
 interface IConcoctRecipeProps {
     user: IUser;
@@ -141,9 +143,22 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
         }
     }
 
+    function revisedQuantity(quantity: number) {
+        return Math.round(quantity * 4) / 4;
+    }
+
     return (
         <div>
-            <h1 className={"text-9xl"}>{recipe.title}</h1>
+            <div className="grid grid-cols-4">
+                <div className={"text-start ms-1"}>
+                    <button onClick={() => window.history.back()}
+                            className="clickable hover:bg-cook-red hover:rounded-full px-2 py-1">
+                        <FontAwesomeIcon icon={faArrowLeft}/>
+                    </button>
+                </div>
+
+                <h1 className={"text-9xl col-span-2"}>{recipe.title}</h1>
+            </div>
 
             <p className={"text-2xl my-2"}>{t('prepTime') + ": " + recipe.prepTime}, {t('cookTime') + ": " + recipe.cookTime}</p>
 
@@ -177,7 +192,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                         <li key={index}>
                             <input type="checkbox" id={`ingredient-${index}`} onChange={() => handleCheck(ingredient)}/>
                             <span className={"mx-1 text-2xl"}>{ingredient.name}</span>
-                            <span className={"mx-1 text-3xl"}>{ingredient.quantity}</span>
+                            <span className={"mx-1 text-3xl"}>{revisedQuantity(ingredient.quantity)}</span>
                             <select
                                 className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base"}
                                 defaultValue={ingredient.unit}
