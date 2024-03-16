@@ -36,7 +36,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
         }
     );
 
-    const [checkedIngredients, setCheckedIngredients] = useState<string[]>([]);
+    const [checkedIngredients, setCheckedIngredients] = useState<string[]>([""]);
     const [ing, setIng] = useState({SOLID: [''], LIQUID: [''], POWDER: [''], OTHER: ['']});
     const [portionSizes, setPortionSizes] = useState<string[]>([]);
     const [portion, setPortion] = useState(1);
@@ -74,7 +74,6 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
         }).catch((error) => {
             toast.error(t(error.response?.data.message));
         });
-        console.log("useEffect", recipe.ingredients, ingredientStates, checkedIngredients, portion, portionSizes, ing)
     }, []);
 
     async function handleUnitChange(ingredient: IIngredient, unit: string) {
@@ -203,7 +202,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                                 className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light focus:ring-cook-light text-base"}
                                 defaultValue={ingredient.unit}
                                 onChange={(e) => handleUnitChange(ingredient, e.target.value)}>
-                                {
+                                { ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"] &&
                                     ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"].map((unit, index) => (
                                         <option key={index} value={unit}>{t(unit)}</option>
                                     ))
