@@ -19,8 +19,8 @@ function InstructionCard({recipe}: IInstructionCardProps) {
 
     return (
         <div className="card mt-2">
-            <h2 className={"text-4xl"}>{t('Instruction')}</h2>
-            <p>{currentInstructionIndex+1}. {recipe.instructions[currentInstructionIndex]}</p>
+            <h2 className={"text-4xl"}>{t('instructions')}</h2>
+            <span className={"text-2xl"}>{currentInstructionIndex+1}. {recipe.instructions[currentInstructionIndex]}</span>
 
             {/*TODO: Add Image / Gifs    */}
 

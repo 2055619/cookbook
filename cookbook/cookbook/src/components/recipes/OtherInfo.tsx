@@ -45,8 +45,6 @@ function OtherInfo({recipe}: IOtherInfoProps) {
                         ))}
                     </ol>
                 </div>
-
-
             </div>
 
         </div>
