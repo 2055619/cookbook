@@ -4,7 +4,6 @@ import PageNotFound from "../any/PageNotFound";
 import React, {useEffect} from "react";
 import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
-import {useTranslation} from "react-i18next";
 import RecipeModification from "./RecipeModification";
 import UserRecipes from "./UserRecipes";
 import RecipeDetails from "./RecipeDetails";
@@ -41,7 +40,7 @@ function UserPages({user, setUser}: IUserPage) {
 
             navigate('/authentication/signin');
         }
-    }, [user]);
+    }, []);
 
     // TODO: Add other pages
     return (

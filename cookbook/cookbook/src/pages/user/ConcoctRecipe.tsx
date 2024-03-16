@@ -74,6 +74,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
         }).catch((error) => {
             toast.error(t(error.response?.data.message));
         });
+        console.log("useEffect", recipe.ingredients, ingredientStates, checkedIngredients, portion, portionSizes, ing)
     }, []);
 
     async function handleUnitChange(ingredient: IIngredient, unit: string) {

@@ -89,13 +89,15 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
         <div className={"relative text-end pb-0"} onClick={handleOptionClick}>
             <div className={"flex justify-between items-center"}>
                 <button className="mb-0 p-1 clickable hover:bg-cook-red hover:rounded-full"
-                   onClick={handleViewProfile}>{recipe.cookUsername}</button>
+                   onClick={handleViewProfile}>{recipe.cookUsername}
+                </button>
+
                 <button className={"px-1 hover:bg-cook-red hover:rounded-full text-2xl"}
                 onClick={handleConcoctionClick}>
                     <span className={"hidden lg:inline-block"}>{t('concoct')}</span>
-                    <FontAwesomeIcon className={"ms-1"}
-                                     onClick={togglePopup} icon={faPlay}/>
+                    <FontAwesomeIcon className={"ms-1"} icon={faPlay}/>
                 </button>
+
                 <FontAwesomeIcon className={"mt-2 px-2 clickable hover:bg-cook-red hover:rounded-full p-2"}
                                  onClick={togglePopup} icon={faEllipsisV}/>
             </div>
