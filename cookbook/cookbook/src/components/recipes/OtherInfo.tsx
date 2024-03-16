@@ -11,7 +11,7 @@ function OtherInfo({recipe}: IOtherInfoProps) {
 
     return (
         <div className={"mt-20 pb-10"}>
-            <h1 className={"text-7xl my-3"}>{t('otherInfo')}</h1>
+            <h1 className={"text-6xl md:text-7xl my-3"}>{t('otherInfo')}</h1>
             <h3 className={"text-2xl mb-2"}>{recipe.description}</h3>
             <div className={"grid grid-cols-5 gap-y-3"}>
                 <p>{t('category') + ": " + t(recipe.category)}</p>
@@ -22,10 +22,10 @@ function OtherInfo({recipe}: IOtherInfoProps) {
                 <p className={"col-span-5"}>{t('dietTypes') + ": " + recipe.dietTypes.map(dietType => t(dietType)).join(", ")}</p>
             </div>
 
-            <div className={"grid grid-cols-2 text-start m-3"}>
-                <div>
-                    <h3 className={"text-4xl "}>{t('ingredients')}</h3>
-                    <ol>
+            <div className={"grid md:grid-cols-2 m-3"}>
+                <div className={""}>
+                    <h3 className={"text-4xl"}>{t('ingredients')}</h3>
+                    <ol className={"text-start w-1/2 mx-auto"}>
                         {recipe.ingredients.map((ingredient, index) => (
                             <li className={""} key={index}>
                                 <span className={""}>{index + 1}.</span>
@@ -34,9 +34,9 @@ function OtherInfo({recipe}: IOtherInfoProps) {
                         ))}
                     </ol>
                 </div>
-                <div>
-                    <h3 className={"text-4xl my-3"}>{t('instructions')}</h3>
-                    <ol>
+                <div className={""}>
+                    <h3 className={"text-4xl"}>{t('instructions')}</h3>
+                    <ol className={"text-start w-1/2 mx-auto"}>
                         {recipe.instructions.map((instruction, index) => (
                             <li className={""} key={index}>
                                     <span className={""}>{index + 1}.</span>

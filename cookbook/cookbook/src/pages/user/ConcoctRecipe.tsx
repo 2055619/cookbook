@@ -148,7 +148,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
 
     return (
         <div className={"min-h-screen bg-cook-orange"}>
-            <div className="grid grid-cols-4">
+            <div className="grid md:grid-cols-4 grid-cols-2">
                 <div className={"text-start ms-1"}>
                     <button onClick={() => window.history.back()}
                             className="clickable hover:bg-cook-red hover:rounded-full px-2 py-1">
@@ -156,7 +156,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                     </button>
                 </div>
 
-                <h1 className={"text-9xl col-span-2"}>{recipe.title}</h1>
+                <h1 className={"text-7xl lg:text-9xl col-span-2"}>{recipe.title}</h1>
             </div>
 
             <p className={"text-2xl my-2"}>{t('prepTime') + ": " + recipe.prepTime}, {t('cookTime') + ": " + recipe.cookTime}</p>
@@ -186,12 +186,12 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
 
             <h1 className={"text-4xl"}>{t('ingredients')}</h1>
             <div className={"grid grid-cols-2 text-center"}>
-                <h1 className="text-2xl">Non utilisé</h1>
-                <h1 className="text-2xl">Utilisé</h1>
+                <h1 className="text-3xl">{t('notUsed')}</h1>
+                <h1 className="text-3xl">{t('used')}</h1>
 
                 <ul>
                     {recipe.ingredients.filter(ingredient => !checkedIngredients.includes(ingredient.name)).map((ingredient, index) => (
-                        <li className={"grid grid-cols-2"} key={index}>
+                        <li className={"grid lg:grid-cols-2"} key={index}>
                             <div className={"clickable grid grid-cols-3 gap-0"} onClick={() => handleCheck(ingredient)}>
                                 <input className={"clickable"} type="checkbox" checked={false} readOnly={true}
                                        id={`ingredient-${index}`}/>
@@ -199,7 +199,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                                 <span className={"mx-1 text-3xl"}>{revisedQuantity(ingredient.quantity)}</span>
                             </div>
                             <select
-                                className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light focus:ring-cook-light text-base"}
+                                className={"mx-1 my-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light focus:ring-cook-light text-base"}
                                 defaultValue={ingredient.unit}
                                 onChange={(e) => handleUnitChange(ingredient, e.target.value)}>
                                 { ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"] &&
@@ -213,7 +213,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                 </ul>
                 <ul>
                     {recipe.ingredients.filter(ingredient => checkedIngredients.includes(ingredient.name)).map((ingredient, index) => (
-                        <li key={index} className="text-cook opacity-80 grid grid-cols-2 clickable"
+                        <li key={index} className="text-cook opacity-80 grid lg:grid-cols-2 clickable"
                             onClick={() => handleCheck(ingredient)}>
                             <div className={"clickable grid grid-cols-3 gap-0"}>
                                 <input className={"clickable"} type="checkbox" checked={true} readOnly={true}
@@ -222,7 +222,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                                 <span className={"mx-1 text-3xl"}>{revisedQuantity(ingredient.quantity)}</span>
                             </div>
                             <select
-                                className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light focus:ring-cook-light text-base"}
+                                className={"mx-1 my-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light focus:ring-cook-light text-base"}
                                 value={getUnit(ingredient)}
                                 disabled={true}>
                                 {
