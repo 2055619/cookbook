@@ -13,6 +13,7 @@ import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 interface IConcoctRecipeProps {
     user: IUser;
 }
+
 function ConcoctRecipe({user}: IConcoctRecipeProps) {
     const cookbookService = new CookBookService();
     const utilsService = new UtilsService();
@@ -79,7 +80,6 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
         let qty = ingredient.quantity;
         await utilsService.convert(ingredient.quantity, ingredient.unit, unit)
             .then((response) => {
-                console.log(response);
                 qty = parseFloat(response.toFixed(2));
             })
             .catch((error) => {
@@ -116,12 +116,11 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
 
     function handleSizeChange(e: React.ChangeEvent<HTMLSelectElement>) {
         const value = e.target.value;
-        const mod = (portionSizes.indexOf(value)+3) / (portionSizes.indexOf(recipe.portionSize)+3);
+        const mod = (portionSizes.indexOf(value) + 3) / (portionSizes.indexOf(recipe.portionSize) + 3);
         setRecipe({
             ...recipe,
             ingredients: recipe.ingredients.map(i => {
                 const newQty = parseFloat((mod * i.quantity).toFixed(2));
-                console.log(newQty);
                 return {...i, quantity: newQty}
             }),
             portionSize: value
@@ -148,7 +147,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
     }
 
     return (
-        <div>
+        <div className={"min-h-screen bg-cook-orange"}>
             <div className="grid grid-cols-4">
                 <div className={"text-start ms-1"}>
                     <button onClick={() => window.history.back()}
@@ -186,15 +185,21 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
             </form>
 
             <h1 className={"text-4xl"}>{t('ingredients')}</h1>
-            <div>
+            <div className={"grid grid-cols-2 text-center"}>
+                <h1 className="text-2xl">Non utilisé</h1>
+                <h1 className="text-2xl">Utilisé</h1>
+
                 <ul>
                     {recipe.ingredients.filter(ingredient => !checkedIngredients.includes(ingredient.name)).map((ingredient, index) => (
-                        <li key={index}>
-                            <input type="checkbox" id={`ingredient-${index}`} onChange={() => handleCheck(ingredient)}/>
-                            <span className={"mx-1 text-2xl"}>{ingredient.name}</span>
-                            <span className={"mx-1 text-3xl"}>{revisedQuantity(ingredient.quantity)}</span>
+                        <li className={"grid grid-cols-2"} key={index}>
+                            <div className={"clickable grid grid-cols-3 gap-0"} onClick={() => handleCheck(ingredient)}>
+                                <input className={"clickable"} type="checkbox" checked={false} readOnly={true}
+                                       id={`ingredient-${index}`}/>
+                                <span className={"mx-1 text-2xl"}>{ingredient.name}</span>
+                                <span className={"mx-1 text-3xl"}>{revisedQuantity(ingredient.quantity)}</span>
+                            </div>
                             <select
-                                className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base"}
+                                className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light focus:ring-cook-light text-base"}
                                 defaultValue={ingredient.unit}
                                 onChange={(e) => handleUnitChange(ingredient, e.target.value)}>
                                 {
@@ -206,32 +211,30 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                         </li>
                     ))}
                 </ul>
-                <div className="mt-4">
-                    <h2>{t('usedIngredients')}</h2>
-                    <ul>
-                        {recipe.ingredients.filter(ingredient => checkedIngredients.includes(ingredient.name)).map((ingredient, index) => (
-                            <li key={index} className="text-cook opacity-80">
-                                <input type="checkbox" id={`ingredient-${index}`} checked
-                                       onChange={() => handleCheck(ingredient)}/>
-                                <span className={"mx-1"}>{ingredient.name}</span>
-                                <span className={"mx-1"}>{ingredient.quantity}</span>
-                                <select
-                                    className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-base"}
-                                    value={getUnit(ingredient)}
-                                    disabled={true}
-                                    onChange={(e) => handleUnitChange(ingredient, e.target.value)}>
-                                    {
-                                        ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"].map((unit, index) => (
-                                            <option key={index}
-                                                    value={unit}>{t(unit)}</option>
-                                        ))
-                                    }
-                                </select>
-                            </li>
+                <ul>
+                    {recipe.ingredients.filter(ingredient => checkedIngredients.includes(ingredient.name)).map((ingredient, index) => (
+                        <li key={index} className="text-cook opacity-80 grid grid-cols-2 clickable"
+                            onClick={() => handleCheck(ingredient)}>
+                            <div className={"clickable grid grid-cols-3 gap-0"}>
+                                <input className={"clickable"} type="checkbox" checked={true} readOnly={true}
+                                       id={`ingredient-${index}`}/>
+                                <span className={"mx-1 text-2xl"}>{ingredient.name}</span>
+                                <span className={"mx-1 text-3xl"}>{revisedQuantity(ingredient.quantity)}</span>
+                            </div>
+                            <select
+                                className={"mx-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light focus:ring-cook-light text-base"}
+                                value={getUnit(ingredient)}
+                                disabled={true}>
+                                {
+                                    ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"].map((unit, index) => (
+                                        <option key={index} value={unit}>{t(unit)}</option>
+                                    ))
+                                }
+                            </select>
+                        </li>
 
-                        ))}
-                    </ul>
-                </div>
+                    ))}
+                </ul>
             </div>
 
             <InstructionCard recipe={recipe}/>

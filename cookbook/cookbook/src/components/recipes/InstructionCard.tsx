@@ -22,6 +22,8 @@ function InstructionCard({recipe}: IInstructionCardProps) {
             <h2 className={"text-4xl"}>{t('Instruction')}</h2>
             <p>{currentInstructionIndex+1}. {recipe.instructions[currentInstructionIndex]}</p>
 
+            {/*TODO: Add Image / Gifs    */}
+
             <div className={" mt-2"}>
                 <button className={"border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 py-1 px-3 mx-10"} onClick={handlePrevious} disabled={currentInstructionIndex === 0}>
                     {t('Previous')}
