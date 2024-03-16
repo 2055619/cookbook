@@ -43,7 +43,7 @@ function ProfileSummary({setUser, user}: IProfileSummaryProps) {
 
     return (
         <div className="relative items-center justify-end">
-            <img src={avatar} alt="Avatar" className="h-10 w-10 me-1 rounded-full cursor-pointer"
+            <img src={avatar} alt="Avatar" className="h-6 w-6 sm:h-10 sm:w-10 me-1 rounded-full cursor-pointer"
                  onClick={togglePopup}/>
             {showPopup && (
                 <div

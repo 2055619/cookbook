@@ -9,7 +9,8 @@ public enum ValidationMessage{
 	COOKTIME_MESSAGE("message.invalidCookTime"),
 	PREPTIME_MESSAGE("message.invalidPrepTime"),
 	QUANTITY_MESSAGE("message.invalidQuantity"),
-	DESCRIPTION_MESSAGE("message.invalidDescription");
+	DESCRIPTION_MESSAGE("message.invalidDescription"),
+	UNIT_MESSAGE("message.invalidUnit");
 	private final String string;
 	ValidationMessage(String string){
 		this.string = string;

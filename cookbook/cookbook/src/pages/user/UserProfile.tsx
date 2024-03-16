@@ -1,11 +1,8 @@
 import {IUser, IUserProfile} from "../../assets/models/Authentication";
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
-import {IRecipe} from "../../assets/models/Recipe";
 import {toast} from "react-toastify";
-import RecipeComponent from "../../components/recipes/RecipeComponent";
-import Loading from "../../components/Utils/Loading";
 import Landing from "./Landing";
 
 interface IUserProfileProps {
@@ -46,9 +43,11 @@ function UserProfile({user}: IUserProfileProps) {
 
     return (
         <div className={"text-start ms-2"}>
-            <h1 className={"text-5xl"}>{userProfile.username}</h1>
-            <h2 className={"text-3xl"}>{t('email')}: {userProfile.email}</h2>
-            <h2 className={"text-3xl"}>{userProfile.firstName} {userProfile.lastName}</h2>
+            <div className="grid grid-cols-3 text-center mb-2">
+                <span className={"text-3xl"}>{userProfile.firstName} {userProfile.lastName}</span>
+                <span className={"text-3xl"}>{userProfile.username}</span>
+                <span className={"text-3xl"}>{t('email')}: {userProfile.email}</span>
+            </div>
 
             <h2 className={"text-3xl"}>{t('solidUnit')}: {t(userProfile.solidUnit)}</h2>
             <h2 className={"text-3xl"}>{t('liquidUnit')}: {t(userProfile.liquidUnit)}</h2>
@@ -57,7 +56,6 @@ function UserProfile({user}: IUserProfileProps) {
 
             <h2 className={"text-7xl text-center mt-4"}>{t('publication')}</h2>
 
-            {/*TODO: Add filter for the user only */}
             <Landing username={userProfile.username} user={user!}/>
         </div>
     );

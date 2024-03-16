@@ -4,6 +4,8 @@ import quixotic.projects.cookbook.dto.IngredientDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.dto.SignUpDTO;
 import quixotic.projects.cookbook.exception.badRequestException.ValidationException;
+import quixotic.projects.cookbook.model.enums.IngredientState;
+import quixotic.projects.cookbook.model.enums.Unit;
 
 import static quixotic.projects.cookbook.validation.ValidationPattern.*;
 
@@ -42,6 +44,13 @@ public final class Validation{
 	public static void validateIngredient(IngredientDTO ingredientDTO) {
 		validateName(ingredientDTO.getName());
 		validateQuantity(ingredientDTO.getQuantity());
+		validateUnitInCategory(ingredientDTO.getUnit(), ingredientDTO.getIngredientState());
+	}
+
+	private static void validateUnitInCategory(Unit unit, IngredientState ingredientState) {
+		if(ingredientState.getUnits().contains(unit))
+			return;
+		exception(ValidationMessage.UNIT_MESSAGE.toString());
 	}
 
 	private static void validateQuantity(float quantity) {

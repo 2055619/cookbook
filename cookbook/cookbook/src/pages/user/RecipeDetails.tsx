@@ -54,9 +54,9 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
 
     function timeConversion(minutes: number) {
         if (minutes > 60) {
-            return Math.floor(minutes / 60) + " " + t('hours') + " " + minutes % 60 + " " + t('minutes');
+            return Math.floor(minutes / 60) + " " + t('hours') + " " + minutes % 60;
         }
-        return minutes + " " + t('minutes');
+        return minutes;
     }
 
     return (
@@ -71,49 +71,54 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
             <div className="text-center">
                 <h1 className="text-8xl font-semibold mt-0 pt-0">{recipe?.title}</h1>
                 <p className="text-3xl">{recipe?.description}</p>
+
+                <div className="grid mx-auto grid-cols-3 gap-1 mt-1">
+                    <p>
+                        <span className={"me-1"}>{t('category')} :</span>
+                        <span className="text-2xl">{t(recipe?.category)}</span>
+                    </p>
+                    <p>
+                        <span className={"me-1"}>{t('difficulty')} :</span>
+                        <span className="text-2xl">{t(recipe?.difficulty)}</span>
+                    </p>
+                    <p>
+                        <span className={"me-1"}>{t('portionSize')} :</span>
+                        <span className="text-2xl">{recipe?.serving} {t(recipe?.portionSize)}</span>
+                    </p>
+                </div>
+                <div className="grid grid-cols-2 gap-1 mt-1">
+                    <p className={""}>
+                        <span className={"me-1"}>{t('prepTime')} :</span>
+                        <span className="text-2xl">{timeConversion(recipe!.prepTime)} <span
+                            className={"hidden sm:inline"}>{t('minutes')}</span>
+                            <span className={"inline sm:hidden"}>{t('mins')}</span>
+                        </span>
+                    </p>
+                    <h1 className={""}>
+                        <span className={"me-1"}>{t('cookTime')} :</span>
+                        <span className="text-2xl">{timeConversion(recipe!.cookTime)}
+                            <span className={"hidden sm:inline"}> {t('minutes')}</span>
+                            <span className={"inline sm:hidden"}> {t('mins')}</span>
+                        </span>
+                    </h1>
+                </div>
+
             </div>
 
-            <div className="grid mx-auto grid-cols-3 gap-1 mt-1">
-                <p>
-                    <span className={"me-1"}>{t('category')} :</span>
-                    <span className="text-2xl">{t(recipe?.category)}</span>
-                </p>
-                <p>
-                    <span className={"me-1"}>{t('difficulty')} :</span>
-                    <span className="text-2xl">{t(recipe?.difficulty)}</span>
-                </p>
-                <p>
-                    <span className={"me-1"}>{t('portionSize')} :</span>
-                    <span className="text-2xl">{recipe?.serving} {t(recipe?.portionSize)}</span>
-                </p>
-            </div>
-            <div className="grid grid-cols-2 gap-1 mt-1">
-                <p className={""}>
-                    <span className={"me-1"}>{t('prepTime')} :</span>
-                    <span className="text-2xl">{timeConversion(recipe!.prepTime)}</span>
-                </p>
-                <h1 className={""}>
-                    <span className={"me-1"}>{t('cookTime')} :</span>
-                    <span className="text-2xl">{timeConversion(recipe!.cookTime)}</span>
-                </h1>
-            </div>
+            <div className={"text-center w-11/12 mx-auto grid md:grid-cols-2 grid-cols-1"}>
+                <div className="">
+                    <img className={"w-full"} src={pastaImg} alt={recipe?.title}/>
+                </div>
 
-            <h1 className="">{t('dietTypes')}:</h1>
-            {recipe?.dietTypes.map((dietType, index) => (
-                <span key={index} className="inline-block mx-1 text-2xl">{t(dietType)}, </span>
-            ))}
-
-            <div className={"w-11/12 mx-auto flex flex-row mt-2"}>
-                <img className={"w-1/2"} src={pastaImg} alt={recipe?.title}/>
-
-                <div className="w-1/2 text-start ms-10">
+                <div className="text-start ms-10">
                     <h1 className="text-4xl">{t('ingredients')}:</h1>
                     <ul>
                         {recipe?.ingredients.map((ingredient, index) => (
                             <li key={index} className="text-2xl">
                                 <span className={""}>{index + 1}.</span>
-                                <span
-                                    className={"mx-1 text-2xl"}>{ingredient.name} {ingredient.quantity} {t(ingredient.unit)}</span>
+                                <span className={"mx-1 text-2xl"}>
+                                {ingredient.name} {ingredient.quantity} {t(ingredient.unit)}
+                            </span>
                             </li>
                         ))}
                     </ul>
@@ -128,7 +133,6 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
                         ))}
                     </ol>
                 </div>
-
             </div>
         </div>
     );
