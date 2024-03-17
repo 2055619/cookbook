@@ -3,12 +3,14 @@ import {CookBookService} from "../../services/CookBookService";
 import {toast} from "react-toastify";
 import {IRecipe} from "../../assets/models/Recipe";
 import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 
 function SearchBox() {
+    const {t} = useTranslation();
+    const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
     const [recipesTitle, setRecipesTitle] = useState<IRecipe[]>([]);
     const cookbookService = new CookBookService();
-    const {t} = useTranslation();
     const popupRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -24,7 +26,7 @@ function SearchBox() {
         };
     }, []);
 
-    const handleInputChange = async (e: any) => {
+    function handleInputChange(e: any){
         const searchValue = e.target.value;
 
         if (searchValue) {
@@ -36,16 +38,15 @@ function SearchBox() {
                     toast.error(error.response?.data.message);
                     setRecipesTitle([]);
                 });
-
             setShowPopup(true);
         } else {
             setShowPopup(false);
         }
-    };
+    }
 
-    const handleRecipeClick = (recipeTitle: string) => {
-        toast.info("You clicked on " + recipeTitle);
-    };
+    function handleRecipeClick(recipeTitle: string){
+        navigate('/u/recipeDetail?title=' + recipeTitle);
+    }
 
     return (
         <div className="relative flex lg:w-1/3 lg:ml-52">

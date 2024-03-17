@@ -126,8 +126,9 @@ public class CookService {
 
     public List<RecipeDTO> getRecipesByUser(String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook cook = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
 
-        return recipeRepository.findAllByCookUsername(username).stream().map(RecipeDTO::new).toList();
+        return recipeRepository.findRecipesByCook(cook).stream().map(RecipeDTO::new).toList();
     }
 
     public UserProfile getUserProfile(String username) {

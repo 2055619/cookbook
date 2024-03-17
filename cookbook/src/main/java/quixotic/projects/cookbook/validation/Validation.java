@@ -61,7 +61,7 @@ public final class Validation{
 
 	//	Validation of attributes
 	private static void validateCookTime(float cookTime) {
-		if(cookTime > 0)
+		if(cookTime >= 0)
 			return;
 		exception(ValidationMessage.COOKTIME_MESSAGE.toString());
 	}

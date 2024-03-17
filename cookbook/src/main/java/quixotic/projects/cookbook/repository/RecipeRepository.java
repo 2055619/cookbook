@@ -1,6 +1,7 @@
 package quixotic.projects.cookbook.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.summary.RecipeSummary;
 
@@ -16,6 +17,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     List<Recipe> findAllByTitleContainsIgnoreCase(String title);
 
     boolean existsByTitle(String title);
-
-    List<Recipe> findAllByCookUsername(String username);
+    List<Recipe> findRecipesByCook(Cook cook);
 }

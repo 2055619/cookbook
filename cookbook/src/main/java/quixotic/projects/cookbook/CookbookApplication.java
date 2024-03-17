@@ -31,6 +31,42 @@ public class CookbookApplication implements CommandLineRunner {
         createRecipes();
     }
 
+    private void createCooks() {
+        userService.createCook(SignUpDTO.builder()
+                .username("TheChef")
+                .password("Password123")
+                .email("qwe@qwe.com")
+                .firstName("John")
+                .lastName("Doe")
+                .powderUnit(Unit.CUP)
+                .liquidUnit(Unit.CUP)
+                .solidUnit(Unit.GRAM)
+                .otherUnit(Unit.CUP)
+                .build());
+        userService.createCook(SignUpDTO.builder()
+                .username("TheCook")
+                .password("Password123")
+                .email("qwe@gmail.com")
+                .firstName("Admin")
+                .lastName("Admin")
+                .powderUnit(Unit.CUP)
+                .liquidUnit(Unit.CUP)
+                .solidUnit(Unit.GRAM)
+                .otherUnit(Unit.CUP)
+                .build());
+        userService.createCook(SignUpDTO.builder()
+                .username("testCook")
+                .email("asd@asd.com")
+                .password("Nonne123!")
+                .firstName("BlaBla")
+                .lastName("BlaBlaLast")
+                .powderUnit(Unit.GRAM)
+                .liquidUnit(Unit.LITER)
+                .solidUnit(Unit.KILOGRAM)
+                .otherUnit(Unit.CUP)
+                .build());
+    }
+
     private void createRecipes() {
         cookService.createRecipe(RecipeDTO.builder()
                 .title("Pancakes")
@@ -96,30 +132,73 @@ public class CookbookApplication implements CommandLineRunner {
                 .dietTypes(List.of(DietType.CARNIVORE))
                 .build());
 
-    }
-
-    private void createCooks() {
-        userService.createCook(SignUpDTO.builder()
-                .username("TheChef")
-                .password("Password123")
-                .email("qwe@qwe.com")
-                .firstName("John")
-                .lastName("Doe")
-                .powderUnit(Unit.CUP)
-                .liquidUnit(Unit.CUP)
-                .solidUnit(Unit.GRAM)
-                .otherUnit(Unit.CUP)
+        cookService.createRecipe(RecipeDTO.builder()
+                .title("Chicken Alfredo")
+                .description("Creamy and delicious chicken alfredo")
+                .cookUsername("TheChef")
+                .visibility(Visibility.PUBLIC)
+                .instructions(Set.of("Boil the pasta", "Cook the chicken", "Mix with Alfredo sauce"))
+                .ingredients(Set.of(
+                        IngredientDTO.builder()
+                                .name("Pasta")
+                                .quantity(200).ingredientState(IngredientState.SOLID)
+                                .unit(Unit.GRAM)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Chicken")
+                                .quantity(200).ingredientState(IngredientState.SOLID)
+                                .unit(Unit.GRAM)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Alfredo Sauce")
+                                .quantity(100).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.MILLILITER)
+                                .build()
+                ))
+                .category(RecipeType.MAIN)
+                .serving(2)
+                .prepTime(15)
+                .cookTime(15)
+                .difficulty(DifficultyLevel.MEDIUM)
+                .portionSize(PortionSize.MEDIUM)
+                .dietTypes(List.of(DietType.CARNIVORE))
                 .build());
-        userService.createCook(SignUpDTO.builder()
-                .username("testCook")
-                .email("asd@asd.com")
-                .password("Nonne123!")
-                .firstName("BlaBla")
-                .lastName("BlaBlaLast")
-                .powderUnit(Unit.GRAM)
-                .liquidUnit(Unit.LITER)
-                .solidUnit(Unit.KILOGRAM)
-                .otherUnit(Unit.CUP)
+
+        cookService.createRecipe(RecipeDTO.builder()
+                .title("Vegan Salad")
+                .description("Healthy and fresh vegan salad")
+                .cookUsername("TheCook")
+                .visibility(Visibility.PUBLIC)
+                .instructions(Set.of("Chop the vegetables", "Mix with dressing"))
+                .ingredients(Set.of(
+                        IngredientDTO.builder()
+                                .name("Lettuce")
+                                .quantity(100).ingredientState(IngredientState.SOLID)
+                                .unit(Unit.GRAM)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Tomato")
+                                .quantity(1).ingredientState(IngredientState.COUNTABLE)
+                                .unit(Unit.NUMBER)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Cucumber")
+                                .quantity(1).ingredientState(IngredientState.COUNTABLE)
+                                .unit(Unit.NUMBER)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Vegan Dressing")
+                                .quantity(50).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.MILLILITER)
+                                .build()
+                ))
+                .category(RecipeType.SALAD)
+                .serving(1)
+                .prepTime(10)
+                .cookTime(0)
+                .difficulty(DifficultyLevel.EASY)
+                .portionSize(PortionSize.SMALL)
+                .dietTypes(List.of(DietType.VEGAN))
                 .build());
     }
 }

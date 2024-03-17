@@ -62,7 +62,7 @@ function Landing({username, user}: ILandingProps) {
                     </div>
                 } else {
                     return <div className={`flex justify-center`} key={index}>
-                        <RecipeComponent recipe={recipe} username={user.username}  key={index}/>
+                        <RecipeComponent recipe={recipe} username={user.username} key={index}/>
                     </div>
                 }
             })}
