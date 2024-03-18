@@ -4,15 +4,16 @@ import pastaImg from "../../assets/image/red-sauce-pasta-recipe.jpg";
 import React from "react";
 import ReactionFooter from "./ReactionFooter";
 import RecipeOptions from "./RecipeOptions";
-import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBowlFood, faGaugeHigh, faHourglass, faHourglassStart, faLayerGroup} from "@fortawesome/free-solid-svg-icons";
 
 interface RecipeCardProps {
     recipe: IRecipe;
     username?: string;
 }
 
-function RecipeComponent({recipe, username}: RecipeCardProps) {
+function RecipeCard({recipe, username}: RecipeCardProps) {
     const {t} = useTranslation();
     const navigate = useNavigate()
 
@@ -37,10 +38,10 @@ function RecipeComponent({recipe, username}: RecipeCardProps) {
                 <p className="text-2xl">{recipe.description}</p>
 
                 <div className="grid grid-cols-4 gap-2 mt-1">
-                    <p>{t(recipe.category)}</p>
-                    <p>{t(recipe.difficulty)}</p>
-                    <p>{recipe.serving} {t(recipe.portionSize)}</p>
-                    <p>{recipeEstimatedTimeInHours()}</p>
+                    <p><FontAwesomeIcon icon={faLayerGroup} /> <span>{t(recipe.category)}</span></p>
+                    <p><FontAwesomeIcon icon={faGaugeHigh} /> <span>{t(recipe.difficulty)}</span></p>
+                    <p><FontAwesomeIcon icon={faBowlFood} /> <span>{recipe.serving} {t(recipe.portionSize)}</span></p>
+                    <p><FontAwesomeIcon icon={faHourglassStart} /> <span>{recipeEstimatedTimeInHours()}</span></p>
                 </div>
 
                 {/*<h1 className="mb-2 text-muted">Diet Types:</h1>*/}
@@ -60,4 +61,4 @@ function RecipeComponent({recipe, username}: RecipeCardProps) {
     );
 }
 
-export default RecipeComponent;
+export default RecipeCard;

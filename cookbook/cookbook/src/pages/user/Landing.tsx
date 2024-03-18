@@ -4,7 +4,7 @@ import Loading from "../../components/Utils/Loading";
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {IRecipe} from "../../assets/models/Recipe";
 import {toast} from "react-toastify";
-import RecipeComponent from "../../components/recipes/RecipeComponent";
+import RecipeCard from "../../components/recipes/RecipeCard";
 import {IUser} from "../../assets/models/Authentication";
 
 interface ILandingProps {
@@ -58,11 +58,11 @@ function Landing({username, user}: ILandingProps) {
             {recipes.map((recipe, index) => {
                 if (recipes.length === index + 1) {
                     return <div className={`flex justify-center`} ref={lastRecipeElementRef} key={index}>
-                        <RecipeComponent recipe={recipe} username={user.username} key={index}/>
+                        <RecipeCard recipe={recipe} username={user.username} key={index}/>
                     </div>
                 } else {
                     return <div className={`flex justify-center`} key={index}>
-                        <RecipeComponent recipe={recipe} username={user.username} key={index}/>
+                        <RecipeCard recipe={recipe} username={user.username} key={index}/>
                     </div>
                 }
             })}

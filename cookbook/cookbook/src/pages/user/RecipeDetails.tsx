@@ -6,7 +6,14 @@ import {CookBookService} from "../../services/CookBookService";
 import {IUser} from "../../assets/models/Authentication";
 import pastaImg from "../../assets/image/red-sauce-pasta-recipe.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import {
+    faArrowLeft,
+    faBowlFood,
+    faGaugeHigh,
+    faHourglass, faHourglassEnd,
+    faHourglassHalf,
+    faLayerGroup
+} from "@fortawesome/free-solid-svg-icons";
 
 interface IRecipeDetailsProps {
     user: IUser;
@@ -74,28 +81,33 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
 
                 <div className="grid mx-auto grid-cols-3 gap-1 mt-1">
                     <p>
-                        <span className={"me-1"}>{t('category')} :</span>
+                        <FontAwesomeIcon className={"mx-1"} icon={faLayerGroup}/>
+                        <span className={"me-1 hidden lg:inline"}>{t('category')} :</span>
                         <span className="text-2xl">{t(recipe?.category)}</span>
                     </p>
                     <p>
-                        <span className={"me-1"}>{t('difficulty')} :</span>
+                        <FontAwesomeIcon className={"mx-1"} icon={faGaugeHigh}/>
+                        <span className={"me-1 hidden lg:inline"}>{t('difficulty')} :</span>
                         <span className="text-2xl">{t(recipe?.difficulty)}</span>
                     </p>
                     <p>
-                        <span className={"me-1"}>{t('portionSize')} :</span>
+                        <FontAwesomeIcon className={"mx-1"} icon={faBowlFood}/>
+                        <span className={"me-1 hidden lg:inline"}>{t('portionSize')} :</span>
                         <span className="text-2xl">{recipe?.serving} {t(recipe?.portionSize)}</span>
                     </p>
                 </div>
                 <div className="grid grid-cols-2 gap-1 mt-1">
                     <p className={""}>
-                        <span className={"me-1"}>{t('prepTime')} :</span>
+                        <FontAwesomeIcon className={"mx-1"} icon={faHourglassHalf}/>
+                        <span className={"me-1 hidden lg:inline"}>{t('prepTime')} :</span>
                         <span className="text-2xl">{timeConversion(recipe!.prepTime)} <span
                             className={"hidden sm:inline"}>{t('minutes')}</span>
                             <span className={"inline sm:hidden"}>{t('mins')}</span>
                         </span>
                     </p>
                     <h1 className={""}>
-                        <span className={"me-1"}>{t('cookTime')} :</span>
+                        <FontAwesomeIcon className={"mx-1"} icon={faHourglassEnd}/>
+                        <span className={"me-1 hidden lg:inline"}>{t('cookTime')} :</span>
                         <span className="text-2xl">{timeConversion(recipe!.cookTime)}
                             <span className={"hidden sm:inline"}> {t('minutes')}</span>
                             <span className={"inline sm:hidden"}> {t('mins')}</span>
