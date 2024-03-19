@@ -41,7 +41,7 @@ function RecipeCard({recipe, username}: RecipeCardProps) {
                     <p><FontAwesomeIcon icon={faLayerGroup} /> <span>{t(recipe.category)}</span></p>
                     <p><FontAwesomeIcon icon={faGaugeHigh} /> <span>{t(recipe.difficulty)}</span></p>
                     <p><FontAwesomeIcon icon={faBowlFood} /> <span>{recipe.serving} {t(recipe.portionSize)}</span></p>
-                    <p><FontAwesomeIcon icon={faHourglassStart} /> <span>{recipeEstimatedTimeInHours()}</span></p>
+                    <p><FontAwesomeIcon icon={faHourglass} /> <span>{recipeEstimatedTimeInHours()}</span></p>
                 </div>
 
                 {/*<h1 className="mb-2 text-muted">Diet Types:</h1>*/}

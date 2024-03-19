@@ -1,7 +1,7 @@
 import {useTranslation} from "react-i18next";
 import LanguageSelector from "../Utils/LanguageSelector";
 import {NavLink, useNavigate} from "react-router-dom";
-import logo from "../../logo.svg";
+import logo from "../../assets/image/cookbookIcon.jpg";
 import {IUser} from "../../assets/models/Authentication";
 import ProfileSummary from "../ProfileSummary";
 import SearchBox from "./SearchBox";
