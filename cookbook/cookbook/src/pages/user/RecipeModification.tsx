@@ -30,7 +30,7 @@ function RecipeModification({user}: RecipeModificationProps) {
     const [category, setCategory] = useState('MAIN');
     const [difficulty, setDifficulty] = useState('EASY');
     const [visibility, setVisibility] = useState('PUBLIC');
-    const [portionSize, setPortionSize] = useState('CUP');
+    const [portionSize, setPortionSize] = useState('MEDIUM');
     const [dietTypes, setDietTypes] = useState<string[]>([]);
 
     const [allCategories, setAllCategories] = useState<string[]>([]);
@@ -191,6 +191,7 @@ function RecipeModification({user}: RecipeModificationProps) {
             cookbookService.updateRecipe(newRecipe)
                 .then(() => {
                     toast.success(t('recipeUpdated'));
+                    window.history.back();
                 })
                 .catch((error) => {
                     toast.error(t(error.response?.data.message));
@@ -200,12 +201,12 @@ function RecipeModification({user}: RecipeModificationProps) {
             cookbookService.createRecipe(newRecipe)
                 .then(() => {
                     toast.success(t('recipeCreated'));
+                    window.history.back();
                 })
                 .catch((error) => {
                     toast.error(t(error.response?.data.message));
                 });
         }
-        window.history.back();
     };
 
     // Diet
@@ -261,8 +262,12 @@ function RecipeModification({user}: RecipeModificationProps) {
 
     function handleIngredientStateChange(index: number, value: string) {
         const newIngredients = [...ingredients];
-        newIngredients[index] = {...newIngredients[index], ingredientState: value};
+        newIngredients[index] = {...newIngredients[index],
+            ingredientState: value,
+            unit: units[value as 'SOLID' | 'LIQUID' | 'POWDER' | 'OTHER'][0]
+        };
         setIngredients(newIngredients);
+
     }
 
     function handleIngredientUnitChange(index: number, value: string) {
@@ -296,7 +301,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('prepTime')}</span>
                         <input type="number" value={prepTime} onChange={e => setPrepTime(Number(e.target.value))}
-                               className="border-2 border-cook-light p-2 rounded" min={`0`}/>
+                               className="border-2 border-cook-light p-2 rounded" min={`1`}/>
                     </label>
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('cookTime')}</span>

@@ -117,6 +117,12 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
 
             </div>
 
+            <div className={`grid grid-cols-${Math.min(recipe.dietTypes.length, 5)} gap-1 mt-1`}>
+                {recipe.dietTypes.map((dietType, index) => (
+                    <p key={index} className="text-2xl">{t(dietType)}</p>
+                ))}
+            </div>
+
             <div className={"text-center w-11/12 mx-auto grid md:grid-cols-2 grid-cols-1"}>
                 <div className="">
                     <img className={"w-full"} src={pastaImg} alt={recipe?.title}/>

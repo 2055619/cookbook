@@ -138,7 +138,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
             case "OTHER":
                 return user.otherUnit;
             default:
-                return ingredient.unit;
+                return "";
         }
     }
 
