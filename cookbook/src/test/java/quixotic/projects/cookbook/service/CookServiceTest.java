@@ -7,18 +7,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.enums.*;
-import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
@@ -113,7 +110,6 @@ public class CookServiceTest {
     @BeforeEach
     public void setUp() {
         // TODO: 2024-03-11 Add token generation
-        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
     }
 
     @Test
@@ -140,9 +136,11 @@ public class CookServiceTest {
     public void getRecipes_whenRecipesExist() {
         Pageable pageable = PageRequest.of(0, 10);
         Page<Recipe> recipePage = Page.empty();
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
         when(recipeRepository.findAll(pageable)).thenReturn(recipePage);
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
 
-        cookService.getRecipesByPage(0, 10, "testCook");
+        cookService.getRecipesByPage(0, 10, anyString());
     }
 
     @Test
@@ -154,7 +152,9 @@ public class CookServiceTest {
     @Test
     public void getRecipe_whenRecipeExists() {
         String title = recipeDTOS.get(0).getTitle();
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
         when(recipeRepository.findByTitle(title)).thenReturn(Optional.of(recipeDTOS.get(0).toEntity(cook)));
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
 
         cookService.getRecipeByTitle(title, token);
     }
@@ -162,7 +162,9 @@ public class CookServiceTest {
     @Test
     public void getRecipe_whenRecipeDoesNotExist() {
         String title = recipeDTOS.get(0).getTitle();
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
         when(recipeRepository.findByTitle(title)).thenReturn(Optional.empty());
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
 
         assertThrows(RecipeNotFoundException.class, () -> cookService.getRecipeByTitle(title, token));
     }
@@ -172,7 +174,8 @@ public class CookServiceTest {
         RecipeDTO recipeDTO = recipeDTOS.get(2);
         recipeDTO.setCookTime(55);
 
-        when(recipeRepository.findByTitle(recipeDTO.getTitle())).thenReturn(Optional.of(recipeDTOS.get(2).toEntity(cook)));
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
+        when(recipeRepository.findById(recipeDTO.getId())).thenReturn(Optional.of(recipeDTO.toEntity(cook)));
         when(cookRepository.findCookByUsername(recipeDTO.getCookUsername())).thenReturn(Optional.of(cook));
         when(recipeRepository.save(recipeDTO.toEntity(cook))).thenReturn(recipeDTO.toEntity(cook));
 
@@ -182,9 +185,10 @@ public class CookServiceTest {
     @Test
     public void updateRecipe_whenRecipeDoesNotExist() {
         RecipeDTO recipeDTO = recipeDTOS.get(0);
-        recipeDTO.setTitle("testRecipe");
 
-        when(recipeRepository.findByTitle(recipeDTO.getTitle())).thenReturn(Optional.empty());
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
+        when(recipeRepository.findById(recipeDTO.getId())).thenReturn(Optional.empty());
+//        when(recipeRepository.findByTitle(recipeDTO.getTitle())).thenReturn(Optional.empty());
 
         assertThrows(RecipeNotFoundException.class, () -> cookService.updateRecipe(recipeDTO, token));
     }
@@ -192,6 +196,8 @@ public class CookServiceTest {
     @Test
     public void deleteRecipe_whenRecipeExists() {
         Long id = 1L;
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
+        when(recipeRepository.findById(id)).thenReturn(Optional.of(recipeDTOS.get(0).toEntity(cook)));
         when(recipeRepository.existsById(id)).thenReturn(true);
 
         cookService.deleteRecipeById(id, token);
@@ -209,7 +215,9 @@ public class CookServiceTest {
     public void deleteRecipe_whenRecipeExists_deletesRecipe() {
         // Arrange
         String title = "testRecipe";
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
         when(recipeRepository.existsByTitle(title)).thenReturn(true);
+        when(recipeRepository.findByTitle(title)).thenReturn(Optional.of(recipeDTOS.get(0).toEntity(cook)));
         doNothing().when(recipeRepository).deleteByTitle(title);
 
         // Act
@@ -234,7 +242,9 @@ public class CookServiceTest {
         // Arrange
         String title = "testRecipe";
         List<Recipe> recipes = List.of();
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
         when(recipeRepository.findAllByTitleContainsIgnoreCase(title)).thenReturn(recipes);
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
 
         // Act
         List<RecipeDTO> result = cookService.getRecipesSummaryByTitle(title, token);
@@ -247,7 +257,9 @@ public class CookServiceTest {
     public void getRecipesByTitle_whenNoRecipesExist_returnsEmptyList() {
         // Arrange
         String title = "testRecipe";
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
         when(recipeRepository.findAllByTitleContainsIgnoreCase(title)).thenReturn(Collections.emptyList());
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
 
         // Act
         List<RecipeDTO> result = cookService.getRecipesSummaryByTitle(title, token);
@@ -255,4 +267,73 @@ public class CookServiceTest {
         // Assert
         assertTrue(result.isEmpty());
     }
+// ----
+    @Test
+    public void createRecipe_CookExists_RecipeCreated() {
+        RecipeDTO recipeDTO = recipeDTOS.get(0);
+
+        when(cookRepository.findCookByUsername(recipeDTO.getCookUsername())).thenReturn(Optional.of(cook));
+
+        cookService.createRecipe(recipeDTO);
+    }
+
+    @Test
+    public void createRecipe_CookDoesNotExist_ThrowsUserNotFoundException() {
+        RecipeDTO recipeDTO = new RecipeDTO();
+        recipeDTO.setCookUsername("invalid");
+
+        when(cookRepository.findCookByUsername(recipeDTO.getCookUsername())).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class, () -> cookService.createRecipe(recipeDTO));
+    }
+
+    @Test
+    public void getRecipesByPage_ValidPageAndSize_ReturnsRecipes() {
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(new Cook()));
+        when(recipeRepository.findAll(any(Pageable.class))).thenReturn(Page.empty());
+
+        cookService.getRecipesByPage(0, 10, "token");
+    }
+
+    @Test
+    public void getRecipesByPage_NegativePage_ThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> cookService.getRecipesByPage(-1, 10, "token"));
+    }
+
+    @Test
+    public void getRecipeById_RecipeExists_ReturnsRecipe() {
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipeDTOS.get(0).toEntity(cook)));
+
+        cookService.getRecipeById(1L, "token");
+    }
+
+    @Test
+    public void getRecipeById_RecipeDoesNotExist_ThrowsRecipeNotFoundException() {
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(new Cook()));
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(RecipeNotFoundException.class, () -> cookService.getRecipeById(1L, "token"));
+    }
+
+    @Test
+    public void deleteRecipeById_RecipeExists_RecipeDeleted() {
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+        when(recipeRepository.existsById(anyLong())).thenReturn(true);
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.of(recipeDTOS.get(0).toEntity(cook)));
+
+        cookService.deleteRecipeById(1L, "token");
+    }
+
+    @Test
+    public void deleteRecipeById_RecipeDoesNotExist_ThrowsRecipeNotFoundException() {
+        when(recipeRepository.existsById(anyLong())).thenReturn(false);
+
+        assertThrows(RecipeNotFoundException.class, () -> cookService.deleteRecipeById(1L, "token"));
+    }
+
+
 }
