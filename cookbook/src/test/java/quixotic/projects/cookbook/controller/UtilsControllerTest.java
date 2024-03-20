@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyFloat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -129,6 +131,44 @@ public class UtilsControllerTest {
         mockMvc.perform(get("/api/v1/utils/diet-types"))
                 .andExpect(status().isAccepted())
                 .andExpect(content().json(new ObjectMapper().writeValueAsString(mockTypes)));
+    }
+
+    @Test
+    public void getConversion_ValidQuantityAndUnitsProvided_returnsAccepted() throws Exception {
+        when(utilsService.convert(anyFloat(), any(Unit.class), any(Unit.class))).thenReturn(1.0f);
+
+        mockMvc.perform(get("/api/v1/utils/conversion")
+                        .param("quantity", "1")
+                        .param("from", "GRAM")
+                        .param("to", "KILOGRAM"))
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    public void getConversion_InvalidQuantityProvided_returnsBadRequest() throws Exception {
+        mockMvc.perform(get("/api/v1/utils/conversion")
+                        .param("quantity", "invalid")
+                        .param("from", "GRAM")
+                        .param("to", "KILOGRAM"))
+                .andExpect(status().is(611));
+    }
+
+    @Test
+    public void getConversion_InvalidFromUnitProvided_returnsBadRequest() throws Exception {
+        mockMvc.perform(get("/api/v1/utils/conversion")
+                        .param("quantity", "1")
+                        .param("from", "INVALID")
+                        .param("to", "KILOGRAM"))
+                .andExpect(status().is(611));
+    }
+
+    @Test
+    public void getConversion_InvalidToUnitProvided_returnsBadRequest() throws Exception {
+        mockMvc.perform(get("/api/v1/utils/conversion")
+                        .param("quantity", "1")
+                        .param("from", "GRAM")
+                        .param("to", "INVALID"))
+                .andExpect(status().is(611));
     }
 
 
