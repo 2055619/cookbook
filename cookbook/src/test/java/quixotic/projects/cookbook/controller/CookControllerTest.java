@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,6 +19,7 @@ import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundEx
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.model.summary.RecipeSummary;
+import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.security.JwtAuthenticationEntryPoint;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
@@ -26,12 +28,9 @@ import quixotic.projects.cookbook.security.SecurityConfiguration;
 import quixotic.projects.cookbook.service.CookService;
 import quixotic.projects.cookbook.service.UserService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -80,7 +79,7 @@ public class CookControllerTest {
     public void getRecipesByTitle_ValidTitleProvided_returnsAccepted() throws Exception {
         List<RecipeDTO> recipeSummaries = new ArrayList<>();
 
-        when(cookService.getRecipesSummaryByTitle(anyString(), token)).thenReturn(recipeSummaries);
+        when(cookService.getRecipesSummaryByTitle(anyString(), anyString())).thenReturn(recipeSummaries);
 
         mockMvc.perform(get("/api/v1/cook/recipes/title")
                         .header("Authorization", token)
@@ -105,7 +104,7 @@ public class CookControllerTest {
 
     @Test
     public void getRecipes_InvalidPageAndSizeProvided_returnsBadRequest() throws Exception {
-        doThrow(new IllegalArgumentException()).when(cookService).getRecipesByPage(-1, -1, "testCook");
+        doThrow(new IllegalArgumentException()).when(cookService).getRecipesByPage(-1, -1, anyString());
         mockMvc.perform(get("/api/v1/cook/recipes")
                         .header("Authorization", token)
                         .param("page", "-1")
@@ -127,7 +126,7 @@ public class CookControllerTest {
 
     @Test
     public void getRecipeByTitle_InvalidTitleProvided_returnsBadRequest() throws Exception {
-        doThrow(new RecipeNotFoundException()).when(cookService).getRecipeByTitle(anyString(), token);
+        doThrow(new RecipeNotFoundException()).when(cookService).getRecipeByTitle(anyString(), anyString());
 
         mockMvc.perform(get("/api/v1/cook/recipe/title")
                         .header("Authorization", token))
@@ -201,4 +200,108 @@ public class CookControllerTest {
                 .andExpect(status().is(611));
     }
 
+    @Test
+    public void getRecipeById_ValidIdProvided_returnsAccepted() throws Exception {
+        when(cookService.getRecipeById(anyLong(), anyString())).thenReturn(new RecipeDTO());
+
+        mockMvc.perform(get("/api/v1/cook/recipe")
+                        .param("id", "1")
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    public void getRecipeById_InvalidIdProvided_returnsBadRequest() throws Exception {
+        mockMvc.perform(get("/api/v1/cook/recipe")
+                        .param("id", "invalid")
+                        .header("Authorization", token))
+                .andExpect(status().is(611));
+    }
+
+    @Test
+    public void deleteRecipeById_ValidIdProvided_returnsNoContent() throws Exception {
+        mockMvc.perform(delete("/api/v1/cook/recipe")
+                        .param("id", "1")
+                        .header("Authorization", token))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void deleteRecipeById_InvalidIdProvided_returnsBadRequest() throws Exception {
+        mockMvc.perform(delete("/api/v1/cook/recipe")
+                        .param("id", "invalid")
+                        .header("Authorization", token))
+                .andExpect(status().is(611));
+    }
+
+    @Test
+    public void getRecipesByUser_ValidToken_returnsAccepted() throws Exception {
+        when(cookService.getRecipesByUser(anyString())).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/api/v1/cook/usr/recipes")
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    public void getUserProfile_ValidUsernameProvided_returnsAccepted() throws Exception {
+        UserProfile userProfile = new UserProfile() {
+            @Override
+            public String getUsername() {
+                return "Test";
+            }
+
+            @Override
+            public String getEmail() {
+                return "Test";
+            }
+
+            @Override
+            public String getFirstName() {
+                return "Test";
+            }
+
+            @Override
+            public String getLastName() {
+                return "Test";
+            }
+
+            @Override
+            public String getPowderUnit() {
+                return "Test";
+            }
+
+            @Override
+            public String getLiquidUnit() {
+                return "Test";
+            }
+
+            @Override
+            public String getSolidUnit() {
+                return "Test";
+            }
+
+            @Override
+            public String getOtherUnit() {
+                return "Test";
+            }
+        };
+        when(cookService.getUserProfile(anyString())).thenReturn(userProfile);
+
+        mockMvc.perform(get("/api/v1/cook/usr/profile")
+                        .param("username", "testCook")
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void getUserProfile_InvalidUsernameProvided_returnsBadRequest() throws Exception {
+        when(cookService.getUserProfile(anyString())).thenThrow(new UsernameNotFoundException(""));
+
+        mockMvc.perform(get("/api/v1/cook/usr/profile")
+                        .param("username", "invalid")
+                        .header("Authorization", token))
+                .andExpect(status().is(611));
+    }
 }

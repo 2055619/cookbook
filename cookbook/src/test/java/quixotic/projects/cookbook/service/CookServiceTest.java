@@ -100,6 +100,9 @@ public class CookServiceTest {
     @Mock
     private RecipeRepository recipeRepository;
 
+    @Mock
+    private JwtTokenProvider jwtTokenProvider;
+
     private String token = "";
 
     @BeforeAll
@@ -110,7 +113,7 @@ public class CookServiceTest {
     @BeforeEach
     public void setUp() {
         // TODO: 2024-03-11 Add token generation
-        this.token = "Tester";
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
     }
 
     @Test
