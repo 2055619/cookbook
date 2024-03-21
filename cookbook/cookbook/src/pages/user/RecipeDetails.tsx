@@ -10,7 +10,7 @@ import {
     faArrowLeft,
     faBowlFood,
     faGaugeHigh,
-    faHourglass, faHourglassEnd,
+    faHourglassEnd,
     faHourglassHalf,
     faLayerGroup
 } from "@fortawesome/free-solid-svg-icons";

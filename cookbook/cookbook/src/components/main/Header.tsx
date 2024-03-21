@@ -9,7 +9,6 @@ import {faPlus, faScroll} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
-
 interface IHeaderProps {
     setUser: (user: IUser | null) => void;
     user: IUser | null;

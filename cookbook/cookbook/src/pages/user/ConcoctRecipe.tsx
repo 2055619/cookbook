@@ -202,7 +202,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                                 className={"mx-1 my-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light focus:ring-cook-light text-base"}
                                 defaultValue={ingredient.unit}
                                 onChange={(e) => handleUnitChange(ingredient, e.target.value)}>
-                                { ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"] &&
+                                {ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"] &&
                                     ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"].map((unit, index) => (
                                         <option key={index} value={unit}>{t(unit)}</option>
                                     ))

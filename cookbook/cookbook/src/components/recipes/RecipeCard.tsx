@@ -6,7 +6,7 @@ import ReactionFooter from "./ReactionFooter";
 import RecipeOptions from "./RecipeOptions";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBowlFood, faGaugeHigh, faHourglass, faHourglassStart, faLayerGroup} from "@fortawesome/free-solid-svg-icons";
+import {faBowlFood, faGaugeHigh, faHourglass, faLayerGroup} from "@fortawesome/free-solid-svg-icons";
 
 interface RecipeCardProps {
     recipe: IRecipe;
@@ -31,17 +31,17 @@ function RecipeCard({recipe, username}: RecipeCardProps) {
     }
 
     return (
-        <div className="border rounded-lg px-4 my-2 lg:w-3/5 w-full flex flex-col h-full justify-between" >
+        <div className="border rounded-lg px-4 my-2 lg:w-3/5 w-full flex flex-col h-full justify-between">
             <div className={""} onClick={handleViewDetails}>
-                <RecipeOptions username={username!} recipe={recipe} />
+                <RecipeOptions username={username!} recipe={recipe}/>
                 <h1 className="text-3xl font-semibold mt-0 pt-0 clickable">{recipe.title}</h1>
                 <p className="text-2xl">{recipe.description}</p>
 
                 <div className="grid grid-cols-4 gap-2 mt-1">
-                    <p><FontAwesomeIcon icon={faLayerGroup} /> <span>{t(recipe.category)}</span></p>
-                    <p><FontAwesomeIcon icon={faGaugeHigh} /> <span>{t(recipe.difficulty)}</span></p>
-                    <p><FontAwesomeIcon icon={faBowlFood} /> <span>{recipe.serving} {t(recipe.portionSize)}</span></p>
-                    <p><FontAwesomeIcon icon={faHourglass} /> <span>{recipeEstimatedTimeInHours()}</span></p>
+                    <p><FontAwesomeIcon icon={faLayerGroup}/> <span>{t(recipe.category)}</span></p>
+                    <p><FontAwesomeIcon icon={faGaugeHigh}/> <span>{t(recipe.difficulty)}</span></p>
+                    <p><FontAwesomeIcon icon={faBowlFood}/> <span>{recipe.serving} {t(recipe.portionSize)}</span></p>
+                    <p><FontAwesomeIcon icon={faHourglass}/> <span>{recipeEstimatedTimeInHours()}</span></p>
                 </div>
 
                 {/*<h1 className="mb-2 text-muted">Diet Types:</h1>*/}

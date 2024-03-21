@@ -262,7 +262,8 @@ function RecipeModification({user}: RecipeModificationProps) {
 
     function handleIngredientStateChange(index: number, value: string) {
         const newIngredients = [...ingredients];
-        newIngredients[index] = {...newIngredients[index],
+        newIngredients[index] = {
+            ...newIngredients[index],
             ingredientState: value,
             unit: units[value as 'SOLID' | 'LIQUID' | 'POWDER' | 'OTHER'][0]
         };
@@ -371,8 +372,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                                     className="border-2 border-cook-light p-2 rounded ">
                                 {units[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"] &&
                                     units[ingredient.ingredientState as 'SOLID' | 'LIQUID' | 'POWDER' | 'OTHER'].map((unit, unitIndex) => (
-                                    <option key={unitIndex} value={unit}>{t(unit)}</option>
-                                ))}
+                                        <option key={unitIndex} value={unit}>{t(unit)}</option>
+                                    ))}
                             </select>
                             <button type="button" onClick={() => removeIngredient(index)}
                                     className="col-span-2 border-2 border-cook-red text-cook-red hover:bg-cook-red hover:text-cook rounded transition ease-in duration-200 p-1">
@@ -422,7 +423,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                     {allDietTypes.map((dietType, index) => (
                         <label key={index} className="inline-flex items-center">
                             <input type="checkbox" value={dietType} onChange={handleDietTypeChange}
-                                  checked={dietTypes.includes(dietType)}
+                                   checked={dietTypes.includes(dietType)}
                                    className="form-checkbox sr-only"/>
                             <div className="w-4 h-4 border-2 border-gray-300 rounded-md mr-2"></div>
                             <span className="ml-2">{t(dietType)}</span>

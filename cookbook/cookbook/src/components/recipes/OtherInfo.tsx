@@ -29,7 +29,8 @@ function OtherInfo({recipe}: IOtherInfoProps) {
                         {recipe.ingredients.map((ingredient, index) => (
                             <li className={""} key={index}>
                                 <span className={""}>{index + 1}.</span>
-                                <span className={"mx-1 text-2xl"}>{ingredient.name} {ingredient.quantity} {t(ingredient.unit)}</span>
+                                <span
+                                    className={"mx-1 text-2xl"}>{ingredient.name} {ingredient.quantity} {t(ingredient.unit)}</span>
                             </li>
                         ))}
                     </ol>
@@ -39,8 +40,8 @@ function OtherInfo({recipe}: IOtherInfoProps) {
                     <ol className={"text-start w-1/2 mx-auto"}>
                         {recipe.instructions.map((instruction, index) => (
                             <li className={""} key={index}>
-                                    <span className={""}>{index + 1}.</span>
-                                    <span className={"mx-1 text-2xl"}>{instruction}</span>
+                                <span className={""}>{index + 1}.</span>
+                                <span className={"mx-1 text-2xl"}>{instruction}</span>
                             </li>
                         ))}
                     </ol>
