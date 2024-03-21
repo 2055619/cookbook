@@ -8,7 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import quixotic.projects.cookbook.exception.badRequestException.InvalidJwtException;
+import quixotic.projects.cookbook.exception.forbiddenRequestExceptions.InvalidJwtException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
