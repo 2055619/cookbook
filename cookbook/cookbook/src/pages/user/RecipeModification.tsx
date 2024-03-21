@@ -369,7 +369,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                             <select value={ingredient.unit}
                                     onChange={e => handleIngredientUnitChange(index, e.target.value)}
                                     className="border-2 border-cook-light p-2 rounded ">
-                                {units[ingredient.ingredientState as 'SOLID' | 'LIQUID' | 'POWDER' | 'OTHER'].map((unit, unitIndex) => (
+                                {units[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"] &&
+                                    units[ingredient.ingredientState as 'SOLID' | 'LIQUID' | 'POWDER' | 'OTHER'].map((unit, unitIndex) => (
                                     <option key={unitIndex} value={unit}>{t(unit)}</option>
                                 ))}
                             </select>
