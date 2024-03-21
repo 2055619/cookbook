@@ -1,10 +1,11 @@
 package quixotic.projects.cookbook.exception.forbiddenRequestExceptions;
 
-import org.springframework.http.HttpStatus;
 import quixotic.projects.cookbook.exception.APIException;
+
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 public class ForbiddenRequestException extends APIException {
     public ForbiddenRequestException(String message) {
-        super(HttpStatus.FORBIDDEN, message);
+        super(FORBIDDEN, message);
     }
 }
