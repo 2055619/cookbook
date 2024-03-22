@@ -133,6 +133,27 @@ public class CookService {
         return recipeRepository.findRecipesByCook(cook).stream().map(RecipeDTO::new).toList();
     }
 
+    public List<RecipeDTO> getLikedRecipesByUser(String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        throw new UnsupportedOperationException("getLikedRecipesByUser() Not implemented yet");
+//        return user.getLikedRecipes().stream().map(RecipeDTO::new).toList();
+    }
+
+    public RecipeDTO likeRecipe(Long id, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+        Recipe recipe = recipeRepository.findById(id).orElseThrow(RecipeNotFoundException::new);
+
+        throw new UnsupportedOperationException("likeRecipe() Not implemented yet");
+
+//        user.likeRecipe(recipe);
+//        cookRepository.save(user);
+//
+//        return new RecipeDTO(recipe);
+    }
+
     public UserProfile getUserProfile(String username) {
         return cookRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }

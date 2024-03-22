@@ -44,6 +44,8 @@
   "profileModify": "Modifier mon profil",
   "seePolicy": "Clicker ici pour voir la politique de confidentialité",
   "modifyPassword": "Modifier mon mot de passe",
+  "recipesList": "Liste des recettes",
+  "likedRecipesList": "Liste des recettes aimées",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"

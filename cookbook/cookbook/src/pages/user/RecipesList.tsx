@@ -10,23 +10,21 @@ interface IUserRecipesProps {
     user: IUser;
 }
 // TODO: Maybe delete it???
-function UserRecipes({user}: IUserRecipesProps){
+function RecipesList({user}: IUserRecipesProps){
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
 
     const [recipes, setRecipes] = useState<IRecipe[]>([]);
 
-
     useEffect(() => {
         const loadRecipes = async () => {
-            await cookbookService.getUserRecipes()
+            await cookbookService.getLikedUserRecipes()
                 .then((response) => {
                     setRecipes(response);
                 })
                 .catch((error) => {
                     if (error.response?.data.message !== "NoToken")
                         toast.error(t(error.response?.data.message));
-                    // toast.error(error.response);
                     return [];
                 });
         };
@@ -35,7 +33,7 @@ function UserRecipes({user}: IUserRecipesProps){
 
     return (
         <div className={""}>
-            <h1 className={"text-4xl"}>{t('modifyRecipes')}</h1>
+            <h1 className={"text-4xl"}>{t('likedRecipesList')}</h1>
             {recipes.map((recipe, index) => {
                 return <div className={`flex justify-center`} key={index}>
                     <RecipeCard recipe={recipe} username={user?.username} key={index}/>
@@ -46,4 +44,4 @@ function UserRecipes({user}: IUserRecipesProps){
     );
 }
 
-export default UserRecipes;
+export default RecipesList;

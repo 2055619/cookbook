@@ -5,7 +5,7 @@ import React, {useEffect} from "react";
 import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
 import RecipeModification from "./RecipeModification";
-import UserRecipes from "./UserRecipes";
+import RecipesList from "./RecipesList";
 import RecipeDetails from "./RecipeDetails";
 import {cookServerInstance} from "../../App";
 import {CookBookService} from "../../services/CookBookService";
@@ -49,7 +49,7 @@ function UserPages({user, setUser}: IUserPage) {
         <div className={"min-h-screen bg-cook-orange text-center"}>
             <Routes>
                 <Route path="landing" element={<Landing user={user!}/>}/>
-                <Route path="recipes" element={<UserRecipes user={user!}/>}/>
+                <Route path="recipes" element={<RecipesList user={user!}/>}/>
                 <Route path="recipeDetail" element={<RecipeDetails user={user!}/>}/>
                 <Route path="concoct" element={<ConcoctRecipe user={user!} />}/>
                 <Route path="recipesModification" element={<RecipeModification user={user!}/>}/>

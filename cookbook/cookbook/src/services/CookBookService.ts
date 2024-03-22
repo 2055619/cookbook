@@ -127,4 +127,14 @@ export class CookBookService {
                 return response.data;
             });
     }
+
+    async getLikedUserRecipes() {
+        if (!cookServerInstance.defaults.headers.common['Authorization'])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.get('/cook/usr/likedRecipes')
+            .then((response) => {
+                return response.data;
+            });
+    }
 }
