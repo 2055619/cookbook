@@ -51,7 +51,8 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
                 })
                 .catch((error) => {
                     toast.error("error")
-                    toast.error(t(error.response?.data.message));
+                    if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
                 });
         } else {
             toast.error(t('noRecipeTitle'));

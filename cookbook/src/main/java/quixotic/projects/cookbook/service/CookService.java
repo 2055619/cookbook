@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import quixotic.projects.cookbook.dto.CookDTO;
 import quixotic.projects.cookbook.dto.IngredientDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
@@ -13,6 +14,7 @@ import quixotic.projects.cookbook.exception.badRequestException.WrongUserExcepti
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Ingredient;
 import quixotic.projects.cookbook.model.Recipe;
+import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
@@ -145,5 +147,21 @@ public class CookService {
                 })
                 .map(RecipeDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    public CookDTO updateUserProfile(CookDTO cookDTO, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+
+        Cook cook = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        cook.setEmail(cookDTO.getEmail());
+        cook.setFirstName(cookDTO.getFirstName());
+        cook.setLastName(cookDTO.getLastName());
+        cook.setPowderUnit(Unit.valueOf(cookDTO.getPowderUnit()));
+        cook.setLiquidUnit(Unit.valueOf(cookDTO.getLiquidUnit()));
+        cook.setSolidUnit(Unit.valueOf(cookDTO.getSolidUnit()));
+        cook.setOtherUnit(Unit.valueOf(cookDTO.getOtherUnit()));
+
+        return new CookDTO(cookRepository.save(cook));
     }
 }

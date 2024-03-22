@@ -54,7 +54,9 @@ function ProfileSummary({setUser, user}: IProfileSummaryProps) {
                         <LanguageSelector/>
                         <button
                             className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook rounded transition ease-in duration-200 font-bold py-2 px-4 my-2 w-full"
-                            onClick={() => {navigate("/u/profile?username=" + user.username)}}>
+                            onClick={() => {
+                                navigate("/u/profile?username=" + user.username)
+                            }}>
                             {t('profile')}
                         </button>
 

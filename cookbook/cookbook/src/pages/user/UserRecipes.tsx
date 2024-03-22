@@ -24,7 +24,8 @@ function UserRecipes({user}: IUserRecipesProps){
                     setRecipes(response);
                 })
                 .catch((error) => {
-                    toast.error(t(error.response?.data.message));
+                    if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
                     // toast.error(error.response);
                     return [];
                 });

@@ -32,7 +32,8 @@ function SignUp({setUser}: ISignUpProps) {
         utilsService.getIngrediantStates().then((response) => {
             setIng(response);
         }).catch((error) => {
-            toast.error(t(error.response?.data.message));
+            if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
         });
 
         utilsService.getValidationPattern().then((response) => {
@@ -41,7 +42,8 @@ function SignUp({setUser}: ISignUpProps) {
             setUsernameReg(new RegExp(response.USERNAME_PATTERN));
             setNameReg(new RegExp(response.NAME_PATTERN));
         }).catch((error) => {
-            toast.error(t(error.response?.data.message));
+            if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
         });
     }, []);
 
@@ -160,7 +162,8 @@ function SignUp({setUser}: ISignUpProps) {
                     return formInfo;
                 }))
             }
-            toast.error(t(error.response?.data.message));
+            if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
         });
     };
 

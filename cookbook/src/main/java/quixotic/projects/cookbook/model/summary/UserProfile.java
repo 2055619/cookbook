@@ -1,12 +1,14 @@
 package quixotic.projects.cookbook.model.summary;
 
+import quixotic.projects.cookbook.model.enums.Unit;
+
 public interface UserProfile {
     String getUsername();
     String getEmail();
     String getFirstName();
     String getLastName();
-    String getPowderUnit();
-    String getLiquidUnit();
-    String getSolidUnit();
-    String getOtherUnit();
+    Unit getPowderUnit();
+    Unit getLiquidUnit();
+    Unit getSolidUnit();
+    Unit getOtherUnit();
 }

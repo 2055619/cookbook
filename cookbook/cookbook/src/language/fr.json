@@ -41,7 +41,9 @@
   "choosePortion": "Choisissez le nombre et la taille des portions",
   "notUsed": "Non utilisé",
   "used": "Utilisé",
+  "profileModify": "Modifier mon profil",
   "seePolicy": "Clicker ici pour voir la politique de confidentialité",
+  "modifyPassword": "Modifier mon mot de passe",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"
@@ -89,6 +91,8 @@
     "edit": "Modifier",
     "delete": "Supprimer",
     "save": "Sauvegarder",
+    "reset": "Réinitialiser",
+    "modify": "Modifier",
     "close": "Fermer",
     "next": "Suivant",
     "previous": "Précédent",

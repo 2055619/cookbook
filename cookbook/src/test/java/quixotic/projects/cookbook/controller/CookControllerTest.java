@@ -267,23 +267,23 @@ public class CookControllerTest {
             }
 
             @Override
-            public String getPowderUnit() {
-                return "Test";
+            public Unit getPowderUnit() {
+                return Unit.CUP;
             }
 
             @Override
-            public String getLiquidUnit() {
-                return "Test";
+            public Unit getLiquidUnit() {
+                return Unit.CUP;
             }
 
             @Override
-            public String getSolidUnit() {
-                return "Test";
+            public Unit getSolidUnit() {
+                return Unit.CUP;
             }
 
             @Override
-            public String getOtherUnit() {
-                return "Test";
+            public Unit getOtherUnit() {
+                return Unit.CUP;
             }
         };
         when(cookService.getUserProfile(anyString())).thenReturn(userProfile);

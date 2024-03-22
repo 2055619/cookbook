@@ -56,7 +56,8 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                 })
                 .catch((error) => {
                     // toast.error("error")
-                    toast.error(t(error.response?.data.message));
+                    if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
                 });
         } else {
             toast.error(t('noRecipeTitle'));
@@ -66,13 +67,15 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
         utilsService.getIngrediantStates().then((response) => {
             setIng(response);
         }).catch((error) => {
-            toast.error(t(error.response?.data.message));
+            if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
         });
 
         utilsService.getPortionSizes().then((response) => {
             setPortionSizes(response);
         }).catch((error) => {
-            toast.error(t(error.response?.data.message));
+            if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
         });
     }, []);
 
@@ -83,7 +86,8 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                 qty = parseFloat(response.toFixed(2));
             })
             .catch((error) => {
-                toast.error(t(error.response?.data.message));
+                if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
             });
 
 

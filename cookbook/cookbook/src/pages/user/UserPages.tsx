@@ -11,6 +11,7 @@ import {cookServerInstance} from "../../App";
 import {CookBookService} from "../../services/CookBookService";
 import UserProfile from "./UserProfile";
 import ConcoctRecipe from "./ConcoctRecipe";
+import ProfileModification from "./ProfileModification";
 
 interface IUserPage {
     user: IUser | null;
@@ -25,6 +26,8 @@ function UserPages({user, setUser}: IUserPage) {
         const token = sessionStorage.getItem('token');
 
         if (token) {
+            if (user !== null)
+                return;
             cookServerInstance.defaults.headers.common['Authorization'] = token;
 
             cookbookService.getUser()
@@ -37,10 +40,9 @@ function UserPages({user, setUser}: IUserPage) {
                 });
         } else {
             toast.error("message.userNotLoggedIn");
-
             navigate('/authentication/signin');
         }
-    }, []);
+    }, [user]);
 
     // TODO: Add other pages
     return (
@@ -52,6 +54,7 @@ function UserPages({user, setUser}: IUserPage) {
                 <Route path="concoct" element={<ConcoctRecipe user={user!} />}/>
                 <Route path="recipesModification" element={<RecipeModification user={user!}/>}/>
                 <Route path="profile" element={<UserProfile user={user!}/>}/>
+                <Route path="profileModify" element={<ProfileModification user={user!} setUser={setUser}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
         </div>

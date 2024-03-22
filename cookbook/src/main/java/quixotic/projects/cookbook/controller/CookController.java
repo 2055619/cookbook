@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import quixotic.projects.cookbook.dto.CookDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.service.CookService;
@@ -76,5 +77,11 @@ public class CookController {
     public ResponseEntity<UserProfile> getUserProfile(@PathParam("username") String username){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.getUserProfile(username));
+    }
+
+    @PutMapping("/usr/profile")
+    public ResponseEntity<CookDTO> updateUserProfile(@RequestBody CookDTO cookDTO, @RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.updateUserProfile(cookDTO, token));
     }
 }

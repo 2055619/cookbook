@@ -34,7 +34,8 @@ function SignIn({setUser}: SignInProps) {
                 navigate('/u/landing');
             })
             .catch((error) => {
-                toast.error(t(error.response?.data.message));
+                if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
             });
     }
 

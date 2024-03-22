@@ -69,7 +69,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                     setDietTypes(response.dietTypes);
                 })
                 .catch((error) => {
-                    toast.error(t(error.response?.data.message));
+                    if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
                 });
         }
     }, []);
@@ -80,7 +81,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                 setAllCategories(response);
             })
             .catch((error) => {
-                toast.error(t(error.response?.data.message));
+                if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
             });
 
         utilsService.getDifficultyLevels()
@@ -88,7 +90,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                 setAllDifficulties(response);
             })
             .catch((error) => {
-                toast.error(t(error.response?.data.message));
+                if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
             });
 
         utilsService.getVisibility()
@@ -96,7 +99,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                 setAllVisibility(response);
             })
             .catch((error) => {
-                toast.error(t(error.response?.data.message));
+                if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
             });
 
         utilsService.getPortionSizes()
@@ -104,7 +108,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                 setAllPortionSizes(response);
             })
             .catch((error) => {
-                toast.error(t(error.response?.data.message));
+                if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
             });
 
         utilsService.getDietTypes()
@@ -112,13 +117,15 @@ function RecipeModification({user}: RecipeModificationProps) {
                 setAllDietTypes(response);
             })
             .catch((error) => {
-                toast.error(t(error.response?.data.message));
+                if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
             });
 
         utilsService.getIngrediantStates().then((response) => {
             setUnits(response);
         }).catch((error) => {
-            toast.error(t(error.response?.data.message));
+            if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
         });
     }, []);
 
@@ -194,7 +201,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                     window.history.back();
                 })
                 .catch((error) => {
-                    toast.error(t(error.response?.data.message));
+                    if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
                 });
 
         } else {
@@ -204,7 +212,8 @@ function RecipeModification({user}: RecipeModificationProps) {
                     window.history.back();
                 })
                 .catch((error) => {
-                    toast.error(t(error.response?.data.message));
+                    if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
                 });
         }
     };
