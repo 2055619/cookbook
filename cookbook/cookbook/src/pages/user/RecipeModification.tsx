@@ -24,7 +24,7 @@ function RecipeModification({user}: RecipeModificationProps) {
     const [instructions, setInstructions] = useState<string[]>([]);
     const [ingredients, setIngredients] = useState<IIngredient[]>([]);
     const [serving, setServing] = useState(1);
-    const [prepTime, setPrepTime] = useState(0);
+    const [prepTime, setPrepTime] = useState(1);
     const [cookTime, setCookTime] = useState(0);
 
     const [category, setCategory] = useState('MAIN');
@@ -311,7 +311,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('prepTime')}</span>
                         <input type="number" value={prepTime} onChange={e => setPrepTime(Number(e.target.value))}
-                               className="border-2 border-cook-light p-2 rounded" min={`1`}/>
+                               className="border-2 border-cook-light p-2 rounded" min="1"/>
                     </label>
                     <label className="flex flex-col space-y-1">
                         <span className="font-medium">{t('cookTime')}</span>

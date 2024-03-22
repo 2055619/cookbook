@@ -21,7 +21,6 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
 
-
     useEffect(() => {
         document.addEventListener('click', closePopup);
         return () => {
@@ -51,7 +50,13 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
     }
 
     function handleSave() {
-        toast.info("Save");
+        cookbookService.saveRecipe(recipe.id!)
+            .then(r => {
+                toast.success(t('input.saved'))
+            })
+            .catch(e => {
+                toast.error(t(e.response?.data.message));
+            })
     }
 
     function handleReport() {
@@ -66,7 +71,7 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
     function handleConfirmDelete() {
         cookbookService.deleteRecipeById(recipe.id!)
             .then(r => {
-                toast.info("Delete")
+                toast.success("Delete")
                 setShowDeleteModal(false);
                 window.location.reload();
             })
@@ -89,11 +94,11 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
         <div className={"relative text-end pb-0"} onClick={handleOptionClick}>
             <div className={"flex justify-between items-center"}>
                 <button className="mb-0 p-1 clickable hover:bg-cook-red hover:rounded-full"
-                   onClick={handleViewProfile}>{recipe.cookUsername}
+                        onClick={handleViewProfile}>{recipe.cookUsername}
                 </button>
 
                 <button className={"px-1 hover:bg-cook-red hover:rounded-full text-2xl"}
-                onClick={handleConcoctionClick}>
+                        onClick={handleConcoctionClick}>
                     <span className={"hidden lg:inline-block"}>{t('concoct')}</span>
                     <FontAwesomeIcon className={"ms-1"} icon={faPlay}/>
                 </button>
@@ -135,7 +140,8 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
 
             {showDeleteModal && (
                 <div className="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center text-cook">
-                    <div className="fixed inset-0 bg-cook opacity-50" onClick={() => setShowDeleteModal(false)}></div> {/* This line adds the grayed out background */}
+                    <div className="fixed inset-0 bg-cook opacity-50" onClick={() => setShowDeleteModal(false)}></div>
+                    {/* This line adds the grayed out background */}
                     <div
                         className="rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
                         <div

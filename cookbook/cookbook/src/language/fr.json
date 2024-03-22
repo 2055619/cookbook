@@ -45,7 +45,8 @@
   "seePolicy": "Clicker ici pour voir la politique de confidentialité",
   "modifyPassword": "Modifier mon mot de passe",
   "recipesList": "Liste des recettes",
-  "likedRecipesList": "Liste des recettes aimées",
+  "savedRecipesList": "Liste des recettes Sauvegardées",
+  "noSavedRecipes": "Vous n'avez pas de recettes sauvegardées",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"
@@ -93,6 +94,7 @@
     "edit": "Modifier",
     "delete": "Supprimer",
     "save": "Sauvegarder",
+    "saved": "Sauvegardé",
     "reset": "Réinitialiser",
     "modify": "Modifier",
     "close": "Fermer",

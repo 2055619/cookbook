@@ -55,16 +55,16 @@ public class CookController {
                 .body(cookService.getRecipesByUser(token));
     }
 
-    @GetMapping("/usr/likedRecipes")
-    public ResponseEntity<List<RecipeDTO>> getLikedRecipesByUser(@RequestHeader("Authorization") String token){
+    @GetMapping("/usr/SavedRecipes")
+    public ResponseEntity<List<RecipeDTO>> getSavedRecipesByUser(@RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getLikedRecipesByUser(token));
+                .body(cookService.getSavedRecipesByUser(token));
     }
 
-    @PostMapping("/usr/like")
-    public ResponseEntity<RecipeDTO> likeRecipe(@PathParam("id") Long id, @RequestHeader("Authorization") String token){
+    @PostMapping("/usr/save")
+    public ResponseEntity<RecipeDTO> saveRecipe(@PathParam("id") Long id, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.likeRecipe(id, token));
+                .body(cookService.saveRecipe(id, token));
     }
 
     @PutMapping("/recipe")

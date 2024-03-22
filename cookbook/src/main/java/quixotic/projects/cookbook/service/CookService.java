@@ -133,26 +133,26 @@ public class CookService {
         return recipeRepository.findRecipesByCook(cook).stream().map(RecipeDTO::new).toList();
     }
 
-    public List<RecipeDTO> getLikedRecipesByUser(String token) {
+    public List<RecipeDTO> getSavedRecipesByUser(String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
         Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
 
-        List<Recipe> likedRecipes = recipeRepository.findAllById(user.getLikedRecipe());
-        List<RecipeDTO> likedRecipeDTOs = filterRecipesByVisibility(likedRecipes, user);
+        List<Recipe> savedRecipes = recipeRepository.findAllById(user.getSavedRecipe());
+        List<RecipeDTO> savedRecipeDTOs = filterRecipesByVisibility(savedRecipes, user);
 
-        if (likedRecipeDTOs.size() != likedRecipes.size()) {
-            user.setLikedRecipe(likedRecipeDTOs.stream().map(RecipeDTO::getId).collect(Collectors.toSet()));
+        if (savedRecipeDTOs.size() != savedRecipes.size()) {
+            user.setSavedRecipe(savedRecipeDTOs.stream().map(RecipeDTO::getId).collect(Collectors.toSet()));
             cookRepository.save(user);
         }
-        return likedRecipeDTOs;
+        return savedRecipeDTOs;
     }
 
-    public RecipeDTO likeRecipe(Long id, String token) {
+    public RecipeDTO saveRecipe(Long id, String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
         Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
         Recipe recipe = recipeRepository.findById(id).orElseThrow(RecipeNotFoundException::new);
 
-        user.likeRecipe(recipe);
+        user.saveRecipe(recipe);
         cookRepository.save(user);
         return new RecipeDTO(recipe);
     }

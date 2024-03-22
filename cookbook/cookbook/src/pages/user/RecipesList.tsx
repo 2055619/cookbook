@@ -18,7 +18,7 @@ function RecipesList({user}: IUserRecipesProps){
 
     useEffect(() => {
         const loadRecipes = async () => {
-            await cookbookService.getLikedUserRecipes()
+            await cookbookService.getSavedUserRecipes()
                 .then((response) => {
                     setRecipes(response);
                 })
@@ -32,14 +32,21 @@ function RecipesList({user}: IUserRecipesProps){
     }, []);
 
     return (
-        <div className={""}>
-            <h1 className={"text-4xl"}>{t('likedRecipesList')}</h1>
-            {recipes.map((recipe, index) => {
-                return <div className={`flex justify-center`} key={index}>
-                    <RecipeCard recipe={recipe} username={user?.username} key={index}/>
-                </div>
-            })}
-
+        <div className={"pb-10"}>
+            <h1 className={"text-5xl mb-5"}>{t('savedRecipesList')}</h1>
+            {
+                recipes.length === 0 ?
+                    <h1 className={"text-4xl mt-10"}>{t('noSavedRecipes')}</h1> :
+                    <div className={"grid grid-cols-1 gap-4"}>
+                        {
+                            recipes.map((recipe, index) => {
+                                return <div className={`flex justify-center`} key={index}>
+                                    <RecipeCard recipe={recipe} username={user?.username} key={index}/>
+                                </div>
+                            })
+                        }
+                    </div>
+            }
         </div>
     );
 }
