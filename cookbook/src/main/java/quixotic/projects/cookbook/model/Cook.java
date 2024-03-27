@@ -54,7 +54,7 @@ public class Cook implements UserDetails {
     private Set<Publication> publications = new HashSet<>();
 
     @ElementCollection
-    private Set<Long> likedRecipe = new HashSet<>();
+    private Set<Long> savedRecipe = new HashSet<>();
 
 //    @OneToMany(mappedBy = "cook")
 //    private Set<Reaction> reactions = new HashSet<>();
@@ -93,8 +93,8 @@ public class Cook implements UserDetails {
         return friends;
     }
 
-    public void likeRecipe(Recipe recipe) {
-        likedRecipe.add(recipe.getId());
+    public void saveRecipe(Recipe recipe) {
+        savedRecipe.add(recipe.getId());
     }
 
     @Override
