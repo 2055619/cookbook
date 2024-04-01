@@ -1,5 +1,5 @@
 import {useTranslation} from "react-i18next";
-import {IRecipe} from "../../assets/models/Recipe";
+import {IRecipe} from "../../assets/models/Publication";
 import pastaImg from "../../assets/image/red-sauce-pasta-recipe.jpg";
 import React from "react";
 import ReactionFooter from "./ReactionFooter";

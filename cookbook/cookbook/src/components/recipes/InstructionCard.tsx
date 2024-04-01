@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useTranslation} from "react-i18next";
-import {IRecipe} from "../../assets/models/Recipe";
+import {IRecipe} from "../../assets/models/Publication";
 
 interface IInstructionCardProps {
     recipe: IRecipe;

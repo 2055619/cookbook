@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
 import Loading from "../../components/Utils/Loading";
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {IRecipe} from "../../assets/models/Recipe";
+import {IRecipe} from "../../assets/models/Publication";
 import {toast} from "react-toastify";
 import RecipeCard from "../../components/recipes/RecipeCard";
 import {IUser} from "../../assets/models/Authentication";

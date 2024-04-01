@@ -1,7 +1,14 @@
-import {IUser} from "./Authentication";
 
-export interface IRecipe {
-    id?: number;
+export interface IPublication {
+    id: number;
+    title: string;
+    description: string;
+    visibility: string;
+    cookUsername: string;
+}
+
+export interface IRecipe extends IPublication{
+    id: number;
     title: string;
     description: string;
     cookUsername: string;
@@ -15,6 +22,7 @@ export interface IRecipe {
     dietTypes: string[];
     prepTime: number;
     cookTime: number;
+    // image: Byte[];
 }
 
 export interface IIngredient {

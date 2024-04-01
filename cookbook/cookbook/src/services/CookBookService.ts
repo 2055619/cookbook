@@ -1,6 +1,6 @@
 import {cookServerInstance} from "../App";
 import {IsignIn, IsignUp, IUser, IUserProfile} from "../assets/models/Authentication";
-import {IRecipe} from "../assets/models/Recipe";
+import {IRecipe} from "../assets/models/Publication";
 
 export class CookBookService {
 

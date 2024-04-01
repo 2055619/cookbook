@@ -1,6 +1,6 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
-import {IRecipe} from "../../assets/models/Recipe";
+import {IRecipe} from "../../assets/models/Publication";
 
 interface IOtherInfoProps {
     recipe: IRecipe;

@@ -1,6 +1,7 @@
 package quixotic.projects.cookbook.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -155,6 +156,12 @@ public class CookService {
         user.saveRecipe(recipe);
         cookRepository.save(user);
         return new RecipeDTO(recipe);
+    }
+
+    public void saveImage(String base64Image, Long recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(() -> new RuntimeException("Recipe not found"));
+        recipe.setImage(Base64.decodeBase64(base64Image));
+        recipeRepository.save(recipe);
     }
 
     public UserProfile getUserProfile(String username) {

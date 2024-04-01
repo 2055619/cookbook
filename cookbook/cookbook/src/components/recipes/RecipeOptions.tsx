@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisV} from "@fortawesome/free-solid-svg-icons/faEllipsisV";
 import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
-import {IRecipe} from "../../assets/models/Recipe";
+import {IRecipe} from "../../assets/models/Publication";
 import {useNavigate} from "react-router-dom";
 import {CookBookService} from "../../services/CookBookService";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";

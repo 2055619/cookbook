@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @Data
-//@Entity
+@Entity
 public class Trick extends Publication {
 
 }

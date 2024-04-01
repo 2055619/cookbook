@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {CookBookService} from "../../services/CookBookService";
 import {useTranslation} from "react-i18next";
-import {IIngredient, IRecipe} from "../../assets/models/Recipe";
+import {IIngredient, IRecipe} from "../../assets/models/Publication";
 import {UtilsService} from "../../services/UtilsService";
 import InstructionCard from "../../components/recipes/InstructionCard";
 import {IUser} from "../../assets/models/Authentication";
@@ -20,6 +20,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
     const {t} = useTranslation();
     const [recipe, setRecipe] = useState<IRecipe>(
         {
+            id: -1,
             title: "",
             description: "",
             visibility: "",

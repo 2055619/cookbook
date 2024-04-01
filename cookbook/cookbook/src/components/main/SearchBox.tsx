@@ -1,7 +1,7 @@
 import {useState, useEffect, useRef} from 'react';
 import {CookBookService} from "../../services/CookBookService";
 import {toast} from "react-toastify";
-import {IRecipe} from "../../assets/models/Recipe";
+import {IRecipe} from "../../assets/models/Publication";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 

@@ -1,4 +1,4 @@
-import {IRecipe} from "../../assets/models/Recipe";
+import {IRecipe} from "../../assets/models/Publication";
 import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
@@ -24,6 +24,7 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
     const {t} = useTranslation();
     const [recipe, setRecipe] = useState<IRecipe>(
         {
+            id: -1,
             title: "",
             description: "",
             visibility: "",

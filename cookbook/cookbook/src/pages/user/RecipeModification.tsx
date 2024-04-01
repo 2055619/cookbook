@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {IIngredient, IRecipe} from "../../assets/models/Recipe";
+import {IIngredient, IRecipe} from "../../assets/models/Publication";
 import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
 import {UtilsService} from "../../services/UtilsService";
@@ -7,6 +7,7 @@ import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import ImageUpload from "../../components/recipes/ImageUpload";
 
 interface RecipeModificationProps {
     user: IUser;
@@ -18,7 +19,6 @@ function RecipeModification({user}: RecipeModificationProps) {
     const utilsService = new UtilsService();
     const [recipe, setRecipe] = useState<IRecipe>();
 
-
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [instructions, setInstructions] = useState<string[]>([]);
@@ -26,6 +26,8 @@ function RecipeModification({user}: RecipeModificationProps) {
     const [serving, setServing] = useState(1);
     const [prepTime, setPrepTime] = useState(1);
     const [cookTime, setCookTime] = useState(0);
+
+    const [image, setImage] = useState<string | null>(null);
 
     const [category, setCategory] = useState('MAIN');
     const [difficulty, setDifficulty] = useState('EASY');
@@ -174,7 +176,7 @@ function RecipeModification({user}: RecipeModificationProps) {
         e.preventDefault();
 
         const newRecipe: IRecipe = {
-            id: recipe?.id,
+            id: recipe?.id !== undefined ? recipe.id : -1,
             title,
             description,
             cookUsername: user.username,
@@ -439,6 +441,9 @@ function RecipeModification({user}: RecipeModificationProps) {
                         </label>
                     ))}
                 </div>
+
+                <ImageUpload onImageUpload={setImage} />
+
                 <h5 className="text-red-500">{t(dietTypeWarning)}</h5>
 
                 <button type="submit" onClick={handleSubmit}
