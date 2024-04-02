@@ -113,6 +113,7 @@
     "report": "Signaler"
   },
   "message": {
+    "profileUpdateSuccess": "Votre profil a été mis à jour avec succès",
     "titleLength": "Le titre doit être composé d'au moins 3 caractères",
     "descriptionLength": "La description doit être composée d'au moins 10 caractères",
     "preparationTime": "Le temps de préparation doit être supérieur à 0",

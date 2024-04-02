@@ -168,18 +168,6 @@ public class CookService {
         return cookRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 
-    private List<RecipeDTO> filterRecipesByVisibility(List<Recipe> recipes, Cook user) {
-        return recipes.stream()
-                .filter(recipe -> switch (recipe.getVisibility()) {
-                    case PUBLIC -> true;
-                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
-                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
-                    case SECRET -> user.equals(recipe.getCook());
-                })
-                .map(RecipeDTO::new)
-                .collect(Collectors.toList());
-    }
-
     public CookDTO updateUserProfile(CookDTO cookDTO, String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
 
@@ -194,5 +182,17 @@ public class CookService {
         cook.setOtherUnit(Unit.valueOf(cookDTO.getOtherUnit()));
 
         return new CookDTO(cookRepository.save(cook));
+    }
+
+    private List<RecipeDTO> filterRecipesByVisibility(List<Recipe> recipes, Cook user) {
+        return recipes.stream()
+                .filter(recipe -> switch (recipe.getVisibility()) {
+                    case PUBLIC -> true;
+                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
+                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
+                    case SECRET -> user.equals(recipe.getCook());
+                })
+                .map(RecipeDTO::new)
+                .collect(Collectors.toList());
     }
 }

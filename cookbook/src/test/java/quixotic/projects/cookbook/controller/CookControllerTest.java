@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
+import quixotic.projects.cookbook.dto.CookDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
@@ -104,7 +105,7 @@ public class CookControllerTest {
 
     @Test
     public void getRecipes_InvalidPageAndSizeProvided_returnsBadRequest() throws Exception {
-        doThrow(new IllegalArgumentException()).when(cookService).getRecipesByPage(-1, -1, anyString());
+        when(cookService.getRecipesByPage(-1, -1, token)).thenThrow(new IllegalArgumentException());
         mockMvc.perform(get("/api/v1/cook/recipes")
                         .header("Authorization", token)
                         .param("page", "-1")
@@ -303,5 +304,56 @@ public class CookControllerTest {
                         .param("username", "invalid")
                         .header("Authorization", token))
                 .andExpect(status().is(611));
+    }
+
+    @Test
+    void saveRecipe_ValidIdProvided_returnsAccepted() throws Exception {
+        RecipeDTO recipeDTO = new RecipeDTO();
+        when(cookService.saveRecipe(anyLong(), anyString())).thenReturn(recipeDTO);
+
+        mockMvc.perform(post("/api/v1/cook/usr/save")
+                        .param("id", "1")
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    void saveRecipe_InvalidIdProvided_returnsBadRequest() throws Exception {
+        mockMvc.perform(post("/api/v1/cook/usr/save")
+                        .param("id", "invalid")
+                        .header("Authorization", token))
+                .andExpect(status().is(611));
+    }
+
+    @Test
+    void getSavedRecipesByUser_ValidToken_returnsAccepted() throws Exception {
+        when(cookService.getSavedRecipesByUser(anyString())).thenReturn(Collections.emptyList());
+
+        mockMvc.perform(get("/api/v1/cook/usr/SavedRecipes")
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    void getSavedRecipesByUser_InvalidToken_returnsBadRequest() throws Exception {
+        when(cookService.getSavedRecipesByUser(anyString())).thenThrow(new IllegalArgumentException());
+
+        mockMvc.perform(get("/api/v1/cook/usr/SavedRecipes")
+                        .header("Authorization", "invalid"))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void putUserProfile_ValidUserProfileProvided_returnsAccepted() throws Exception {
+        CookDTO cookDTO = CookDTO.builder().username("testCook").build();
+        when(cookService.updateUserProfile(any(), anyString())).thenReturn(cookDTO);
+
+        mockMvc.perform(put("/api/v1/cook/usr/profile")
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(cookDTO)))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }
