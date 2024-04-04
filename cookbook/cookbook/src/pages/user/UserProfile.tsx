@@ -58,15 +58,18 @@ function UserProfile({user}: IUserProfileProps) {
             <h2 className={"text-3xl"}>{t('powderUnit')}: {t(userProfile.powderUnit)}</h2>
             <h2 className={"text-3xl"}>{t('otherUnit')}: {t(userProfile.otherUnit)}</h2>
 
-            <div className={"text-center"}>
-                <button
-                    className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2 w-1/6"
-                    onClick={() => {
-                        navigate("/u/profileModify?username=" + user.username)
-                    }}>
-                    {t('profileModify')}
-                </button>
-            </div>
+            {
+                user?.username === userProfile.username &&
+                <div className={"text-center"}>
+                    <button
+                        className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2 w-1/6"
+                        onClick={() => {
+                            navigate("/u/profileModify?username=" + user.username)
+                        }}>
+                        {t('profileModify')}
+                    </button>
+                </div>
+            }
 
             <h2 className={"text-7xl text-center mt-4"}>{t('publication')}</h2>
 
