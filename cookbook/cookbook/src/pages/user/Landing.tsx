@@ -56,17 +56,19 @@ function Landing({username, user}: ILandingProps) {
     return (
         <div className={"text-center"}>
 
-            {recipes.map((recipe, index) => {
-                if (recipes.length === index + 1) {
-                    return <div className={`flex justify-center`} ref={lastRecipeElementRef} key={index}>
-                        <RecipeCard recipe={recipe} username={user.username} key={index}/>
-                    </div>
-                } else {
-                    return <div className={`flex justify-center`} key={index}>
-                        <RecipeCard recipe={recipe} username={user.username} key={index}/>
-                    </div>
-                }
-            })}
+            {
+                recipes.map((recipe, index) => {
+                    if (recipes.length === index + 1) {
+                        return <div className={`flex justify-center`} ref={lastRecipeElementRef} key={index}>
+                            <RecipeCard recipe={recipe} username={user.username} key={index}/>
+                        </div>
+                    } else {
+                        return <div className={`flex justify-center`} key={index}>
+                            <RecipeCard recipe={recipe} username={user.username} key={index}/>
+                        </div>
+                    }
+                })
+            }
 
             <Loading/>
         </div>

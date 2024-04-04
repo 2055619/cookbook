@@ -8,16 +8,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import quixotic.projects.cookbook.dto.CookDTO;
 import quixotic.projects.cookbook.dto.IngredientDTO;
+import quixotic.projects.cookbook.dto.PublicationDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.WrongUserException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Ingredient;
+import quixotic.projects.cookbook.model.Publication;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.repository.CookRepository;
+import quixotic.projects.cookbook.repository.PublicationRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
 
@@ -31,6 +34,7 @@ public class CookService {
     private final CookRepository cookRepository;
     private final RecipeRepository recipeRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final PublicationRepository publicationRepository;
 
     //    Recipes
     public RecipeDTO createRecipe(RecipeDTO recipeDTO) {
@@ -54,6 +58,17 @@ public class CookService {
         Page<Recipe> recipePage = recipeRepository.findAll(pageable);
 
         return filterRecipesByVisibility(recipePage.getContent(), user);
+    }
+    public List<PublicationDTO> getPublicationByPage(int page, int size, String token) {
+        if (page < 0 || size < 0)
+            throw new IllegalArgumentException("Page and size must be greater than 0");
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+
+        Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Publication> pubPage = publicationRepository.findAll(pageable);
+
+        return pubPage.getContent().stream().map(PublicationDTO::new).collect(Collectors.toList());
     }
 
     public RecipeDTO getRecipeById(Long id, String token) {
