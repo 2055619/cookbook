@@ -128,7 +128,7 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
                     <button
                         onClick={handleSave}
                         className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook transition ease-in duration-200 py-1 w-full">
-                        {t('input.save')}
+                        {t('input.favorite')}
                     </button>
                     <button
                         onClick={handleReport}

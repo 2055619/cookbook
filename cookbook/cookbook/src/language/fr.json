@@ -44,8 +44,8 @@
   "profileModify": "Modifier mon profil",
   "seePolicy": "Clicker ici pour voir la politique de confidentialité",
   "modifyPassword": "Modifier mon mot de passe",
-  "recipesList": "Liste des recettes",
-  "savedRecipesList": "Liste des recettes Sauvegardées",
+  "recipesList": "Recettes favorites",
+  "savedRecipesList": "Liste des recettes favorite",
   "noSavedRecipes": "Vous n'avez pas de recettes sauvegardées",
   "pages": {
     "home": {
@@ -110,6 +110,7 @@
     "description": "Ajoutez une description",
     "ingredient": "Nommer l'Ingrédient",
     "instruction": "Inscrivez l'instruction",
+    "favorite": "Ajouter aux Favoris",
     "report": "Signaler"
   },
   "message": {
