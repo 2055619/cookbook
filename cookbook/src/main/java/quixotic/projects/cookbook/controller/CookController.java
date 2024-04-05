@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import quixotic.projects.cookbook.dto.CookDTO;
+import quixotic.projects.cookbook.dto.PublicationDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.service.CookService;
@@ -29,6 +30,12 @@ public class CookController {
     public ResponseEntity<List<RecipeDTO>> getRecipes(@PathParam("page") int page, @PathParam("size") int size, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.getRecipesByPage(page, size, token));
+    }
+
+    @GetMapping("/publications")
+    public ResponseEntity<List<PublicationDTO>> getPublications(@PathParam("page") int page, @PathParam("size") int size, @RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getPublicationsByPage(page, size, token));
     }
 
     @GetMapping("/recipe")
@@ -61,7 +68,6 @@ public class CookController {
                 .body(cookService.getSavedRecipesByUser(token));
     }
 
-//    TODO: Find what this is
     @PostMapping("/usr/save")
     public ResponseEntity<RecipeDTO> saveRecipe(@PathParam("id") Long id, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)

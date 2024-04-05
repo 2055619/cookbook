@@ -1,15 +1,13 @@
 package quixotic.projects.cookbook.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Ingredient;
 import quixotic.projects.cookbook.model.Publication;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.enums.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,16 +16,11 @@ import java.util.stream.Collectors;
 
 import static quixotic.projects.cookbook.validation.Validation.validateRecipe;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class RecipeDTO {
-    private Long id;
-    private String title;
-    private String description;
-    private String cookUsername;
-    private Visibility visibility;
+public class RecipeDTO extends PublicationDTO{
     private Set<String> instructions = new HashSet<>();
     private Set<IngredientDTO> ingredients = new HashSet<>();
     private RecipeType category;
@@ -38,12 +31,22 @@ public class RecipeDTO {
     private float prepTime;
     private float cookTime;
 
+    @Builder
+    public RecipeDTO(Long id, String title, String description, LocalDate localDate, Visibility visibility, String cookUsername, Set<String> instructions, Set<IngredientDTO> ingredients, RecipeType category, DifficultyLevel difficulty, int serving, PortionSize portionSize, List<DietType> dietTypes, float prepTime, float cookTime) {
+        super(id, title, description, cookUsername, localDate, visibility);
+        this.instructions = instructions;
+        this.ingredients = ingredients;
+        this.category = category;
+        this.difficulty = difficulty;
+        this.serving = serving;
+        this.portionSize = portionSize;
+        this.dietTypes = dietTypes;
+        this.prepTime = prepTime;
+        this.cookTime = cookTime;
+    }
+
     public RecipeDTO(Recipe recipe) {
-        this.id = recipe.getId();
-        this.title = recipe.getTitle();
-        this.description = recipe.getDescription();
-        this.cookUsername = recipe.getCook().getUsername();
-        this.visibility = recipe.getVisibility();
+        super(recipe);
         this.instructions = recipe.getInstructions();
         this.ingredients = recipe.getIngredients().stream().map(IngredientDTO::new).collect(Collectors.toSet());
         this.category = recipe.getCategory();
@@ -58,9 +61,9 @@ public class RecipeDTO {
     public Recipe toEntity(Cook cook) {
         validateRecipe(this);
         return Recipe.builder()
-                .title(this.title)
-                .description(this.description)
-                .visibility(this.visibility)
+                .title(this.getTitle())
+                .description(this.getDescription())
+                .visibility(this.getVisibility())
                 .cook(cook)
                 .instructions(this.instructions)
                 .ingredients(this.ingredients.stream().map(IngredientDTO::toEntity).collect(Collectors.toSet()))

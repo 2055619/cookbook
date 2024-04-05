@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import quixotic.projects.cookbook.dto.IngredientDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.dto.SignUpDTO;
+import quixotic.projects.cookbook.dto.TrickDTO;
+import quixotic.projects.cookbook.model.Cook;
+import quixotic.projects.cookbook.model.Trick;
 import quixotic.projects.cookbook.model.enums.*;
 import quixotic.projects.cookbook.service.CookService;
 import quixotic.projects.cookbook.service.UserService;
@@ -29,6 +32,7 @@ public class CookbookApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         createCooks();
         createRecipes();
+        createTricks();
     }
 
     private void createCooks() {
@@ -65,6 +69,20 @@ public class CookbookApplication implements CommandLineRunner {
                 .solidUnit(Unit.KILOGRAM)
                 .otherUnit(Unit.CUP)
                 .build());
+    }
+
+    private void createTricks() {
+        cookService.createTrick(
+                new TrickDTO(
+                        Trick.builder()
+                                .title("This is it")
+                                .description("Don't cook your steak in olive oil")
+                                .visibility(Visibility.PUBLIC)
+                                .cook(Cook.builder().username("TheCook").build())
+                                .build()
+                )
+        );
+
     }
 
     private void createRecipes() {

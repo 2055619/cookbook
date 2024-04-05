@@ -6,17 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import quixotic.projects.cookbook.dto.CookDTO;
-import quixotic.projects.cookbook.dto.IngredientDTO;
-import quixotic.projects.cookbook.dto.PublicationDTO;
-import quixotic.projects.cookbook.dto.RecipeDTO;
+import quixotic.projects.cookbook.dto.*;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.WrongUserException;
-import quixotic.projects.cookbook.model.Cook;
-import quixotic.projects.cookbook.model.Ingredient;
-import quixotic.projects.cookbook.model.Publication;
-import quixotic.projects.cookbook.model.Recipe;
+import quixotic.projects.cookbook.model.*;
 import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.repository.CookRepository;
@@ -59,7 +53,8 @@ public class CookService {
 
         return filterRecipesByVisibility(recipePage.getContent(), user);
     }
-    public List<PublicationDTO> getPublicationByPage(int page, int size, String token) {
+
+    public List<PublicationDTO> getPublicationsByPage(int page, int size, String token) {
         if (page < 0 || size < 0)
             throw new IllegalArgumentException("Page and size must be greater than 0");
         String username = jwtTokenProvider.getUsernameFromJWT(token);
@@ -68,7 +63,12 @@ public class CookService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Publication> pubPage = publicationRepository.findAll(pageable);
 
-        return pubPage.getContent().stream().map(PublicationDTO::new).collect(Collectors.toList());
+        return pubPage.getContent().stream()
+                .map((publication -> {
+                    if (publication instanceof Recipe)
+                        return new RecipeDTO((Recipe) publication);
+                    return new PublicationDTO(publication);
+                })).collect(Collectors.toList());
     }
 
     public RecipeDTO getRecipeById(Long id, String token) {
@@ -85,7 +85,7 @@ public class CookService {
         Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
 
         return filterRecipesByVisibility(new ArrayList<>(List.of(recipeRepository.findByTitle(title)
-                .orElseThrow(RecipeNotFoundException::new))),
+                        .orElseThrow(RecipeNotFoundException::new))),
                 user).stream().findFirst().orElseThrow(RecipeNotFoundException::new);
     }
 
@@ -197,6 +197,16 @@ public class CookService {
         cook.setOtherUnit(Unit.valueOf(cookDTO.getOtherUnit()));
 
         return new CookDTO(cookRepository.save(cook));
+    }
+
+    public TrickDTO createTrick(TrickDTO trickDTO) {
+        Cook cook = cookRepository.findCookByUsername(trickDTO.getCookUsername()).orElseThrow(UserNotFoundException::new);
+        Trick trick = trickDTO.toEntity(cook);
+
+        cook.addPublication(trick);
+
+        cookRepository.save(cook);
+        return new TrickDTO(trick);
     }
 
     private List<RecipeDTO> filterRecipesByVisibility(List<Recipe> recipes, Cook user) {
