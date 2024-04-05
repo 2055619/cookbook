@@ -5,6 +5,12 @@ export interface IFormInput {
     warning: string;
 }
 
+export interface IFilters {
+    title?: string;
+    cookUsername?: string;
+    creationDate?: string;
+}
+
 class FormInput implements IFormInput {
     name: string;
     type: string;

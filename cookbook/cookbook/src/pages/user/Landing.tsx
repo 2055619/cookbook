@@ -7,13 +7,16 @@ import {toast} from "react-toastify";
 import RecipeCard from "../../components/recipes/RecipeCard";
 import {IUser} from "../../assets/models/Authentication";
 import PublicationCard from "../../components/PublicationCard";
+import FilterObjectList from "../../components/Utils/FilterObjectList";
+import {IFilters} from "../../assets/models/Form";
 
 interface ILandingProps {
     user: IUser;
     username?: string;
+    filters?: IFilters;
 }
 
-function Landing({username, user}: ILandingProps) {
+function Landing({username, user, filters}: ILandingProps) {
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
 
@@ -56,22 +59,35 @@ function Landing({username, user}: ILandingProps) {
         loadPublications();
     }, [page, username]);
 
+    const renderPublication = (filteredPublication: IPublication[]) => {
+        return (
+            <>
+                {
+                    filteredPublication.map((publication, index) => {
+                        if (publications.length === index + 1) {
+                            return <div className={`flex justify-center`} ref={lastRecipeElementRef} key={index}>
+                                <PublicationCard publication={publication} username={user.username} key={index}/>
+                            </div>
+                        } else {
+                            return <div className={`flex justify-center`} key={index}>
+                                <PublicationCard publication={publication} username={user.username} key={index}/>
+                            </div>
+                        }
+                    })
+                }
+            </>
+        )
+    }
+
     return (
         <div className={"text-center"}>
 
-            {
-                publications.map((publication, index) => {
-                    if (publications.length === index + 1) {
-                        return <div className={`flex justify-center`} ref={lastRecipeElementRef} key={index}>
-                            <PublicationCard publication={publication} username={user.username} key={index}/>
-                        </div>
-                    } else {
-                        return <div className={`flex justify-center`} key={index}>
-                            <PublicationCard publication={publication} username={user.username} key={index}/>
-                        </div>
-                    }
-                })
-            }
+            <FilterObjectList
+                items={publications}
+                attributes={["title", "cookUsername", "creationDate"]}
+                renderItem={renderPublication}
+                filters={filters}
+            />
 
             <Loading/>
         </div>

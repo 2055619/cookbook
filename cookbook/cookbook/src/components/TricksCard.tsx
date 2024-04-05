@@ -9,10 +9,6 @@ interface ITrickCardProps {
 }
 function TrickCard({trick, username}: ITrickCardProps){
 
-    useEffect(() => {
-        console.log("TrickCard");
-    }, []);
-
     return (
         <div className="border rounded-lg px-4 my-2 lg:w-3/5 w-full flex flex-col h-full justify-between">
             <div className={""}>

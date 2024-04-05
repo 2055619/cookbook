@@ -12,13 +12,15 @@ import {CookBookService} from "../../services/CookBookService";
 import UserProfile from "./UserProfile";
 import ConcoctRecipe from "./ConcoctRecipe";
 import ProfileModification from "./ProfileModification";
+import {IFilters} from "../../assets/models/Form";
 
 interface IUserPage {
     user: IUser | null;
     setUser: (user: IUser) => void;
+    filters: IFilters;
 }
 
-function UserPages({user, setUser}: IUserPage) {
+function UserPages({user, setUser, filters}: IUserPage) {
     const cookbookService = new CookBookService();
     const navigate = useNavigate();
 
@@ -44,11 +46,10 @@ function UserPages({user, setUser}: IUserPage) {
         }
     }, [user]);
 
-    // TODO: Add other pages
     return (
         <div className={"min-h-screen bg-cook-orange text-center"}>
             <Routes>
-                <Route path="landing" element={<Landing user={user!}/>}/>
+                <Route path="landing" element={<Landing user={user!} filters={filters} />}/>
                 <Route path="recipes" element={<RecipesList user={user!}/>}/>
                 <Route path="recipeDetail" element={<RecipeDetails user={user!}/>}/>
                 <Route path="concoct" element={<ConcoctRecipe user={user!} />}/>
