@@ -4,10 +4,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useTranslation} from "react-i18next";
 
 interface IReactionFooterProps {
-    recipeTitle: string;
+    publicationTitle: string;
 }
 
-function ReactionFooter({recipeTitle}: IReactionFooterProps) {
+function ReactionFooter({publicationTitle}: IReactionFooterProps) {
     const {t} = useTranslation();
     return (
         <div className={"flex justify-between"}>

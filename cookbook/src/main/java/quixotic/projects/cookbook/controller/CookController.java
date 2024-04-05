@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import quixotic.projects.cookbook.dto.CookDTO;
 import quixotic.projects.cookbook.dto.PublicationDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
+import quixotic.projects.cookbook.dto.TrickDTO;
 import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.service.CookService;
 
@@ -20,6 +21,7 @@ import java.util.List;
 public class CookController {
     private final CookService cookService;
 
+//    Recipes
     @PostMapping("/recipe")
     public ResponseEntity<RecipeDTO> authenticateCook(@RequestBody RecipeDTO recipeDTO){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
@@ -30,12 +32,6 @@ public class CookController {
     public ResponseEntity<List<RecipeDTO>> getRecipes(@PathParam("page") int page, @PathParam("size") int size, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.getRecipesByPage(page, size, token));
-    }
-
-    @GetMapping("/publications")
-    public ResponseEntity<List<PublicationDTO>> getPublications(@PathParam("page") int page, @PathParam("size") int size, @RequestHeader("Authorization") String token){
-        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getPublicationsByPage(page, size, token));
     }
 
     @GetMapping("/recipe")
@@ -92,6 +88,21 @@ public class CookController {
         return ResponseEntity.noContent().build();
     }
 
+//    Publications
+    @GetMapping("/publications")
+    public ResponseEntity<List<PublicationDTO>> getPublications(@PathParam("page") int page, @PathParam("size") int size, @RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getPublicationsByPage(page, size, token));
+    }
+
+//    Tricks
+    @PostMapping("/trick")
+    public ResponseEntity<PublicationDTO> createTrick(@RequestBody TrickDTO trickDTO){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.createTrick(trickDTO));
+    }
+
+//    User
     @GetMapping("/usr/profile")
     public ResponseEntity<UserProfile> getUserProfile(@PathParam("username") String username){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)

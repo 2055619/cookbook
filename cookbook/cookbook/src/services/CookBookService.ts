@@ -18,6 +18,36 @@ export class CookBookService {
             });
     }
 
+    async getUser() {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.get<IUser>(`/cook/auth/me`).then((response) => {
+            return response.data;
+        });
+    }
+
+    async getUserProfile(username: string) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.get<IUser>(`/cook/usr/profile?username=${username}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async updateProfile(updatedUser: IUserProfile) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.put(`/cook/usr/profile`, updatedUser)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    // Recipe
     async getRecipes(page: number) {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
@@ -26,15 +56,6 @@ export class CookBookService {
             .then((response) => {
                 return response.data;
             });
-    }
-
-    async getUser() {
-        if (!cookServerInstance.defaults.headers.common[`Authorization`])
-            return Promise.reject({response: {data: {message: "NoToken"}}});
-
-        return cookServerInstance.get<IUser>(`/cook/auth/me`).then((response) => {
-            return response.data;
-        });
     }
 
     async getRecipeByTitle(searchValue: string) {
@@ -108,26 +129,6 @@ export class CookBookService {
             });
     }
 
-    async getUserProfile(username: string) {
-        if (!cookServerInstance.defaults.headers.common[`Authorization`])
-            return Promise.reject({response: {data: {message: "NoToken"}}});
-
-        return cookServerInstance.get<IUser>(`/cook/usr/profile?username=${username}`)
-            .then((response) => {
-                return response.data;
-            });
-    }
-
-    async updateProfile(updatedUser: IUserProfile) {
-        if (!cookServerInstance.defaults.headers.common[`Authorization`])
-            return Promise.reject({response: {data: {message: "NoToken"}}});
-
-        return cookServerInstance.put(`/cook/usr/profile`, updatedUser)
-            .then((response) => {
-                return response.data;
-            });
-    }
-
     async getSavedUserRecipes() {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
@@ -143,6 +144,17 @@ export class CookBookService {
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
         return cookServerInstance.post(`/cook/usr/save?id=${id}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    // Publications
+    async getPublications(page: number) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.get<IRecipe[]>(`/cook/publications?page=` + page + `&size=10`)
             .then((response) => {
                 return response.data;
             });

@@ -3,17 +3,17 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEllipsisV} from "@fortawesome/free-solid-svg-icons/faEllipsisV";
 import React, {useEffect, useState} from "react";
 import {toast} from "react-toastify";
-import {IRecipe} from "../../assets/models/Publication";
+import {IPublication, IRecipe} from "../../assets/models/Publication";
 import {useNavigate} from "react-router-dom";
 import {CookBookService} from "../../services/CookBookService";
 import {faPlay} from "@fortawesome/free-solid-svg-icons";
 
 interface IRecipeOptionsProps {
     username: string;
-    recipe: IRecipe;
+    publication: IPublication;
 }
 
-function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
+function RecipeOptions({username, publication}: IRecipeOptionsProps) {
     const {t} = useTranslation();
     const navigate = useNavigate();
     const cookbookService = new CookBookService();
@@ -42,7 +42,7 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
     }
 
     function handleEdit() {
-        navigate(`/u/recipesModification?title=${recipe.title}`);
+        navigate(`/u/recipesModification?title=${publication.title}`);
     }
 
     function handleDelete() {
@@ -50,7 +50,7 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
     }
 
     function handleSave() {
-        cookbookService.saveRecipe(recipe.id!)
+        cookbookService.saveRecipe(publication.id!)
             .then(r => {
                 toast.success(t('input.saved'))
             })
@@ -65,11 +65,11 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
 
     function handleViewProfile(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         event.stopPropagation();
-        navigate('/u/profile?username=' + recipe.cookUsername)
+        navigate('/u/profile?username=' + publication.cookUsername)
     }
 
     function handleConfirmDelete() {
-        cookbookService.deleteRecipeById(recipe.id!)
+        cookbookService.deleteRecipeById(publication.id!)
             .then(r => {
                 toast.success("Delete")
                 setShowDeleteModal(false);
@@ -87,21 +87,27 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
     }
 
     function handleConcoctionClick() {
-        navigate(`/u/concoct?title=${recipe.title}`);
+        navigate(`/u/concoct?title=${publication.title}`);
     }
 
     return (
         <div className={"relative text-end pb-0"} onClick={handleOptionClick}>
             <div className={"flex justify-between items-center"}>
                 <button className="mb-0 p-1 clickable hover:bg-cook-red hover:rounded-full"
-                        onClick={handleViewProfile}>{recipe.cookUsername}
+                        onClick={handleViewProfile}>{publication.cookUsername}
                 </button>
 
-                <button className={"px-1 hover:bg-cook-red hover:rounded-full text-2xl"}
-                        onClick={handleConcoctionClick}>
-                    <span className={"hidden lg:inline-block"}>{t('concoct')}</span>
-                    <FontAwesomeIcon className={"ms-1"} icon={faPlay}/>
-                </button>
+                {
+                    (publication as IRecipe).cookTime !== undefined ? (
+                        <button className={"px-1 hover:bg-cook-red hover:rounded-full text-2xl me-10"}
+                                onClick={handleConcoctionClick}>
+                            <span className={"hidden lg:inline-block"}>{t('concoct')}</span>
+                            <FontAwesomeIcon className={"ms-1"} icon={faPlay}/>
+                        </button>
+                    ) : (
+                        <h1 className={"text-2xl me-10"}>{t('trick')}</h1>
+                    )
+                }
 
                 <FontAwesomeIcon className={"mt-2 px-2 clickable hover:bg-cook-red hover:rounded-full p-2"}
                                  onClick={togglePopup} icon={faEllipsisV}/>
@@ -110,7 +116,7 @@ function RecipeOptions({username, recipe}: IRecipeOptionsProps) {
                 <div
                     onClick={handlePopupClick}
                     className="absolute right-0 w-1/6 border-2 border-cook rounded shadow-xl bg-cook-light">
-                    {username === recipe.cookUsername && (
+                    {username === publication.cookUsername && (
                         <>
                             <button
                                 onClick={handleEdit}

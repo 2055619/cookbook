@@ -29,6 +29,7 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
             description: "",
             visibility: "",
             cookUsername: "",
+            creationDate: "",
             category: "",
             difficulty: "",
             serving: 0,

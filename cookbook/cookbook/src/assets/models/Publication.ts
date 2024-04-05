@@ -3,8 +3,18 @@ export interface IPublication {
     id: number;
     title: string;
     description: string;
-    visibility: string;
     cookUsername: string;
+    creationDate: string;
+    visibility: string;
+}
+
+export interface ITrick extends IPublication{
+    id: number;
+    title: string;
+    description: string;
+    cookUsername: string;
+    creationDate: string;
+    visibility: string;
 }
 
 export interface IRecipe extends IPublication{
@@ -12,6 +22,7 @@ export interface IRecipe extends IPublication{
     title: string;
     description: string;
     cookUsername: string;
+    creationDate: string;
     visibility: string;
     instructions: string[];
     ingredients: IIngredient[];

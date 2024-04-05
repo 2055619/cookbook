@@ -2,10 +2,11 @@ import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
 import Loading from "../../components/Utils/Loading";
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {IRecipe} from "../../assets/models/Publication";
+import {IPublication, IRecipe} from "../../assets/models/Publication";
 import {toast} from "react-toastify";
 import RecipeCard from "../../components/recipes/RecipeCard";
 import {IUser} from "../../assets/models/Authentication";
+import PublicationCard from "../../components/PublicationCard";
 
 interface ILandingProps {
     user: IUser;
@@ -16,7 +17,7 @@ function Landing({username, user}: ILandingProps) {
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
 
-    const [recipes, setRecipes] = useState<IRecipe[]>([]);
+    const [publications, setPublications] = useState<IPublication[]>([]);
     const [page, setPage] = useState(0);
     const observer = useRef<IntersectionObserver | null>(null);
 
@@ -31,10 +32,11 @@ function Landing({username, user}: ILandingProps) {
     }, []);
 
     useEffect(() => {
-        const loadRecipes = async () => {
-            const newRecipes = await cookbookService.getRecipes(page)
+        async function loadPublications() {
+            const pub = await cookbookService.getPublications(page)
                 .then((response) => {
                     return response;
+                    // setPublications(response);
                 })
                 .catch((error) => {
                     if (error.response?.data.message !== "NoToken")
@@ -42,29 +44,30 @@ function Landing({username, user}: ILandingProps) {
                     return [];
                 });
 
-            const uniqueRecipes: IRecipe[] = Array.from(new Set([...recipes, ...newRecipes].map(recipe => recipe.title)))
+            const uniquePublication: IRecipe[] = Array.from(new Set([...publications, ...pub].map(publication => publication.title)))
                 .map(title => {
-                    return [...recipes, ...newRecipes].find(recipe => recipe.title === title)!
+                    return [...publications, ...pub].find(publication => publication.title === title)!
                 })
-                .filter(recipe => !username || username === recipe.cookUsername) as IRecipe[];
+                .filter(publication => !username || username === publication.cookUsername) as IRecipe[];
 
-            setRecipes(uniqueRecipes!);
-        };
-        loadRecipes();
+            setPublications(uniquePublication!);
+        }
+
+        loadPublications();
     }, [page, username]);
 
     return (
         <div className={"text-center"}>
 
             {
-                recipes.map((recipe, index) => {
-                    if (recipes.length === index + 1) {
+                publications.map((publication, index) => {
+                    if (publications.length === index + 1) {
                         return <div className={`flex justify-center`} ref={lastRecipeElementRef} key={index}>
-                            <RecipeCard recipe={recipe} username={user.username} key={index}/>
+                            <PublicationCard publication={publication} username={user.username} key={index}/>
                         </div>
                     } else {
                         return <div className={`flex justify-center`} key={index}>
-                            <RecipeCard recipe={recipe} username={user.username} key={index}/>
+                            <PublicationCard publication={publication} username={user.username} key={index}/>
                         </div>
                     }
                 })

@@ -180,6 +180,7 @@ function RecipeModification({user}: RecipeModificationProps) {
             title,
             description,
             cookUsername: user.username,
+            creationDate: new Date().toISOString(),
             visibility,
             instructions,
             ingredients,

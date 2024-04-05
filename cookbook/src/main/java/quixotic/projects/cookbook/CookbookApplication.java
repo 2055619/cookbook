@@ -74,12 +74,12 @@ public class CookbookApplication implements CommandLineRunner {
     private void createTricks() {
         cookService.createTrick(
                 new TrickDTO(
-                        Trick.builder()
-                                .title("This is it")
-                                .description("Don't cook your steak in olive oil")
-                                .visibility(Visibility.PUBLIC)
-                                .cook(Cook.builder().username("TheCook").build())
-                                .build()
+                    Trick.builder()
+                        .title("This is it")
+                        .description("Don't cook your steak in olive oil")
+                        .visibility(Visibility.PUBLIC)
+                        .cook(Cook.builder().username("TheCook").build())
+                        .build()
                 )
         );
 

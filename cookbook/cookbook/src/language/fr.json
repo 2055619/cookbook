@@ -47,6 +47,7 @@
   "recipesList": "Recettes favorites",
   "savedRecipesList": "Liste des recettes favorite",
   "noSavedRecipes": "Vous n'avez pas de recettes sauvegardées",
+  "trick": "Astuce",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"

@@ -1,16 +1,37 @@
-import {IPublication} from "../assets/models/Publication";
+import {IPublication, IRecipe} from "../assets/models/Publication";
+import RecipeCard from "./recipes/RecipeCard";
+import TrickCard from "./TricksCard";
 
 interface IPublicationCardProps {
     publication: IPublication;
-    username?: string;
+    username: string;
 }
-function publicationCard(){
+
+function PublicationCard({publication, username}: IPublicationCardProps) {
+
+    function isRecipe(publication: IPublication): publication is IRecipe {
+        return (publication as IRecipe).instructions !== undefined;
+    }
+
+    function isTrick(publication: IPublication): publication is IRecipe {
+        return (publication as IRecipe).instructions === undefined;
+    }
 
     return (
-        <div>
-            <h1>Publication Card</h1>
-        </div>
+        <>
+            {
+                isRecipe(publication) ? (
+                    RecipeCard({recipe: publication, username: username})
+                ) : isTrick(publication) ? (
+                    TrickCard({trick: publication, username: username})
+                ) : (
+                    <>
+                        <h1>Publication Not Supported</h1>
+                    </>
+                )
+            }
+        </>
     );
 }
 
-export default publicationCard;
+export default PublicationCard;
