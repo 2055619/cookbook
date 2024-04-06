@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import ImageCard from "./ImageCard";
 
 interface ImageUploadProps {
     onImageUpload: (base64Image: number[]) => void;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+const ImageUpload: React.FC<ImageUploadProps> = ({onImageUpload}) => {
+    const [selectedImage, setSelectedImage] = useState<number[] | null>(null);
 
     // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //     const file = e.target.files?.[0];
@@ -28,6 +29,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
                 const arrayBuffer = reader.result as ArrayBuffer;
                 const byteArray = new Uint8Array(arrayBuffer);
                 const byteList = Array.from(byteArray);
+                setSelectedImage(byteList);
                 onImageUpload(byteList);
             };
             reader.readAsArrayBuffer(file);
@@ -36,8 +38,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
 
     return (
         <div>
-            <input type="file" onChange={handleImageChange} />
-            {selectedImage && <img src={selectedImage} alt="Selected" />}
+            <input type="file" onChange={handleImageChange}/>
+
+            {selectedImage && <ImageCard byteArray={selectedImage} alt={"Selected Image"} />}
+            {/*{selectedImage && <img src={selectedImage} alt="Selected"/>}*/}
         </div>
     );
 };
