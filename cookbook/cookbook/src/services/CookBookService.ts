@@ -1,6 +1,6 @@
 import {cookServerInstance} from "../App";
 import {IsignIn, IsignUp, IUser, IUserProfile} from "../assets/models/Authentication";
-import {IRecipe} from "../assets/models/Publication";
+import {IPublication, IReaction, IRecipe} from "../assets/models/Publication";
 
 export class CookBookService {
 
@@ -155,6 +155,16 @@ export class CookBookService {
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
         return cookServerInstance.get<IRecipe[]>(`/cook/publications?page=` + page + `&size=10`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async getReactionByPublication(publication: IPublication) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.get<IReaction>(`/cook/reactions`, {data: publication})
             .then((response) => {
                 return response.data;
             });

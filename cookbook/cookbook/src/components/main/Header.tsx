@@ -75,7 +75,6 @@ function Header({user, setUser}: IHeaderProps) {
                     <>
                         {AllHeader()}
                     </>
-
                 ) :
                 (
                     <>

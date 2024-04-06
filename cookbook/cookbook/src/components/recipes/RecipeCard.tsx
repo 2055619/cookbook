@@ -1,7 +1,6 @@
 import {useTranslation} from "react-i18next";
 import {IRecipe} from "../../assets/models/Publication";
 import React from "react";
-import ReactionFooter from "./ReactionFooter";
 import RecipeOptions from "./RecipeOptions";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -31,32 +30,25 @@ function RecipeCard({recipe, username}: RecipeCardProps) {
     }
 
     return (
-        <div className="border rounded-lg px-4 my-2 lg:w-3/5 w-full flex flex-col h-full justify-between">
-            <div className={""} onClick={handleViewDetails}>
-                <RecipeOptions username={username!} publication={recipe}/>
-                <h1 className="text-3xl font-semibold mt-0 pt-0 clickable">{recipe.title}</h1>
-                <p className="text-2xl">{recipe.description}</p>
+        <div className={""} onClick={handleViewDetails}>
+            <RecipeOptions username={username!} publication={recipe}/>
+            <h1 className="text-3xl font-semibold mt-0 pt-0 clickable">{recipe.title}</h1>
+            <p className="text-2xl">{recipe.description}</p>
 
-                <div className="grid grid-cols-4 gap-2 mt-1">
-                    <p><FontAwesomeIcon icon={faLayerGroup}/> <span>{t(recipe.category)}</span></p>
-                    <p><FontAwesomeIcon icon={faGaugeHigh}/> <span>{t(recipe.difficulty)}</span></p>
-                    <p><FontAwesomeIcon icon={faBowlFood}/> <span>{recipe.serving} {t(recipe.portionSize)}</span></p>
-                    <p><FontAwesomeIcon icon={faHourglass}/> <span>{recipeEstimatedTimeInHours()}</span></p>
-                </div>
-
-                {/*<h1 className="mb-2 text-muted">Diet Types:</h1>*/}
-                <div className={`grid grid-cols-${Math.min(recipe.dietTypes.length, 5)} gap-1 mt-1`}>
-                    {recipe.dietTypes.map((dietType, index) => (
-                        <p key={index} className="">{t(dietType)}</p>
-                    ))}
-                </div>
-
-                <ImageCard byteArray={recipe.image!} alt={recipe.title + " Image"} />
+            <div className="grid grid-cols-4 gap-2 mt-1">
+                <p><FontAwesomeIcon icon={faLayerGroup}/> <span>{t(recipe.category)}</span></p>
+                <p><FontAwesomeIcon icon={faGaugeHigh}/> <span>{t(recipe.difficulty)}</span></p>
+                <p><FontAwesomeIcon icon={faBowlFood}/> <span>{recipe.serving} {t(recipe.portionSize)}</span></p>
+                <p><FontAwesomeIcon icon={faHourglass}/> <span>{recipeEstimatedTimeInHours()}</span></p>
             </div>
 
-            <footer className={"py-2"}>
-                <ReactionFooter publicationTitle={recipe.title}/>
-            </footer>
+            <div className={`grid grid-cols-${Math.min(recipe.dietTypes.length, 5)} gap-1 mt-1`}>
+                {recipe.dietTypes.map((dietType, index) => (
+                    <p key={index} className="">{t(dietType)}</p>
+                ))}
+            </div>
+
+            <ImageCard byteArray={recipe.image!} alt={recipe.title + " Image"}/>
         </div>
     );
 }

@@ -43,3 +43,11 @@ export interface IIngredient {
     unit: string;
     ingredientState: string;
 }
+
+export interface IReaction {
+    id: number;
+    rating: number;
+    comment: string;
+    publicationId: number;
+    username: string;
+}

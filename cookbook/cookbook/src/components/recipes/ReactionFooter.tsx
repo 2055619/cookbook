@@ -1,33 +1,60 @@
-import React from 'react';
-import {faComment, faGrinStars, faShareSquare, faTired} from '@fortawesome/free-solid-svg-icons';
+import React, {useEffect, useState} from 'react';
+import {faComment, faShareSquare, faStar} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useTranslation} from "react-i18next";
+import {CookBookService} from "../../services/CookBookService";
+import {IPublication} from "../../assets/models/Publication";
 
 interface IReactionFooterProps {
-    publicationTitle: string;
+    publication: IPublication;
+    username: string;
 }
 
-function ReactionFooter({publicationTitle}: IReactionFooterProps) {
+function ReactionFooter({publication, username}: IReactionFooterProps) {
     const {t} = useTranslation();
+    const cookbookService = new CookBookService();
+
+    const [rating, setRating] = useState(0);
+    const [hover, setHover] = useState(-1);
+
+    useEffect(() => {
+        cookbookService.getReactionByPublication(publication)
+            .then((response) => {
+                setRating(response.rating);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, []);
+    function handleClick(index: number){
+        setRating(index + 1);
+        console.log(`Clicked star number: ${index + 1}`);
+    }
+
     return (
         <div className={"flex justify-between"}>
-            <div className={"flex"}>
-                <button className={"mx-2 text-2xl text-cook-light"} onClick={() => console.log("Like")}>
-                    <FontAwesomeIcon className={"fa fa-1x"} icon={faGrinStars}/>
-                    <span className={"mx-1"}>{t('miam')}</span>
-                </button>
-                <button className={"mx-2 text-2xl text-cook-red"} onClick={() => console.log("DisLike")}>
-                    <FontAwesomeIcon className={""} icon={faTired}/>
-                    <span className={"mx-1"}>{t('eww')}</span>
-                </button>
+            <div className={"flex clickable text-3xl"}>
+                {[...Array(5)].map((star, index) => {
+                    return (
+                        <FontAwesomeIcon
+                            key={index}
+                            icon={faStar}
+                            className={`hover:text-cook-light ${index <= hover || index < rating ? 'text-cook-light' : 'text-cook'}`}
+                            onClick={() => handleClick(index)}
+                            onMouseEnter={() => setHover(index)} // Add this line
+                            onMouseLeave={() => setHover(-1)} // And this line
+                        />
+                    );
+                })}
             </div>
+
             <button className={"mx-2 text-2xl"}>
                 <FontAwesomeIcon className={""} icon={faComment} onClick={() => console.log("comment")}/>
-                <span className={"mx-1"}>{t('comment')}</span>
+                <span className={"mx-1 hidden md:inline"}>{t('comment')}</span>
             </button>
             <button className={"mx-2 text-2xl"}>
                 <FontAwesomeIcon className={""} icon={faShareSquare} onClick={() => console.log("share")}/>
-                <span className={"mx-1"}>{t('share')}</span>
+                <span className={"mx-1 hidden md:inline"}>{t('share')}</span>
             </button>
         </div>
     );
