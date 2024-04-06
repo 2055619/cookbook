@@ -6,10 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import quixotic.projects.cookbook.dto.CookDTO;
-import quixotic.projects.cookbook.dto.PublicationDTO;
-import quixotic.projects.cookbook.dto.RecipeDTO;
-import quixotic.projects.cookbook.dto.TrickDTO;
+import quixotic.projects.cookbook.dto.*;
 import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.service.CookService;
 
@@ -100,6 +97,31 @@ public class CookController {
     public ResponseEntity<PublicationDTO> createTrick(@RequestBody TrickDTO trickDTO){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.createTrick(trickDTO));
+    }
+
+//    Reaction
+    @GetMapping("/reactions")
+    public ResponseEntity<List<ReactionDTO>> getReactions(@RequestBody PublicationDTO publicationDTO, @RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getReactionsByPublication(publicationDTO, token));
+    }
+
+    @PostMapping("/react")
+    public ResponseEntity<ReactionDTO> createReaction(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.createReaction(reactionDTO, token));
+    }
+
+    @PostMapping("/rate")
+    public ResponseEntity<ReactionDTO> ratePublication(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.ratePublication(reactionDTO, token));
+    }
+
+    @PostMapping("/comment")
+    public ResponseEntity<ReactionDTO> commentPublication(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.commentPublication(reactionDTO, token));
     }
 
 //    User

@@ -8,6 +8,8 @@ import lombok.ToString;
 import quixotic.projects.cookbook.model.enums.Visibility;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -28,12 +30,13 @@ public abstract class Publication {
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
 
+    @OneToMany(mappedBy = "publication")
+    private Set<Reaction> reactions = new HashSet<>();
+
     public Publication(String title, String description, Visibility visibility, Cook cook) {
         this.title = title;
         this.description = description;
         this.visibility = visibility;
         this.cook = cook;
     }
-//    @OneToMany(mappedBy = "publication")
-//    private Set<Reaction> reactions;
 }

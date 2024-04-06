@@ -1,6 +1,7 @@
 package quixotic.projects.cookbook.validation;
 
 import quixotic.projects.cookbook.dto.IngredientDTO;
+import quixotic.projects.cookbook.dto.ReactionDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
 import quixotic.projects.cookbook.dto.SignUpDTO;
 import quixotic.projects.cookbook.exception.badRequestException.ValidationException;
@@ -45,6 +46,23 @@ public final class Validation{
 		validateName(ingredientDTO.getName());
 		validateQuantity(ingredientDTO.getQuantity());
 		validateUnitInCategory(ingredientDTO.getUnit(), ingredientDTO.getIngredientState());
+	}
+
+	public static void validateReaction(ReactionDTO reactionDTO) {
+		validateRating(reactionDTO.getRating());
+//		validateComment(reactionDTO.getComment());
+	}
+
+	private static void validateComment(String comment) {
+		if(comment.matches(COMMENT_PATTERN.toString()))
+			return;
+		exception(ValidationMessage.COMMENT_MESSAGE.toString());
+	}
+
+	private static void validateRating(float rating) {
+		if((rating >= 0 && rating <= 5) || rating == -1)
+			return;
+		exception(ValidationMessage.RATING_MESSAGE.toString());
 	}
 
 	private static void validateUnitInCategory(Unit unit, IngredientState ingredientState) {

@@ -1,21 +1,26 @@
 package quixotic.projects.cookbook.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 public class Reaction {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Publication publication;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private float rating = -1;
+    private String comment;
+    @ManyToOne
+    @JoinColumn(name = "cook_id", nullable = false)
     private Cook cook;
-    @Enumerated(EnumType.STRING)
-    private ReactionType reactionType;
-
-    public enum ReactionType {
-        MIAM,
-        EWW,
-    }
+    @ManyToOne
+    @JoinColumn(name = "publication_id", nullable = false)
+    private Publication publication;
 }

@@ -56,8 +56,8 @@ public class Cook implements UserDetails {
     @ElementCollection
     private Set<Long> savedRecipe = new HashSet<>();
 
-//    @OneToMany(mappedBy = "cook")
-//    private Set<Reaction> reactions = new HashSet<>();
+    @OneToMany(mappedBy = "cook")
+    private Set<Reaction> reactions = new HashSet<>();
 
     public void addPublication(Publication publication) {
         publications.add(publication);
