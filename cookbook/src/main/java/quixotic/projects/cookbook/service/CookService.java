@@ -63,12 +63,7 @@ public class CookService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Publication> pubPage = publicationRepository.findAll(pageable);
 
-        return pubPage.getContent().stream()
-                .map((publication -> {
-                    if (publication instanceof Recipe)
-                        return new RecipeDTO((Recipe) publication);
-                    return new PublicationDTO(publication);
-                })).collect(Collectors.toList());
+        return filterPublicationsByVisibility(pubPage.getContent(), user);
     }
 
     public RecipeDTO getRecipeById(Long id, String token) {
@@ -220,4 +215,43 @@ public class CookService {
                 .map(RecipeDTO::new)
                 .collect(Collectors.toList());
     }
+
+    private List<PublicationDTO> filterPublicationsByVisibility(List<Publication> publications, Cook user) {
+        return publications.stream()
+                .filter(recipe -> switch (recipe.getVisibility()) {
+                    case PUBLIC -> true;
+                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
+                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
+                    case SECRET -> user.equals(recipe.getCook());
+                })
+                .map((publication -> {
+                            if (publication instanceof Recipe)
+                                return new RecipeDTO((Recipe) publication);
+                            return new PublicationDTO(publication);
+                        })
+                ).collect(Collectors.toList());
+    }
+
+//    private List<RecipeDTO> filterPublicationsByVisibility(List<Recipe> publications, Cook user) {
+//        return publications.stream()
+//                .filter(recipe -> switch (recipe.getVisibility()) {
+//                    case PUBLIC -> true;
+//                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
+//                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
+//                    case SECRET -> user.equals(recipe.getCook());
+//                })
+//                .map(RecipeDTO::new)
+//                .collect(Collectors.toList());
+//    }
+//    private List<TrickDTO> filterPublicationsByVisibility(List<Trick> publications, Cook user) {
+//        return publications.stream()
+//                .filter(recipe -> switch (recipe.getVisibility()) {
+//                    case PUBLIC -> true;
+//                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
+//                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
+//                    case SECRET -> user.equals(recipe.getCook());
+//                })
+//                .map(TrickDTO::new)
+//                .collect(Collectors.toList());
+//    }
 }
