@@ -30,11 +30,11 @@ public class Recipe extends Publication {
     private List<DietType> dietTypes = new ArrayList<>();
     private float prepTime;
     private float cookTime;
-    @Lob
+//    @Lob
     private byte[] image;
 
     @Builder
-    public Recipe(String title, String description, Visibility visibility, Cook cook, Set<String> instructions, Set<Ingredient> ingredients, RecipeType category, DifficultyLevel difficulty, int serving, PortionSize portionSize, List<DietType> dietTypes, float prepTime, float cookTime, int ovenTemp) {
+    public Recipe(String title, String description, Visibility visibility, Cook cook, Set<String> instructions, Set<Ingredient> ingredients, RecipeType category, DifficultyLevel difficulty, int serving, PortionSize portionSize, List<DietType> dietTypes, float prepTime, float cookTime, byte[] image) {
         super(title, description, visibility, cook);
         this.instructions = instructions;
         this.ingredients = ingredients;
@@ -45,6 +45,7 @@ public class Recipe extends Publication {
         this.dietTypes = dietTypes;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
+        this.image = image;
     }
 
     public Cook getCook() {

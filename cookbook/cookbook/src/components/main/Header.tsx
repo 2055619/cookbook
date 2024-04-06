@@ -5,7 +5,7 @@ import logo from "../../assets/image/cookbookIcon.jpg";
 import {IUser} from "../../assets/models/Authentication";
 import ProfileSummary from "../ProfileSummary";
 import SearchBox from "./SearchBox";
-import {faList, faPlus, faScroll} from "@fortawesome/free-solid-svg-icons";
+import {faHeart, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
@@ -53,7 +53,7 @@ function Header({user, setUser}: IHeaderProps) {
                     <div className={"flex items-center clickable"}
                          onClick={() => navigate('/u/recipes')}>
                         <h1 className={"lg:block hidden"}>{t('recipesList')}</h1>
-                        <FontAwesomeIcon className={"clickable ml-2 md:w-8 md:h-8"} icon={faList}
+                        <FontAwesomeIcon className={"clickable ml-2 md:w-8 md:h-8"} icon={faHeart}
                                          onClick={() => navigate('/u/recipes')}/>
                     </div>
                     <div className="flex items-center clickable"

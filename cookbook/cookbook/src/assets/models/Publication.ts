@@ -33,7 +33,7 @@ export interface IRecipe extends IPublication{
     dietTypes: string[];
     prepTime: number;
     cookTime: number;
-    // image: Byte[];
+    image?: number[];
 }
 
 export interface IIngredient {

@@ -30,7 +30,7 @@ function LeftAside({setFilters}: ILeftAside) {
         <div className="md:w-1/4 text-cook-light px-4 hidden md:block">
             <h1 className={"text-4xl"}>{t('filter')}</h1>
 
-            <form onSubmit={handleSubmit}>
+            <form className={"sticky top-14"} onSubmit={handleSubmit}>
                 <div>
                     <label className="block text-sm font-medium text-cook-light">{t('title')}</label>
                     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}

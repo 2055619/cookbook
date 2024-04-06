@@ -2,8 +2,6 @@ package quixotic.projects.cookbook.dto;
 
 import lombok.*;
 import quixotic.projects.cookbook.model.Cook;
-import quixotic.projects.cookbook.model.Ingredient;
-import quixotic.projects.cookbook.model.Publication;
 import quixotic.projects.cookbook.model.Recipe;
 import quixotic.projects.cookbook.model.enums.*;
 
@@ -20,7 +18,7 @@ import static quixotic.projects.cookbook.validation.Validation.validateRecipe;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecipeDTO extends PublicationDTO{
+public class RecipeDTO extends PublicationDTO {
     private Set<String> instructions = new HashSet<>();
     private Set<IngredientDTO> ingredients = new HashSet<>();
     private RecipeType category;
@@ -30,9 +28,10 @@ public class RecipeDTO extends PublicationDTO{
     private List<DietType> dietTypes = new ArrayList<>();
     private float prepTime;
     private float cookTime;
+    private byte[] image;
 
     @Builder
-    public RecipeDTO(Long id, String title, String description, LocalDate localDate, Visibility visibility, String cookUsername, Set<String> instructions, Set<IngredientDTO> ingredients, RecipeType category, DifficultyLevel difficulty, int serving, PortionSize portionSize, List<DietType> dietTypes, float prepTime, float cookTime) {
+    public RecipeDTO(Long id, String title, String description, LocalDate localDate, Visibility visibility, String cookUsername, Set<String> instructions, Set<IngredientDTO> ingredients, RecipeType category, DifficultyLevel difficulty, int serving, PortionSize portionSize, List<DietType> dietTypes, float prepTime, float cookTime, byte[] image) {
         super(id, title, description, cookUsername, localDate, visibility);
         this.instructions = instructions;
         this.ingredients = ingredients;
@@ -43,6 +42,7 @@ public class RecipeDTO extends PublicationDTO{
         this.dietTypes = dietTypes;
         this.prepTime = prepTime;
         this.cookTime = cookTime;
+        this.image = image;
     }
 
     public RecipeDTO(Recipe recipe) {
@@ -56,6 +56,7 @@ public class RecipeDTO extends PublicationDTO{
         this.dietTypes = recipe.getDietTypes();
         this.prepTime = recipe.getPrepTime();
         this.cookTime = recipe.getCookTime();
+        this.image = recipe.getImage();
     }
 
     public Recipe toEntity(Cook cook) {
@@ -74,6 +75,7 @@ public class RecipeDTO extends PublicationDTO{
                 .dietTypes(this.dietTypes)
                 .prepTime(this.prepTime)
                 .cookTime(this.cookTime)
+                .image(this.image)
                 .build();
     }
 }

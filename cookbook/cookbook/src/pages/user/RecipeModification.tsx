@@ -7,7 +7,7 @@ import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import ImageUpload from "../../components/recipes/ImageUpload";
+import ImageUpload from "../../components/ImageUpload";
 
 interface RecipeModificationProps {
     user: IUser;
@@ -27,7 +27,7 @@ function RecipeModification({user}: RecipeModificationProps) {
     const [prepTime, setPrepTime] = useState(1);
     const [cookTime, setCookTime] = useState(0);
 
-    const [image, setImage] = useState<string | null>(null);
+    const [image, setImage] = useState<number[] | null>(null);
 
     const [category, setCategory] = useState('MAIN');
     const [difficulty, setDifficulty] = useState('EASY');
@@ -69,6 +69,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                     setVisibility(response.visibility);
                     setPortionSize(response.portionSize);
                     setDietTypes(response.dietTypes);
+                    setImage(response.image || null);
                 })
                 .catch((error) => {
                     if (error.response?.data.message !== "NoToken")
@@ -191,6 +192,7 @@ function RecipeModification({user}: RecipeModificationProps) {
             dietTypes,
             prepTime,
             cookTime,
+            image: image || undefined
         };
 
         if (!isValid()) {
@@ -371,7 +373,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                             <input type="number" value={ingredient.quantity}
                                    onChange={e => handleIngredientQuantityChange(index, Number(e.target.value))}
                                    className="border-2 border-cook-light p-2 rounded"
-                                   min="0" step="0.01"/>
+                                   min="0" step="0.25"/>
                             <select value={ingredient.ingredientState}
                                     onChange={e => handleIngredientStateChange(index, e.target.value)}
                                     className="border-2 border-cook-light p-2 rounded">

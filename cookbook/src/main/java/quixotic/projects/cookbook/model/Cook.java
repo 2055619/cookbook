@@ -50,7 +50,7 @@ public class Cook implements UserDetails {
     @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Cook> followers = new HashSet<>();
 
-    @OneToMany(mappedBy = "cook", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cook", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Publication> publications = new HashSet<>();
 
     @ElementCollection

@@ -1,12 +1,12 @@
 import {useTranslation} from "react-i18next";
 import {IRecipe} from "../../assets/models/Publication";
-import pastaImg from "../../assets/image/red-sauce-pasta-recipe.jpg";
 import React from "react";
 import ReactionFooter from "./ReactionFooter";
 import RecipeOptions from "./RecipeOptions";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBowlFood, faGaugeHigh, faHourglass, faLayerGroup} from "@fortawesome/free-solid-svg-icons";
+import ImageCard from "../ImageCard";
 
 interface RecipeCardProps {
     recipe: IRecipe;
@@ -51,7 +51,7 @@ function RecipeCard({recipe, username}: RecipeCardProps) {
                     ))}
                 </div>
 
-                <img className={"w-full md:w-3/5 mx-auto"} src={pastaImg} alt={recipe.title}/>
+                <ImageCard byteArray={recipe.image!} alt={recipe.title + " Image"} />
             </div>
 
             <footer className={"py-2"}>

@@ -4,7 +4,7 @@ import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
 import {IUser} from "../../assets/models/Authentication";
-import pastaImg from "../../assets/image/red-sauce-pasta-recipe.jpg";
+import noImg from "../../assets/image/noImg.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faArrowLeft,
@@ -14,6 +14,7 @@ import {
     faHourglassHalf,
     faLayerGroup
 } from "@fortawesome/free-solid-svg-icons";
+import ImageCard from "../../components/ImageCard";
 
 interface IRecipeDetailsProps {
     user: IUser;
@@ -127,9 +128,7 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
             </div>
 
             <div className={"text-center w-11/12 mx-auto grid md:grid-cols-2 grid-cols-1"}>
-                <div className="">
-                    <img className={"w-full"} src={pastaImg} alt={recipe?.title}/>
-                </div>
+                <ImageCard byteArray={recipe.image!} alt={recipe.title} />
 
                 <div className="text-start ms-10">
                     <h1 className="text-4xl">{t('ingredients')}:</h1>
