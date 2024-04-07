@@ -52,7 +52,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.get<IRecipe[]>(`/cook/recipes?page=` + page + `&size=10`)
+        return cookServerInstance.get<IRecipe[]>(`/cook/recipes?page=${page}&size=10`)
             .then((response) => {
                 return response.data;
             });
@@ -62,7 +62,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.get<IRecipe[]>(`/cook/recipes/title?title=` + searchValue)
+        return cookServerInstance.get<IRecipe[]>(`/cook/recipes/title?title=${searchValue}`)
             .then((response) => {
                 return response.data;
             });
@@ -154,17 +154,37 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.get<IRecipe[]>(`/cook/publications?page=` + page + `&size=10`)
+        return cookServerInstance.get<IRecipe[]>(`/cook/publications?page=${page}&size=10`)
             .then((response) => {
                 return response.data;
             });
     }
 
-    async getReactionByPublication(publication: IPublication) {
+    async getReactionsByPublication(publication: IPublication) {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.get<IReaction>(`/cook/reactions`, {data: publication})
+        return cookServerInstance.get<IReaction[]>(`/cook/reactions/${publication.id}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async ratePublication(reaction: IReaction) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.post(`/cook/rate`, reaction)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async commentPublication(reaction: IReaction) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.post(`/cook/comment`, reaction)
             .then((response) => {
                 return response.data;
             });

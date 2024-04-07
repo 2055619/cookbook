@@ -47,7 +47,7 @@ public class Cook implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Unit otherUnit;
 
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Cook> followers = new HashSet<>();
 
     @OneToMany(mappedBy = "cook", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -56,7 +56,7 @@ public class Cook implements UserDetails {
     @ElementCollection
     private Set<Long> savedRecipe = new HashSet<>();
 
-    @OneToMany(mappedBy = "cook")
+    @OneToMany(mappedBy = "cook", cascade = CascadeType.PERSIST)
     private Set<Reaction> reactions = new HashSet<>();
 
     public void addPublication(Publication publication) {

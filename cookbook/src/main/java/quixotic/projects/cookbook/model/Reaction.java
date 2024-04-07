@@ -1,10 +1,8 @@
 package quixotic.projects.cookbook.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Formula;
 
 @Data
 @NoArgsConstructor
@@ -17,10 +15,10 @@ public class Reaction {
     private Long id;
     private float rating = -1;
     private String comment;
-    @ManyToOne
-    @JoinColumn(name = "cook_id", nullable = false)
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Cook cook;
-    @ManyToOne
-    @JoinColumn(name = "publication_id", nullable = false)
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Publication publication;
 }

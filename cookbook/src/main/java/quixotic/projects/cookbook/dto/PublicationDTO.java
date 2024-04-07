@@ -18,6 +18,7 @@ public class PublicationDTO {
     private String cookUsername;
     private LocalDate creationDate;
     private Visibility visibility;
+    private float averageRating;
 
     public PublicationDTO(Publication publication) {
         this.id = publication.getId();
@@ -26,5 +27,6 @@ public class PublicationDTO {
         this.cookUsername = publication.getCook().getUsername();
         this.creationDate = publication.getCreationDate();
         this.visibility = publication.getVisibility();
+        this.averageRating = publication.getAverageRating();
     }
 }

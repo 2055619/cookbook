@@ -100,17 +100,20 @@ public class CookController {
     }
 
 //    Reaction
-    @GetMapping("/reactions")
-    public ResponseEntity<List<ReactionDTO>> getReactions(@RequestBody PublicationDTO publicationDTO, @RequestHeader("Authorization") String token){
+    @GetMapping("/reactions/{id}")
+    public ResponseEntity<List<ReactionDTO>> getReactions(@PathVariable("id") Long pubId, @RequestHeader("Authorization") String token){
+//        @RequestBody PublicationDTO publicationDTO
+//        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+//                .body(cookService.getReactionsByPublication(publicationDTO, token));
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getReactionsByPublication(publicationDTO, token));
+                .body(cookService.getReactionsByPublication(pubId));
     }
 
-    @PostMapping("/react")
-    public ResponseEntity<ReactionDTO> createReaction(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
-        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.createReaction(reactionDTO, token));
-    }
+//    @PostMapping("/react")
+//    public ResponseEntity<ReactionDTO> createReaction(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
+//        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+//                .body(cookService.createReaction(reactionDTO, token));
+//    }
 
     @PostMapping("/rate")
     public ResponseEntity<ReactionDTO> ratePublication(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){

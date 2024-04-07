@@ -45,9 +45,9 @@ export interface IIngredient {
 }
 
 export interface IReaction {
-    id: number;
-    rating: number;
-    comment: string;
+    id: number | null;
+    rating: number | null;
+    comment: string | null;
     publicationId: number;
-    username: string;
+    cookUsername: string;
 }

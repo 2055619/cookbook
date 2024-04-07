@@ -29,8 +29,8 @@ public abstract class Publication {
     private LocalDate creationDate = LocalDate.now();
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
-
-    @OneToMany(mappedBy = "publication")
+    private float averageRating;
+    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL)
     private Set<Reaction> reactions = new HashSet<>();
 
     public Publication(String title, String description, Visibility visibility, Cook cook) {
@@ -38,5 +38,30 @@ public abstract class Publication {
         this.description = description;
         this.visibility = visibility;
         this.cook = cook;
+    }
+
+    public void addReaction(Reaction reaction) {
+        reactions.add(reaction);
+        recalculateAverageRating();
+    }
+
+    public void removeReaction(Reaction reaction) {
+        reactions.remove(reaction);
+        reaction.setPublication(null);
+        recalculateAverageRating();
+    }
+
+    public void recalculateAverageRating() {
+        if (reactions.isEmpty()) {
+            averageRating = 0;
+        } else {
+            float sum = 0;
+            for (Reaction reaction : reactions) {
+                if (reaction.getRating() != -1){
+                    sum += reaction.getRating();
+                }
+            }
+            averageRating = sum / reactions.size();
+        }
     }
 }

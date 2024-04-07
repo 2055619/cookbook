@@ -3,7 +3,8 @@ import {faComment, faShareSquare, faStar} from '@fortawesome/free-solid-svg-icon
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
-import {IPublication} from "../../assets/models/Publication";
+import {IPublication, IReaction} from "../../assets/models/Publication";
+import {toast} from "react-toastify";
 
 interface IReactionFooterProps {
     publication: IPublication;
@@ -16,19 +17,42 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
 
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(-1);
+    const [reaction, setReaction] = useState<IReaction>({
+        id: null,
+        rating: null,
+        comment: null,
+        publicationId: publication.id,
+        cookUsername: username
+    });
 
     useEffect(() => {
-        cookbookService.getReactionByPublication(publication)
+        cookbookService.getReactionsByPublication(publication)
             .then((response) => {
-                setRating(response.rating);
+                // setReaction(response);
+                response.map((reaction) => {
+                    if (reaction.cookUsername === username) {
+                        setReaction(reaction);
+                        setRating(reaction.rating!);
+                    }
+                });
             })
             .catch((error) => {
-                console.error(error);
+                toast.error(t(error.response?.data.message));
             });
     }, []);
-    function handleClick(index: number){
+
+    function handleClick(index: number) {
         setRating(index + 1);
-        console.log(`Clicked star number: ${index + 1}`);
+        setReaction({...reaction, rating: index + 1});
+
+        cookbookService.ratePublication(reaction)
+            .then((response) => {
+                setReaction(response);
+            })
+            .catch((error) => {
+                toast.error(t(error.response?.data.message));
+            });
+        console.log("react: ", reaction)
     }
 
     return (
