@@ -16,9 +16,9 @@ public class Reaction {
     private float rating = -1;
     private String comment;
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Cook cook;
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Publication publication;
 }

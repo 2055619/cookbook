@@ -29,7 +29,7 @@ public abstract class Publication {
     private LocalDate creationDate = LocalDate.now();
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
-    private float averageRating;
+    private float averageRating = 0;
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL)
     private Set<Reaction> reactions = new HashSet<>();
 

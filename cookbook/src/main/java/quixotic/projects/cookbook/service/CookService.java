@@ -230,10 +230,12 @@ public class CookService {
     public ReactionDTO ratePublication(ReactionDTO reactionDTO, String token) {
         Cook cook = cookRepository.findCookByUsername(jwtTokenProvider.getUsernameFromJWT(token))
                 .orElseThrow(UserNotFoundException::new);
-        if (!Objects.equals(cook.getUsername(), reactionDTO.getCookUsername()))
+        if (!Objects.equals(cook.getUsername(), reactionDTO.getCookUsername())) {
             throw new WrongUserException();
+        }
         Publication publication = publicationRepository.findById(reactionDTO.getPublicationId())
                 .orElseThrow(PublicationNotFoundException::new);
+
 
         Reaction reaction = reactionRepository.findByCookAndPublication(cook, publication)
                 .orElse(Reaction.builder().build());
@@ -243,7 +245,6 @@ public class CookService {
             reaction.setCook(cook);
             reaction.setPublication(publication);
         }
-
         return new ReactionDTO(reactionRepository.save(reaction));
     }
     public ReactionDTO commentPublication(ReactionDTO reactionDTO, String token) {

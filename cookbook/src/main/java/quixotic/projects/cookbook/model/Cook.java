@@ -56,7 +56,7 @@ public class Cook implements UserDetails {
     @ElementCollection
     private Set<Long> savedRecipe = new HashSet<>();
 
-    @OneToMany(mappedBy = "cook", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "cook", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     private Set<Reaction> reactions = new HashSet<>();
 
     public void addPublication(Publication publication) {

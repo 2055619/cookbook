@@ -28,12 +28,12 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
     useEffect(() => {
         cookbookService.getReactionsByPublication(publication)
             .then((response) => {
-                // setReaction(response);
                 response.map((reaction) => {
                     if (reaction.cookUsername === username) {
                         setReaction(reaction);
                         setRating(reaction.rating!);
                     }
+                    return reaction;
                 });
             })
             .catch((error) => {
@@ -43,16 +43,15 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
 
     function handleClick(index: number) {
         setRating(index + 1);
-        setReaction({...reaction, rating: index + 1});
+        const react = {...reaction, rating: index + 1};
 
-        cookbookService.ratePublication(reaction)
+        cookbookService.ratePublication(react)
             .then((response) => {
                 setReaction(response);
             })
             .catch((error) => {
                 toast.error(t(error.response?.data.message));
             });
-        console.log("react: ", reaction)
     }
 
     return (
@@ -65,8 +64,8 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
                             icon={faStar}
                             className={`hover:text-cook-light ${index <= hover || index < rating ? 'text-cook-light' : 'text-cook'}`}
                             onClick={() => handleClick(index)}
-                            onMouseEnter={() => setHover(index)} // Add this line
-                            onMouseLeave={() => setHover(-1)} // And this line
+                            onMouseEnter={() => setHover(index)}
+                            onMouseLeave={() => setHover(-1)}
                         />
                     );
                 })}
