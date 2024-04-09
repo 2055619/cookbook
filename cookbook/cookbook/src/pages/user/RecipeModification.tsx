@@ -7,7 +7,7 @@ import {IUser} from "../../assets/models/Authentication";
 import {toast} from "react-toastify";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import ImageUpload from "../../components/ImageUpload";
+import ImageUpload from "../../components/publications/ImageUpload";
 
 interface RecipeModificationProps {
     user: IUser;

@@ -8,6 +8,8 @@ import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Publication;
 import quixotic.projects.cookbook.model.Reaction;
 
+import java.util.List;
+
 import static quixotic.projects.cookbook.validation.Validation.validateReaction;
 
 @Data
@@ -15,16 +17,16 @@ import static quixotic.projects.cookbook.validation.Validation.validateReaction;
 public class ReactionDTO {
     private Long id;
     private float rating = -1;
-    private String comment;
+    private CommentDTO comment;
     private String cookUsername;
     private Long publicationId;
 
     public ReactionDTO(Reaction reaction) {
         this.id = reaction.getId();
         this.rating = reaction.getRating();
-        this.comment = reaction.getComment();
         this.cookUsername = reaction.getCook().getUsername();
         this.publicationId = reaction.getPublication().getId();
+        this.comment = new CommentDTO(this);
     }
 
     public Reaction toEntity(Cook cook, Publication publication) {
@@ -32,9 +34,9 @@ public class ReactionDTO {
         return Reaction.builder()
                 .id(this.id)
                 .rating(Math.round(this.rating * 4) / 4.0f)
-                .comment(this.comment)
                 .cook(cook)
                 .publication(publication)
+                .comment(this.comment.toEntity())
                 .build();
     }
 

@@ -9,6 +9,7 @@ import quixotic.projects.cookbook.model.enums.Visibility;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data

@@ -14,7 +14,8 @@ import {
     faHourglassHalf,
     faLayerGroup
 } from "@fortawesome/free-solid-svg-icons";
-import ImageCard from "../../components/ImageCard";
+import ImageCard from "../../components/publications/ImageCard";
+import CommentsCard from "../../components/publications/CommentationCard";
 
 interface IRecipeDetailsProps {
     user: IUser;
@@ -154,6 +155,7 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
                     </ol>
                 </div>
             </div>
+            <CommentsCard publication={recipe} />
         </div>
     );
 }

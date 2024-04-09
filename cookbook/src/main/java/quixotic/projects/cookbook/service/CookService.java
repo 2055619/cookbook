@@ -14,10 +14,7 @@ import quixotic.projects.cookbook.exception.badRequestException.WrongUserExcepti
 import quixotic.projects.cookbook.model.*;
 import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.model.summary.UserProfile;
-import quixotic.projects.cookbook.repository.CookRepository;
-import quixotic.projects.cookbook.repository.PublicationRepository;
-import quixotic.projects.cookbook.repository.ReactionRepository;
-import quixotic.projects.cookbook.repository.RecipeRepository;
+import quixotic.projects.cookbook.repository.*;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
 
 import java.util.ArrayList;
@@ -33,6 +30,7 @@ public class CookService {
     private final RecipeRepository recipeRepository;
     private final PublicationRepository publicationRepository;
     private final ReactionRepository reactionRepository;
+    private final CommentRepository commentRepository;
 
 
     //    Recipes
@@ -201,6 +199,7 @@ public class CookService {
                 .map(ReactionDTO::new)
                 .collect(Collectors.toList());
     }
+
     public List<ReactionDTO> getReactionsByPublication(Long pubId) {
         Publication publication = publicationRepository.findById(pubId)
                 .orElseThrow(PublicationNotFoundException::new);
@@ -210,44 +209,7 @@ public class CookService {
                 .collect(Collectors.toList());
     }
 
-//    public ReactionDTO createReaction(ReactionDTO reactionDTO, String token) {
-//        Cook cook = cookRepository.findCookByUsername(jwtTokenProvider.getUsernameFromJWT(token))
-//                .orElseThrow(UserNotFoundException::new);
-//        if (!Objects.equals(cook.getUsername(), reactionDTO.getCookUsername()))
-//            throw new WrongUserException();
-//        Publication publication = publicationRepository.findById(reactionDTO.getPublicationId())
-//                .orElseThrow(PublicationNotFoundException::new);
-//
-//        Reaction reaction = reactionRepository.findByCookAndPublication(cook, publication)
-//                .orElse(reactionDTO.toEntity(cook, publication));
-//
-////        reaction.setRating(Math.round(reactionDTO.getRating() * 4) / 4.0f);
-////        reaction.setComment(reactionDTO.getComment());
-//
-//        return new ReactionDTO(reactionRepository.save(reaction));
-//    }
-
-    public ReactionDTO ratePublication(ReactionDTO reactionDTO, String token) {
-        Cook cook = cookRepository.findCookByUsername(jwtTokenProvider.getUsernameFromJWT(token))
-                .orElseThrow(UserNotFoundException::new);
-        if (!Objects.equals(cook.getUsername(), reactionDTO.getCookUsername())) {
-            throw new WrongUserException();
-        }
-        Publication publication = publicationRepository.findById(reactionDTO.getPublicationId())
-                .orElseThrow(PublicationNotFoundException::new);
-
-
-        Reaction reaction = reactionRepository.findByCookAndPublication(cook, publication)
-                .orElse(Reaction.builder().build());
-
-        reaction.setRating(reactionDTO.getRating());
-        if (reaction.getId() == null) {
-            reaction.setCook(cook);
-            reaction.setPublication(publication);
-        }
-        return new ReactionDTO(reactionRepository.save(reaction));
-    }
-    public ReactionDTO commentPublication(ReactionDTO reactionDTO, String token) {
+    public ReactionDTO createReaction(ReactionDTO reactionDTO, String token) {
         Cook cook = cookRepository.findCookByUsername(jwtTokenProvider.getUsernameFromJWT(token))
                 .orElseThrow(UserNotFoundException::new);
         if (!Objects.equals(cook.getUsername(), reactionDTO.getCookUsername()))
@@ -255,17 +217,45 @@ public class CookService {
         Publication publication = publicationRepository.findById(reactionDTO.getPublicationId())
                 .orElseThrow(PublicationNotFoundException::new);
 
-        Reaction reaction = reactionRepository.findByCookAndPublication(cook, publication)
-                .orElse(Reaction.builder().build());
+        return new ReactionDTO(reactionRepository.save(reactionDTO.toEntity(cook, publication)));
+    }
 
-        reaction.setComment(reactionDTO.getComment());
-        if (reaction.getId() == null) {
-            reaction.setRating(-1);
-            reaction.setCook(cook);
-            reaction.setPublication(publication);
-        }
+    public ReactionDTO ratePublication(ReactionDTO reactionDTO, String token) {
+//        Cook cook = cookRepository.findCookByUsername(jwtTokenProvider.getUsernameFromJWT(token))
+//                .orElseThrow(UserNotFoundException::new);
+//        if (!Objects.equals(cook.getUsername(), reactionDTO.getCookUsername())) {
+//            throw new WrongUserException();
+//        }
+//        Publication publication = publicationRepository.findById(reactionDTO.getPublicationId())
+//                .orElseThrow(PublicationNotFoundException::new);
+//
+//
+//        Reaction reaction = reactionRepository.findByCookAndPublication(cook, publication)
+//                .orElse(Reaction.builder().build());
+//
+//        reaction.setRating(reactionDTO.getRating());
+//        if (reaction.getId() == null) {
+//            reaction.setCook(cook);
+//            reaction.setPublication(publication);
+//        }
+//        return new ReactionDTO(reactionRepository.save(reaction));
 
-        return new ReactionDTO(reactionRepository.save(reaction));
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+
+    public CommentDTO commentPublication(CommentDTO commentDTO, String token) {
+//        Cook cook = cookRepository.findCookByUsername(jwtTokenProvider.getUsernameFromJWT(token))
+//                .orElseThrow(UserNotFoundException::new);
+//        Comment comment = commentDTO.toEntity();
+
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    public List<CommentDTO> getCommentsByPublication(Long pubId) {
+        return reactionRepository.findAllByPublicationId(pubId).stream()
+                .map(reaction -> new CommentDTO(reaction.getComment()))
+                .collect(Collectors.toList());
     }
 
     //    User

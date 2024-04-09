@@ -1,6 +1,6 @@
 
 import React from 'react';
-import noImg from "../assets/image/noImage.jpg";
+import noImg from "../../assets/image/noImage.jpg";
 
 interface ImageCardProps {
     byteArray: number[];

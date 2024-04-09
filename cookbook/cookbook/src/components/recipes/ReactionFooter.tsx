@@ -18,9 +18,14 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(-1);
     const [reaction, setReaction] = useState<IReaction>({
-        id: null,
-        rating: null,
-        comment: null,
+        id: -1,
+        rating: -1,
+        comment: {
+            id: -1,
+            content: "",
+            creationDate: "",
+            reactionId: -1
+        },
         publicationId: publication.id,
         cookUsername: username
     });

@@ -1,6 +1,6 @@
 import {cookServerInstance} from "../App";
 import {IsignIn, IsignUp, IUser, IUserProfile} from "../assets/models/Authentication";
-import {IPublication, IReaction, IRecipe} from "../assets/models/Publication";
+import {IComment, IPublication, IReaction, IRecipe} from "../assets/models/Publication";
 
 export class CookBookService {
 
@@ -185,6 +185,13 @@ export class CookBookService {
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
         return cookServerInstance.post(`/cook/comment`, reaction)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async getCommentsByPublication(publication: IPublication) {
+        return cookServerInstance.get<IComment[]>(`/cook/comments/${publication.id}`)
             .then((response) => {
                 return response.data;
             });

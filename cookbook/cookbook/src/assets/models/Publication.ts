@@ -7,7 +7,6 @@ export interface IPublication {
     creationDate: string;
     visibility: string;
 }
-
 export interface ITrick extends IPublication{
     id: number;
     title: string;
@@ -16,7 +15,6 @@ export interface ITrick extends IPublication{
     creationDate: string;
     visibility: string;
 }
-
 export interface IRecipe extends IPublication{
     id: number;
     title: string;
@@ -47,7 +45,13 @@ export interface IIngredient {
 export interface IReaction {
     id: number | null;
     rating: number | null;
-    comment: string | null;
-    publicationId: number;
+    comment: IComment;
     cookUsername: string;
+    publicationId: number;
+}
+export interface IComment {
+    id: number;
+    content: string;
+    creationDate: string;
+    reactionId: number;
 }

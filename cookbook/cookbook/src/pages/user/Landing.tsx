@@ -6,7 +6,7 @@ import {IPublication, IRecipe} from "../../assets/models/Publication";
 import {toast} from "react-toastify";
 import RecipeCard from "../../components/recipes/RecipeCard";
 import {IUser} from "../../assets/models/Authentication";
-import PublicationCard from "../../components/PublicationCard";
+import PublicationCard from "../../components/publications/PublicationCard";
 import FilterObjectList from "../../components/Utils/FilterObjectList";
 import {IFilters} from "../../assets/models/Form";
 

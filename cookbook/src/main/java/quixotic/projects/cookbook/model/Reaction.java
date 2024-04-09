@@ -2,7 +2,6 @@ package quixotic.projects.cookbook.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Formula;
 
 @Data
 @NoArgsConstructor
@@ -14,7 +13,8 @@ public class Reaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private float rating = -1;
-    private String comment;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Comment comment;
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Cook cook;

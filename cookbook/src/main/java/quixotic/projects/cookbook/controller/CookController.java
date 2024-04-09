@@ -101,33 +101,36 @@ public class CookController {
 
 //    Reaction
     @GetMapping("/reactions/{id}")
-    public ResponseEntity<List<ReactionDTO>> getReactions(@PathVariable("id") Long pubId, @RequestHeader("Authorization") String token){
-//        @RequestBody PublicationDTO publicationDTO
-//        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-//                .body(cookService.getReactionsByPublication(publicationDTO, token));
+    public ResponseEntity<List<ReactionDTO>> getReactions(@PathVariable("id") Long pubId){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.getReactionsByPublication(pubId));
     }
 
-//    @PostMapping("/react")
-//    public ResponseEntity<ReactionDTO> createReaction(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
+    @GetMapping("/comments/{id}")
+    public ResponseEntity<List<CommentDTO>> getComments(@PathVariable("id") Long pubId, @RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getCommentsByPublication(pubId));
+    }
+
+    @PostMapping("/react")
+    public ResponseEntity<ReactionDTO> createReaction(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.createReaction(reactionDTO, token));
+    }
+
+//    @PostMapping("/rate")
+//    public ResponseEntity<ReactionDTO> ratePublication(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
 //        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-//                .body(cookService.createReaction(reactionDTO, token));
+//                .body(cookService.ratePublication(reactionDTO, token));
+//    }
+//
+//    @PostMapping("/comment")
+//    public ResponseEntity<CommentDTO> commentPublication(@RequestBody CommentDTO commentDTO, @RequestHeader("Authorization") String token){
+//        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+//                .body(cookService.commentPublication(commentDTO, token));
 //    }
 
-    @PostMapping("/rate")
-    public ResponseEntity<ReactionDTO> ratePublication(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
-        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.ratePublication(reactionDTO, token));
-    }
-
-    @PostMapping("/comment")
-    public ResponseEntity<ReactionDTO> commentPublication(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
-        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.commentPublication(reactionDTO, token));
-    }
-
-//    User
+    //    User
     @GetMapping("/usr/profile")
     public ResponseEntity<UserProfile> getUserProfile(@PathParam("username") String username){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)

@@ -5,7 +5,7 @@ import RecipeOptions from "./RecipeOptions";
 import {useNavigate} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBowlFood, faGaugeHigh, faHourglass, faLayerGroup} from "@fortawesome/free-solid-svg-icons";
-import ImageCard from "../ImageCard";
+import ImageCard from "../publications/ImageCard";
 
 interface RecipeCardProps {
     recipe: IRecipe;
