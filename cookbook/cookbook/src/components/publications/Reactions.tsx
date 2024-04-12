@@ -5,6 +5,8 @@ import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 import CommentForm from "./CommentForm";
 import ReactionCard from "./ReactionCard";
+import {faStar} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface ReactionProps {
     publication: IPublication;
@@ -14,22 +16,42 @@ interface ReactionProps {
 function Reactions({publication, username}: ReactionProps) {
     const cookbookService = new CookBookService();
     const {t} = useTranslation();
+
     const [reactions, setReactions] = useState<IReaction[]>([]);
+    const [avgRating, setAvgRating] = useState(0);
 
     useEffect(() => {
         cookbookService.getReactionsByPublication(publication)
             .then((response) => {
                 setReactions(response);
+                let sum = 0;
+                response.map((reaction) => {
+                    sum += reaction.rating!;
+                    return reaction;
+                });
+                setAvgRating(sum / response.length);
             })
             .catch((error) => {
                 toast.error(error.response?.data.message);
             });
+
     }, [publication]);
 
     return (
         <div id={"reactions"} className={""}>
-            <h1 className={`text-3xl`}>{t('reactions')}</h1>
+            <div className={"text-3xl"}>
+                <h1 className={``}>{t('reactions')}</h1>
 
+                {[...Array(5)].map((star, index) => {
+                    return (
+                        <FontAwesomeIcon
+                            key={index}
+                            icon={faStar}
+                            className={` ${index < Math.floor(avgRating) ? 'text-cook-light' : 'text-cook'} `}
+                        />
+                    );
+                })}
+            </div>
             {
                 reactions.filter((reaction) => reaction.cookUsername === username).length === 0 &&
                 <CommentForm setReactions={setReactions} reactions={reactions} publication={publication}

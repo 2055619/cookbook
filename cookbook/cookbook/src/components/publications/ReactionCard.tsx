@@ -58,36 +58,7 @@ function ReactionCard({reaction}: IReactionCardProps) {
             </div>
             <div className="mt-1 ms-5 text-left">{reaction.comment?.content}</div>
         </div>
-
-        // <div className="max-w-md mx-auto rounded-xl shadow-md overflow-hidden md:max-w-2xl m-3">
-        //     <div className="md:flex">
-        //         <div className="p-8">
-        //             <div className="tracking-wide text-sm font-semibold">{reaction.cookUsername}</div>
-        //             <p className="mt-2">{reaction.comment!.content}</p>
-        //             <p className="mt-2">{getDateString()}</p>
-        //         </div>
-        //     </div>
-        // </div>
     );
-
-    // return (
-    //     <div className={"text-cook border border-cook"}>
-    //         <h1 className="text-start w-1/12 mb-0 p-1 clickable hover:bg-cook-red hover:rounded-full"
-    //             onClick={handleViewProfile}>{reaction.cookUsername}</h1>
-    //         <div className={"text-2xl text-start"}>
-    //             {[...Array(5)].map((star, index) => {
-    //                 return (
-    //                     <FontAwesomeIcon
-    //                         key={index}
-    //                         icon={faStar}
-    //                         className={` ${index < Math.floor(reaction.rating!) ? 'text-cook-light' : 'text-cook'} `}
-    //                     />
-    //                 );
-    //             })}
-    //         </div>
-    //         <h1>{reaction.comment?.content}</h1>
-    //     </div>
-    // );
 }
 
 export default ReactionCard;
