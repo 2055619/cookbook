@@ -36,7 +36,7 @@ function Reactions({publication, username}: ReactionProps) {
                              username={username}/>
             }
 
-            <div className={"w-1/3 mx-auto"}>
+            <div className={"w-1/2 mx-auto"}>
                 {
                     reactions.map((reaction, index) => (
                         <div key={index}>
