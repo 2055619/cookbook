@@ -4,7 +4,6 @@ import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
 import {IUser} from "../../assets/models/Authentication";
-import noImg from "../../assets/image/noImg.jpg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faArrowLeft,
@@ -15,7 +14,7 @@ import {
     faLayerGroup
 } from "@fortawesome/free-solid-svg-icons";
 import ImageCard from "../../components/publications/ImageCard";
-import CommentsCard from "../../components/publications/CommentationCard";
+import Reactions from "../../components/publications/Reactions";
 
 interface IRecipeDetailsProps {
     user: IUser;
@@ -60,7 +59,7 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
                 });
         } else {
             toast.error(t('noRecipeTitle'));
-            window.history.back();
+            // window.history.back();
         }
     }, []);
 
@@ -155,7 +154,8 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
                     </ol>
                 </div>
             </div>
-            <CommentsCard publication={recipe} />
+
+            <Reactions publication={recipe} username={user === null ? "" : user.username} />
         </div>
     );
 }

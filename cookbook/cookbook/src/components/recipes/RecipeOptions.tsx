@@ -91,7 +91,7 @@ function RecipeOptions({username, publication}: IRecipeOptionsProps) {
     }
 
     return (
-        <div className={"relative text-end pb-0"} onClick={handleOptionClick}>
+        <div className={"relative text-end pb-0"} style={{cursor: "default"}} onClick={handleOptionClick}>
             <div className={"flex justify-between items-center"}>
                 <button className="mb-0 p-1 clickable hover:bg-cook-red hover:rounded-full"
                         onClick={handleViewProfile}>{publication.cookUsername}

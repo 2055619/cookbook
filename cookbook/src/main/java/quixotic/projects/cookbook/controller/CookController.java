@@ -106,18 +106,18 @@ public class CookController {
                 .body(cookService.getReactionsByPublication(pubId));
     }
 
-    @GetMapping("/comments/{id}")
-    public ResponseEntity<List<CommentDTO>> getComments(@PathVariable("id") Long pubId, @RequestHeader("Authorization") String token){
-        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-                .body(cookService.getCommentsByPublication(pubId));
-    }
-
     @PostMapping("/react")
     public ResponseEntity<ReactionDTO> createReaction(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.createReaction(reactionDTO, token));
     }
 
+//    @GetMapping("/comments/{id}")
+//    public ResponseEntity<List<CommentDTO>> getComments(@PathVariable("id") Long pubId, @RequestHeader("Authorization") String token){
+//        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+//                .body(cookService.getCommentsByPublication(pubId));
+//    }
+//
 //    @PostMapping("/rate")
 //    public ResponseEntity<ReactionDTO> ratePublication(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
 //        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)

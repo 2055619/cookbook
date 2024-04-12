@@ -15,6 +15,7 @@ public class Reaction {
     private float rating = -1;
     @OneToOne(cascade = CascadeType.PERSIST)
     private Comment comment;
+
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private Cook cook;

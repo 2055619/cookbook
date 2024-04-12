@@ -45,13 +45,12 @@ export interface IIngredient {
 export interface IReaction {
     id: number | null;
     rating: number | null;
-    comment: IComment;
+    comment: IComment | null;
     cookUsername: string;
     publicationId: number;
 }
 export interface IComment {
-    id: number;
+    id: number | null;
     content: string;
     creationDate: string;
-    reactionId: number;
 }

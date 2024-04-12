@@ -30,7 +30,7 @@ function RecipeCard({recipe, username}: RecipeCardProps) {
     }
 
     return (
-        <div className={""} onClick={handleViewDetails}>
+        <div className={"clickable"} onClick={handleViewDetails}>
             <RecipeOptions username={username!} publication={recipe}/>
             <h1 className="text-3xl font-semibold mt-0 pt-0 clickable">{recipe.title}</h1>
             <p className="text-2xl">{recipe.description}</p>

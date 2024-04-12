@@ -1,7 +1,7 @@
 import {IPublication, IRecipe} from "../../assets/models/Publication";
 import RecipeCard from "../recipes/RecipeCard";
 import TrickCard from "../TricksCard";
-import ReactionFooter from "../recipes/ReactionFooter";
+import ReactionFooter from "./ReactionFooter";
 import React from "react";
 
 interface IPublicationCardProps {
@@ -28,9 +28,7 @@ function PublicationCard({publication, username}: IPublicationCardProps) {
                     ) : isTrick(publication) ? (
                         TrickCard({trick: publication, username: username})
                     ) : (
-                        <>
-                            <h1>Publication Not Supported</h1>
-                        </>
+                        <h1>Publication Not Supported</h1>
                     )
                 }
 

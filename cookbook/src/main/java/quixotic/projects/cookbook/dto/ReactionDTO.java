@@ -26,7 +26,7 @@ public class ReactionDTO {
         this.rating = reaction.getRating();
         this.cookUsername = reaction.getCook().getUsername();
         this.publicationId = reaction.getPublication().getId();
-        this.comment = new CommentDTO(this);
+        this.comment = new CommentDTO(reaction.getComment());
     }
 
     public Reaction toEntity(Cook cook, Publication publication) {

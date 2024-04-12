@@ -13,4 +13,5 @@ public interface ReactionRepository extends JpaRepository<Reaction, Long> {
     Optional<Reaction> findByCookAndPublication(Cook cook, Publication publication);
 
     List<Reaction> findAllByPublication(Publication publication);
+    List<Reaction> findAllByPublicationId(Long publicationId);
 }

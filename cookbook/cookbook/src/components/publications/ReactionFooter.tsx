@@ -3,8 +3,9 @@ import {faComment, faShareSquare, faStar} from '@fortawesome/free-solid-svg-icon
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
-import {IPublication, IReaction} from "../../assets/models/Publication";
+import {IPublication} from "../../assets/models/Publication";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 interface IReactionFooterProps {
     publication: IPublication;
@@ -13,71 +14,44 @@ interface IReactionFooterProps {
 
 function ReactionFooter({publication, username}: IReactionFooterProps) {
     const {t} = useTranslation();
+    const navigate = useNavigate();
     const cookbookService = new CookBookService();
 
-    const [rating, setRating] = useState(0);
-    const [hover, setHover] = useState(-1);
-    const [reaction, setReaction] = useState<IReaction>({
-        id: -1,
-        rating: -1,
-        comment: {
-            id: -1,
-            content: "",
-            creationDate: "",
-            reactionId: -1
-        },
-        publicationId: publication.id,
-        cookUsername: username
-    });
+    const [avgRating, setAvgRating] = useState(0);
 
     useEffect(() => {
         cookbookService.getReactionsByPublication(publication)
             .then((response) => {
+                let sum = 0;
                 response.map((reaction) => {
-                    if (reaction.cookUsername === username) {
-                        setReaction(reaction);
-                        setRating(reaction.rating!);
-                    }
+                    sum += reaction.rating!;
                     return reaction;
                 });
+                setAvgRating(sum / response.length);
+
             })
             .catch((error) => {
                 toast.error(t(error.response?.data.message));
             });
     }, []);
 
-    function handleClick(index: number) {
-        setRating(index + 1);
-        const react = {...reaction, rating: index + 1};
-
-        cookbookService.ratePublication(react)
-            .then((response) => {
-                setReaction(response);
-            })
-            .catch((error) => {
-                toast.error(t(error.response?.data.message));
-            });
-    }
 
     return (
         <div className={"flex justify-between"}>
-            <div className={"flex clickable text-3xl"}>
+            <div className={"flex text-3xl"}>
                 {[...Array(5)].map((star, index) => {
                     return (
                         <FontAwesomeIcon
                             key={index}
                             icon={faStar}
-                            className={`hover:text-cook-light ${index <= hover || index < rating ? 'text-cook-light' : 'text-cook'}`}
-                            onClick={() => handleClick(index)}
-                            onMouseEnter={() => setHover(index)}
-                            onMouseLeave={() => setHover(-1)}
+                            className={` ${index < Math.floor(avgRating) ? 'text-cook-light' : 'text-cook'} `}
                         />
                     );
                 })}
             </div>
 
-            <button className={"mx-2 text-2xl"}>
-                <FontAwesomeIcon className={""} icon={faComment} onClick={() => console.log("comment")}/>
+            <button className={"mx-2 text-2xl"} onClick={() => navigate(`/u/recipeDetail?title=${publication.title}`)}>
+                <FontAwesomeIcon className={""} icon={faComment} />
                 <span className={"mx-1 hidden md:inline"}>{t('comment')}</span>
             </button>
             <button className={"mx-2 text-2xl"}>

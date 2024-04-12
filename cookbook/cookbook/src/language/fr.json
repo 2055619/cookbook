@@ -50,6 +50,9 @@
   "trick": "Astuce",
   "filter": "Filtre",
   "creationDate": "Date de création",
+  "recipeCreation": "recette créée avec succès",
+  "reactions": "Réactions",
+  "rate&comment": "Noter et commenter",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"
@@ -115,9 +118,11 @@
     "instruction": "Inscrivez l'instruction",
     "favorite": "Ajouter aux Favoris",
     "apply": "Appliquer",
-    "report": "Signaler"
+    "report": "Signaler",
+    "react": "Réagir"
   },
   "message": {
+    "noRatingOrComment": "Il n'y a pas de note ou de commentaire pour le moment",
     "profileUpdateSuccess": "Votre profil a été mis à jour avec succès",
     "titleLength": "Le titre doit être composé d'au moins 3 caractères",
     "descriptionLength": "La description doit être composée d'au moins 10 caractères",
