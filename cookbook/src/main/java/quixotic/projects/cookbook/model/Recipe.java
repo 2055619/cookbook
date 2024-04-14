@@ -34,7 +34,7 @@ public class Recipe extends Publication {
 
     @Builder
     public Recipe(String title, String description, Visibility visibility, Cook cook, Set<String> instructions, Set<Ingredient> ingredients, RecipeType category, DifficultyLevel difficulty, int serving, PortionSize portionSize, List<DietType> dietTypes, float prepTime, float cookTime, byte[] image) {
-        super(title, description, visibility, cook);
+        super(title, description, visibility, cook, PublicationType.RECIPE);
         this.instructions = instructions;
         this.ingredients = ingredients;
         this.category = category;

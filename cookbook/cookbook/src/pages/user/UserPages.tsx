@@ -13,6 +13,7 @@ import UserProfile from "./UserProfile";
 import ConcoctRecipe from "./ConcoctRecipe";
 import ProfileModification from "./ProfileModification";
 import {IFilters} from "../../assets/models/Form";
+import ReactionsPage from "./ReactionsPage";
 
 interface IUserPage {
     user: IUser | null;
@@ -56,6 +57,7 @@ function UserPages({user, setUser, filters}: IUserPage) {
                 <Route path="recipesModification" element={<RecipeModification user={user!}/>}/>
                 <Route path="profile" element={<UserProfile user={user!}/>}/>
                 <Route path="profileModify" element={<ProfileModification user={user!} setUser={setUser}/>}/>
+                <Route path="reactions" element={<ReactionsPage user={user}/>}/>
                 <Route path="*" element={<PageNotFound/>}/>
             </Routes>
         </div>

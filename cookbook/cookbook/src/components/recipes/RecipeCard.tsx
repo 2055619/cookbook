@@ -16,7 +16,7 @@ function RecipeCard({recipe, username}: RecipeCardProps) {
     const {t} = useTranslation();
     const navigate = useNavigate()
 
-    const recipeEstimatedTimeInHours = () => {
+    function recipeEstimatedTimeInHours() {
         const time = recipe.prepTime + recipe.cookTime;
         if (time > 60) {
             return Math.floor(time / 60) + " " + t('hours') + " " + time % 60 + " " + t('minutes');
@@ -42,12 +42,14 @@ function RecipeCard({recipe, username}: RecipeCardProps) {
                 <p><FontAwesomeIcon icon={faHourglass}/> <span>{recipeEstimatedTimeInHours()}</span></p>
             </div>
 
-            <div className={`grid grid-cols-${Math.min(recipe.dietTypes.length, 5)} gap-1 mt-1`}>
-                {recipe.dietTypes.map((dietType, index) => (
-                    <p key={index} className="">{t(dietType)}</p>
-                ))}
-            </div>
-
+            {
+                recipe.dietTypes !== undefined &&
+                <div className={`grid grid-cols-${Math.min(recipe.dietTypes.length, 5)} gap-1 mt-1`}>
+                    {recipe.dietTypes.map((dietType, index) => (
+                        <p key={index} className="">{t(dietType)}</p>
+                    ))}
+                </div>
+            }
             <ImageCard byteArray={recipe.image!} alt={recipe.title + " Image"}/>
         </div>
     );

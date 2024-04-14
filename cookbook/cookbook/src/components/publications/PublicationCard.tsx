@@ -12,11 +12,15 @@ interface IPublicationCardProps {
 function PublicationCard({publication, username}: IPublicationCardProps) {
 
     function isRecipe(publication: IPublication): publication is IRecipe {
-        return (publication as IRecipe).instructions !== undefined;
+        if (publication.publicationType === "RECIPE" && (publication as IRecipe).instructions === undefined) {
+            console.log("Recipe: ", publication.title, (publication as IRecipe).dietTypes);
+
+        }
+        return publication.publicationType === "RECIPE";
     }
 
     function isTrick(publication: IPublication): publication is IRecipe {
-        return (publication as IRecipe).instructions === undefined;
+        return publication.publicationType === "TRICK";
     }
 
     return (
@@ -24,9 +28,9 @@ function PublicationCard({publication, username}: IPublicationCardProps) {
             <div className="border rounded-lg px-4 my-2 lg:w-3/5 w-full flex flex-col h-full justify-between">
                 {
                     isRecipe(publication) ? (
-                        RecipeCard({recipe: publication, username: username})
+                        <RecipeCard recipe={publication} username={username} />
                     ) : isTrick(publication) ? (
-                        TrickCard({trick: publication, username: username})
+                        <TrickCard trick={publication} username={username} />
                     ) : (
                         <h1>Publication Not Supported</h1>
                     )

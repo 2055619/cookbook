@@ -20,6 +20,7 @@ import quixotic.projects.cookbook.security.JwtTokenProvider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -185,21 +186,36 @@ public class CookService {
 
         Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
         Pageable pageable = PageRequest.of(page, size);
-        Page<Publication> pubPage = publicationRepository.findAll(pageable);
+        Page<Publication> pubPage = publicationRepository.findAll(pageable)
+                .map(publication -> switch (publication.getPublicationType()) {
+                            case RECIPE -> {
+                                System.out.println("RECIPE: " + (publication instanceof Recipe));
+                                if (publication instanceof Recipe) {
+                                    Recipe recipe = recipeRepository.findByTitle(publication.getTitle())
+                                            .orElseThrow(RecipeNotFoundException::new);
+                                    publication = recipe;
+                                    yield recipe;
+                                }
+                                yield publication;
+                            }
+                            case TRICK -> publication;
+                            case OTHER -> publication;
+                        }
+                );
 
         return filterPublicationsByVisibility(pubPage.getContent(), user);
     }
 
-    //    Reaction
-    public List<ReactionDTO> getReactionsByPublication(PublicationDTO publicationDTO, String token) {
-        Publication publication = publicationRepository.findById(publicationDTO.getId())
-                .orElseThrow(PublicationNotFoundException::new);
+    public PublicationDTO getPublicationByTitle(String title, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
 
-        return reactionRepository.findAllByPublication(publication).stream()
-                .map(ReactionDTO::new)
-                .collect(Collectors.toList());
+        return filterPublicationsByVisibility(new ArrayList<>(List.of(publicationRepository.findByTitle(title)
+                        .orElseThrow(PublicationNotFoundException::new))),
+                user).stream().findFirst().orElseThrow(PublicationNotFoundException::new);
     }
 
+    //    Reaction
     public List<ReactionDTO> getReactionsByPublication(Long pubId) {
         Publication publication = publicationRepository.findById(pubId)
                 .orElseThrow(PublicationNotFoundException::new);
@@ -218,44 +234,6 @@ public class CookService {
                 .orElseThrow(PublicationNotFoundException::new);
 
         return new ReactionDTO(reactionRepository.save(reactionDTO.toEntity(cook, publication)));
-    }
-
-    public ReactionDTO ratePublication(ReactionDTO reactionDTO, String token) {
-//        Cook cook = cookRepository.findCookByUsername(jwtTokenProvider.getUsernameFromJWT(token))
-//                .orElseThrow(UserNotFoundException::new);
-//        if (!Objects.equals(cook.getUsername(), reactionDTO.getCookUsername())) {
-//            throw new WrongUserException();
-//        }
-//        Publication publication = publicationRepository.findById(reactionDTO.getPublicationId())
-//                .orElseThrow(PublicationNotFoundException::new);
-//
-//
-//        Reaction reaction = reactionRepository.findByCookAndPublication(cook, publication)
-//                .orElse(Reaction.builder().build());
-//
-//        reaction.setRating(reactionDTO.getRating());
-//        if (reaction.getId() == null) {
-//            reaction.setCook(cook);
-//            reaction.setPublication(publication);
-//        }
-//        return new ReactionDTO(reactionRepository.save(reaction));
-
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-
-    public CommentDTO commentPublication(CommentDTO commentDTO, String token) {
-//        Cook cook = cookRepository.findCookByUsername(jwtTokenProvider.getUsernameFromJWT(token))
-//                .orElseThrow(UserNotFoundException::new);
-//        Comment comment = commentDTO.toEntity();
-
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    public List<CommentDTO> getCommentsByPublication(Long pubId) {
-        return reactionRepository.findAllByPublicationId(pubId).stream()
-                .map(reaction -> new CommentDTO(reaction.getComment()))
-                .collect(Collectors.toList());
     }
 
     //    User
@@ -279,6 +257,31 @@ public class CookService {
         return new CookDTO(cookRepository.save(cook));
     }
 
+    private List<PublicationDTO> filterPublicationsByVisibility(List<Publication> publications, Cook user) {
+        return publications.stream()
+                .filter(recipe -> switch (recipe.getVisibility()) {
+                    case PUBLIC -> true;
+                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
+                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
+                    case SECRET -> user.equals(recipe.getCook());
+                })
+                .map((publication -> switch (publication.getPublicationType()) {
+                    case RECIPE -> {
+                        if (publication instanceof Recipe) {
+                            yield new RecipeDTO((Recipe) publication);
+                        }
+                        yield new PublicationDTO(publication);
+                    }
+                    case TRICK -> {
+                        if (publication instanceof Trick) {
+                            yield new TrickDTO((Trick) publication);
+                        }
+                        yield new PublicationDTO(publication);
+                    }
+                    case OTHER -> new PublicationDTO(publication);
+                })).collect(Collectors.toList());
+    }
+
     private List<RecipeDTO> filterRecipesByVisibility(List<Recipe> recipes, Cook user) {
         return recipes.stream()
                 .filter(recipe -> switch (recipe.getVisibility()) {
@@ -291,42 +294,4 @@ public class CookService {
                 .collect(Collectors.toList());
     }
 
-    private List<PublicationDTO> filterPublicationsByVisibility(List<Publication> publications, Cook user) {
-        return publications.stream()
-                .filter(recipe -> switch (recipe.getVisibility()) {
-                    case PUBLIC -> true;
-                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
-                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
-                    case SECRET -> user.equals(recipe.getCook());
-                })
-                .map((publication -> {
-                            if (publication instanceof Recipe)
-                                return new RecipeDTO((Recipe) publication);
-                            return new PublicationDTO(publication);
-                        })
-                ).collect(Collectors.toList());
-    }
-
-//    private List<RecipeDTO> filterPublicationsByVisibility(List<Recipe> publications, Cook user) {
-//        return publications.stream()
-//                .filter(recipe -> switch (recipe.getVisibility()) {
-//                    case PUBLIC -> true;
-//                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
-//                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
-//                    case SECRET -> user.equals(recipe.getCook());
-//                })
-//                .map(RecipeDTO::new)
-//                .collect(Collectors.toList());
-//    }
-//    private List<TrickDTO> filterPublicationsByVisibility(List<Trick> publications, Cook user) {
-//        return publications.stream()
-//                .filter(recipe -> switch (recipe.getVisibility()) {
-//                    case PUBLIC -> true;
-//                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
-//                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
-//                    case SECRET -> user.equals(recipe.getCook());
-//                })
-//                .map(TrickDTO::new)
-//                .collect(Collectors.toList());
-//    }
 }

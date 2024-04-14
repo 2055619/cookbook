@@ -3,7 +3,7 @@ import {faComment, faShareSquare, faStar} from '@fortawesome/free-solid-svg-icon
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
-import {IPublication} from "../../assets/models/Publication";
+import {IPublication, IRecipe} from "../../assets/models/Publication";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
 
@@ -35,6 +35,13 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
             });
     }, []);
 
+    function isRecipe(publication: IPublication): publication is IRecipe {
+        return (publication as IRecipe).instructions !== undefined;
+    }
+
+    function isTrick(publication: IPublication): publication is IRecipe {
+        return (publication as IRecipe).instructions === undefined;
+    }
 
     return (
         <div className={"flex justify-between"}>
@@ -50,7 +57,7 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
                 })}
             </div>
 
-            <button className={"mx-2 text-2xl"} onClick={() => navigate(`/u/recipeDetail?title=${publication.title}`)}>
+            <button className={"mx-2 text-2xl"} onClick={() => navigate(`/u/reactions?title=${publication.title}`)}>
                 <FontAwesomeIcon className={""} icon={faComment} />
                 <span className={"mx-1 hidden md:inline"}>{t('comment')}</span>
             </button>

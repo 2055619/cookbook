@@ -92,6 +92,12 @@ public class CookController {
                 .body(cookService.getPublicationsByPage(page, size, token));
     }
 
+    @GetMapping("/publication/{title}")
+    public ResponseEntity<PublicationDTO> getPublicationByTitle(@PathVariable String title, @RequestHeader("Authorization") String token){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getPublicationByTitle(title, token));
+    }
+
 //    Tricks
     @PostMapping("/trick")
     public ResponseEntity<PublicationDTO> createTrick(@RequestBody TrickDTO trickDTO){
@@ -111,24 +117,6 @@ public class CookController {
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.createReaction(reactionDTO, token));
     }
-
-//    @GetMapping("/comments/{id}")
-//    public ResponseEntity<List<CommentDTO>> getComments(@PathVariable("id") Long pubId, @RequestHeader("Authorization") String token){
-//        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-//                .body(cookService.getCommentsByPublication(pubId));
-//    }
-//
-//    @PostMapping("/rate")
-//    public ResponseEntity<ReactionDTO> ratePublication(@RequestBody ReactionDTO reactionDTO, @RequestHeader("Authorization") String token){
-//        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-//                .body(cookService.ratePublication(reactionDTO, token));
-//    }
-//
-//    @PostMapping("/comment")
-//    public ResponseEntity<CommentDTO> commentPublication(@RequestBody CommentDTO commentDTO, @RequestHeader("Authorization") String token){
-//        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
-//                .body(cookService.commentPublication(commentDTO, token));
-//    }
 
     //    User
     @GetMapping("/usr/profile")

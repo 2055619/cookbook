@@ -182,30 +182,13 @@ export class CookBookService {
             });
     }
 
-    // async ratePublication(reaction: IReaction) {
-    //     if (!cookServerInstance.defaults.headers.common[`Authorization`])
-    //         return Promise.reject({response: {data: {message: "NoToken"}}});
-    //
-    //     return cookServerInstance.post(`/cook/rate`, reaction)
-    //         .then((response) => {
-    //             return response.data;
-    //         });
-    // }
-    //
-    // async commentPublication(reaction: IReaction) {
-    //     if (!cookServerInstance.defaults.headers.common[`Authorization`])
-    //         return Promise.reject({response: {data: {message: "NoToken"}}});
-    //
-    //     return cookServerInstance.post(`/cook/comment`, reaction)
-    //         .then((response) => {
-    //             return response.data;
-    //         });
-    // }
-    //
-    // async getCommentsByPublication(publication: IPublication) {
-    //     return cookServerInstance.get<IComment[]>(`/cook/comments/${publication.id}`)
-    //         .then((response) => {
-    //             return response.data;
-    //         });
-    // }
+    async getPublication(title: string) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.get<IPublication>(`/cook/publication/${title}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
 }

@@ -5,11 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import quixotic.projects.cookbook.model.enums.PublicationType;
 import quixotic.projects.cookbook.model.enums.Visibility;
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -31,19 +31,22 @@ public abstract class Publication {
     @Enumerated(EnumType.STRING)
     private Visibility visibility;
     private float averageRating = 0;
-    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL)
+    @Enumerated(EnumType.STRING)
+    private PublicationType publicationType = PublicationType.OTHER;
+    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Reaction> reactions = new HashSet<>();
 
-    public Publication(String title, String description, Visibility visibility, Cook cook) {
+    public Publication(String title, String description, Visibility visibility, Cook cook, PublicationType publicationType) {
         this.title = title;
         this.description = description;
         this.visibility = visibility;
         this.cook = cook;
+        this.publicationType = publicationType;
     }
 
     public void addReaction(Reaction reaction) {
         reactions.add(reaction);
-        recalculateAverageRating();
+//        recalculateAverageRating();
     }
 
     public void removeReaction(Reaction reaction) {

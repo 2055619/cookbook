@@ -87,6 +87,125 @@ public class CookbookApplication implements CommandLineRunner {
 
     private void createRecipes() {
         cookService.createRecipe(RecipeDTO.builder()
+                .title("Foie Gras")
+                .description("C'est le foie gras de ma maraine, donc la meilleure recette de foie gras")
+                .cookUsername("TheCook")
+                .visibility(Visibility.PUBLIC)
+                .instructions(Set.of("Mettre le foie gras en puré à l'aide d'un couteau pour séparer les nerfs",
+                        "Mettre le foie gras dans un plat. Le mieux est de faire en sorte que le foie gras soit bombé au centre",
+                        "Ajouter du sel et du poivre et le porto sur le dessus et laisser mariner 24h",
+                        "Rincer à l'eau froide pour retirer l'exès de sel",
+                        "Mettre le foie gras dans un petit plat de céramique avec un couvercle. Placer le foie gras de manière à ce qu'il soit le plus compacter possible, donc bien tasser les coins et le fond",
+                        "Créer une pate de sel pour bien celler le plat. La pate de sel ce fait avec la farine de l'eau et du sel",
+                        "Dans un bain marie, mettre le plat de foie gras et cuire à 400°F pendant 10 à 15 minutes. Bien important de ne pas dépasser 20 minutes au four",
+                        "Retirer grossièrement l'exès de gras avec une cuillère sans toucher au foie gras",
+                        "Mettre un poid sur le dessus du foie gras pour bien le compacter et le laisser refroidir. Recommandation: Utiliser une petite cane",
+                        "Une fois refroidi, retirer le poid et ajouter le gras excédentaire sur le dessus du foie gras",
+                        "Mettre au frigo jusqu'au jour de la dégustation"
+                ))
+                .ingredients(Set.of(
+                        IngredientDTO.builder()
+                                .name("Foie Gras")
+                                .quantity(1).ingredientState(IngredientState.COUNTABLE)
+                                .unit(Unit.NUMBER)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Porto")
+                                .quantity(2).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.TEASPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Farine")
+                                .quantity(6).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.TABLESPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Eau")
+                                .quantity(4).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.TABLESPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Sel")
+                                .quantity(3).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.TABLESPOON)
+                                .build()
+                ))
+                .category(RecipeType.ENTREE)
+                .serving(4)
+                .prepTime(150)
+                .cookTime(10)
+                .difficulty(DifficultyLevel.MEDIUM)
+                .portionSize(PortionSize.MEDIUM)
+                .dietTypes(List.of(DietType.CARNIVORE, DietType.OTHER))
+//                .image()
+                .build());
+
+        cookService.createRecipe(RecipeDTO.builder()
+                .title("Saumure pour saumon")
+                .description("La meilleure recette de saumure qui existe")
+                .cookUsername("TheCook")
+                .visibility(Visibility.PUBLIC)
+                .instructions(Set.of("Mélanger tous les ingrédients ensemble",
+                        "Mettre le une couche d'environ 1 pouce de la saumure dans le fond d'un plat avec un couvercle",
+                        "Mettre le saumon avec le muscle vers le bas, donc la peau vers le haut",
+                        "Mettre le reste de la saumure sur le dessus du saumon",
+                        "Fermer le couvercle et mettre au frigo pour 24h",
+                        "Retirer le saumon de la saumure et essuyer avec du papier brun ou rincer à l'eau froide. À ce point, vous pouvez manger le saumon ou le fumer pour ajouter de la saveur",
+                        "Pour fumer: Faire un feu avec des copeaux de bois de pommier ou d'érable. Lorsque le feu est bien établi, mettre le saumon sur la grille et fumer pendant 1h30 à 2h"
+                ))
+                .ingredients(Set.of(
+                        IngredientDTO.builder()
+                                .name("Filet de saumon")
+                                .quantity(1000).ingredientState(IngredientState.SOLID)
+                                .unit(Unit.GRAM)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Gros Sel")
+                                .quantity(3).ingredientState(IngredientState.SOLID)
+                                .unit(Unit.KILOGRAM)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Cassonage")
+                                .quantity(6).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.KILOGRAM)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Fines herbes au citron")
+                                .quantity(1.5f).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.CUP)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Aneth séchées")
+                                .quantity(1).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.CUP)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Poivre noir en grain moulu grossièrement")
+                                .quantity(5).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.TABLESPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Fenouille en grain moulu grossièrement")
+                                .quantity(2).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.TABLESPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Baie de genièvre en grain moulu grossièrement")
+                                .quantity(2).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.TABLESPOON)
+                                .build()
+                ))
+                .category(RecipeType.APPETIZER)
+                .serving(4)
+                .prepTime(20)
+                .cookTime(0)
+                .difficulty(DifficultyLevel.MEDIUM)
+                .portionSize(PortionSize.LARGE)
+                .dietTypes(List.of(DietType.CARNIVORE, DietType.OTHER))
+//                .image()
+                .build());
+
+        cookService.createRecipe(RecipeDTO.builder()
                 .title("Pancakes")
                 .description("The best pancakes you'll ever eat")
                 .cookUsername("TheChef")
@@ -116,110 +235,110 @@ public class CookbookApplication implements CommandLineRunner {
                 .difficulty(DifficultyLevel.EASY)
                 .portionSize(PortionSize.SMALL)
                 .dietTypes(List.of(DietType.CARNIVORE))
-//                .image()
-                .build());
-
-        cookService.createRecipe(RecipeDTO.builder()
-                .title("Pasta")
-                .description("The best Pasta you'll ever eat")
-                .cookUsername("testCook")
-                .visibility(Visibility.SECRET)
-                .instructions(Set.of("Mix the ingredients", "Cook the pancakes"))
-                .ingredients(Set.of(
-                        IngredientDTO.builder()
-                                .name("Farine")
-                                .quantity(2).ingredientState(IngredientState.LIQUID)
-                                .unit(Unit.CUP)
-                                .build(),
-                        IngredientDTO.builder()
-                                .name("Oeuf")
-                                .quantity(2).ingredientState(IngredientState.COUNTABLE)
-                                .unit(Unit.NUMBER)
-                                .build(),
-                        IngredientDTO.builder()
-                                .name("Milk")
-                                .quantity(1).ingredientState(IngredientState.LIQUID)
-                                .unit(Unit.CUP)
-                                .build()
-                ))
-                .category(RecipeType.BREAKFAST)
-                .serving(4)
-                .prepTime(10)
-                .cookTime(10)
-                .difficulty(DifficultyLevel.EASY)
-                .portionSize(PortionSize.SMALL)
-                .dietTypes(List.of(DietType.CARNIVORE))
-                .build());
-
-        cookService.createRecipe(RecipeDTO.builder()
-                .title("Chicken Alfredo")
-                .description("Creamy and delicious chicken alfredo")
-                .cookUsername("TheChef")
-                .visibility(Visibility.PUBLIC)
-                .instructions(Set.of("Boil the pasta", "Cook the chicken", "Mix with Alfredo sauce"))
-                .ingredients(Set.of(
-                        IngredientDTO.builder()
-                                .name("Pasta")
-                                .quantity(200).ingredientState(IngredientState.SOLID)
-                                .unit(Unit.GRAM)
-                                .build(),
-                        IngredientDTO.builder()
-                                .name("Chicken")
-                                .quantity(200).ingredientState(IngredientState.SOLID)
-                                .unit(Unit.GRAM)
-                                .build(),
-                        IngredientDTO.builder()
-                                .name("Alfredo Sauce")
-                                .quantity(100).ingredientState(IngredientState.LIQUID)
-                                .unit(Unit.MILLILITER)
-                                .build()
-                ))
-                .category(RecipeType.MAIN)
-                .serving(2)
-                .prepTime(15)
-                .cookTime(15)
-                .difficulty(DifficultyLevel.MEDIUM)
-                .portionSize(PortionSize.MEDIUM)
-                .dietTypes(List.of(DietType.CARNIVORE))
                 .image(getImage())
                 .build());
 
-        cookService.createRecipe(RecipeDTO.builder()
-                .title("Vegan Salad")
-                .description("Healthy and fresh vegan salad")
-                .cookUsername("TheCook")
-                .visibility(Visibility.PUBLIC)
-                .instructions(Set.of("Chop the vegetables", "Mix with dressing"))
-                .ingredients(Set.of(
-                        IngredientDTO.builder()
-                                .name("Lettuce")
-                                .quantity(100).ingredientState(IngredientState.SOLID)
-                                .unit(Unit.GRAM)
-                                .build(),
-                        IngredientDTO.builder()
-                                .name("Tomato")
-                                .quantity(1).ingredientState(IngredientState.COUNTABLE)
-                                .unit(Unit.NUMBER)
-                                .build(),
-                        IngredientDTO.builder()
-                                .name("Cucumber")
-                                .quantity(1).ingredientState(IngredientState.COUNTABLE)
-                                .unit(Unit.NUMBER)
-                                .build(),
-                        IngredientDTO.builder()
-                                .name("Vegan Dressing")
-                                .quantity(50).ingredientState(IngredientState.LIQUID)
-                                .unit(Unit.MILLILITER)
-                                .build()
-                ))
-                .category(RecipeType.SALAD)
-                .serving(1)
-                .prepTime(10)
-                .cookTime(0)
-                .difficulty(DifficultyLevel.EASY)
-                .portionSize(PortionSize.SMALL)
-                .dietTypes(List.of(DietType.VEGAN))
-                .build());
+//        cookService.createRecipe(RecipeDTO.builder()
+//                .title("Pasta")
+//                .description("The best Pasta you'll ever eat")
+//                .cookUsername("testCook")
+//                .visibility(Visibility.SECRET)
+//                .instructions(Set.of("Mix the ingredients", "Cook the pancakes"))
+//                .ingredients(Set.of(
+//                        IngredientDTO.builder()
+//                                .name("Farine")
+//                                .quantity(2).ingredientState(IngredientState.LIQUID)
+//                                .unit(Unit.CUP)
+//                                .build(),
+//                        IngredientDTO.builder()
+//                                .name("Oeuf")
+//                                .quantity(2).ingredientState(IngredientState.COUNTABLE)
+//                                .unit(Unit.NUMBER)
+//                                .build(),
+//                        IngredientDTO.builder()
+//                                .name("Milk")
+//                                .quantity(1).ingredientState(IngredientState.LIQUID)
+//                                .unit(Unit.CUP)
+//                                .build()
+//                ))
+//                .category(RecipeType.BREAKFAST)
+//                .serving(4)
+//                .prepTime(10)
+//                .cookTime(10)
+//                .difficulty(DifficultyLevel.EASY)
+//                .portionSize(PortionSize.SMALL)
+//                .dietTypes(List.of(DietType.CARNIVORE))
+//                .build());
+//
+//        cookService.createRecipe(RecipeDTO.builder()
+//                .title("Chicken Alfredo")
+//                .description("Creamy and delicious chicken alfredo")
+//                .cookUsername("TheChef")
+//                .visibility(Visibility.PUBLIC)
+//                .instructions(Set.of("Boil the pasta", "Cook the chicken", "Mix with Alfredo sauce"))
+//                .ingredients(Set.of(
+//                        IngredientDTO.builder()
+//                                .name("Pasta")
+//                                .quantity(200).ingredientState(IngredientState.SOLID)
+//                                .unit(Unit.GRAM)
+//                                .build(),
+//                        IngredientDTO.builder()
+//                                .name("Chicken")
+//                                .quantity(200).ingredientState(IngredientState.SOLID)
+//                                .unit(Unit.GRAM)
+//                                .build(),
+//                        IngredientDTO.builder()
+//                                .name("Alfredo Sauce")
+//                                .quantity(100).ingredientState(IngredientState.LIQUID)
+//                                .unit(Unit.MILLILITER)
+//                                .build()
+//                ))
+//                .category(RecipeType.MAIN)
+//                .serving(2)
+//                .prepTime(15)
+//                .cookTime(15)
+//                .difficulty(DifficultyLevel.MEDIUM)
+//                .portionSize(PortionSize.MEDIUM)
+//                .dietTypes(List.of(DietType.CARNIVORE))
+//                .image(getImage())
+//                .build());
+//
+//        cookService.createRecipe(RecipeDTO.builder()
+//                .title("Vegan Salad")
+//                .description("Healthy and fresh vegan salad")
+//                .cookUsername("TheCook")
+//                .visibility(Visibility.PUBLIC)
+//                .instructions(Set.of("Chop the vegetables", "Mix with dressing"))
+//                .ingredients(Set.of(
+//                        IngredientDTO.builder()
+//                                .name("Lettuce")
+//                                .quantity(100).ingredientState(IngredientState.SOLID)
+//                                .unit(Unit.GRAM)
+//                                .build(),
+//                        IngredientDTO.builder()
+//                                .name("Tomato")
+//                                .quantity(1).ingredientState(IngredientState.COUNTABLE)
+//                                .unit(Unit.NUMBER)
+//                                .build(),
+//                        IngredientDTO.builder()
+//                                .name("Cucumber")
+//                                .quantity(1).ingredientState(IngredientState.COUNTABLE)
+//                                .unit(Unit.NUMBER)
+//                                .build(),
+//                        IngredientDTO.builder()
+//                                .name("Vegan Dressing")
+//                                .quantity(50).ingredientState(IngredientState.LIQUID)
+//                                .unit(Unit.MILLILITER)
+//                                .build()
+//                ))
+//                .category(RecipeType.SALAD)
+//                .serving(1)
+//                .prepTime(10)
+//                .cookTime(0)
+//                .difficulty(DifficultyLevel.EASY)
+//                .portionSize(PortionSize.SMALL)
+//                .dietTypes(List.of(DietType.VEGAN))
+//                .build());
     }
 
     private byte[] getImage() {

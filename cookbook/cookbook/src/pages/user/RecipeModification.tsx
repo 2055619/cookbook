@@ -183,6 +183,7 @@ function RecipeModification({user}: RecipeModificationProps) {
             cookUsername: user.username,
             creationDate: new Date().toISOString(),
             visibility,
+            publicationType: 'RECIPE',
             instructions,
             ingredients,
             category,

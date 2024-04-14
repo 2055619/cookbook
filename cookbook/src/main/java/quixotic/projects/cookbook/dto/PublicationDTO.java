@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import quixotic.projects.cookbook.model.Publication;
+import quixotic.projects.cookbook.model.enums.PublicationType;
 import quixotic.projects.cookbook.model.enums.Visibility;
 
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ public class PublicationDTO {
     private String cookUsername;
     private LocalDate creationDate;
     private Visibility visibility;
+    private PublicationType publicationType;
     private float averageRating;
 
     public PublicationDTO(Publication publication) {
@@ -27,6 +29,7 @@ public class PublicationDTO {
         this.cookUsername = publication.getCook().getUsername();
         this.creationDate = publication.getCreationDate();
         this.visibility = publication.getVisibility();
+        this.publicationType = publication.getPublicationType();
         this.averageRating = publication.getAverageRating();
     }
 }

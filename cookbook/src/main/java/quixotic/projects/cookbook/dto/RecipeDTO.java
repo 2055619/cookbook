@@ -32,7 +32,7 @@ public class RecipeDTO extends PublicationDTO {
 
     @Builder
     public RecipeDTO(Long id, String title, String description, LocalDate localDate, Visibility visibility, String cookUsername, Set<String> instructions, Set<IngredientDTO> ingredients, RecipeType category, DifficultyLevel difficulty, int serving, PortionSize portionSize, List<DietType> dietTypes, float prepTime, float cookTime, byte[] image) {
-        super(id, title, description, cookUsername, localDate, visibility, 0);
+        super(id, title, description, cookUsername, localDate, visibility, PublicationType.RECIPE, 0);
         this.instructions = instructions;
         this.ingredients = ingredients;
         this.category = category;

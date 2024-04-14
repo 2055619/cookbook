@@ -4,7 +4,6 @@ import Loading from "../../components/Utils/Loading";
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {IPublication, IRecipe} from "../../assets/models/Publication";
 import {toast} from "react-toastify";
-import RecipeCard from "../../components/recipes/RecipeCard";
 import {IUser} from "../../assets/models/Authentication";
 import PublicationCard from "../../components/publications/PublicationCard";
 import FilterObjectList from "../../components/Utils/FilterObjectList";
@@ -47,16 +46,43 @@ function Landing({username, user, filters}: ILandingProps) {
                     return [];
                 });
 
-            const uniquePublication: IRecipe[] = Array.from(new Set([...publications, ...pub].map(publication => publication.title)))
+            const uniquePublication= Array.from(new Set([...publications, ...pub]
+                .map(publication => {
+                    // if (publication.publicationType === "RECIPE" && (publication as IRecipe).instructions === undefined) {
+                    //     console.log("GET RECIPE", publication.title)
+                    //     cookbookService.getRecipe(publication.title)
+                    //         .then((response) => {
+                    //             publication = response;
+                    //         })
+                    //         .catch((error) => {
+                    //             if (error.response?.data.message !== "NoToken")
+                    //                 toast.error(t(error.response?.data.message));
+                    //         });
+                    //
+                    //     console.log("PUBLICATION", publication)
+                    // }
+                    // return publication;
+
+                    return publication.title;
+                })))
                 .map(title => {
+
                     return [...publications, ...pub].find(publication => publication.title === title)!
                 })
-                .filter(publication => !username || username === publication.cookUsername) as IRecipe[];
+                .filter(publication => !username || username === publication.cookUsername);
 
-            setPublications(uniquePublication!);
+            // uniquePublication.map((publication) => {
+            // });
+
+            console.log("UNIQUE PUBLICATION", uniquePublication)
+
+            return uniquePublication;
         }
 
-        loadPublications();
+        loadPublications().then((uniquePublication) => {
+            setPublications(uniquePublication!);
+        });
+
     }, [page, username]);
 
     const renderPublication = (filteredPublication: IPublication[]) => {

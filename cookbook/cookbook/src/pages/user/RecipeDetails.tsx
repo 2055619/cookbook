@@ -31,6 +31,7 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
             visibility: "",
             cookUsername: "",
             creationDate: "",
+            publicationType: "RECIPE",
             category: "",
             difficulty: "",
             serving: 0,
@@ -53,7 +54,6 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
                     setRecipe(response);
                 })
                 .catch((error) => {
-                    toast.error("error")
                     if (error.response?.data.message !== "NoToken")
                         toast.error(t(error.response?.data.message));
                 });
