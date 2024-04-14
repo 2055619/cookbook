@@ -32,7 +32,8 @@ function Reactions({publication, username}: ReactionProps) {
                 setAvgRating(sum / response.length);
             })
             .catch((error) => {
-                toast.error(t(error.response?.data.message));
+                if (error.response?.data.message !== "NoToken" && error.message !== "No Publication ID")
+                    toast.error(t(error.response?.data.message));
             });
 
     }, [publication]);

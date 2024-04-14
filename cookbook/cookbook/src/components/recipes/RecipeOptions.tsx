@@ -54,8 +54,9 @@ function RecipeOptions({username, publication}: IRecipeOptionsProps) {
             .then(r => {
                 toast.success(t('input.saved'))
             })
-            .catch(e => {
-                toast.error(t(e.response?.data.message));
+            .catch(error => {
+                if (error.response?.data.message !== "NoToken")
+                    toast.error(t(error.response?.data.message));
             })
     }
 
@@ -75,8 +76,9 @@ function RecipeOptions({username, publication}: IRecipeOptionsProps) {
                 setShowDeleteModal(false);
                 window.location.reload();
             })
-            .catch(e => {
-                toast.error(t(e.response?.data.message));
+            .catch(error => {
+                if (error.response?.data.message !== "NoToken")
+                    toast.error(t(error.response?.data.message));
                 setShowDeleteModal(false);
             });
 

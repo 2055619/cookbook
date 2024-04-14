@@ -46,7 +46,8 @@ function CommentForm({setReactions, reactions, publication, username}: CommentsC
                 setReactions([...reactions, response]);
             })
             .catch((error) => {
-                toast.error(t(error.response?.data.message));
+                if (error.response?.data.message !== "NoToken")
+                    toast.error(t(error.response?.data.message));
             });
 
     }

@@ -58,7 +58,6 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                     setIngredientStates(response.ingredients);
                 })
                 .catch((error) => {
-                    // toast.error("error")
                     if (error.response?.data.message !== "NoToken")
                         toast.error(t(error.response?.data.message));
                 });

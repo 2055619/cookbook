@@ -54,7 +54,7 @@
   "reactions": "Réactions",
   "rate&comment": "Noter et commenter",
   "comment": "Commentaire",
-  "noToken": "Vous n'avez pas de jeton",
+  "NoToken": "Vous n'avez pas de jeton",
   "linkCopied": "Lien copié",
   "pages": {
     "home": {
