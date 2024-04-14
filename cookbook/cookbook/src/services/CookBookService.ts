@@ -163,7 +163,7 @@ export class CookBookService {
     async getReactionsByPublication(publication: IPublication) {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
-        if (!publication.id || publication.id === -1)
+        if (publication.id === null || publication.id === -1)
             return Promise.reject({message: "No Publication ID"});
 
         return cookServerInstance.get<IReaction[]>(`/cook/reactions/${publication.id}`)

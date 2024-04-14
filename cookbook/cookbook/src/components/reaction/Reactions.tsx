@@ -7,6 +7,7 @@ import CommentForm from "./CommentForm";
 import ReactionCard from "./ReactionCard";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import StarDropdown from "./StarDropdown";
 
 interface ReactionProps {
     publication: IPublication;
@@ -19,6 +20,8 @@ function Reactions({publication, username}: ReactionProps) {
 
     const [reactions, setReactions] = useState<IReaction[]>([]);
     const [avgRating, setAvgRating] = useState(0);
+    const [starFilter, setStarFilter] = useState(0);
+    const stars = [1, 2, 3, 4, 5];
 
     useEffect(() => {
         cookbookService.getReactionsByPublication(publication)
@@ -32,8 +35,10 @@ function Reactions({publication, username}: ReactionProps) {
                 setAvgRating(sum / response.length);
             })
             .catch((error) => {
-                if (error.response?.data.message !== "NoToken" && error.message !== "No Publication ID")
+                if (error.response?.data.message !== "NoToken" && error.message !== "No Publication ID"){
                     toast.error(t(error.response?.data.message));
+                    console.log(error)
+                }
             });
 
     }, [publication]);
@@ -43,7 +48,7 @@ function Reactions({publication, username}: ReactionProps) {
             <div className={"text-3xl"}>
                 <h1 className={``}>{t('reactions')}</h1>
 
-                {[...Array(5)].map((star, index) => {
+                {stars.map((star, index) => {
                     return (
                         <FontAwesomeIcon
                             key={index}
@@ -59,13 +64,18 @@ function Reactions({publication, username}: ReactionProps) {
                              username={username}/>
             }
 
+            <label className={"text-2xl me-3"}>{t('starFilter')}</label>
+            <StarDropdown selectedStars={starFilter} setSelectedStars={setStarFilter}/>
+
             <div className={"w-2/3 mx-auto"}>
                 {
-                    reactions.map((reaction, index) => (
-                        <div key={index}>
-                            <ReactionCard reaction={reaction}/>
-                        </div>
-                    ))
+                    reactions
+                        .filter((reaction) => starFilter === 0 || reaction.rating === starFilter)
+                        .map((reaction, index) => (
+                            <div key={index}>
+                                <ReactionCard reaction={reaction}/>
+                            </div>
+                        ))
                 }
             </div>
         </div>

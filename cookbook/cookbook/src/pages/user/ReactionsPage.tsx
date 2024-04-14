@@ -1,4 +1,4 @@
-import Reactions from "../../components/publications/Reactions";
+import Reactions from "../../components/reaction/Reactions";
 import React, {useEffect, useState} from "react";
 import {IPublication} from "../../assets/models/Publication";
 import {toast} from "react-toastify";

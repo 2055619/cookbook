@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from 'react'
-import {useTranslation} from "react-i18next";
+import React from 'react'
 import {t} from "i18next";
 import {IPublication} from "../../assets/models/Publication";
 
@@ -11,8 +10,6 @@ interface IFilterObjectList {
 }
 
 function FilterObjectList({items, attributes, renderItem, filters}: IFilterObjectList) {
-    const {t} = useTranslation()
-
     const filteredItems = Array.isArray(items)
         ? items.filter(item => {
             for (let key in filters) {

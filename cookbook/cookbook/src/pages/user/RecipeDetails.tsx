@@ -14,7 +14,7 @@ import {
     faLayerGroup
 } from "@fortawesome/free-solid-svg-icons";
 import ImageCard from "../../components/publications/ImageCard";
-import Reactions from "../../components/publications/Reactions";
+import Reactions from "../../components/reaction/Reactions";
 
 interface IRecipeDetailsProps {
     user: IUser;

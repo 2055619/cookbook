@@ -1,7 +1,7 @@
 import {IPublication, IRecipe} from "../../assets/models/Publication";
 import RecipeCard from "../recipes/RecipeCard";
 import TrickCard from "../TricksCard";
-import ReactionFooter from "./ReactionFooter";
+import ReactionFooter from "../reaction/ReactionFooter";
 import React from "react";
 
 interface IPublicationCardProps {
