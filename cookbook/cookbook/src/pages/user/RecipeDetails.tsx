@@ -127,8 +127,13 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
                 ))}
             </div>
 
-            <div className={"text-center w-11/12 mx-auto grid md:grid-cols-2 grid-cols-1"}>
-                <ImageCard byteArray={recipe.image!} alt={recipe.title} />
+
+
+            <div className="grid grid-cols-2 gap-1">
+                <div>
+                    <ImageCard byteArray={recipe.image!} alt={recipe.title} />
+                    <Reactions publication={recipe} username={user === null ? "" : user.username} />
+                </div>
 
                 <div className="text-start ms-10">
                     <h1 className="text-4xl">{t('ingredients')}:</h1>
@@ -146,16 +151,14 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
                     <h1 className="text-4xl mt-4">{t('instructions')}:</h1>
                     <ol>
                         {recipe?.instructions.map((instruction, index) => (
-                            <li key={index} className="text-2xl">
+                            <li key={index} className="text-2xl mt-3">
                                 <span className={""}>{index + 1}.</span>
-                                <span className={"mx-1 text-2xl"}>{instruction}</span>
+                                <span className={"mx-1"}>{instruction}</span>
                             </li>
                         ))}
                     </ol>
                 </div>
             </div>
-
-            <Reactions publication={recipe} username={user === null ? "" : user.username} />
         </div>
     );
 }

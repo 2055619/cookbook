@@ -97,17 +97,11 @@ function RecipeOptions({username, publication}: IRecipeOptionsProps) {
                         onClick={handleViewProfile}>{publication.cookUsername}
                 </button>
 
-                {
-                    (publication as IRecipe).cookTime !== undefined ? (
-                        <button className={"px-1 hover:bg-cook-red hover:rounded-full text-2xl me-10"}
-                                onClick={handleConcoctionClick}>
-                            <span className={"hidden lg:inline-block"}>{t('concoct')}</span>
-                            <FontAwesomeIcon className={"ms-1"} icon={faPlay}/>
-                        </button>
-                    ) : (
-                        <h1 className={"text-2xl me-10"}>{t('trick')}</h1>
-                    )
-                }
+                <button className={"px-1 hover:bg-cook-red hover:rounded-full text-2xl me-10"}
+                        onClick={handleConcoctionClick}>
+                    <span className={"hidden lg:inline-block"}>{t('concoct')}</span>
+                    <FontAwesomeIcon className={"ms-1"} icon={faPlay}/>
+                </button>
 
                 <FontAwesomeIcon className={"mt-2 px-2 clickable hover:bg-cook-red hover:rounded-full p-2"}
                                  onClick={togglePopup} icon={faEllipsisV}/>

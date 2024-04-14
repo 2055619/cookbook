@@ -1,6 +1,5 @@
 import {ITrick} from "../assets/models/Publication";
 import React from "react";
-import RecipeOptions from "./recipes/RecipeOptions";
 import PublicationOption from "./publications/PublicationOption";
 
 interface ITrickCardProps {
