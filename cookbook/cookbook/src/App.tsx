@@ -20,7 +20,7 @@ function App() {
             rtl={false}
             pauseOnFocusLoss
             pauseOnHover
-            theme="colored"
+            theme="dark"
         />
         <BrowserRouter>
           <div className="min-h-screen p-0 m-0">
@@ -41,4 +41,4 @@ export const cookServerInstance = axios.create({
     },
     params: {}
 });
-export const cookbookServerStatus = 611;
+export const webBaseUrl = 'http://localhost:3000';

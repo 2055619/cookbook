@@ -32,13 +32,13 @@ function Reactions({publication, username}: ReactionProps) {
                 setAvgRating(sum / response.length);
             })
             .catch((error) => {
-                toast.error(error.response?.data.message);
+                toast.error(t(error.response?.data.message));
             });
 
     }, [publication]);
 
     return (
-        <div id={"reactions"} className={""}>
+        <div id={"reactions"} className={"mt-2"}>
             <div className={"text-3xl"}>
                 <h1 className={``}>{t('reactions')}</h1>
 

@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {faComment, faShareSquare, faStar} from '@fortawesome/free-solid-svg-icons';
+import {faComment, faFaceSurprise, faShareSquare, faStar} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
 import {IPublication, IRecipe} from "../../assets/models/Publication";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import {webBaseUrl} from "../../App";
 
 interface IReactionFooterProps {
     publication: IPublication;
@@ -43,6 +44,19 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
         return (publication as IRecipe).instructions === undefined;
     }
 
+    function handleSharePublication() {
+        const urlToShare = `${webBaseUrl}/u/recipeDetail?title=${publication.title}`;
+
+        navigator.clipboard.writeText(urlToShare)
+            .then(() => {
+                toast.success(t('linkCopied'));
+            })
+            .catch((error) => {
+                toast.error(t('message.linkCopyError', error));
+                console.error('Failed to copy link: ', error);
+            });
+    }
+
     return (
         <div className={"flex justify-between"}>
             <div className={"flex text-3xl"}>
@@ -58,11 +72,11 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
             </div>
 
             <button className={"mx-2 text-2xl"} onClick={() => navigate(`/u/reactions?title=${publication.title}`)}>
-                <FontAwesomeIcon className={""} icon={faComment} />
-                <span className={"mx-1 hidden md:inline"}>{t('comment')}</span>
+                <FontAwesomeIcon className={""} icon={faFaceSurprise} />
+                <span className={"mx-1 hidden md:inline"}>{t('rate&comment')}</span>
             </button>
-            <button className={"mx-2 text-2xl"}>
-                <FontAwesomeIcon className={""} icon={faShareSquare} onClick={() => console.log("share")}/>
+            <button className={"mx-2 text-2xl"} onClick={handleSharePublication}>
+                <FontAwesomeIcon className={""} icon={faShareSquare}/>
                 <span className={"mx-1 hidden md:inline"}>{t('share')}</span>
             </button>
         </div>

@@ -14,6 +14,7 @@ import ConcoctRecipe from "./ConcoctRecipe";
 import ProfileModification from "./ProfileModification";
 import {IFilters} from "../../assets/models/Form";
 import ReactionsPage from "./ReactionsPage";
+import {useTranslation} from "react-i18next";
 
 interface IUserPage {
     user: IUser | null;
@@ -24,6 +25,7 @@ interface IUserPage {
 function UserPages({user, setUser, filters}: IUserPage) {
     const cookbookService = new CookBookService();
     const navigate = useNavigate();
+    const {t} = useTranslation()
 
     useEffect(() => {
         const token = sessionStorage.getItem('token');
@@ -38,7 +40,7 @@ function UserPages({user, setUser, filters}: IUserPage) {
                     setUser(response);
                 })
                 .catch((error) => {
-                    toast.error(error.response?.data.message);
+                    toast.error(t(error.response?.data.message));
                     navigate('/authentication/signin');
                 });
         } else {

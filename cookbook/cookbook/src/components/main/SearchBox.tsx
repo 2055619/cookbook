@@ -35,7 +35,7 @@ function SearchBox() {
                     setRecipesTitle(response);
                 })
                 .catch((error) => {
-                    toast.error(error.response?.data.message);
+                    toast.error(t(error.response?.data.message));
                     setRecipesTitle([]);
                 });
             setShowPopup(true);

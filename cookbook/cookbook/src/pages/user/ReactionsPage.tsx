@@ -50,6 +50,7 @@ function ReactionsPage({user}: IReactionsPageProps) {
 
             <h1 className={"text-5xl"}>{publication?.title}</h1>
             <h1 className={"text-3xl"}>{publication?.description}</h1>
+            <div className={"my-5"}></div>
             <Reactions publication={publication!} username={user!.username}/>
         </div>
     );

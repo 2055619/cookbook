@@ -46,7 +46,7 @@ function CommentForm({setReactions, reactions, publication, username}: CommentsC
                 setReactions([...reactions, response]);
             })
             .catch((error) => {
-                toast.error(error.response?.data.message);
+                toast.error(t(error.response?.data.message));
             });
 
     }
