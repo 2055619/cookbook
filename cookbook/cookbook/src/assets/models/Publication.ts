@@ -6,6 +6,7 @@ export interface IPublication {
     cookUsername: string;
     creationDate: string;
     visibility: string;
+    averageRating: number;
     publicationType: string;
 }
 export interface ITrick extends IPublication{
@@ -15,6 +16,7 @@ export interface ITrick extends IPublication{
     cookUsername: string;
     creationDate: string;
     visibility: string;
+    averageRating: number;
     publicationType: string;
 }
 export interface IRecipe extends IPublication{
@@ -24,6 +26,7 @@ export interface IRecipe extends IPublication{
     cookUsername: string;
     creationDate: string;
     visibility: string;
+    averageRating: number;
     publicationType: string;
     instructions: string[];
     ingredients: IIngredient[];

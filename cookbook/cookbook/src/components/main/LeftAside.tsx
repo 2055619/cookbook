@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {IFilters} from "../../assets/models/Form";
+import StarDropdown from "../reaction/StarDropdown";
 
 interface ILeftAside {
     setFilters: (filters: IFilters) => void;
@@ -11,19 +12,21 @@ function LeftAside({setFilters}: ILeftAside) {
     const [title, setTitle] = useState("");
     const [cookUsername, setCookUsername] = useState("");
     const [creationDate, setCreationDate] = useState("");
+    const [stars, setStars] = useState(0);
 
     function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
-        console.log(title, cookUsername, creationDate)
+        console.log(title, cookUsername, creationDate, stars)
         // if ()
-        setFilters({title: title, cookUsername: cookUsername, creationDate: creationDate});
+        setFilters({title: title, cookUsername: cookUsername, creationDate: creationDate, averageRating: stars});
     }
 
     function handleReset() {
-        setFilters({title: "", cookUsername: "", creationDate: ""});
+        setFilters({title: "", cookUsername: "", creationDate: "", averageRating: 0});
         setTitle("");
         setCookUsername("");
         setCreationDate("");
+        setStars(0);
     }
 
     return (
@@ -42,6 +45,15 @@ function LeftAside({setFilters}: ILeftAside) {
                     <input type="text" value={cookUsername} onChange={(e) => setCookUsername(e.target.value)}
                            className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-cook-light focus:border-cook-light sm:text-sm"/>
                 </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-cook-light">{t('stars')}</label>
+                    <StarDropdown selectedStars={stars} setSelectedStars={setStars}/>
+                    {/*<input type="number" min="0" max="5" value={stars}*/}
+                    {/*       onChange={(e) => setStars(Number(e.target.value))}*/}
+                    {/*       className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-cook-light focus:border-cook-light sm:text-sm"/>*/}
+                </div>
+
 
                 <div>
                     <label className="block text-sm font-medium text-cook-light">{t('creationDate')}</label>

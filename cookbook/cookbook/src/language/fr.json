@@ -48,7 +48,7 @@
   "savedRecipesList": "Liste des recettes favorite",
   "noSavedRecipes": "Vous n'avez pas de recettes sauvegardées",
   "trick": "Astuce",
-  "filter": "Filtre",
+  "filter": "Filtre(s)",
   "creationDate": "Date de création",
   "recipeCreation": "recette créée avec succès",
   "reactions": "Réactions",
@@ -57,6 +57,7 @@
   "NoToken": "Vous n'avez pas de jeton",
   "linkCopied": "Lien copié",
   "starFilter": "Filtrer par note",
+  "stars": "Nombre d'étoile minimum",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"

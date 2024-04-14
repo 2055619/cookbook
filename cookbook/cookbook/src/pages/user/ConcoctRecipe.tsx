@@ -26,6 +26,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
             cookUsername: "",
             creationDate: "",
             visibility: "",
+            averageRating: 0,
             publicationType: "RECIPE",
             category: "",
             difficulty: "",

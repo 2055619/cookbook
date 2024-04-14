@@ -232,6 +232,7 @@ public class CookService {
             throw new WrongUserException();
         Publication publication = publicationRepository.findById(reactionDTO.getPublicationId())
                 .orElseThrow(PublicationNotFoundException::new);
+//        TODO: Ajouter AvgRating
 
         return new ReactionDTO(reactionRepository.save(reactionDTO.toEntity(cook, publication)));
     }

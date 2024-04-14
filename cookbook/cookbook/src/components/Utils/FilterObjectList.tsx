@@ -13,7 +13,14 @@ function FilterObjectList({items, attributes, renderItem, filters}: IFilterObjec
     const filteredItems = Array.isArray(items)
         ? items.filter(item => {
             for (let key in filters) {
-                if (filters[key] && !String(item[key]).toLowerCase().includes(filters[key].toLowerCase())) {
+                // if (filters[key] && String(item[key])) {
+                //     return false;
+                // }
+
+                if (filters[key] && typeof item[key] === 'string' && !String(item[key]).toLowerCase().includes(filters[key].toLowerCase())) {
+                    return false;
+                }
+                if (filters[key] && typeof item[key] === 'number' && item[key] <= Number(filters[key])) {
                     return false;
                 }
             }

@@ -70,7 +70,7 @@ function Reactions({publication, username}: ReactionProps) {
             <div className={"w-2/3 mx-auto"}>
                 {
                     reactions
-                        .filter((reaction) => starFilter === 0 || reaction.rating === starFilter)
+                        .filter((reaction) => starFilter === 0 || reaction.rating! >= starFilter)
                         .map((reaction, index) => (
                             <div key={index}>
                                 <ReactionCard reaction={reaction}/>

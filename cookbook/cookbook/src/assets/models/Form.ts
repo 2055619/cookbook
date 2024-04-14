@@ -8,6 +8,7 @@ export interface IFormInput {
 export interface IFilters {
     title?: string;
     cookUsername?: string;
+    averageRating?: number;
     creationDate?: string;
 }
 

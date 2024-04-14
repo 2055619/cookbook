@@ -31,6 +31,7 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
             visibility: "",
             cookUsername: "",
             creationDate: "",
+            averageRating: 0,
             publicationType: "RECIPE",
             category: "",
             difficulty: "",
