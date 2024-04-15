@@ -8,21 +8,28 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import quixotic.projects.cookbook.dto.CookDTO;
+import quixotic.projects.cookbook.dto.PublicationDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
+import quixotic.projects.cookbook.dto.TrickDTO;
+import quixotic.projects.cookbook.exception.badRequestException.PublicationNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
+import quixotic.projects.cookbook.model.Publication;
 import quixotic.projects.cookbook.model.Recipe;
+import quixotic.projects.cookbook.model.Trick;
 import quixotic.projects.cookbook.model.enums.*;
-import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.repository.CookRepository;
+import quixotic.projects.cookbook.repository.PublicationRepository;
 import quixotic.projects.cookbook.repository.RecipeRepository;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
 import quixotic.projects.cookbook.security.Role;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -98,6 +105,8 @@ public class CookServiceTest {
     private CookRepository cookRepository;
     @Mock
     private RecipeRepository recipeRepository;
+    @Mock
+    private PublicationRepository publicationRepository;
 
     @Mock
     private JwtTokenProvider jwtTokenProvider;
@@ -269,7 +278,8 @@ public class CookServiceTest {
         // Assert
         assertTrue(result.isEmpty());
     }
-// ----
+
+    // ----
     @Test
     public void createRecipe_CookExists_RecipeCreated() {
         RecipeDTO recipeDTO = recipeDTOS.get(0);
@@ -444,5 +454,127 @@ public class CookServiceTest {
         when(cookRepository.findCookByUsername(cook.getUsername())).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> cookService.updateUserProfile(new CookDTO(cook), token));
+    }
+
+    @Test
+    void saveImage_whenRecipeExists_imageSaved() {
+        Long id = 1L;
+        String base64Image = "testImage";
+
+        when(recipeRepository.findById(id)).thenReturn(Optional.of(recipeDTOS.get(0).toEntity(cook)));
+
+        cookService.saveImage(base64Image, id);
+    }
+
+    @Test
+    void saveImage_whenRecipeDoesNotExist_throwsException() {
+        Long id = 1L;
+        String base64Image = "testImage";
+
+        when(recipeRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> cookService.saveImage(base64Image, id));
+    }
+
+    @Test
+    void createTrick_whenCookExists_trickCreated() {
+        TrickDTO trickDTO = new TrickDTO();
+        trickDTO.setCookUsername(cook.getUsername());
+
+        when(cookRepository.findCookByUsername(trickDTO.getCookUsername())).thenReturn(Optional.of(cook));
+
+        cookService.createTrick(trickDTO);
+    }
+
+    @Test
+    void createTrick_whenCookDoesNotExist_throwsUserNotFoundException() {
+        TrickDTO trickDTO = new TrickDTO();
+        trickDTO.setCookUsername("invalid");
+
+        when(cookRepository.findCookByUsername(trickDTO.getCookUsername())).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class, () -> cookService.createTrick(trickDTO));
+    }
+
+    @Test
+    void getPublicationsByPage_ValidPageAndSize_ReturnsPublications() {
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(new Cook()));
+        when(publicationRepository.findAll(any(Pageable.class))).thenReturn(Page.empty());
+
+        cookService.getPublicationsByPage(0, 10, "token");
+    }
+
+    @Test
+    void getPublicationsByPage_NegativePage_ThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> cookService.getPublicationsByPage(-1, 10, "token"));
+    }
+
+    @Test
+    void getPublicationsByPage_NegativeSize_ThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> cookService.getPublicationsByPage(0, -1, "token"));
+    }
+
+    @Test
+    void getPublicationsByPage_UserDoesNotExist_ThrowsUserNotFoundException() {
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.empty());
+
+        assertThrows(UserNotFoundException.class, () -> cookService.getPublicationsByPage(0, 10, "token"));
+    }
+
+    @Test
+    void getPublicationsByPage_PublicVisibility_ReturnsPublications() {
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+        Cook cook = new Cook();
+        cook.setUsername("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
+        Publication publication = Trick.builder().date(LocalDate.now()).title("Trick").description("This is totaly a trick").cook(cook).visibility(Visibility.PUBLIC).build();
+        publication.setVisibility(Visibility.PUBLIC);
+        Page<Publication> publicationPage = new PageImpl<>(List.of(publication));
+        when(publicationRepository.findAll(any(Pageable.class))).thenReturn(publicationPage);
+
+        List<PublicationDTO> result = cookService.getPublicationsByPage(0, 10, token);
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void getPublicationsByPage_FollowersVisibility_UserIsNotFollower_ReturnsNoPublications() {
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+        Cook cook = new Cook();
+        cook.setUsername("testCook");
+        Cook publicationCook = new Cook();
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
+        Publication publication = new Trick();
+        publication.setVisibility(Visibility.FOLLOWERS);
+        publication.setCook(publicationCook);
+        Page<Publication> publicationPage = new PageImpl<>(List.of(publication));
+        when(publicationRepository.findAll(any(Pageable.class))).thenReturn(publicationPage);
+
+        List<PublicationDTO> result = cookService.getPublicationsByPage(0, 10, token);
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void getPublicationByTitle_PublicationExists_ReturnsPublication() {
+        String title = "testPublication";
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
+        Publication publication = new Trick();
+        publication.setTitle(title);
+        when(publicationRepository.findByTitle(title)).thenReturn(Optional.of(publication));
+
+        PublicationDTO result = cookService.getPublicationByTitle(title, "token");
+        assertEquals(title, result.getTitle());
+    }
+
+    @Test
+    void getPublicationByTitle_PublicationDoesNotExist_ThrowsPublicationNotFoundException() {
+        String title = "testPublication";
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
+        when(publicationRepository.findByTitle(title)).thenReturn(Optional.empty());
+
+        assertThrows(PublicationNotFoundException.class, () -> cookService.getPublicationByTitle(title, "token"));
     }
 }

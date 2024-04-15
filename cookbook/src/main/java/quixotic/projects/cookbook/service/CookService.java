@@ -210,9 +210,10 @@ public class CookService {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
         Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
 
-        return filterPublicationsByVisibility(new ArrayList<>(List.of(publicationRepository.findByTitle(title)
-                        .orElseThrow(PublicationNotFoundException::new))),
-                user).stream().findFirst().orElseThrow(PublicationNotFoundException::new);
+        return filterPublicationsByVisibility(new ArrayList<>(List.of(
+                publicationRepository.findByTitle(title).orElseThrow(PublicationNotFoundException::new))), user)
+                .stream().findFirst()
+                .orElseThrow(PublicationNotFoundException::new);
     }
 
     //    Reaction
