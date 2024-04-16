@@ -8,18 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 import quixotic.projects.cookbook.dto.CookDTO;
+import quixotic.projects.cookbook.dto.PublicationDTO;
 import quixotic.projects.cookbook.dto.RecipeDTO;
+import quixotic.projects.cookbook.exception.badRequestException.PublicationNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.enums.Unit;
-import quixotic.projects.cookbook.model.summary.RecipeSummary;
 import quixotic.projects.cookbook.model.summary.UserProfile;
 import quixotic.projects.cookbook.repository.CookRepository;
 import quixotic.projects.cookbook.security.JwtAuthenticationEntryPoint;
@@ -27,7 +26,6 @@ import quixotic.projects.cookbook.security.JwtTokenProvider;
 import quixotic.projects.cookbook.security.Role;
 import quixotic.projects.cookbook.security.SecurityConfiguration;
 import quixotic.projects.cookbook.service.CookService;
-import quixotic.projects.cookbook.service.UserService;
 
 import java.util.*;
 
@@ -356,4 +354,59 @@ public class CookControllerTest {
                 .andExpect(status().isAccepted())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+
+    @Test
+    public void getPublications_whenValidPageAndSizeProvided_returnsAccepted() throws Exception {
+        List<PublicationDTO> publicationDTOS = new ArrayList<>();
+
+        when(cookService.getPublicationsByPage(0, 10, token)).thenReturn(publicationDTOS);
+
+        mockMvc.perform(get("/api/v1/cook/publications")
+                        .header("Authorization", token)
+                        .param("page", "0")
+                        .param("size", "10"))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void getPublications_whenInvalidPageAndSizeProvided_returnsBadRequest() throws Exception {
+        when(cookService.getPublicationsByPage(-1, -1, token)).thenThrow(new IllegalArgumentException());
+
+        mockMvc.perform(get("/api/v1/cook/publications")
+                        .header("Authorization", token)
+                        .param("page", "-1")
+                        .param("size", "-1"))
+                .andExpect(status().is(611));
+    }
+
+    @Test
+    public void getPublicationByTitle_whenPublicationExists_returnsPublication() throws Exception {
+        PublicationDTO publicationDTO = new PublicationDTO();
+
+        when(cookService.getPublicationByTitle("Test Publication", token)).thenReturn(publicationDTO);
+
+        mockMvc.perform(get("/api/v1/cook/publication/Test Publication")
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void getPublicationByTitle_whenPublicationDoesNotExist_returnsNotFound() throws Exception {
+        when(cookService.getPublicationByTitle("Invalid Publication", token)).thenThrow(new PublicationNotFoundException());
+
+        mockMvc.perform(get("/api/v1/cook/publication/Invalid Publication")
+                        .header("Authorization", token))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void getPublicationByTitle_whenTitleIsEmpty_returnsBadRequest() throws Exception {
+        mockMvc.perform(get("/api/v1/cook/publication/")
+                        .header("Authorization", token))
+                .andExpect(status().is(611));
+    }
+
+
 }
