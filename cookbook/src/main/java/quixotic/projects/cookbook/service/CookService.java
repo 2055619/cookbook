@@ -186,24 +186,8 @@ public class CookService {
 
         Cook user = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
         Pageable pageable = PageRequest.of(page, size);
-        Page<Publication> pubPage = publicationRepository.findAll(pageable)
-                .map(publication -> switch (publication.getPublicationType()) {
-                            case RECIPE -> {
-                                System.out.println("RECIPE: " + (publication instanceof Recipe));
-                                if (publication instanceof Recipe) {
-                                    Recipe recipe = recipeRepository.findByTitle(publication.getTitle())
-                                            .orElseThrow(RecipeNotFoundException::new);
-                                    publication = recipe;
-                                    yield recipe;
-                                }
-                                yield publication;
-                            }
-                            case TRICK -> publication;
-                            case OTHER -> publication;
-                        }
-                );
 
-        return filterPublicationsByVisibility(pubPage.getContent(), user);
+        return filterPublicationsByVisibility(publicationRepository.findAll(pageable).getContent(), user);
     }
 
     public PublicationDTO getPublicationByTitle(String title, String token) {
