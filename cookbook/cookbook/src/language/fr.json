@@ -127,6 +127,7 @@
     "react": "Réagir"
   },
   "message": {
+    "notImplemented": "Désolé cette fonctionnalité n'est pas encore implémentée",
     "noRatingOrComment": "Il n'y a pas de note ou de commentaire pour le moment",
     "profileUpdateSuccess": "Votre profil a été mis à jour avec succès",
     "titleLength": "Le titre doit être composé d'au moins 3 caractères",

@@ -5,6 +5,8 @@ import {toast} from "react-toastify";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {cookServerInstance} from "../../App";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 interface SignInProps {
@@ -17,6 +19,7 @@ function SignIn({setUser}: SignInProps) {
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -39,6 +42,10 @@ function SignIn({setUser}: SignInProps) {
             });
     }
 
+    function toggleShowPassword() {
+        setShowPassword(!showPassword);
+    }
+
     return (
         <form autoComplete="false" onSubmit={handleSubmit} className="">
             <div className="flex flex-col justify-center items-center mb-3">
@@ -52,22 +59,27 @@ function SignIn({setUser}: SignInProps) {
                         placeholder={t('pages.auth.username')}
                     />
                 </div>
-                <div className="mb-3 lg:w-1/3 md:w-1/2 w-11/12" id="formBasicPassword">
+                <div className="mb-3 lg:w-1/3 md:w-1/2 w-11/12 relative" id="formBasicPassword">
                     <label className="text-lg font-bold text-right my-auto w-full">{t('pages.auth.password')}</label>
                     <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
+                        autoComplete={"current-password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className="form-input border border-gray-300 rounded-md p-2 w-full"
                         placeholder={t('pages.auth.password')}
                     />
+                    <button type="button" onClick={toggleShowPassword}
+                            className="absolute right-3 mt-3 top-1/2 transform -translate-y-1/2">
+                        <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}/>
+                    </button>
                 </div>
             </div>
             <button type="submit"
                     className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 m-5 p-2">
                 {t('signin')}
             </button>
-            <button type="button"
+            <button type="button" onClick={() => {toast.error(t('message.notImplemented'))}}
                     className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 mb-5 p-2">
                 {t('pages.auth.forgotPassword')}
             </button>
