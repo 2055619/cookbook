@@ -20,7 +20,6 @@ import quixotic.projects.cookbook.security.JwtTokenProvider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -246,6 +245,26 @@ public class CookService {
         return new CookDTO(cookRepository.save(cook));
     }
 
+    public CookDTO followCook(String usernameToFollow, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook follower = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+        Cook followee = cookRepository.findCookByUsername(usernameToFollow).orElseThrow(UserNotFoundException::new);
+
+        followee.addFollower(follower);
+
+        return new CookDTO(cookRepository.save(followee));
+    }
+
+    public CookDTO unfollowCook(String usernameToUnfollow, String token) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook follower = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+        Cook followee = cookRepository.findCookByUsername(usernameToUnfollow).orElseThrow(UserNotFoundException::new);
+
+        followee.removeFollower(follower);
+
+        return new CookDTO(cookRepository.save(followee));
+    }
+
     private List<PublicationDTO> filterPublicationsByVisibility(List<Publication> publications, Cook user) {
         return publications.stream()
                 .filter(recipe -> switch (recipe.getVisibility()) {
@@ -287,4 +306,12 @@ public class CookService {
                 .collect(Collectors.toList());
     }
 
+    public List<CookDTO> getFollowers(String username) {
+        return cookRepository.findCookByUsername(username)
+                .orElseThrow(UserNotFoundException::new)
+                .getFollowers()
+                .stream()
+                .map(CookDTO::new)
+                .collect(Collectors.toList());
+    }
 }

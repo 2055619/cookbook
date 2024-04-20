@@ -76,10 +76,24 @@ public class Cook implements UserDetails {
     }
 
     public void addFollower(Cook cook) {
+        if (followers == null) {
+            followers = new HashSet<>();
+        } else if (followers.contains(cook)) {
+            throw new IllegalArgumentException("Cook is already following you");
+        }
         followers.add(cook);
     }
 
     public void removeFollower(Cook cook) {
+
+
+        if (followers == null) {
+            followers = new HashSet<>();
+            return;
+        }
+//        else if (!followers.contains(cook)) {
+//            throw new IllegalArgumentException("Cook is not following you");
+//        }
         followers.remove(cook);
     }
 
