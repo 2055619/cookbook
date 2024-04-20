@@ -274,8 +274,12 @@ public class CookService {
                     case RECIPE -> {
                         if (publication instanceof Recipe) {
                             yield new RecipeDTO((Recipe) publication);
+                        } else {
+                            yield recipeRepository.findByTitle(publication.getTitle())
+                                    .map(RecipeDTO::new)
+                                    .orElseThrow(RecipeNotFoundException::new);
+
                         }
-                        yield new PublicationDTO(publication);
                     }
                     case TRICK -> {
                         if (publication instanceof Trick) {
