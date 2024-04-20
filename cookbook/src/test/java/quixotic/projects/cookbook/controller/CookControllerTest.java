@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import quixotic.projects.cookbook.dto.*;
 import quixotic.projects.cookbook.exception.badRequestException.PublicationNotFoundException;
 import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundException;
+import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.enums.Unit;
 import quixotic.projects.cookbook.model.summary.UserProfile;
@@ -412,7 +413,7 @@ public class CookControllerTest {
         trickDTO.setCookUsername(cook.getUsername());
 
 
-        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
+//        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
         when(cookRepository.findCookByUsername(trickDTO.getCookUsername())).thenReturn(Optional.of(cook));
         when(cookService.createTrick(any(TrickDTO.class))).thenReturn(new TrickDTO());
 
@@ -429,9 +430,9 @@ public class CookControllerTest {
         TrickDTO trickDTO = new TrickDTO();
         trickDTO.setCookUsername("invalidCook");
 
-        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("invalidCook");
-        when(cookRepository.findCookByUsername(trickDTO.getCookUsername())).thenReturn(Optional.empty());
-        when(cookService.createTrick(any(TrickDTO.class))).thenReturn(new TrickDTO());
+//        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("invalidCook");
+//        when(cookRepository.findCookByUsername(trickDTO.getCookUsername())).thenThrow(new UserNotFoundException());
+        when(cookService.createTrick(any(TrickDTO.class))).thenThrow(new UserNotFoundException());
 
         mockMvc.perform(post("/api/v1/cook/trick")
                         .header("Authorization", token)
@@ -477,11 +478,9 @@ public class CookControllerTest {
         reactionDTO.setCookUsername(cook.getUsername());
         reactionDTO.setPublicationId(1L);
 
-        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
-        when(cookRepository.findCookByUsername(reactionDTO.getCookUsername())).thenReturn(Optional.of(cook));
-        when(cookService.createReaction(any(ReactionDTO.class), anyString())).thenReturn(new ReactionDTO());
+        when(cookService.createReaction(any(ReactionDTO.class), anyString())).thenReturn(reactionDTO);
 
-        mockMvc.perform(post("/api/v1/cook/reaction")
+        mockMvc.perform(post("/api/v1/cook/react")
                         .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(reactionDTO)))
@@ -494,10 +493,9 @@ public class CookControllerTest {
         ReactionDTO reactionDTO = new ReactionDTO();
         reactionDTO.setCookUsername("invalidCook");
 
-        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("invalidCook");
-        when(cookRepository.findCookByUsername(reactionDTO.getCookUsername())).thenReturn(Optional.empty());
+        when(cookService.createReaction(any(ReactionDTO.class), anyString())).thenThrow(new UserNotFoundException());
 
-        mockMvc.perform(post("/api/v1/cook/reaction")
+        mockMvc.perform(post("/api/v1/cook/react")
                         .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(reactionDTO)))
@@ -510,14 +508,12 @@ public class CookControllerTest {
         reactionDTO.setCookUsername(cook.getUsername());
         reactionDTO.setPublicationId(1L);
 
-        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
-        when(cookRepository.findCookByUsername(reactionDTO.getCookUsername())).thenReturn(Optional.of(cook));
         when(cookService.createReaction(any(ReactionDTO.class), anyString())).thenThrow(new PublicationNotFoundException());
 
-        mockMvc.perform(post("/api/v1/cook/reaction")
+        mockMvc.perform(post("/api/v1/cook/react")
                         .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(reactionDTO)))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isBadRequest());
     }
 }

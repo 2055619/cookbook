@@ -94,7 +94,12 @@ public class Cook implements UserDetails {
     }
 
     public void saveRecipe(Recipe recipe) {
-        savedRecipe.add(recipe.getId());
+        if (savedRecipe == null){
+            savedRecipe = new HashSet<>();
+            savedRecipe.add(recipe.getId());
+        } else if (!savedRecipe.contains(recipe.getId())){
+            savedRecipe.add(recipe.getId());
+        }
     }
 
     @Override

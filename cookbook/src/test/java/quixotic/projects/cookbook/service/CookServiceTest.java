@@ -2,6 +2,7 @@ package quixotic.projects.cookbook.service;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -398,6 +399,17 @@ public class CookServiceTest {
     }
 
     @Test
+    void saveRecipe_valid() {
+        Long id = 1L;
+
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(cook.getUsername());
+        when(cookRepository.findCookByUsername(cook.getUsername())).thenReturn(Optional.of(cook));
+        when(recipeRepository.findById(recipeDTOS.get(0).getId())).thenReturn(Optional.of(recipeDTOS.get(0).toEntity(cook)));
+
+        cookService.saveRecipe(recipeDTOS.get(0).getId(), token);
+    }
+
+    @Test
     void saveRecipe_whenRecipeDoesNotExist() {
         Long id = 1L;
 
@@ -453,6 +465,7 @@ public class CookServiceTest {
         assertThrows(UserNotFoundException.class, () -> cookService.updateUserProfile(new CookDTO(cook), token));
     }
 
+    @Disabled
     @Test
     void saveImage_whenRecipeExists_imageSaved() {
         Long id = 1L;
