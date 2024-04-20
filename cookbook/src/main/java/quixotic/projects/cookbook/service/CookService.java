@@ -234,6 +234,9 @@ public class CookService {
         Publication publication = publicationRepository.findById(reactionDTO.getPublicationId())
                 .orElseThrow(PublicationNotFoundException::new);
 //        TODO: Ajouter AvgRating
+        List<Reaction> reactions = reactionRepository.findAllByPublication(publication);
+        reactions.add(reactionDTO.toEntity(cook, publication));
+        publication.calculateAvgRating(reactions);
 
         return new ReactionDTO(reactionRepository.save(reactionDTO.toEntity(cook, publication)));
     }

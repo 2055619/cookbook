@@ -18,24 +18,24 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
     const navigate = useNavigate();
     const cookbookService = new CookBookService();
 
-    const [avgRating, setAvgRating] = useState(0);
+    // const [avgRating, setAvgRating] = useState(0);
 
-    useEffect(() => {
-        cookbookService.getReactionsByPublication(publication)
-            .then((response) => {
-                let sum = 0;
-                response.map((reaction) => {
-                    sum += reaction.rating!;
-                    return reaction;
-                });
-                setAvgRating(sum / response.length);
-
-            })
-            .catch((error) => {
-                if (error.response?.data.message !== "NoToken")
-                    toast.error(t(error.response?.data.message));
-            });
-    }, []);
+    // useEffect(() => {
+    //     cookbookService.getReactionsByPublication(publication)
+    //         .then((response) => {
+    //             let sum = 0;
+    //             response.map((reaction) => {
+    //                 sum += reaction.rating!;
+    //                 return reaction;
+    //             });
+    //             setAvgRating(sum / response.length);
+    //
+    //         })
+    //         .catch((error) => {
+    //             if (error.response?.data.message !== "NoToken")
+    //                 toast.error(t(error.response?.data.message));
+    //         });
+    // }, []);
 
     function isRecipe(publication: IPublication): publication is IRecipe {
         return (publication as IRecipe).instructions !== undefined;
@@ -66,7 +66,7 @@ function ReactionFooter({publication, username}: IReactionFooterProps) {
                         <FontAwesomeIcon
                             key={index}
                             icon={faStar}
-                            className={` ${index < Math.floor(avgRating) ? 'text-cook-light' : 'text-cook'} `}
+                            className={` ${index < Math.floor(publication.averageRating) ? 'text-cook-light' : 'text-cook'} `}
                         />
                     );
                 })}

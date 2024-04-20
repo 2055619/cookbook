@@ -10,6 +10,7 @@ import quixotic.projects.cookbook.model.enums.Visibility;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -56,6 +57,20 @@ public abstract class Publication {
     }
 
     public void recalculateAverageRating() {
+        if (reactions.isEmpty()) {
+            averageRating = 0;
+        } else {
+            float sum = 0;
+            for (Reaction reaction : reactions) {
+                if (reaction.getRating() != -1){
+                    sum += reaction.getRating();
+                }
+            }
+            averageRating = sum / reactions.size();
+        }
+    }
+
+    public void calculateAvgRating(List<Reaction> reactions) {
         if (reactions.isEmpty()) {
             averageRating = 0;
         } else {
