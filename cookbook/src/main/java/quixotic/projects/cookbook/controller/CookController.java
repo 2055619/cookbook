@@ -132,7 +132,7 @@ public class CookController {
     }
 
     @PutMapping("/usr/follow")
-    public ResponseEntity<CookDTO> followUser(@PathParam("username") String username, @RequestHeader("Authorization") String token){
+    public ResponseEntity<FollowerDTO> followUser(@PathParam("username") String username, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.followCook(username, token));
     }

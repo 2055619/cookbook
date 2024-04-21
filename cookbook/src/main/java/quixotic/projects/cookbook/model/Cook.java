@@ -73,10 +73,11 @@ public class Cook implements UserDetails {
         if (followers == null) {
             followers = new HashSet<>();
         } else if (followers.contains(follower)) {
-            throw new IllegalArgumentException("Cook is already following you");
+            throw new IllegalArgumentException("message.cookFollowed");
         }
-        System.out.println("Adding:" + follower);
         followers.add(follower);
+
+        System.out.println("Followers:" + followers.size());
     }
 
     public void removeFollower(Follower follower) {
@@ -85,7 +86,7 @@ public class Cook implements UserDetails {
             return;
         }
         else if (!followers.contains(follower)) {
-            throw new IllegalArgumentException("Cook is not following you");
+            throw new IllegalArgumentException("message.cookNotFollowing");
         }
         followers.remove(follower);
     }

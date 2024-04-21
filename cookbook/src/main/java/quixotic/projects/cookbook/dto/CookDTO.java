@@ -20,7 +20,7 @@ public class CookDTO {
     private String otherUnit;
     private String role;
     private String token;
-    List<CookDTO> followers;
+//    List<CookDTO> followers;
 
     public CookDTO(Cook cook, String token){
         this.username = cook.getUsername();
@@ -33,9 +33,9 @@ public class CookDTO {
         this.otherUnit = cook.getOtherUnit().name();
         this.role = cook.getRole().name();
         this.token = token;
-        if (cook.getFollowers() != null) {
-            this.followers = cook.getFollowers().stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
-        }
+//        if (cook.getFollowers() != null) {
+//            this.followers = cook.getFollowers().stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
+//        }
     }
 
     public CookDTO(Cook cook){
@@ -48,9 +48,9 @@ public class CookDTO {
         this.solidUnit = cook.getSolidUnit().name();
         this.otherUnit = cook.getOtherUnit().name();
         this.role = cook.getRole().name();
-        if (cook.getFollowers() != null) {
-            System.out.println("Followers: " + cook.getFollowers());
-            this.followers = cook.getFollowers().stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
-        }
+//        if (cook.getFollowers() != null) {
+//            System.out.println("Followers: " + cook.getFollowers());
+//            this.followers = cook.getFollowers().stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
+//        }
     }
 }

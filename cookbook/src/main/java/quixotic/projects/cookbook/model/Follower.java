@@ -1,10 +1,7 @@
 package quixotic.projects.cookbook.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
@@ -16,10 +13,18 @@ public class Follower {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "follower_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private Cook follower;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "followed_id")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private Cook followed;
+
+    @Override
+    public String toString() {
+        if (follower == null || followed == null) {
+            return "id: " + id + ", NULLs";
+        }
+        return "id: " + id +
+                ", follower: " + follower.getUsername() +
+                ", followed: " + followed.getUsername();
+    }
 }

@@ -246,24 +246,25 @@ public class CookService {
         return new CookDTO(cookRepository.save(cook));
     }
 
-    public CookDTO followCook(String usernameToFollow, String token) {
+    public FollowerDTO followCook(String usernameToFollow, String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
         Cook follower = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
         Cook followed = cookRepository.findCookByUsername(usernameToFollow).orElseThrow(UserNotFoundException::new);
 
-        followed.addFollower(Follower.builder().followed(followed).follower(follower).build());
-
-        return new CookDTO(cookRepository.save(followed));
+        return new FollowerDTO(followerRepository.save(Follower.builder().followed(followed).follower(follower).build()));
     }
 
     public CookDTO unfollowCook(String usernameToUnfollow, String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
-        Cook follower = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
-        Cook followed = cookRepository.findCookByUsername(usernameToUnfollow).orElseThrow(UserNotFoundException::new);
 
-        follower.removeFollower(Follower.builder().followed(followed).follower(follower).build());
+        Follower follower = followerRepository.findByFollowedAndFollower(
+                        cookRepository.findCookByUsername(usernameToUnfollow).orElseThrow(UserNotFoundException::new),
+                        cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new))
+                .orElseThrow(UserNotFoundException::new);
 
-        return new CookDTO(cookRepository.save(followed));
+        followerRepository.delete(follower);
+        return new CookDTO(follower.getFollower());
+
     }
 
     public List<CookDTO> getFollowers(String username) {
@@ -271,7 +272,10 @@ public class CookService {
 
 //        return followerRepository.findAllByFollowed(cook).stream().map((follower -> new CookDTO(follower.getFollower()))).toList();
 
-        return cook.getFollowers().stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
+//        return cook.getFollowers().stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
+
+        List<Follower> followers = followerRepository.findAllByFollowed(cook);
+        return followers.stream().map((follower -> new CookDTO(follower.getFollower()))).toList();
     }
 
     private List<PublicationDTO> filterPublicationsByVisibility(List<Publication> publications, Cook user) {
