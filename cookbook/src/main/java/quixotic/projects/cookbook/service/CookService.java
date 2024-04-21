@@ -30,8 +30,8 @@ public class CookService {
     private final RecipeRepository recipeRepository;
     private final PublicationRepository publicationRepository;
     private final ReactionRepository reactionRepository;
-    private final CommentRepository commentRepository;
     private final FollowerRepository followerRepository;
+    private final CommentRepository commentRepository;
 
 
     //    Recipes
@@ -269,10 +269,6 @@ public class CookService {
 
     public List<CookDTO> getFollowers(String username) {
         Cook cook = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
-
-//        return followerRepository.findAllByFollowed(cook).stream().map((follower -> new CookDTO(follower.getFollower()))).toList();
-
-//        return cook.getFollowers().stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
 
         List<Follower> followers = followerRepository.findAllByFollowed(cook);
         return followers.stream().map((follower -> new CookDTO(follower.getFollower()))).toList();

@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface FollowerRepository extends JpaRepository<Follower, Long> {
 
     List<Follower> findAllByFollowed(Cook cook);
-
     Optional<Follower> findByFollowedAndFollower(Cook followed, Cook follower);
+    int countByFollowed(Cook cook);
 }
