@@ -137,7 +137,7 @@ public class CookController {
                 .body(cookService.followCook(username, token));
     }
 
-    @PutMapping("/usr/unfollow")
+    @DeleteMapping("/usr/unfollow")
     public ResponseEntity<CookDTO> unfollowUser(@PathParam("username") String username, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.unfollowCook(username, token));
@@ -147,5 +147,11 @@ public class CookController {
     public ResponseEntity<List<CookDTO>> getFollowers(@PathParam("username") String username){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.getFollowers(username));
+    }
+
+    @GetMapping("/usr/following")
+    public ResponseEntity<List<CookDTO>> getFollowing(@PathParam("username") String username){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getFollowing(username));
     }
 }
