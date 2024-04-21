@@ -2,7 +2,7 @@ import {useTranslation} from "react-i18next";
 import {CookBookService} from "../../services/CookBookService";
 import Loading from "../../components/Utils/Loading";
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {IPublication, IRecipe} from "../../assets/models/Publication";
+import {IPublication} from "../../assets/models/Publication";
 import {toast} from "react-toastify";
 import {IUser} from "../../assets/models/Authentication";
 import PublicationCard from "../../components/publications/PublicationCard";
@@ -46,7 +46,7 @@ function Landing({username, user, filters}: ILandingProps) {
                     return [];
                 });
 
-            const uniquePublication= Array.from(new Set([...publications, ...pub]
+            return Array.from(new Set([...publications, ...pub]
                 .map(publication => {
                     // if (publication.publicationType === "RECIPE" && (publication as IRecipe).instructions === undefined) {
                     //     console.log("GET RECIPE", publication.title)
@@ -70,13 +70,6 @@ function Landing({username, user, filters}: ILandingProps) {
                     return [...publications, ...pub].find(publication => publication.title === title)!
                 })
                 .filter(publication => !username || username === publication.cookUsername);
-
-            // uniquePublication.map((publication) => {
-            // });
-
-            console.log("UNIQUE PUBLICATION", uniquePublication)
-
-            return uniquePublication;
         }
 
         loadPublications().then((uniquePublication) => {
