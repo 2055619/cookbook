@@ -9,6 +9,16 @@
   "profile": "Profile",
   "createRecipe": "Créer une nouvelle recette",
   "usrRecipes": "Mes recettes",
+  "cookWelcome": "Bienvenue sur Cookbook",
+  "intro": "Cookbook est une application de partage de recettes de cuisine. Vous pouvez créer, modifier et partager vos recettes avec la communauté. Vous pouvez également consulter les recettes des autres utilisateurs et les ajouter à vos favoris.",
+  "reachOut": "N'hésitez pas à nous contacter si vous avez des questions ou des commentaires au courriel suivant: buzzwares@gmail.com",
+  "supportDevs": "Soutenez les développeurs avec des dons en cliquant sur le lien suivant: ",
+  "paypal": "Sur Paypal",
+  "eth": "En Ethereum",
+  "btc": "En Bitcoin",
+  "paypalLink": "https://www.paypal.com/paypalme/QuixoticQC",
+  "ethWallet": "0x177DA3298468DFBA273ea51c06F308d95045E597",
+  "btcWallet": "bc1qm7t9gkqml4csh8fa66tl7su8fvtjevy5tujca9",
   "title": "Titre",
   "description": "Description",
   "visibility": "Visibilité",
@@ -63,9 +73,6 @@
   "follow": "S'abonner",
   "unfollow": "Se désabonner",
   "pages": {
-    "home": {
-      "title": "Bienvenue sur Cookbook"
-    },
     "auth": {
       "title": "Connexion",
       "email": "Adresse email",
@@ -131,6 +138,8 @@
     "react": "Réagir"
   },
   "message": {
+    "ethAddressCopied": "Adresse Ethereum copiée",
+    "btcAddressCopied": "Adresse Bitcoin copiée",
     "notImplemented": "Désolé cette fonctionnalité n'est pas encore implémentée",
     "noRatingOrComment": "Il n'y a pas de note ou de commentaire pour le moment",
     "profileUpdateSuccess": "Votre profil a été mis à jour avec succès",
