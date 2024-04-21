@@ -34,7 +34,7 @@ public class CookDTO {
         this.role = cook.getRole().name();
         this.token = token;
         if (cook.getFollowers() != null) {
-            this.followers = cook.getFollowers().stream().map(CookDTO::new).toList();
+            this.followers = cook.getFollowers().stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
         }
     }
 
@@ -49,7 +49,8 @@ public class CookDTO {
         this.otherUnit = cook.getOtherUnit().name();
         this.role = cook.getRole().name();
         if (cook.getFollowers() != null) {
-            this.followers = cook.getFollowers().stream().map(CookDTO::new).toList();
+            System.out.println("Followers: " + cook.getFollowers());
+            this.followers = cook.getFollowers().stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
         }
     }
 }

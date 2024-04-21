@@ -11,6 +11,7 @@ import quixotic.projects.cookbook.model.enums.Visibility;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -83,4 +84,10 @@ public abstract class Publication {
             averageRating = sum / reactions.size();
         }
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
 }

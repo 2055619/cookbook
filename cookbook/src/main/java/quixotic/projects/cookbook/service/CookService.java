@@ -31,6 +31,7 @@ public class CookService {
     private final PublicationRepository publicationRepository;
     private final ReactionRepository reactionRepository;
     private final CommentRepository commentRepository;
+    private final FollowerRepository followerRepository;
 
 
     //    Recipes
@@ -248,21 +249,29 @@ public class CookService {
     public CookDTO followCook(String usernameToFollow, String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
         Cook follower = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
-        Cook followee = cookRepository.findCookByUsername(usernameToFollow).orElseThrow(UserNotFoundException::new);
+        Cook followed = cookRepository.findCookByUsername(usernameToFollow).orElseThrow(UserNotFoundException::new);
 
-        followee.addFollower(follower);
+        followed.addFollower(Follower.builder().followed(followed).follower(follower).build());
 
-        return new CookDTO(cookRepository.save(followee));
+        return new CookDTO(cookRepository.save(followed));
     }
 
     public CookDTO unfollowCook(String usernameToUnfollow, String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
         Cook follower = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
-        Cook followee = cookRepository.findCookByUsername(usernameToUnfollow).orElseThrow(UserNotFoundException::new);
+        Cook followed = cookRepository.findCookByUsername(usernameToUnfollow).orElseThrow(UserNotFoundException::new);
 
-        followee.removeFollower(follower);
+        follower.removeFollower(Follower.builder().followed(followed).follower(follower).build());
 
-        return new CookDTO(cookRepository.save(followee));
+        return new CookDTO(cookRepository.save(followed));
+    }
+
+    public List<CookDTO> getFollowers(String username) {
+        Cook cook = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+
+//        return followerRepository.findAllByFollowed(cook).stream().map((follower -> new CookDTO(follower.getFollower()))).toList();
+
+        return cook.getFollowers().stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
     }
 
     private List<PublicationDTO> filterPublicationsByVisibility(List<Publication> publications, Cook user) {
@@ -303,15 +312,6 @@ public class CookService {
                     case SECRET -> user.equals(recipe.getCook());
                 })
                 .map(RecipeDTO::new)
-                .collect(Collectors.toList());
-    }
-
-    public List<CookDTO> getFollowers(String username) {
-        return cookRepository.findCookByUsername(username)
-                .orElseThrow(UserNotFoundException::new)
-                .getFollowers()
-                .stream()
-                .map(CookDTO::new)
                 .collect(Collectors.toList());
     }
 }

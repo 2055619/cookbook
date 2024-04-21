@@ -4,12 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import quixotic.projects.cookbook.model.enums.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @Entity
@@ -68,5 +64,10 @@ public class Recipe extends Publication {
     }
     public void removeDietType(DietType dietType) {
         this.dietTypes.remove(dietType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getId());
     }
 }

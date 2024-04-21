@@ -6,8 +6,8 @@ import quixotic.projects.cookbook.model.enums.PublicationType;
 import quixotic.projects.cookbook.model.enums.Visibility;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
-@EqualsAndHashCode(callSuper = true)
 //@AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -24,4 +24,8 @@ public class Trick extends Publication {
 
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getId());
+    }
 }

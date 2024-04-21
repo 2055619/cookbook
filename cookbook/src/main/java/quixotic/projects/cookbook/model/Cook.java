@@ -2,12 +2,9 @@ package quixotic.projects.cookbook.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.mapping.List;
-import org.springframework.boot.autoconfigure.amqp.RabbitConnectionDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import quixotic.projects.cookbook.model.enums.RecipeType;
 import quixotic.projects.cookbook.security.Role;
 import quixotic.projects.cookbook.model.enums.Unit;
 
@@ -47,15 +44,12 @@ public class Cook implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Unit otherUnit;
 
-    @OneToMany(mappedBy = "id", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<Cook> followers = new HashSet<>();
-
-    @OneToMany(mappedBy = "cook", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "follower", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<Follower> followers = new HashSet<>();
+    @OneToMany(mappedBy = "cook", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Publication> publications = new HashSet<>();
-
     @ElementCollection
     private Set<Long> savedRecipe = new HashSet<>();
-
     @OneToMany(mappedBy = "cook", fetch = FetchType.LAZY,cascade = CascadeType.PERSIST)
     private Set<Reaction> reactions = new HashSet<>();
 
@@ -68,42 +62,41 @@ public class Cook implements UserDetails {
     }
 
     // TODO: 2024-03-01 Fix the Stack overflow error (infinite getter loop)
-    public Set<Publication> getPublications() {
-        for (Publication publication : publications) {
-            System.out.println(publication.getId());
-        }
-        return Set.of();
-    }
+//    public Set<Publication> getPublications() {
+//        for (Publication publication : publications) {
+//            System.out.println("PUB:" + publication.getId());
+//        }
+//        return Set.of();
+//    }
 
-    public void addFollower(Cook cook) {
+    public void addFollower(Follower follower) {
         if (followers == null) {
             followers = new HashSet<>();
-        } else if (followers.contains(cook)) {
+        } else if (followers.contains(follower)) {
             throw new IllegalArgumentException("Cook is already following you");
         }
-        followers.add(cook);
+        System.out.println("Adding:" + follower);
+        followers.add(follower);
     }
 
-    public void removeFollower(Cook cook) {
-
-
+    public void removeFollower(Follower follower) {
         if (followers == null) {
             followers = new HashSet<>();
             return;
         }
-//        else if (!followers.contains(cook)) {
-//            throw new IllegalArgumentException("Cook is not following you");
-//        }
-        followers.remove(cook);
+        else if (!followers.contains(follower)) {
+            throw new IllegalArgumentException("Cook is not following you");
+        }
+        followers.remove(follower);
     }
 
     public Set<Cook> getFriends() {
         Set<Cook> friends = new HashSet<>();
-        for (Cook cook : followers) {
-            if (cook.getFollowers().contains(this)) {
-                friends.add(cook);
-            }
-        }
+//        for (Cook cook : followers) {
+//            if (cook.getFollowers().contains(this)) {
+//                friends.add(cook);
+//            }
+//        }
         return friends;
     }
 
