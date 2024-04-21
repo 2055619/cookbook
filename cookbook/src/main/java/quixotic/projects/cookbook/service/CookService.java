@@ -251,6 +251,10 @@ public class CookService {
         Cook follower = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
         Cook followed = cookRepository.findCookByUsername(usernameToFollow).orElseThrow(UserNotFoundException::new);
 
+        if (followerRepository.findByFollowedAndFollower(followed, follower).isPresent()){
+            throw new IllegalArgumentException("message.cookFollowed");
+        }
+
         return new FollowerDTO(followerRepository.save(Follower.builder().followed(followed).follower(follower).build()));
     }
 
@@ -272,6 +276,13 @@ public class CookService {
 
         List<Follower> followers = followerRepository.findAllByFollowed(cook);
         return followers.stream().map((follower -> new CookDTO(follower.getFollower()))).toList();
+    }
+
+    public List<CookDTO> getFollowing(String username) {
+        Cook cook = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        List<Follower> followers = followerRepository.findAllByFollower(cook);
+        return followers.stream().map((follower -> new CookDTO(follower.getFollowed()))).toList();
     }
 
     private List<PublicationDTO> filterPublicationsByVisibility(List<Publication> publications, Cook user) {

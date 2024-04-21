@@ -191,4 +191,44 @@ export class CookBookService {
                 return response.data;
             });
     }
+
+    async unfollow(username: string) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.delete(`/cook/usr/unfollow?username=${username}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async follow(username: string) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.put(`/cook/usr/follow?username=${username}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async getFollowers(username: string) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.get<IUser[]>(`/cook/usr/followers?username=${username}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async getFollowing(username: string) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.get<IUser[]>(`/cook/usr/following?username=${username}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
 }

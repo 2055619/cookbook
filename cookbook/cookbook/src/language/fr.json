@@ -58,6 +58,10 @@
   "linkCopied": "Lien copié",
   "starFilter": "Filtrer par note",
   "stars": "Nombre d'étoile minimum",
+  "followers": "Abonnés",
+  "following": "Abonnements",
+  "follow": "S'abonner",
+  "unfollow": "Se désabonner",
   "pages": {
     "home": {
       "title": "Bienvenue sur Cookbook"
