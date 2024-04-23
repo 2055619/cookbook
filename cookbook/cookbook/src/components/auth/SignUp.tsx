@@ -235,9 +235,9 @@ function SignUp({setUser}: ISignUpProps) {
                         </select>
                     </div>
                 </div>
-                <div className="" onClick={() => setLawCheck(!lawCheck)}>
-                    <input type={"checkbox"} checked={lawCheck} className={"mx-2"} />
-                    <label>{t('pages.auth.law25')}</label>
+                <div className="clickable" onClick={() => setLawCheck(!lawCheck)}>
+                    <input  type={"checkbox"} checked={lawCheck} className={"mx-2 clickable"} />
+                    <label className={"mx-2 clickable"}>{t('pages.auth.law25')}</label>
                 </div>
                 <span className={"clickable "} onClick={() => navigate("/policies")}>{t('seePolicy')}</span>
             </div>

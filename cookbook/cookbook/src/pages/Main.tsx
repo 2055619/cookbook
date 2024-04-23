@@ -25,7 +25,7 @@ function Main() {
             <Header user={user} setUser={setUser}/>
             <main className="min-h-screen bg-cook text-cook font-semibold">
                 <div className="flex">
-                    <LeftAside setFilters={setFilters}/>
+                    <LeftAside user={user} setFilters={setFilters}/>
                     <div className="w-full md:w-full">
                         <Routes>
                             <Route path="/*" element={<AnyonePages setUser={setUser}/>}/>
@@ -33,7 +33,7 @@ function Main() {
                             <Route path="*" element={<PageNotFound/>}/>
                         </Routes>
                     </div>
-                    <RightAside/>
+                    <RightAside user={user}/>
                 </div>
             </main>
             <Footer/>

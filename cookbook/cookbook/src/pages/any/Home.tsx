@@ -1,6 +1,5 @@
 import {useTranslation} from "react-i18next";
 import React from "react";
-import {toast} from "react-toastify";
 import SupportDevs from "../../components/main/SupportDevs";
 
 function Home() {
