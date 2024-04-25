@@ -40,7 +40,6 @@ Nous savons tous que les évènements tels que noël, les BBQ, les repas-partage
 - Trier les recettes par note, popularité, etc.
 - Consulter une recette du jour
 - Consulter une astuce culinaire du jour
-- Ajout de suggestion pour améliorer la recette
 - Ajout de suggestion pour améliorer le site en général
 
 ### Ajout de fonctionnalités futures

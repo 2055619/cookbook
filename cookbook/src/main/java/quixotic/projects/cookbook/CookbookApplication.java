@@ -145,7 +145,7 @@ public class CookbookApplication implements CommandLineRunner {
                 .title("Saumure pour saumon")
                 .description("La meilleure recette de saumure qui existe")
                 .cookUsername("TheCook")
-                .visibility(Visibility.FRIENDS)
+                .visibility(Visibility.PUBLIC)
                 .instructions(Set.of("Mélanger tous les ingrédients ensemble",
                         "Mettre le une couche d'environ 1 pouce de la saumure dans le fond d'un plat avec un couvercle",
                         "Mettre le saumon avec le muscle vers le bas, donc la peau vers le haut",
@@ -205,6 +205,31 @@ public class CookbookApplication implements CommandLineRunner {
                 .dietTypes(List.of(DietType.CARNIVORE, DietType.OTHER))
 //                .image()
                 .build());
+
+//        cookService.createRecipe(RecipeDTO.builder()
+//                .title("Muffins à la citrouille")
+//                .description("La meilleure recette de muffins à la citrouille")
+//                .cookUsername("TheCook")
+//                .visibility(Visibility.PUBLIC)
+//                .instructions(Set.of(
+//                        "Mélanger tous les ingrédients ensemble"
+//                ))
+//                .ingredients(Set.of(
+//                        IngredientDTO.builder()
+//                                .name("Filet de saumon")
+//                                .quantity(1000).ingredientState(IngredientState.SOLID)
+//                                .unit(Unit.GRAM)
+//                                .build()
+//                ))
+//                .category(RecipeType.APPETIZER)
+//                .serving(4)
+//                .prepTime(20)
+//                .cookTime(0)
+//                .difficulty(DifficultyLevel.MEDIUM)
+//                .portionSize(PortionSize.LARGE)
+//                .dietTypes(List.of(DietType.CARNIVORE, DietType.OTHER))
+////                .image()
+//                .build());
 
         cookService.createRecipe(RecipeDTO.builder()
                 .title("Pancakes")
