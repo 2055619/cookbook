@@ -36,7 +36,7 @@ Nous savons tous que les évènements tels que noël, les BBQ, les repas-partage
 - Créer une liste de recette
 - Créer un menu
 - Créer un évènement (Ex: Souper de Noël, BBQ, Repas-partage/PotLuck, etc.)
-- Rechercher une recette par titre, ingrédients, catégorie, etc.
+- Rechercher/Filtrer une recette par titre, ingrédients, catégorie, etc.
 - Trier les recettes par note, popularité, etc.
 - Consulter une recette du jour
 - Consulter une astuce culinaire du jour
@@ -50,6 +50,8 @@ Nous savons tous que les évènements tels que noël, les BBQ, les repas-partage
 - Commander des ingrédients pour une ou plusieurs recette(s)
 - Gestion des allergies
 - Comparer le profil de gout pour trouver des recettes similaires
+- Créer des pages de restaurants pour les recettes les plus populaires
+- Une Intelligence Artificielle pour suggérer des recettes selon vos goûts
 
 ## Technologies
 Pour ce projet, j'utiliserai les technologies suivantes :
