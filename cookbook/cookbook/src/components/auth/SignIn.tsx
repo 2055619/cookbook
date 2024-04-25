@@ -79,7 +79,7 @@ function SignIn({setUser}: SignInProps) {
                     className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 m-5 p-2">
                 {t('signin')}
             </button>
-            <button type="button" onClick={() => {toast.error(t('message.notImplemented'))}}
+            <button type="button" onClick={() => {toast.info(t('message.notImplemented'))}}
                     className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 mb-5 p-2">
                 {t('pages.auth.forgotPassword')}
             </button>

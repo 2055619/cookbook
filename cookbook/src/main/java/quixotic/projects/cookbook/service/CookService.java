@@ -289,8 +289,11 @@ public class CookService {
         return publications.stream()
                 .filter(recipe -> switch (recipe.getVisibility()) {
                     case PUBLIC -> true;
-                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
-                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
+                    case FOLLOWERS -> user.equals(recipe.getCook()) || followerRepository.findByFollowedAndFollower(recipe.getCook(), user).isPresent();
+                    case FRIENDS -> user.equals(recipe.getCook()) || followerRepository.findByFollowedAndFollower(recipe.getCook(), user).isPresent() &&
+                            followerRepository.findByFollowedAndFollower(user, recipe.getCook()).isPresent();
+//                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
+//                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
                     case SECRET -> user.equals(recipe.getCook());
                 })
                 .map((publication -> switch (publication.getPublicationType()) {

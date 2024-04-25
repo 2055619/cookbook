@@ -197,7 +197,7 @@ function ProfileModification({user, setUser}: IProfileModificationProps) {
                 <div className="mb-3">
                     <h1 className={"text-3xl mb-2"}>{t('pages.auth.password')}</h1>
                     <button type="button"
-                            onClick={() => navigate('/u/passwordModify?username=' + user.username)}
+                            onClick={() => toast.info(t('message.notImplemented'))}
                             className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2 mx-2">
                         {t('modifyPassword')}
                     </button>

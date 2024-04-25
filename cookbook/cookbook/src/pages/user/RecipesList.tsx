@@ -8,6 +8,7 @@ import {IUser} from "../../assets/models/Authentication";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 import {useNavigate} from "react-router-dom";
+import Loading from "../../components/Utils/Loading";
 
 interface IUserRecipesProps {
     user: IUser;
@@ -51,13 +52,15 @@ function RecipesList({user}: IUserRecipesProps){
                     <div className={"grid grid-cols-1 gap-4"}>
                         {
                             recipes.map((recipe, index) => {
-                                return <div className={`flex justify-center`} key={index}>
+                                // return <div className={`flex justify-center `} key={index}>
+                                return <div className={`border rounded-lg px-4 mx-auto my-2 lg:w-3/5 w-full flex flex-col h-full justify-between `} key={index}>
                                     <RecipeCard recipe={recipe} username={user?.username} key={index}/>
                                 </div>
                             })
                         }
                     </div>
             }
+            <Loading/>
         </div>
     );
 }

@@ -145,7 +145,7 @@ public class CookbookApplication implements CommandLineRunner {
                 .title("Saumure pour saumon")
                 .description("La meilleure recette de saumure qui existe")
                 .cookUsername("TheCook")
-                .visibility(Visibility.PUBLIC)
+                .visibility(Visibility.FRIENDS)
                 .instructions(Set.of("Mélanger tous les ingrédients ensemble",
                         "Mettre le une couche d'environ 1 pouce de la saumure dans le fond d'un plat avec un couvercle",
                         "Mettre le saumon avec le muscle vers le bas, donc la peau vers le haut",
@@ -238,108 +238,6 @@ public class CookbookApplication implements CommandLineRunner {
                 .dietTypes(List.of(DietType.CARNIVORE))
                 .image(getImage())
                 .build());
-
-//        cookService.createRecipe(RecipeDTO.builder()
-//                .title("Pasta")
-//                .description("The best Pasta you'll ever eat")
-//                .cookUsername("testCook")
-//                .visibility(Visibility.SECRET)
-//                .instructions(Set.of("Mix the ingredients", "Cook the pancakes"))
-//                .ingredients(Set.of(
-//                        IngredientDTO.builder()
-//                                .name("Farine")
-//                                .quantity(2).ingredientState(IngredientState.LIQUID)
-//                                .unit(Unit.CUP)
-//                                .build(),
-//                        IngredientDTO.builder()
-//                                .name("Oeuf")
-//                                .quantity(2).ingredientState(IngredientState.COUNTABLE)
-//                                .unit(Unit.NUMBER)
-//                                .build(),
-//                        IngredientDTO.builder()
-//                                .name("Milk")
-//                                .quantity(1).ingredientState(IngredientState.LIQUID)
-//                                .unit(Unit.CUP)
-//                                .build()
-//                ))
-//                .category(RecipeType.BREAKFAST)
-//                .serving(4)
-//                .prepTime(10)
-//                .cookTime(10)
-//                .difficulty(DifficultyLevel.EASY)
-//                .portionSize(PortionSize.SMALL)
-//                .dietTypes(List.of(DietType.CARNIVORE))
-//                .build());
-//
-//        cookService.createRecipe(RecipeDTO.builder()
-//                .title("Chicken Alfredo")
-//                .description("Creamy and delicious chicken alfredo")
-//                .cookUsername("TheChef")
-//                .visibility(Visibility.PUBLIC)
-//                .instructions(Set.of("Boil the pasta", "Cook the chicken", "Mix with Alfredo sauce"))
-//                .ingredients(Set.of(
-//                        IngredientDTO.builder()
-//                                .name("Pasta")
-//                                .quantity(200).ingredientState(IngredientState.SOLID)
-//                                .unit(Unit.GRAM)
-//                                .build(),
-//                        IngredientDTO.builder()
-//                                .name("Chicken")
-//                                .quantity(200).ingredientState(IngredientState.SOLID)
-//                                .unit(Unit.GRAM)
-//                                .build(),
-//                        IngredientDTO.builder()
-//                                .name("Alfredo Sauce")
-//                                .quantity(100).ingredientState(IngredientState.LIQUID)
-//                                .unit(Unit.MILLILITER)
-//                                .build()
-//                ))
-//                .category(RecipeType.MAIN)
-//                .serving(2)
-//                .prepTime(15)
-//                .cookTime(15)
-//                .difficulty(DifficultyLevel.MEDIUM)
-//                .portionSize(PortionSize.MEDIUM)
-//                .dietTypes(List.of(DietType.CARNIVORE))
-//                .image(getImage())
-//                .build());
-//
-//        cookService.createRecipe(RecipeDTO.builder()
-//                .title("Vegan Salad")
-//                .description("Healthy and fresh vegan salad")
-//                .cookUsername("TheCook")
-//                .visibility(Visibility.PUBLIC)
-//                .instructions(Set.of("Chop the vegetables", "Mix with dressing"))
-//                .ingredients(Set.of(
-//                        IngredientDTO.builder()
-//                                .name("Lettuce")
-//                                .quantity(100).ingredientState(IngredientState.SOLID)
-//                                .unit(Unit.GRAM)
-//                                .build(),
-//                        IngredientDTO.builder()
-//                                .name("Tomato")
-//                                .quantity(1).ingredientState(IngredientState.COUNTABLE)
-//                                .unit(Unit.NUMBER)
-//                                .build(),
-//                        IngredientDTO.builder()
-//                                .name("Cucumber")
-//                                .quantity(1).ingredientState(IngredientState.COUNTABLE)
-//                                .unit(Unit.NUMBER)
-//                                .build(),
-//                        IngredientDTO.builder()
-//                                .name("Vegan Dressing")
-//                                .quantity(50).ingredientState(IngredientState.LIQUID)
-//                                .unit(Unit.MILLILITER)
-//                                .build()
-//                ))
-//                .category(RecipeType.SALAD)
-//                .serving(1)
-//                .prepTime(10)
-//                .cookTime(0)
-//                .difficulty(DifficultyLevel.EASY)
-//                .portionSize(PortionSize.SMALL)
-//                .dietTypes(List.of(DietType.VEGAN))
-//                .build());
     }
 
     private byte[] getImage() {
