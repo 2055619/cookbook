@@ -10,10 +10,11 @@ import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import ImageUpload from "../../components/publications/ImageUpload";
 
 interface RecipeModificationProps {
-    user: IUser;
+    user: IUser,
+    setPubType: (value: (((prevState: string) => string) | string)) => void
 }
 
-function RecipeModification({user}: RecipeModificationProps) {
+function RecipeModification({user, setPubType}: RecipeModificationProps) {
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
     const utilsService = new UtilsService();
@@ -72,8 +73,9 @@ function RecipeModification({user}: RecipeModificationProps) {
                     setImage(response.image || null);
                 })
                 .catch((error) => {
-                    if (error.response?.data.message !== "NoToken")
+                    if (error.response?.data.message !== "NoToken" && error.response?.data.message !== "RecipeNotFound"){
                         toast.error(t(error.response?.data.message));
+                    }
                 });
         }
     }, []);
@@ -85,7 +87,7 @@ function RecipeModification({user}: RecipeModificationProps) {
             })
             .catch((error) => {
                 if (error.response?.data.message !== "NoToken")
-                        toast.error(t(error.response?.data.message));
+                    toast.error(t(error.response?.data.message));
             });
 
         utilsService.getDifficultyLevels()
@@ -94,7 +96,7 @@ function RecipeModification({user}: RecipeModificationProps) {
             })
             .catch((error) => {
                 if (error.response?.data.message !== "NoToken")
-                        toast.error(t(error.response?.data.message));
+                    toast.error(t(error.response?.data.message));
             });
 
         utilsService.getVisibility()
@@ -103,7 +105,7 @@ function RecipeModification({user}: RecipeModificationProps) {
             })
             .catch((error) => {
                 if (error.response?.data.message !== "NoToken")
-                        toast.error(t(error.response?.data.message));
+                    toast.error(t(error.response?.data.message));
             });
 
         utilsService.getPortionSizes()
@@ -112,7 +114,7 @@ function RecipeModification({user}: RecipeModificationProps) {
             })
             .catch((error) => {
                 if (error.response?.data.message !== "NoToken")
-                        toast.error(t(error.response?.data.message));
+                    toast.error(t(error.response?.data.message));
             });
 
         utilsService.getDietTypes()
@@ -121,14 +123,14 @@ function RecipeModification({user}: RecipeModificationProps) {
             })
             .catch((error) => {
                 if (error.response?.data.message !== "NoToken")
-                        toast.error(t(error.response?.data.message));
+                    toast.error(t(error.response?.data.message));
             });
 
         utilsService.getIngrediantStates().then((response) => {
             setUnits(response);
         }).catch((error) => {
             if (error.response?.data.message !== "NoToken")
-                        toast.error(t(error.response?.data.message));
+                toast.error(t(error.response?.data.message));
         });
     }, []);
 
@@ -447,7 +449,7 @@ function RecipeModification({user}: RecipeModificationProps) {
                     ))}
                 </div>
 
-                <ImageUpload onImageUpload={setImage} />
+                <ImageUpload onImageUpload={setImage}/>
 
                 <h5 className="text-red-500">{t(dietTypeWarning)}</h5>
 

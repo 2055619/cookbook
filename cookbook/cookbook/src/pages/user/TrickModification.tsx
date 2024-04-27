@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'react-toastify';
-import { CookBookService } from '../../services/CookBookService';
-import { UtilsService } from '../../services/UtilsService';
-import { IUser } from '../../assets/models/Authentication';
+import React, {useState, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
+import {toast} from 'react-toastify';
+import {CookBookService} from '../../services/CookBookService';
+import {UtilsService} from '../../services/UtilsService';
+import {IUser} from '../../assets/models/Authentication';
 import {IRecipe, ITrick} from "../../assets/models/Publication";
 
 interface TrickModificationProps {
-    user: IUser;
+    user: IUser,
+    setPubType: (value: (((prevState: string) => string) | string)) => void
 }
 
-function TrickModification({ user }: TrickModificationProps) {
-    const { t } = useTranslation();
+function TrickModification({user, setPubType}: TrickModificationProps) {
+    const {t} = useTranslation();
     const cookbookService = new CookBookService();
     const utilsService = new UtilsService();
 
@@ -34,6 +35,7 @@ function TrickModification({ user }: TrickModificationProps) {
         if (title !== null) {
             cookbookService.getTrick(title)
                 .then((response) => {
+                    setPubType('trick')
                     setTrick(response);
 
                     setTitle(response.title);
@@ -56,7 +58,7 @@ function TrickModification({ user }: TrickModificationProps) {
             });
     }, []);
 
-    function isValid(){
+    function isValid() {
         let isValid = true;
 
         if (title === '') {
@@ -71,7 +73,7 @@ function TrickModification({ user }: TrickModificationProps) {
         return isValid;
     }
 
-    function handleSubmit(e: React.FormEvent){
+    function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
         const newTrick: ITrick = {
@@ -111,7 +113,8 @@ function TrickModification({ user }: TrickModificationProps) {
                     if (error.response?.data.message !== "NoToken")
                         toast.error(t(error.response?.data.message));
                 });
-        }    }
+        }
+    }
 
 
     return (

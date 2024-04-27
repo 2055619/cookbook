@@ -111,7 +111,7 @@ public class CookController {
                 .body(cookService.getTrickByTitle(token, title));
     }
 
-    @PutMapping("/trick/{id}")
+    @PutMapping("/trick")
     public ResponseEntity<PublicationDTO> updateTrick(@RequestBody TrickDTO trickDTO){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.updateTrick(trickDTO));

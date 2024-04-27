@@ -44,7 +44,7 @@ function PublicationOption({username, publication}: IPublicationOptionsProps) {
 
 
     function handleEdit() {
-        navigate(`/u/recipesModification?title=${publication.title}`);
+        navigate(`/u/publicationModification?title=${publication.title}`);
     }
 
     function handleDelete() {
@@ -72,18 +72,34 @@ function PublicationOption({username, publication}: IPublicationOptionsProps) {
     }
 
     function handleConfirmDelete() {
-        cookbookService.deleteRecipeById(publication.id!)
-            .then(r => {
-                toast.success("Delete")
-                setShowDeleteModal(false);
-                window.location.reload();
-            })
-            .catch(error => {
-                if (error.response?.data.message !== "NoToken")
-                    toast.error(t(error.response?.data.message));
-                setShowDeleteModal(false);
-            });
+        if (publication.publicationType === "RECIPE"){
+            cookbookService.deleteRecipeById(publication.id!)
+                .then(r => {
+                    toast.success("Delete")
+                    setShowDeleteModal(false);
+                    window.location.reload();
+                })
+                .catch(error => {
+                    if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
+                    setShowDeleteModal(false);
+                });
+            return;
+        } else if (publication.publicationType === "TRICK"){
+            cookbookService.deleteTrickById(publication.id!)
+                .then(r => {
+                    toast.success("Delete")
+                    setShowDeleteModal(false);
+                    window.location.reload();
+                })
+                .catch(error => {
+                    if (error.response?.data.message !== "NoToken")
+                        toast.error(t(error.response?.data.message));
+                    setShowDeleteModal(false);
+                });
+            return;
 
+        }
     }
 
     function handleOptionClick(e: React.MouseEvent) {

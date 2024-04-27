@@ -178,7 +178,7 @@ export class CookBookService {
             });
     }
 
-    async deleteTrick(id: number) {
+    async deleteTrickById(id: number) {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: null});
 

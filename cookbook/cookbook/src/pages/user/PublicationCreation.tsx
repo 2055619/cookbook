@@ -1,8 +1,10 @@
 import { IUser } from "../../assets/models/Authentication";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import TrickModification from "./TrickModification";
 import RecipeModification from "./RecipeModification";
 import { useTranslation } from "react-i18next";
+import {toast} from "react-toastify";
+import { CookBookService } from "../../services/CookBookService";
 
 
 interface PublicationCreationProps {
@@ -11,8 +13,30 @@ interface PublicationCreationProps {
 
 function PublicationCreation({user}: PublicationCreationProps){
     const {t} = useTranslation();
+    const cookbookService = new CookBookService();
 
     const [publicationType, setPublicationType] = useState('recipe');
+
+
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const title = urlParams.get('title');
+        if (title !== null) {
+            cookbookService.getPublication(title)
+                .then((response) => {
+                    if (response.publicationType === "RECIPE"){
+                        setPublicationType('recipe');
+                    } else {
+                        setPublicationType('trick');
+                    }
+                })
+                .catch((error) => {
+                    if (error.response?.data.message !== "NoToken"){
+                        toast.error(t(error.response?.data.message));
+                    }
+                });
+        }
+    }, []);
 
     function handlePublicationTypeChange(event: React.ChangeEvent<HTMLSelectElement>){
         setPublicationType(event.target.value);
@@ -28,8 +52,8 @@ function PublicationCreation({user}: PublicationCreationProps){
                 <option value="trick">{t('trick')}</option>
             </select>
 
-            {publicationType === 'recipe' && <RecipeModification user={user}/>}
-            {publicationType === 'trick' && <TrickModification user={user}/>}
+            {publicationType === 'recipe' && <RecipeModification user={user} setPubType={setPublicationType}/>}
+            {publicationType === 'trick' && <TrickModification user={user} setPubType={setPublicationType}/>}
         </div>
     )
 }
