@@ -105,6 +105,26 @@ public class CookController {
                 .body(cookService.createTrick(trickDTO));
     }
 
+    @GetMapping("/trick/{title}")
+    public ResponseEntity<PublicationDTO> getTrickByTitle(@RequestHeader("Authorization") String token, @PathVariable String title){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.getTrickByTitle(token, title));
+    }
+
+    @PutMapping("/trick/{id}")
+    public ResponseEntity<PublicationDTO> updateTrick(@RequestBody TrickDTO trickDTO){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.updateTrick(trickDTO));
+    }
+
+    @DeleteMapping("/trick/{id}")
+    public ResponseEntity<Boolean> getTricks(@RequestHeader("Authorization") String token, @PathVariable Long id){
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(cookService.deleteTrickById(token, id));
+    }
+
+
+
 //    Reaction
     @GetMapping("/reactions/{id}")
     public ResponseEntity<List<ReactionDTO>> getReactions(@PathVariable("id") Long pubId){

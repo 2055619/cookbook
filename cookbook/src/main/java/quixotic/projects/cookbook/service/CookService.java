@@ -178,6 +178,36 @@ public class CookService {
         return new TrickDTO(trick);
     }
 
+    public PublicationDTO getTrickByTitle(String token, String title) {
+        Cook cook = cookRepository.findCookByUsername(jwtTokenProvider.getUsernameFromJWT(token)).orElseThrow(UserNotFoundException::new);
+
+        return filterPublicationsByVisibility(publicationRepository.findByTitle(title).stream().toList(), cook).get(0);
+    }
+
+    public boolean deleteTrickById(String token, Long id) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook cook = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+
+        Trick trick = (Trick) publicationRepository.findById(id).orElseThrow(PublicationNotFoundException::new);
+        if (!trick.getCook().equals(cook))
+            throw new WrongUserException();
+
+        publicationRepository.deleteById(id);
+
+        return true;
+    }
+
+    public PublicationDTO updateTrick(TrickDTO trickDTO) {
+        Trick trick = (Trick) publicationRepository.findById(trickDTO.getId()).orElseThrow(PublicationNotFoundException::new);
+
+        trick.setTitle(trickDTO.getTitle());
+        trick.setDescription(trickDTO.getDescription());
+        trick.setVisibility(trickDTO.getVisibility());
+        trick.setCook(cookRepository.findCookByUsername(trickDTO.getCookUsername()).orElseThrow(UserNotFoundException::new));
+
+        return new TrickDTO(publicationRepository.save(trick));
+    }
+
     //    Publications
     public List<PublicationDTO> getPublicationsByPage(int page, int size, String token) {
         if (page < 0 || size < 0)

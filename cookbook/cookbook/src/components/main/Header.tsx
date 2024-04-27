@@ -57,10 +57,10 @@ function Header({user, setUser}: IHeaderProps) {
                                          onClick={() => navigate('/u/recipes')}/>
                     </div>
                     <div className="flex items-center clickable"
-                         onClick={() => navigate('/u/recipesModification')}>
-                        <h1 className={"lg:block hidden"}>{t('createRecipe')}</h1>
+                         onClick={() => navigate('/u/publicationModification')}>
+                        <h1 className={"lg:block hidden"}>{t('createPublication')}</h1>
                         <FontAwesomeIcon className={"clickable ml-2 md:w-8 md:h-8"} icon={faPlus}
-                                         onClick={() => navigate('/u/recipesModification')}/>
+                                         onClick={() => navigate('/u/publicationModification')}/>
                     </div>
                     <ProfileSummary setUser={setUser} user={user}/>
                 </div>

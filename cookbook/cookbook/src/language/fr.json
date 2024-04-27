@@ -60,6 +60,7 @@
   "trick": "Astuce",
   "filter": "Filtre(s)",
   "creationDate": "Date de création",
+  "recipe":  "Recette",
   "recipeCreation": "recette créée avec succès",
   "reactions": "Réactions",
   "rate&comment": "Noter et commenter",
@@ -72,6 +73,12 @@
   "following": "Abonnements",
   "follow": "S'abonner",
   "unfollow": "Se désabonner",
+  "createTrick": "Créer une astuce",
+  "publicationCreation": "Création de la publication",
+  "createPublication": "Créer une publication",
+  "invalidForm": "Le formulaire est invalide",
+  "titleEmpty": "Le titre est vide",
+  "descriptionEmpty": "La description est vide",
   "pages": {
     "auth": {
       "title": "Connexion",

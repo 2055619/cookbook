@@ -1,6 +1,6 @@
 import {cookServerInstance} from "../App";
 import {IsignIn, IsignUp, IUser, IUserProfile} from "../assets/models/Authentication";
-import {IComment, IPublication, IReaction, IRecipe} from "../assets/models/Publication";
+import {IComment, IPublication, IReaction, IRecipe, ITrick} from "../assets/models/Publication";
 
 export class CookBookService {
 
@@ -144,6 +144,45 @@ export class CookBookService {
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
         return cookServerInstance.post(`/cook/usr/save?id=${id}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    // Trick
+    async createTrick(trick: ITrick) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.post(`/cook/trick`, trick)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async getTrick(title: string) {
+        return cookServerInstance.get<ITrick>(`/cook/trick/${title}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+
+    async updateTrick(trick: ITrick) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: null});
+
+        return cookServerInstance.put(`/cook/trick`, trick)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async deleteTrick(id: number) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: null});
+
+        return cookServerInstance.delete(`/cook/trick?id=${id}`)
             .then((response) => {
                 return response.data;
             });

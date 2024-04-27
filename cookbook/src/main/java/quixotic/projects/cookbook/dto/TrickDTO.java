@@ -1,9 +1,9 @@
 package quixotic.projects.cookbook.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Trick;
+import quixotic.projects.cookbook.model.enums.PublicationType;
 
 @AllArgsConstructor
 public class TrickDTO extends PublicationDTO {
@@ -13,6 +13,12 @@ public class TrickDTO extends PublicationDTO {
     }
 
     public Trick toEntity(Cook cook) {
-        return new Trick(this.getId(), this.getTitle(), this.getDescription(), cook, this.getCreationDate(), this.getVisibility());
+        return Trick.builder()
+                .title(this.getTitle())
+                .description(this.getDescription())
+                .visibility(this.getVisibility())
+                .cook(cook)
+                .date(this.getCreationDate())
+                .build();
     }
 }
