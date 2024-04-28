@@ -16,7 +16,13 @@ function Main() {
         {
             title: "",
             cookUsername: "",
-            creationDate: ""
+            creationDate: "",
+            difficulty: [],
+            recipeType: [],
+            ingredientName: "",
+            dietType: [],
+            prepTime: 0,
+            cookTime: 0,
         } as IFilters
     );
 

@@ -79,6 +79,12 @@
   "invalidForm": "Le formulaire est invalide",
   "titleEmpty": "Le titre est vide",
   "descriptionEmpty": "La description est vide",
+  "recipeType": "Type de recette",
+  "all": "Tous",
+  "publicationType": "Type de publication",
+  "maxCookingTime": "Temps de préparation et de cuisson maximum",
+  "maxCookTime": "Temps de cuisson maximum",
+  "maxPrepTime": "Temps de préparation maximum",
   "pages": {
     "auth": {
       "title": "Connexion",
@@ -172,6 +178,8 @@
     "passwords": "Les mots de passe ne correspondent pas",
     "password": "Votre mot de passe doit contenir au moins 8 caractères, une lettre majuscule, une lettre minuscule et un chiffre"
   },
+  "RECIPE": "Recette",
+  "TRICK": "Astuce",
   "KILOGRAM": "Kilogramme (kg)",
   "GRAM": "Gramme (g)",
   "MILLIGRAM": "Milligramme (mg)",

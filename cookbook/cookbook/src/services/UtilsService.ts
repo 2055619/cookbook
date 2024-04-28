@@ -46,4 +46,9 @@ export class UtilsService {
         return cookServerInstance.get(`/utils/conversion?quantity=${quantity}&from=${from}&to=${to}`)
             .then((response) => response.data);
     }
+
+    async getPublicationTypes() {
+        return cookServerInstance.get('/utils/publication-types')
+            .then((response) => response.data);
+    }
 }

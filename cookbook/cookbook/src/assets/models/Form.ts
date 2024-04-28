@@ -6,10 +6,18 @@ export interface IFormInput {
 }
 
 export interface IFilters {
+    publicationType?: string;
     title?: string;
     cookUsername?: string;
     averageRating?: number;
     creationDate?: string;
+    difficulty?: string[];
+    category?: string[];
+    ingredientName?: string;
+    dietTypes?: string[];
+    cookingTime?: number;
+    prepTime?: number;
+    cookTime?: number;
 }
 
 class FormInput implements IFormInput {
@@ -25,4 +33,5 @@ class FormInput implements IFormInput {
         this.warning = warning;
     }
 }
+
 export default FormInput;
