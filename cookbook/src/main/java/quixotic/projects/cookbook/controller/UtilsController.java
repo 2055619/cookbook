@@ -62,6 +62,12 @@ public class UtilsController {
                 .body(utilsService.getDietTypes());
     }
 
+    @GetMapping("publication-types")
+    public ResponseEntity<List<String>> getPublicationTypes() {
+        return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
+                .body(utilsService.getPublicationType());
+    }
+
     @GetMapping("conversion")
     public ResponseEntity<Float> getConversion(@PathParam("quantity") Float quantity, @PathParam("from") Unit from, @PathParam("to") Unit to) {
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)

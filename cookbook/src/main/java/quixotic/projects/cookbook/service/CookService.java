@@ -343,7 +343,6 @@ public class CookService {
                         }
                         yield new PublicationDTO(publication);
                     }
-                    case OTHER -> new PublicationDTO(publication);
                 })).collect(Collectors.toList());
     }
 

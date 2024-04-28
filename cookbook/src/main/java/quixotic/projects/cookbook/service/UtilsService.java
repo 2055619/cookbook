@@ -88,4 +88,11 @@ public class UtilsService {
         };
     }
 
+    public List<String> getPublicationType() {
+        List<String> pubTypes = new ArrayList<>();
+        for (PublicationType publicationType : PublicationType.values()) {
+            pubTypes.add(publicationType.name());
+        }
+        return pubTypes;
+    }
 }

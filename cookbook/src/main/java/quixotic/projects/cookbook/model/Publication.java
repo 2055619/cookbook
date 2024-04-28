@@ -34,7 +34,7 @@ public abstract class Publication {
     private Visibility visibility;
     private float averageRating = 0;
     @Enumerated(EnumType.STRING)
-    private PublicationType publicationType = PublicationType.OTHER;
+    private PublicationType publicationType;
     @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Reaction> reactions = new HashSet<>();
 
