@@ -54,7 +54,6 @@ function Header({user, setUser, setShowFilters, showFilters}: IHeaderProps) {
 
                 <SearchBox/>
                 <div className="flex justify-end items-center space-x-3">
-                    {/*TODO: Changer pour aller à la liste des recette*/}
                     <div className={"flex items-center clickable"}
                          onClick={() => navigate('/u/recipes')}>
                         <h1 className={"lg:block hidden"}>{t('recipesList')}</h1>

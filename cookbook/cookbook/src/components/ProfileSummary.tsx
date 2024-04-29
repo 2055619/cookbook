@@ -14,7 +14,6 @@ function ProfileSummary({setUser, user}: IProfileSummaryProps) {
     const navigate = useNavigate();
     const [showPopup, setShowPopup] = useState(false);
 
-    // TODO: Add sign out Page
     function SignOut() {
         sessionStorage.clear();
         setUser(null);

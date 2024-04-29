@@ -13,7 +13,7 @@ import Loading from "../../components/Utils/Loading";
 interface IUserRecipesProps {
     user: IUser;
 }
-// TODO: Maybe delete it???
+
 function RecipesList({user}: IUserRecipesProps){
     const {t} = useTranslation();
     const cookbookService = new CookBookService();

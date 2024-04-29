@@ -38,7 +38,6 @@ function Landing({username, user, filters}: ILandingProps) {
             const pub = await cookbookService.getPublications(page)
                 .then((response) => {
                     return response;
-                    // setPublications(response);
                 })
                 .catch((error) => {
                     if (error.response?.data.message !== "NoToken")
@@ -48,20 +47,6 @@ function Landing({username, user, filters}: ILandingProps) {
 
             return Array.from(new Set([...publications, ...pub]
                 .map(publication => {
-                    // if (publication.publicationType === "RECIPE" && (publication as IRecipe).instructions === undefined) {
-                    //     console.log("GET RECIPE", publication.title)
-                    //     cookbookService.getRecipe(publication.title)
-                    //         .then((response) => {
-                    //             publication = response;
-                    //         })
-                    //         .catch((error) => {
-                    //             if (error.response?.data.message !== "NoToken")
-                    //                 toast.error(t(error.response?.data.message));
-                    //         });
-                    //
-                    //     console.log("PUBLICATION", publication)
-                    // }
-                    // return publication;
 
                     return publication.title;
                 })))
