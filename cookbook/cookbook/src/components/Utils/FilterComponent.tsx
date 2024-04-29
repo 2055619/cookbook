@@ -152,65 +152,9 @@ function FilterComponent({setFilters}: IFiltersProps) {
         </>
     );
 
-    // const publicationFilters = (
-        // <form className={"sticky top-14"} onSubmit={handleSubmit}>
-        //     <h1 className={"text-4xl"}>{t('filter')}</h1>
-        //
-        //     <div>
-        //         <label className="block text-sm font-medium text-cook-light">{t('publicationType')}</label>
-        //         <select value={publicationType} onChange={(e) => setPublicationType(e.target.value)}
-        //                 className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-cook-light focus:border-cook-light sm:text-sm">
-        //             <option value="">{t('all')}</option>
-        //             {publicationTypes.map((type, index) => (
-        //                 <option key={index} value={type}>{t(type)}</option>
-        //             ))}
-        //         </select>
-        //     </div>
-        //
-        //     <div>
-        //         <label className="block text-sm font-medium text-cook-light">{t('title')}</label>
-        //         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)}
-        //                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-cook-light focus:border-cook-light sm:text-sm"/>
-        //     </div>
-        //
-        //     <div>
-        //         <label className="block text-sm font-medium text-cook-light">{t('pages.auth.username')}</label>
-        //         <input type="text" value={cookUsername} onChange={(e) => setCookUsername(e.target.value)}
-        //                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-cook-light focus:border-cook-light sm:text-sm"/>
-        //     </div>
-        //
-        //     <div>
-        //         <label className="block text-sm font-medium text-cook-light">{t('stars')}</label>
-        //         <StarDropdown selectedStars={stars} setSelectedStars={setStars}/>
-        //     </div>
-        //
-        //     <div>
-        //         <label className="block text-sm font-medium text-cook-light">{t('creationDate')}</label>
-        //         <input type="date" value={creationDate} onChange={(e) => setCreationDate(e.target.value)}
-        //                className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-cook-light focus:border-cook-light sm:text-sm"/>
-        //     </div>
-        //
-        //     {
-        //         publicationType === "RECIPE" || publicationType === "" ? recipeFilters : ""
-        //     }
-        //
-        //     <div className="flex justify-between mt-3">
-        //         <button type={"button"} onClick={handleReset}
-        //                 className="border border-cook-red text-cook-red hover:bg-cook-red hover:text-cook rounded transition ease-in duration-200 p-2 mx-2">
-        //             {t('input.reset')}
-        //         </button>
-        //
-        //         <button type="submit"
-        //                 className="border border-cook-light text-cook-light hover:bg-cook-light hover:text-cook rounded transition ease-in duration-200 p-2 mx-2">
-        //             {t('input.apply')}
-        //         </button>
-        //     </div>
-        // </form>
-    // );
-
     return (
-        <div className="">
-            <form className={"sticky top-14"} onSubmit={handleSubmit}>
+        <div  className={"bg-cook text-cook-light p-2 pb-14 md:pb-2 sticky top-10 md:top-0 z-50 md:z-0 h-screen overflow-auto"}>
+            <form className={""} onSubmit={handleSubmit}>
                 <h1 className={"text-4xl"}>{t('filter')}</h1>
 
                 <div>

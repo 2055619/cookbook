@@ -30,10 +30,21 @@ function Main() {
 
     return (
         <>
-            <Header user={user} setUser={setUser} setFilters={setFilters}/>
+            <Header user={user} setUser={setUser} setShowFilters={setShowFilters} showFilters={showFilters}/>
 
             {/*<button onClick={() => setShowFilters(!showFilters)}>Show Filters</button>*/}
-            {/*{showFilters && <FilterComponent user={user} setFilters={setFilters}/>}*/}
+            {/*{showFilters && <FilterComponent setFilters={setFilters}/>}*/}
+
+            {/*<button onClick={() => setShowFilters(!showFilters)} className="p-2 bg-blue-500 text-white rounded">*/}
+            {/*    Toggle Filter*/}
+            {/*</button>*/}
+
+            {showFilters && (
+                // <aside className="transition-all duration-500 ease-in-out transform translate-x-0">
+                    <FilterComponent setFilters={setFilters} />
+                // </aside>
+            )}
+
 
             <main className="min-h-screen bg-cook text-cook font-semibold">
                 <div className="flex">

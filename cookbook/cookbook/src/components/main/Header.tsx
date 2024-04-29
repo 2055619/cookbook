@@ -5,20 +5,18 @@ import logo from "../../assets/image/cookbookIcon.jpg";
 import {IUser} from "../../assets/models/Authentication";
 import ProfileSummary from "../ProfileSummary";
 import SearchBox from "./SearchBox";
-import {faHeart, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faBurger, faHeart, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useState} from "react";
-import LeftAside from "./LeftAside";
-import FilterComponent from "../Utils/FilterComponent";
 
 
 interface IHeaderProps {
     setUser: (user: IUser | null) => void;
     user: IUser | null;
-    setFilters: (filters: any) => void;
+    setShowFilters: (filters: boolean) => void;
+    showFilters: boolean;
 }
 
-function Header({user, setUser, setFilters}: IHeaderProps) {
+function Header({user, setUser, setShowFilters, showFilters}: IHeaderProps) {
     const {t} = useTranslation();
     const navigate = useNavigate();
 
@@ -47,10 +45,13 @@ function Header({user, setUser, setFilters}: IHeaderProps) {
     const UserHeader = () => {
         return (
             <>
+                <FontAwesomeIcon icon={faBars} className="md:hidden mx-0 w-5 h-5 ms-2" onClick={() => setShowFilters(!showFilters)}/>
+
                 <NavLink className="flex items-center" to="/u/landing">
-                    <img alt="Logo" className="h-10 w-10 mr-2" src={logo}/>
+                    <img alt="Logo" className="h-10 w-10" src={logo}/>
                     <h1 className="text-xl font-semibold hidden md:block">{t('name')}</h1>
                 </NavLink>
+
                 <SearchBox/>
                 <div className="flex justify-end items-center space-x-3">
                     {/*TODO: Changer pour aller à la liste des recette*/}
