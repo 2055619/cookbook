@@ -98,11 +98,9 @@ function Landing({username, user, filters}: ILandingProps) {
         )
     }
 
-    // "category", "difficulty", "serving", "portionSize", "prepTime", "cookTime", "dietTypes"
     return (
         <div className={"text-center"}>
             <FilterObjectList
-                // attributes={["title", "cookUsername", "creationDate", "averageRating", "difficulty", "recipeType", "ingredientName", "dietType", "prepTime", "cookTime"]}
                 items={publications}
                 renderItem={renderPublication}
                 filters={filters}

@@ -1,11 +1,9 @@
 import React from 'react'
 import {t} from "i18next";
 import {IPublication} from "../../assets/models/Publication";
-import {IFilters} from "../../assets/models/Form";
 
 interface IFilterObjectList {
     items: any[];
-    // attributes: string[];
     renderItem: (items: IPublication[]) => JSX.Element;
     filters: any;
 }
@@ -47,52 +45,6 @@ function FilterObjectList({items, renderItem, filters}: IFilterObjectList) {
             return true;
         })
         : []
-
-
-    // const filteredItems = Array.isArray(items)
-    //     ? items.filter(item => {
-    //         for (let key in filters) {
-    //             if (filters[key]) {
-    //                 if (Array.isArray(item[key])) {
-    //                     // If the item's attribute is an array (like dietType), check if it includes the filter
-    //                     if (!item[key].includes(filters[key])) {
-    //                         return false;
-    //                     }
-    //                 } else if (typeof item[key] === 'string' && !String(item[key]).toLowerCase().includes(filters[key].toLowerCase())) {
-    //                     return false;
-    //                 } else if (typeof item[key] === 'number' && item[key] <= Number(filters[key])) {
-    //                     return false;
-    //                 }
-    //             }
-    //
-    //             // if (filters[key] && String(item[key])) {
-    //             //     return false;
-    //             // }
-    //
-    //
-    //             // if (filters[key] && typeof item[key] === 'string' && !String(item[key]).toLowerCase().includes(filters[key].toLowerCase())) {
-    //             //     return false;
-    //             // }
-    //             // if (filters[key] && typeof item[key] === 'number' && item[key] <= Number(filters[key])) {
-    //             //     return false;
-    //             // }
-    //         }
-    //         console.log("Filters 2: ", filters)
-    //
-    //         return true;
-    //     })
-    //     : []
-
-    // const filteredItems = Array.isArray(items)
-    //     ? items.filter(item => {
-    //         for (let key in filters) {
-    //             if (String(item[key]).toLowerCase() !== filters[key].toLowerCase()) {
-    //                 return false;
-    //             }
-    //         }
-    //         return true;
-    //     })
-    //     : []
 
     return (
         <div className="">

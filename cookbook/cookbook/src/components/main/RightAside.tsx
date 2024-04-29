@@ -1,14 +1,16 @@
 import {IUser} from "../../assets/models/Authentication";
+import React, {useState} from "react";
+import { useTranslation } from "react-i18next";
 
 interface IRightAside {
     user: IUser | null;
 }
 function RightAside({user}: IRightAside) {
+    const {t} = useTranslation();
 
-    // TODO: Implement RightAside by adding the following
+    // TODO: Find something to put here
     return (
         <div className="w-1/4 text-white text-end me-2 hidden md:block">
-            {/*<h1>Right Aside</h1>*/}
 
         </div>
     );
