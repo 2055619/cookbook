@@ -7,14 +7,18 @@ import ProfileSummary from "../ProfileSummary";
 import SearchBox from "./SearchBox";
 import {faHeart, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useState} from "react";
+import LeftAside from "./LeftAside";
+import FilterComponent from "../Utils/FilterComponent";
 
 
 interface IHeaderProps {
     setUser: (user: IUser | null) => void;
     user: IUser | null;
+    setFilters: (filters: any) => void;
 }
 
-function Header({user, setUser}: IHeaderProps) {
+function Header({user, setUser, setFilters}: IHeaderProps) {
     const {t} = useTranslation();
     const navigate = useNavigate();
 

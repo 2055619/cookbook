@@ -9,6 +9,7 @@ import RightAside from "../components/main/RightAside";
 import UserPages from "./user/UserPages";
 import AnyonePages from "./any/AnyonePages";
 import {IFilters} from "../assets/models/Form";
+import FilterComponent from "../components/Utils/FilterComponent";
 
 function Main() {
     const [user, setUser] = useState<IUser | null>(null);
@@ -25,10 +26,15 @@ function Main() {
             cookTime: 0,
         } as IFilters
     );
+    const [showFilters, setShowFilters] = useState(false);
 
     return (
         <>
-            <Header user={user} setUser={setUser}/>
+            <Header user={user} setUser={setUser} setFilters={setFilters}/>
+
+            {/*<button onClick={() => setShowFilters(!showFilters)}>Show Filters</button>*/}
+            {/*{showFilters && <FilterComponent user={user} setFilters={setFilters}/>}*/}
+
             <main className="min-h-screen bg-cook text-cook font-semibold">
                 <div className="flex">
                     <LeftAside user={user} setFilters={setFilters}/>
