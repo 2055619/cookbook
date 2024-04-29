@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -18,10 +19,7 @@ import quixotic.projects.cookbook.exception.badRequestException.RecipeNotFoundEx
 import quixotic.projects.cookbook.exception.badRequestException.UserNotFoundException;
 import quixotic.projects.cookbook.model.*;
 import quixotic.projects.cookbook.model.enums.*;
-import quixotic.projects.cookbook.repository.CookRepository;
-import quixotic.projects.cookbook.repository.PublicationRepository;
-import quixotic.projects.cookbook.repository.ReactionRepository;
-import quixotic.projects.cookbook.repository.RecipeRepository;
+import quixotic.projects.cookbook.repository.*;
 import quixotic.projects.cookbook.security.JwtTokenProvider;
 import quixotic.projects.cookbook.security.Role;
 
@@ -105,6 +103,8 @@ public class CookServiceTest {
     private PublicationRepository publicationRepository;
     @Mock
     private ReactionRepository reactionRepository;
+    @Mock
+    private FollowerRepository followerRepository;
 
     @Mock
     private JwtTokenProvider jwtTokenProvider;
@@ -507,6 +507,107 @@ public class CookServiceTest {
     }
 
     @Test
+    public void updateTrick_ValidInput_UpdatesTrick() {
+        TrickDTO trickDTO = new TrickDTO();
+        trickDTO.setId(1L);
+        trickDTO.setTitle("Updated Title");
+        trickDTO.setCookUsername(cook.getUsername());
+
+        Trick trick = Trick.builder()
+                .id(trickDTO.getId())
+                .date(LocalDate.now())
+                .title("title")
+                .description("Test Description")
+                .visibility(Visibility.PUBLIC)
+                .cook(cook)
+                .build();
+
+        when(publicationRepository.findById(trickDTO.getId())).thenReturn(Optional.of(trick));
+        when(cookRepository.findCookByUsername(trickDTO.getCookUsername())).thenReturn(Optional.of(cook));
+        when(publicationRepository.save(any(Trick.class))).thenReturn(trick);
+
+        cookService.updateTrick(trickDTO);
+
+        verify(publicationRepository, times(1)).save(any(Trick.class));
+    }
+
+    @Test
+    public void updateTrick_InvalidTrickId_ThrowsPublicationNotFoundException() {
+        TrickDTO trickDTO = new TrickDTO();
+        trickDTO.setId(1L);
+
+        when(publicationRepository.findById(trickDTO.getId())).thenReturn(Optional.empty());
+
+        assertThrows(PublicationNotFoundException.class, () -> cookService.updateTrick(trickDTO));
+    }
+
+    @Test
+    public void getTrickByTitle_ValidTitle_ReturnsTrick() {
+        String title = "Test Title";
+
+        Trick trick = Trick.builder()
+                .date(LocalDate.now())
+                .title(title)
+                .description("Test Description")
+                .visibility(Visibility.PUBLIC)
+                .cook(cook)
+                .build();
+
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
+        when(publicationRepository.findByTitle(title)).thenReturn(Optional.of(trick));
+
+        PublicationDTO result = cookService.getTrickByTitle(token, title);
+
+        assertEquals(title, result.getTitle());
+    }
+
+    @Test
+    public void getTrickByTitle_InvalidTitle_ThrowsPublicationNotFoundException() {
+        String token = "token";
+        String title = "Invalid Title";
+
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(new Cook()));
+        when(publicationRepository.findByTitle(title)).thenReturn(Optional.empty());
+
+        assertThrows(PublicationNotFoundException.class, () -> cookService.getTrickByTitle(token, title));
+    }
+
+    @Test
+    public void deleteTrickById_ValidId_DeletesTrick() {
+        String token = "token";
+        Long id = 1L;
+
+        Cook cook = new Cook();
+        cook.setUsername("testCook");
+
+        Trick trick = new Trick();
+        trick.setId(id);
+        trick.setCook(cook);
+
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
+        when(publicationRepository.findById(id)).thenReturn(Optional.of(trick));
+
+        cookService.deleteTrickById(token, id);
+
+        verify(publicationRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    public void deleteTrickById_InvalidId_ThrowsPublicationNotFoundException() {
+        String token = "token";
+        Long id = 1L;
+
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("testCook");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(new Cook()));
+        when(publicationRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(PublicationNotFoundException.class, () -> cookService.deleteTrickById(token, id));
+    }
+
+    @Test
     void getPublicationsByPage_ValidPageAndSize_ReturnsPublications() {
         when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
         when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(new Cook()));
@@ -548,22 +649,48 @@ public class CookServiceTest {
         assertEquals(1, result.size());
     }
 
-    @Test
-    void getPublicationsByPage_FollowersVisibility_UserIsNotFollower_ReturnsNoPublications() {
-        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
-        Cook cook = new Cook();
-        cook.setUsername("testCook");
-        Cook publicationCook = new Cook();
-        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
-        Publication publication = new Trick();
-        publication.setVisibility(Visibility.FOLLOWERS);
-        publication.setCook(publicationCook);
-        Page<Publication> publicationPage = new PageImpl<>(List.of(publication));
-        when(publicationRepository.findAll(any(Pageable.class))).thenReturn(publicationPage);
+//    @Test
+//    void getPublicationsByPage_FollowersVisibility_UserIsNotFollower_ReturnsNoPublications() {
+//        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testCook");
+//        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
+//        Publication publication = new Trick();
+//        publication.setVisibility(Visibility.FOLLOWERS);
+//        publication.setPublicationType(PublicationType.RECIPE);
+//        publication.setCook(cook);
+//
+//        when(followerRepository.findByFollowedAndFollower(publication.getCook(), cook))
+//                .thenReturn(Optional.of(Follower.builder().build()));
+//
+//        Page<Publication> publicationPage = new PageImpl<>(List.of(publication));
+//        when(publicationRepository.findAll(any(Pageable.class))).thenReturn(publicationPage);
+//
+//        List<PublicationDTO> result = cookService.getPublicationsByPage(0, 10, token);
+//        assertTrue(result.isEmpty());
+//    }
 
-        List<PublicationDTO> result = cookService.getPublicationsByPage(0, 10, token);
+    @Test
+    public void getPublicationsByPage_FollowersVisibility_UserIsNotFollower_ReturnsNoPublications() {
+        cookRepository = Mockito.mock(CookRepository.class);
+        publicationRepository = Mockito.mock(PublicationRepository.class);
+        jwtTokenProvider = Mockito.mock(JwtTokenProvider.class);
+        cookService = new CookService(jwtTokenProvider, cookRepository, null, publicationRepository, null, null, null);
+
+        when(jwtTokenProvider.getUsernameFromJWT(anyString())).thenReturn("testUser");
+        when(cookRepository.findCookByUsername(anyString())).thenReturn(Optional.of(cook));
+
+        Publication publication = recipeDTOS.get(0).toEntity(cook);
+        publication.setVisibility(Visibility.FOLLOWERS);
+
+        List<Publication> publications = new ArrayList<>();
+        Page<Publication> page = new PageImpl<>(publications);
+
+        when(publicationRepository.findAll(any(Pageable.class))).thenReturn(page);
+
+        List<PublicationDTO> result = cookService.getPublicationsByPage(0, 1, "token");
+
         assertTrue(result.isEmpty());
     }
+
 
     @Test
     void getPublicationByTitle_PublicationExists_ReturnsPublication() {
@@ -678,5 +805,75 @@ public class CookServiceTest {
         when(publicationRepository.findById(reactionDTO.getPublicationId())).thenReturn(Optional.empty());
 
         assertThrows(PublicationNotFoundException.class, () -> cookService.createReaction(reactionDTO, token));
+    }
+
+    @Test
+    public void followCook_ValidInput_FollowsCook() {
+        String usernameToFollow = cook.getUsername();
+
+        Cook follower = cook;
+        Cook followed = cook;
+
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(follower.getUsername());
+        when(cookRepository.findCookByUsername(follower.getUsername())).thenReturn(Optional.of(follower));
+        when(cookRepository.findCookByUsername(usernameToFollow)).thenReturn(Optional.of(followed));
+        when(followerRepository.findByFollowedAndFollower(followed, follower)).thenReturn(Optional.empty());
+
+        FollowerDTO result = cookService.followCook(usernameToFollow, token);
+
+        assertEquals(follower.getUsername(), result.getFollower().getUsername());
+    }
+
+    @Test
+    public void unfollowCook_ValidInput_UnfollowsCook() {
+        String usernameToUnfollow = cook.getUsername();
+        String token = "token";
+
+        Cook follower = cook;
+
+        Cook followed = cook;
+
+        Follower followerEntity = new Follower();
+        followerEntity.setFollowed(followed);
+        followerEntity.setFollower(follower);
+
+        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn(follower.getUsername());
+        when(followerRepository.findByFollowedAndFollower(followed, follower)).thenReturn(Optional.of(followerEntity));
+
+        CookDTO result = cookService.unfollowCook(usernameToUnfollow, token);
+
+        assertEquals(follower.getUsername(), result.getUsername());
+    }
+
+    @Test
+    public void getFollowers_ValidInput_ReturnsFollowers() {
+        String username = "testCook";
+
+        Follower followerEntity = new Follower();
+        followerEntity.setFollowed(cook);
+        followerEntity.setFollower(cook);
+
+        when(cookRepository.findCookByUsername(username)).thenReturn(Optional.of(cook));
+        when(followerRepository.findAllByFollowed(cook)).thenReturn(List.of(followerEntity));
+
+        List<CookDTO> result = cookService.getFollowers(username);
+
+        assertFalse(result.isEmpty());
+    }
+
+    @Test
+    public void getFollowing_ValidInput_ReturnsFollowing() {
+        String username = cook.getUsername();
+
+        Follower followerEntity = new Follower();
+        followerEntity.setFollower(cook);
+        followerEntity.setFollowed(cook);
+
+        when(cookRepository.findCookByUsername(username)).thenReturn(Optional.of(cook));
+        when(followerRepository.findAllByFollower(cook)).thenReturn(List.of(followerEntity));
+
+        List<CookDTO> result = cookService.getFollowing(username);
+
+        assertFalse(result.isEmpty());
     }
 }

@@ -271,4 +271,15 @@ public class UtilsServiceTest {
         assertThrows(IllegalArgumentException.class, () -> utilsService.convert(null, Unit.CUP, Unit.OUNCE));
     }
 
+    @Test
+    public void getPublicationType_returnsCorrectPublicationTypes() {
+        List<String> publicationTypes = utilsService.getPublicationType();
+
+        assertNotNull(publicationTypes);
+        assertEquals(PublicationType.values().length, publicationTypes.size());
+
+        for (PublicationType type : PublicationType.values()) {
+            assertTrue(publicationTypes.contains(type.name()));
+        }
+    }
 }

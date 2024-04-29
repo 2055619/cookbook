@@ -430,8 +430,6 @@ public class CookControllerTest {
         TrickDTO trickDTO = new TrickDTO();
         trickDTO.setCookUsername("invalidCook");
 
-//        when(jwtTokenProvider.getUsernameFromJWT(token)).thenReturn("invalidCook");
-//        when(cookRepository.findCookByUsername(trickDTO.getCookUsername())).thenThrow(new UserNotFoundException());
         when(cookService.createTrick(any(TrickDTO.class))).thenThrow(new UserNotFoundException());
 
         mockMvc.perform(post("/api/v1/cook/trick")

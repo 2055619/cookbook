@@ -181,7 +181,7 @@ public class CookService {
     public PublicationDTO getTrickByTitle(String token, String title) {
         Cook cook = cookRepository.findCookByUsername(jwtTokenProvider.getUsernameFromJWT(token)).orElseThrow(UserNotFoundException::new);
 
-        return filterPublicationsByVisibility(publicationRepository.findByTitle(title).stream().toList(), cook).get(0);
+        return filterPublicationsByVisibility(List.of(publicationRepository.findByTitle(title).orElseThrow(PublicationNotFoundException::new)), cook).get(0);
     }
 
     public boolean deleteTrickById(String token, Long id) {
@@ -317,14 +317,12 @@ public class CookService {
 
     private List<PublicationDTO> filterPublicationsByVisibility(List<Publication> publications, Cook user) {
         return publications.stream()
-                .filter(recipe -> switch (recipe.getVisibility()) {
+                .filter(publication -> switch (publication.getVisibility()) {
                     case PUBLIC -> true;
-                    case FOLLOWERS -> user.equals(recipe.getCook()) || followerRepository.findByFollowedAndFollower(recipe.getCook(), user).isPresent();
-                    case FRIENDS -> user.equals(recipe.getCook()) || followerRepository.findByFollowedAndFollower(recipe.getCook(), user).isPresent() &&
-                            followerRepository.findByFollowedAndFollower(user, recipe.getCook()).isPresent();
-//                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
-//                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
-                    case SECRET -> user.equals(recipe.getCook());
+                    case FOLLOWERS -> user.equals(publication.getCook()) || followerRepository.findByFollowedAndFollower(publication.getCook(), user).isPresent();
+                    case FRIENDS -> user.equals(publication.getCook()) || followerRepository.findByFollowedAndFollower(publication.getCook(), user).isPresent() &&
+                            followerRepository.findByFollowedAndFollower(user, publication.getCook()).isPresent();
+                    case SECRET -> user.equals(publication.getCook());
                 })
                 .map((publication -> switch (publication.getPublicationType()) {
                     case RECIPE -> {
@@ -350,8 +348,9 @@ public class CookService {
         return recipes.stream()
                 .filter(recipe -> switch (recipe.getVisibility()) {
                     case PUBLIC -> true;
-                    case FOLLOWERS -> user.getFollowers().contains(recipe.getCook());
-                    case FRIENDS -> user.getFriends().contains(recipe.getCook());
+                    case FOLLOWERS -> user.equals(recipe.getCook()) || followerRepository.findByFollowedAndFollower(recipe.getCook(), user).isPresent();
+                    case FRIENDS -> user.equals(recipe.getCook()) || followerRepository.findByFollowedAndFollower(recipe.getCook(), user).isPresent() &&
+                            followerRepository.findByFollowedAndFollower(user, recipe.getCook()).isPresent();
                     case SECRET -> user.equals(recipe.getCook());
                 })
                 .map(RecipeDTO::new)
