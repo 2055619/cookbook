@@ -514,4 +514,159 @@ public class CookControllerTest {
                         .content(objectMapper.writeValueAsString(reactionDTO)))
                 .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void createReaction_ValidInput_ReturnsAccepted() throws Exception {
+        ReactionDTO reactionDTO = new ReactionDTO();
+        reactionDTO.setCookUsername("testCook");
+        reactionDTO.setPublicationId(1L);
+
+        when(cookService.createReaction(any(ReactionDTO.class), anyString())).thenReturn(reactionDTO);
+
+        mockMvc.perform(post("/api/v1/cook/react")
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(reactionDTO)))
+                .andExpect(status().isAccepted())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void createReaction_InvalidCook_ReturnsBadRequest() throws Exception {
+        ReactionDTO reactionDTO = new ReactionDTO();
+        reactionDTO.setCookUsername("invalidCook");
+
+        when(cookService.createReaction(any(ReactionDTO.class), anyString())).thenThrow(new UserNotFoundException());
+
+        mockMvc.perform(post("/api/v1/cook/react")
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(reactionDTO)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void createReaction_InvalidPublication_ReturnsBadRequest() throws Exception {
+        ReactionDTO reactionDTO = new ReactionDTO();
+        reactionDTO.setCookUsername("testCook");
+        reactionDTO.setPublicationId(1L);
+
+        when(cookService.createReaction(any(ReactionDTO.class), anyString())).thenThrow(new PublicationNotFoundException());
+
+        mockMvc.perform(post("/api/v1/cook/react")
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(611));
+    }
+
+    @Test
+    public void getTrickByTitle_ValidTitle_ReturnsTrick() throws Exception {
+        String title = "Test Title";
+
+        TrickDTO trickDTO = new TrickDTO();
+        trickDTO.setTitle(title);
+
+        when(cookService.getTrickByTitle(token, title)).thenReturn(trickDTO);
+
+        mockMvc.perform(get("/api/v1/cook/trick/{title}", title)
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted())
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(trickDTO)));
+    }
+
+    @Test
+    public void updateTrick_ValidInput_UpdatesTrick() throws Exception {
+        TrickDTO trickDTO = new TrickDTO();
+        trickDTO.setId(1L);
+        trickDTO.setTitle("Updated Title");
+
+        when(cookService.updateTrick(trickDTO)).thenReturn(trickDTO);
+
+        mockMvc.perform(put("/api/v1/cook/trick")
+                        .header("Authorization", token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(trickDTO)))
+                .andExpect(status().isAccepted())
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(trickDTO)));
+    }
+
+    @Test
+    public void deleteTrickById_ValidId_DeletesTrick() throws Exception {
+        Long id = 1L;
+
+        when(cookService.deleteTrickById(token, id)).thenReturn(true);
+
+        mockMvc.perform(delete("/api/v1/cook/trick/{id}", id)
+                        .header("Authorization", token))
+                .andExpect(status().isAccepted())
+                .andExpect(content().string("true"));
+    }
+
+    @Test
+    public void followUser_ValidInput_FollowsUser() throws Exception {
+        String username = "testUser";
+
+        FollowerDTO followerDTO = new FollowerDTO();
+        followerDTO.setFollowed(CookDTO.builder().username(username).build());
+
+        when(cookService.followCook(username, token)).thenReturn(followerDTO);
+
+        mockMvc.perform(put("/api/v1/cook/usr/follow")
+                .header("Authorization", token)
+                .param("username", username))
+                .andExpect(status().isAccepted())
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(followerDTO)));
+    }
+
+    @Test
+    public void unfollowUser_ValidInput_UnfollowsUser() throws Exception {
+        String username = "testUser";
+
+        CookDTO cookDTO = new CookDTO();
+        cookDTO.setUsername(username);
+
+        when(cookService.unfollowCook(username, token)).thenReturn(cookDTO);
+
+        mockMvc.perform(delete("/api/v1/cook/usr/unfollow")
+                .header("Authorization", token)
+                .param("username", username))
+                .andExpect(status().isAccepted())
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(cookDTO)));
+    }
+
+    @Test
+    public void getFollowers_ValidUsername_ReturnsFollowers() throws Exception {
+        String username = "testUser";
+
+        List<CookDTO> followers = new ArrayList<>();
+        CookDTO cookDTO = new CookDTO();
+        cookDTO.setUsername(username);
+        followers.add(cookDTO);
+
+        when(cookService.getFollowers(username)).thenReturn(followers);
+
+        mockMvc.perform(get("/api/v1/cook/usr/followers")
+                        .header("Authorization", token)
+                        .param("username", username))
+                .andExpect(status().isAccepted())
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(followers)));
+    }
+
+    @Test
+    public void getFollowing_ValidUsername_ReturnsFollowing() throws Exception {
+        String username = "testUser";
+
+        List<CookDTO> following = new ArrayList<>();
+        CookDTO cookDTO = new CookDTO();
+        cookDTO.setUsername(username);
+        following.add(cookDTO);
+
+        when(cookService.getFollowing(username)).thenReturn(following);
+
+        mockMvc.perform(get("/api/v1/cook/usr/following")
+                        .header("Authorization", token)
+                        .param("username", username))
+                .andExpect(status().isAccepted())
+                .andExpect(content().json(new ObjectMapper().writeValueAsString(following)));
+    }
 }
