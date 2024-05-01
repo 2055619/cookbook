@@ -151,11 +151,20 @@ function PublicationOption({username, publication}: IPublicationOptionsProps) {
 
                         </>
                     )}
-                    <button
-                        onClick={handleSave}
-                        className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook transition ease-in duration-200 py-1 w-full">
-                        {t('input.favorite')}
-                    </button>
+                    {
+                        publication.publicationType === "RECIPE" && (
+                            <button
+                                onClick={handleSave}
+                                className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook transition ease-in duration-200 py-1 w-full">
+                                {t('input.favorite')}
+                            </button>
+                        )
+                    }
+                    {/*<button*/}
+                    {/*    onClick={handleSave}*/}
+                    {/*    className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook transition ease-in duration-200 py-1 w-full">*/}
+                    {/*    {t('input.favorite')}*/}
+                    {/*</button>*/}
                     <button
                         onClick={handleReport}
                         className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook transition ease-in duration-200 py-1 w-full">
