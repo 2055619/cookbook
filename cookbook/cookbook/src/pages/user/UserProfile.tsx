@@ -31,15 +31,18 @@ function UserProfile({user}: IUserProfileProps) {
     const [followerCount, setFollowerCount] = useState<number>(0);
     const [followingCount, setFollowingCount] = useState<number>(0);
     const [username, setUsername] = useState<string>("");
+    const [tmpUser, setTmpUser] = useState<string | null>("");
 
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        const username = urlParams.get('username');
+        const newUsername = urlParams.get('username');
+        
+        setTmpUser(newUsername! + Math.random().toString());
 
-        if (username) {
-            setUsername(username);
+        if (newUsername && newUsername !== username) {
+            setUsername(newUsername);
 
-            cookbookService.getUserProfile(username)
+            cookbookService.getUserProfile(newUsername)
                 .then((response) => {
                     setUserProfile(response);
                 })
@@ -48,8 +51,7 @@ function UserProfile({user}: IUserProfileProps) {
                         toast.error(t(error.response?.data.message));
                 });
         }
-
-    }, [user]);
+    }, [tmpUser, username]);
 
     useEffect(() => {
         updateFollowersAndFollowing();
