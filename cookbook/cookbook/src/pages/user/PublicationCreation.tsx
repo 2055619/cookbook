@@ -46,7 +46,7 @@ function PublicationCreation({user}: PublicationCreationProps){
         <div>
             <h1 className={"text-5xl"}>{t('publicationCreation')}</h1>
             <select
-                className={"mt-2 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook focus:ring-cook text-base"}
+                className={"mt-2 w-1/12 h-10 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook focus:ring-cook text-base"}
                 value={publicationType} onChange={handlePublicationTypeChange}>
                 <option value="recipe">{t('recipe')}</option>
                 <option value="trick">{t('trick')}</option>

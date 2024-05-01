@@ -20,6 +20,7 @@ function Reactions({publication, username}: ReactionProps) {
 
     const [reactions, setReactions] = useState<IReaction[]>([]);
     const [avgRating, setAvgRating] = useState(0);
+    const [newRating, setNewRating] = useState(0);
     const [starFilter, setStarFilter] = useState(0);
     const stars = [1, 2, 3, 4, 5];
 
@@ -41,7 +42,7 @@ function Reactions({publication, username}: ReactionProps) {
                 }
             });
 
-    }, [publication]);
+    }, [publication, newRating]);
 
     return (
         <div id={"reactions"} className={"mt-2"}>
@@ -61,7 +62,7 @@ function Reactions({publication, username}: ReactionProps) {
             {
                 reactions.filter((reaction) => reaction.cookUsername === username).length === 0 &&
                 <CommentForm setReactions={setReactions} reactions={reactions} publication={publication}
-                             username={username}/>
+                             username={username} setNewRating={setNewRating}/>
             }
 
             <label className={"text-2xl me-3"}>{t('starFilter')}</label>

@@ -50,7 +50,7 @@ function StarDropdown({selectedStars, setSelectedStars}: StarDropdownProps) {
                     <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                         <button type="button"
                                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                role="menuitem" onClick={() => handleStarClick(0)}>All
+                                role="menuitem" onClick={() => handleStarClick(0)}>{t('all')}
                         </button>
                         {stars.map((star, index) => (
                             <button key={index} type="button"

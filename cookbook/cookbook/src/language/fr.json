@@ -67,7 +67,7 @@
   "comment": "Commentaire",
   "NoToken": "Vous n'avez pas de jeton",
   "linkCopied": "Lien copié",
-  "starFilter": "Filtrer par note",
+  "starFilter": "Filtrer par la note minimum",
   "stars": "Nombre d'étoile minimum",
   "followers": "Abonnés",
   "following": "Abonnements",

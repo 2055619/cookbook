@@ -206,30 +206,65 @@ public class CookbookApplication implements CommandLineRunner {
 //                .image()
                 .build());
 
-//        cookService.createRecipe(RecipeDTO.builder()
-//                .title("Muffins à la citrouille")
-//                .description("La meilleure recette de muffins à la citrouille")
-//                .cookUsername("TheCook")
-//                .visibility(Visibility.PUBLIC)
-//                .instructions(Set.of(
-//                        "Mélanger tous les ingrédients ensemble"
-//                ))
-//                .ingredients(Set.of(
-//                        IngredientDTO.builder()
-//                                .name("Filet de saumon")
-//                                .quantity(1000).ingredientState(IngredientState.SOLID)
-//                                .unit(Unit.GRAM)
-//                                .build()
-//                ))
-//                .category(RecipeType.APPETIZER)
-//                .serving(4)
-//                .prepTime(20)
-//                .cookTime(0)
-//                .difficulty(DifficultyLevel.MEDIUM)
-//                .portionSize(PortionSize.LARGE)
-//                .dietTypes(List.of(DietType.CARNIVORE, DietType.OTHER))
-////                .image()
-//                .build());
+        cookService.createRecipe(RecipeDTO.builder()
+                .title("Muffins à la citrouille")
+                .description("La meilleure recette de muffins à la citrouille")
+                .cookUsername("TheCook")
+                .visibility(Visibility.PUBLIC)
+                .instructions(Set.of(
+                        "Mélanger tous les ingrédients ensemble"
+                ))
+                .ingredients(Set.of(
+                        IngredientDTO.builder()
+                                .name("Sucre")
+                                .quantity(2).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.CUP)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Farine")
+                                .quantity(3).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.CUP)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Poudre à pâte")
+                                .quantity(2).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.TEASPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("bicarbonate de sodium")
+                                .quantity(3).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.TEASPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Canelle")
+                                .quantity(3).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.TEASPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Citrouille en purée")
+                                .quantity(1.5f).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.CUP)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Oeuf")
+                                .quantity(4).ingredientState(IngredientState.COUNTABLE)
+                                .unit(Unit.NUMBER)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Huile végétale")
+                                .quantity(1.5f).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.TEASPOON)
+                                .build()
+                        ))
+                .category(RecipeType.DESSERT)
+                .serving(12)
+                .prepTime(30)
+                .cookTime(60)
+                .difficulty(DifficultyLevel.EASY)
+                .portionSize(PortionSize.MEDIUM)
+                .dietTypes(List.of(DietType.OTHER))
+//                .image()
+                .build());
 
         cookService.createRecipe(RecipeDTO.builder()
                 .title("Pancakes")

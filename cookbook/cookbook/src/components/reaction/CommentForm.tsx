@@ -11,9 +11,10 @@ interface CommentsCardProps {
     reactions: IReaction[];
     publication: IPublication;
     username: string;
+    setNewRating: (avgRating: number) => void;
 }
 
-function CommentForm({setReactions, reactions, publication, username}: CommentsCardProps) {
+function CommentForm({setReactions, reactions, publication, username, setNewRating}: CommentsCardProps) {
     const cookbookService = new CookBookService();
     const {t} = useTranslation();
 
@@ -44,6 +45,7 @@ function CommentForm({setReactions, reactions, publication, username}: CommentsC
         cookbookService.reactPublication(reaction)
             .then((response) => {
                 setReactions([...reactions, response]);
+                setNewRating(response.rating!);
             })
             .catch((error) => {
                 if (error.response?.data.message !== "NoToken")
