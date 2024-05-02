@@ -191,55 +191,33 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                 </select>
             </form>
 
-            <h1 className={"text-4xl"}>{t('ingredients')}</h1>
-            <div className={"grid grid-cols-2 text-center"}>
-                <h1 className="text-3xl">{t('notUsed')}</h1>
-                <h1 className="text-3xl">{t('used')}</h1>
-
+            <div className={"text-center"}>
+                <h1 className={"text-4xl"}>{t('ingredients')}</h1>
                 <ul>
-                    {recipe.ingredients.filter(ingredient => !checkedIngredients.includes(ingredient.name)).map((ingredient, index) => (
-                        <li className={"grid lg:grid-cols-2"} key={index}>
-                            <div className={"clickable grid grid-cols-3 gap-0"} onClick={() => handleCheck(ingredient)}>
-                                <input className={"clickable"} type="checkbox" checked={false} readOnly={true}
+                    {recipe.ingredients.map((ingredient, index) => (
+                        <li className={`w-11/12 mx-auto ${checkedIngredients.includes(ingredient.name) ? "text-cook opacity-80" : ""}`}
+                            key={index}>
+                            <div className={"clickable grid grid-cols-12 gap-0"}
+                                 onClick={() => handleCheck(ingredient)}>
+                                <input className={"clickable col-span-1"} type="checkbox"
+                                       checked={checkedIngredients.includes(ingredient.name)} readOnly={true}
                                        id={`ingredient-${index}`}/>
-                                <span className={"mx-1 text-2xl"}>{ingredient.name}</span>
-                                <span className={"mx-1 text-3xl"}>{revisedQuantity(ingredient.quantity)}</span>
+                                <span
+                                    className={`mx-1 col-span-6 ${checkedIngredients.includes(ingredient.name) ? "text-sm" : "text-2xl"}`}>{ingredient.name}</span>
+                                <span
+                                    className={`mx-1 col-span-2 ${checkedIngredients.includes(ingredient.name) ? "text-sm" : "text-3xl"}`}>{revisedQuantity(ingredient.quantity)}</span>
+                                <select onClick={(e) => e.stopPropagation()}
+                                    className={"mx-1 my-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light text-base col-span-3"}
+                                    defaultValue={ingredient.unit}
+                                    onChange={(e) => handleUnitChange(ingredient, e.target.value)}>
+                                    {ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"] &&
+                                        ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"].map((unit, index) => (
+                                            <option key={index} value={unit}>{t(unit)}</option>
+                                        ))
+                                    }
+                                </select>
                             </div>
-                            <select
-                                className={"mx-1 my-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light focus:ring-cook-light text-base"}
-                                defaultValue={ingredient.unit}
-                                onChange={(e) => handleUnitChange(ingredient, e.target.value)}>
-                                {ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"] &&
-                                    ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"].map((unit, index) => (
-                                        <option key={index} value={unit}>{t(unit)}</option>
-                                    ))
-                                }
-                            </select>
                         </li>
-                    ))}
-                </ul>
-                <ul>
-                    {recipe.ingredients.filter(ingredient => checkedIngredients.includes(ingredient.name)).map((ingredient, index) => (
-                        <li key={index} className="text-cook opacity-80 grid lg:grid-cols-2 clickable"
-                            onClick={() => handleCheck(ingredient)}>
-                            <div className={"clickable grid grid-cols-3 gap-0"}>
-                                <input className={"clickable"} type="checkbox" checked={true} readOnly={true}
-                                       id={`ingredient-${index}`}/>
-                                <span className={"mx-1 text-2xl"}>{ingredient.name}</span>
-                                <span className={"mx-1 text-3xl"}>{revisedQuantity(ingredient.quantity)}</span>
-                            </div>
-                            <select
-                                className={"mx-1 my-1 bg-white border border-gray-300 rounded-md shadow-sm focus:border-cook-light focus:ring-cook-light text-base"}
-                                value={getUnit(ingredient)}
-                                disabled={true}>
-                                {
-                                    ing[ingredient.ingredientState as "SOLID" | "LIQUID" | "POWDER" | "OTHER"].map((unit, index) => (
-                                        <option key={index} value={unit}>{t(unit)}</option>
-                                    ))
-                                }
-                            </select>
-                        </li>
-
                     ))}
                 </ul>
             </div>

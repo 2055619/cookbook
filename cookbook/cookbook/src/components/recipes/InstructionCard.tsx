@@ -20,16 +20,26 @@ function InstructionCard({recipe}: IInstructionCardProps) {
     return (
         <div className="card mt-2">
             <h2 className={"text-4xl"}>{t('instructions')}</h2>
-            <span className={"text-2xl"}>{currentInstructionIndex+1}. {recipe.instructions[currentInstructionIndex]}</span>
+            {/*<span className={"text-2xl"}>{currentInstructionIndex+1}. {recipe.instructions[currentInstructionIndex]}</span>*/}
+
+            <div className={"text-2xl overflow-auto h-32 flex items-center justify-center"}
+                 style={{maxHeight: '100px'}}>
+                <span>{currentInstructionIndex + 1}. {recipe.instructions[currentInstructionIndex]}</span>
+            </div>
+
 
             {/*TODO: Add Image / Gifs    */}
 
             <div className={" mt-2"}>
-                <button className={"border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 py-1 px-3 mx-10"} onClick={handlePrevious} disabled={currentInstructionIndex === 0}>
+                <button
+                    className={"border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 py-1 px-3 mx-10"}
+                    onClick={handlePrevious} disabled={currentInstructionIndex === 0}>
                     {t('Previous')}
                 </button>
-                <span>instruction # {currentInstructionIndex+1}</span>
-                <button className={"border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 py-1 px-3 mx-10"} onClick={handleNext} disabled={currentInstructionIndex === recipe.instructions.length - 1}>
+                <span>instruction # {currentInstructionIndex + 1}</span>
+                <button
+                    className={"border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 py-1 px-3 mx-10"}
+                    onClick={handleNext} disabled={currentInstructionIndex === recipe.instructions.length - 1}>
                     {t('Next')}
                 </button>
             </div>
