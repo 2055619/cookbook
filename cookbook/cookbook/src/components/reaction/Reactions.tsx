@@ -38,7 +38,6 @@ function Reactions({publication, username}: ReactionProps) {
             .catch((error) => {
                 if (error.response?.data.message !== "NoToken" && error.message !== "No Publication ID"){
                     toast.error(t(error.response?.data.message));
-                    console.log(error)
                 }
             });
 

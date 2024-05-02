@@ -12,9 +12,6 @@ interface IPublicationCardProps {
 function PublicationCard({publication, username}: IPublicationCardProps) {
 
     function isRecipe(publication: IPublication): publication is IRecipe {
-        // if (publication.publicationType === "RECIPE" && (publication as IRecipe).instructions === undefined) {
-        //     console.log("Recipe: ", publication.title, (publication as IRecipe).dietTypes);
-        // }
         return publication.publicationType === "RECIPE";
     }
 

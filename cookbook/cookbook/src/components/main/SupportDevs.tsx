@@ -19,8 +19,6 @@ function SupportDevs(){
         navigator.clipboard.writeText(t('btcWallet'))
             .then(() => {
                 toast.success(t('message.btcAddressCopied'));
-
-                console.log('BTC address copied to clipboard');
             })
             .catch((error) => {
                 console.error('Failed to copy BTC address: ', error);
