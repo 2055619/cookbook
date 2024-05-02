@@ -29,7 +29,7 @@ function UserPages({user, setUser, filters}: IUserPage) {
     const navigate = useNavigate();
     const {t} = useTranslation()
 
-    setInterval(checkToken, 5000);
+    setInterval(checkToken, 100000);
 
     function checkToken() {
         cookbookService.getUser()

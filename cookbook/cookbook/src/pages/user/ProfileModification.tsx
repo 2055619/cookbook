@@ -91,6 +91,15 @@ function ProfileModification({user, setUser}: IProfileModificationProps) {
             ...units
         };
 
+        if (!emailReg.test(updatedUser.email)) {
+            setCreateFromInfo(createFormInfo.map((formInfo) => {
+                if (formInfo.name === 'email')
+                    formInfo.warning = 'message.emailInvalid';
+                return formInfo;
+            }))
+            return;
+        }
+
         await cookbookService.updateProfile(updatedUser)
             .then((response) => {
                 setUser(response);
@@ -140,52 +149,53 @@ function ProfileModification({user, setUser}: IProfileModificationProps) {
                     <h1 className={"text-3xl"}>{t('pages.auth.preference')}</h1>
                     <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-4 gap-1 mb-3 ">
                         <div className="my-1 lg:mr-0 mx-auto w-2/3" id="solidUnitSelect">
+                            <label >{t('pages.auth.solidUnit')}</label>
                             <select aria-label="Default select example"
                                     onChange={(event) => {
                                         setUnits({...units, solidUnit: event.target.value});
                                     }}
                                     value={units.solidUnit}
                                     className="form-select border border-cook-light rounded-md p-2 mx-auto w-11/12">
-                                <option>{t('pages.auth.solidUnit')}</option>
                                 {ing["SOLID"].map((unit, index) => (
                                     <option key={index} value={unit}>{t(unit)}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="my-1 mx-auto lg:mx-0 w-2/3" id="liquidUnitSelect">
+                            <label>{t('pages.auth.liquidUnit')}</label>
+
                             <select aria-label="Default select example"
                                     onChange={(event) => {
                                         setUnits({...units, liquidUnit: event.target.value});
                                     }}
                                     value={units.liquidUnit}
                                     className="form-select border border-cook-light rounded-md p-2 w-11/12">
-                                <option>{t('pages.auth.liquidUnit')}</option>
                                 {ing["LIQUID"].map((unit, index) => (
                                     <option key={index} value={unit}>{t(unit)}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="my-1 lg:mr-0 mx-auto w-2/3" id="powderUnitSelect">
+                            <label>{t('pages.auth.powderUnit')}</label>
                             <select aria-label="Default select example"
                                     onChange={(event) => {
                                         setUnits({...units, powderUnit: event.target.value});
                                     }}
                                     value={units.powderUnit}
                                     className="form-select border border-cook-light rounded-md p-2 w-11/12">
-                                <option>{t('pages.auth.powderUnit')}</option>
                                 {ing["POWDER"].map((unit, index) => (
                                     <option key={index} value={unit}>{t(unit)}</option>
                                 ))}
                             </select>
                         </div>
                         <div className="my-1 mx-auto lg:mx-0 w-2/3" id="otherUnitSelect">
+                            <label>{t('pages.auth.otherUnit')}</label>
                             <select aria-label="Default select example"
                                     onChange={(event) => {
                                         setUnits({...units, otherUnit: event.target.value});
                                     }}
                                     value={units.otherUnit}
                                     className="form-select border border-cook-light rounded-md p-2 w-11/12">
-                                <option>{t('pages.auth.otherUnit')}</option>
                                 {ing["OTHER"].map((unit, index) => (
                                     <option key={index} value={unit}>{t(unit)}</option>
                                 ))}
