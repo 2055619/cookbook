@@ -30,33 +30,24 @@ function Main() {
 
     return (
         <>
-            <Header user={user} setUser={setUser} setShowFilters={setShowFilters} showFilters={showFilters}/>
-
-            {/*<button onClick={() => setShowFilters(!showFilters)}>Show Filters</button>*/}
-            {/*{showFilters && <FilterComponent setFilters={setFilters}/>}*/}
-
-            {/*<button onClick={() => setShowFilters(!showFilters)} className="p-2 bg-blue-500 text-white rounded">*/}
-            {/*    Toggle Filter*/}
-            {/*</button>*/}
+            <Header user={user!} setUser={setUser} setShowFilters={setShowFilters} showFilters={showFilters}/>
 
             {showFilters && (
-                // <aside className="transition-all duration-500 ease-in-out transform translate-x-0">
                     <FilterComponent setFilters={setFilters} />
-                // </aside>
             )}
 
 
             <main className="min-h-screen bg-cook text-cook font-semibold">
                 <div className="flex">
-                    <LeftAside user={user} setFilters={setFilters}/>
+                    <LeftAside user={user!} setFilters={setFilters}/>
                     <div className="w-full md:w-full">
                         <Routes>
                             <Route path="/*" element={<AnyonePages setUser={setUser}/>}/>
-                            <Route path="/u/*" element={<UserPages setUser={setUser} user={user} filters={filters}/>}/>
+                            <Route path="/u/*" element={<UserPages setUser={setUser} user={user!} filters={filters}/>}/>
                             <Route path="*" element={<PageNotFound/>}/>
                         </Routes>
                     </div>
-                    <RightAside user={user}/>
+                    <RightAside user={user!}/>
                 </div>
             </main>
             <Footer/>

@@ -11,7 +11,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 interface IHeaderProps {
     setUser: (user: IUser | null) => void;
-    user: IUser | null;
+    user: IUser;
     setShowFilters: (filters: boolean) => void;
     showFilters: boolean;
 }

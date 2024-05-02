@@ -16,6 +16,7 @@ import {IFilters} from "../../assets/models/Form";
 import ReactionsPage from "./ReactionsPage";
 import {useTranslation} from "react-i18next";
 import PublicationCreation from "./PublicationCreation";
+import Loading from "../../components/Utils/Loading";
 
 interface IUserPage {
     user: IUser | null;
@@ -27,6 +28,19 @@ function UserPages({user, setUser, filters}: IUserPage) {
     const cookbookService = new CookBookService();
     const navigate = useNavigate();
     const {t} = useTranslation()
+
+    setInterval(checkToken, 5000);
+
+    function checkToken() {
+        cookbookService.getUser()
+            .then((response) => {
+                // setUser(response);
+            })
+            .catch((error) => {
+                toast.error(t(error.response?.data.message));
+                navigate('/authentication/signin');
+            });
+    }
 
     useEffect(() => {
         const token = sessionStorage.getItem('token');
@@ -53,17 +67,25 @@ function UserPages({user, setUser, filters}: IUserPage) {
 
     return (
         <div className={"min-h-screen bg-cook-orange text-center"}>
-            <Routes>
-                <Route path="landing" element={<Landing user={user!} filters={filters} />}/>
-                <Route path="recipes" element={<RecipesList user={user!}/>}/>
-                <Route path="recipeDetail" element={<RecipeDetails user={user!}/>}/>
-                <Route path="concoct" element={<ConcoctRecipe user={user!} />}/>
-                <Route path="publicationModification" element={<PublicationCreation user={user!}/>}/>
-                <Route path="profile" element={<UserProfile user={user!}/>}/>
-                <Route path="profileModify" element={<ProfileModification user={user!} setUser={setUser}/>}/>
-                <Route path="reactions" element={<ReactionsPage user={user}/>}/>
-                <Route path="*" element={<PageNotFound/>}/>
-            </Routes>
+            {
+                user === null ?
+                <div>
+                    <h1>{t('loading')}</h1>
+                    <Loading/>
+                </div> : (
+                        <Routes>
+                            <Route path="landing" element={<Landing user={user!} filters={filters} />}/>
+                            <Route path="recipes" element={<RecipesList user={user!}/>}/>
+                            <Route path="recipeDetail" element={<RecipeDetails user={user!}/>}/>
+                            <Route path="concoct" element={<ConcoctRecipe user={user!} />}/>
+                            <Route path="publicationModification" element={<PublicationCreation user={user!}/>}/>
+                            <Route path="profile" element={<UserProfile user={user!}/>}/>
+                            <Route path="profileModify" element={<ProfileModification user={user!} setUser={setUser}/>}/>
+                            <Route path="reactions" element={<ReactionsPage username={user!.username}/>}/>
+                            <Route path="*" element={<PageNotFound/>}/>
+                        </Routes>
+                    )
+            }
         </div>
     )
 }

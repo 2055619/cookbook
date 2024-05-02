@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import { useTranslation } from "react-i18next";
 
 interface IRightAside {
-    user: IUser | null;
+    user: IUser;
 }
 function RightAside({user}: IRightAside) {
     const {t} = useTranslation();

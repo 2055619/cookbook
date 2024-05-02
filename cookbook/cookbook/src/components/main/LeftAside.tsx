@@ -5,7 +5,7 @@ import FilterComponent from "../Utils/FilterComponent";
 
 interface ILeftAside {
     setFilters: (filters: IFilters) => void;
-    user: IUser | null;
+    user: IUser;
 }
 
 function LeftAside({setFilters, user}: ILeftAside) {

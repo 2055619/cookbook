@@ -11,10 +11,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
 interface IReactionsPageProps {
-    user: IUser | null;
+    username: string;
 }
 
-function ReactionsPage({user}: IReactionsPageProps) {
+function ReactionsPage({username}: IReactionsPageProps) {
     const cookbookService = new CookBookService();
     const {t} = useTranslation();
 
@@ -37,7 +37,7 @@ function ReactionsPage({user}: IReactionsPageProps) {
             toast.error(t('noPublicationForTitle'));
         }
 
-    }, [user]);
+    }, []);
 
     return (
         <div>
@@ -51,7 +51,7 @@ function ReactionsPage({user}: IReactionsPageProps) {
             <h1 className={"text-5xl"}>{publication?.title}</h1>
             <h1 className={"text-3xl"}>{publication?.description}</h1>
             <div className={"my-5"}></div>
-            <Reactions publication={publication!} username={user!.username}/>
+            <Reactions publication={publication!} username={username}/>
         </div>
     );
 // if (loading) {

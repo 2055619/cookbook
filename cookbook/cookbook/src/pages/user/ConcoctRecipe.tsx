@@ -163,7 +163,7 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
                     </button>
                 </div>
 
-                <h1 className={"text-7xl lg:text-9xl col-span-2"}>{recipe.title}</h1>
+                <h1 className={"text-7xl col-span-4"}>{recipe.title}</h1>
             </div>
 
             <p className={"text-2xl my-2"}>{t('prepTime') + ": " + recipe.prepTime}, {t('cookTime') + ": " + recipe.cookTime}</p>
