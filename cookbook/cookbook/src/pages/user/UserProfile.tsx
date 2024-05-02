@@ -136,7 +136,7 @@ function UserProfile({user}: IUserProfileProps) {
 
             {
                 user?.username === userProfile.username &&
-                <div className={"text-center"}>
+                <div className={"text-center mt-2"}>
                     <button
                         className="border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 p-2 w-1/6"
                         onClick={() => {
