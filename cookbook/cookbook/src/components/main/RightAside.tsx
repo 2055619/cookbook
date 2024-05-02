@@ -35,7 +35,7 @@ function RightAside({user}: IRightAside) {
 
     return (
         <div className="w-1/4 text-center me-2 hidden md:block text-cook-light sticky top-12 h-screen overflow-auto">
-            <h1 className="text-2xl">{t('followed')}</h1>
+            <h1 className="text-2xl">{t('followers')}</h1>
             <ul>
                 {followed.map((follower, index) => (
                     <li className="mb-0 p-1 mx-auto w-1/2 clickable hover:bg-cook-red hover:text-cook hover:rounded-full"
