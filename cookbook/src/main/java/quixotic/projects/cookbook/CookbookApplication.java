@@ -212,6 +212,7 @@ public class CookbookApplication implements CommandLineRunner {
                 .cookUsername("TheCook")
                 .visibility(Visibility.PUBLIC)
                 .instructions(Set.of(
+                        "À REMPLIR",
                         "Mélanger tous les ingrédients ensemble"
                 ))
                 .ingredients(Set.of(
