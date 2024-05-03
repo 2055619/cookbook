@@ -6,7 +6,7 @@
   "signup": "S'inscrire",
   "signout": "Se déconnecter",
   "welcome": "Bienvenue",
-  "profile": "Profile",
+  "profile": "Profil",
   "createRecipe": "Créer une nouvelle recette",
   "usrRecipes": "Mes recettes",
   "cookWelcome": "Bienvenue sur Cookbook",
@@ -85,6 +85,7 @@
   "maxCookingTime": "Temps de préparation et de cuisson maximum",
   "maxCookTime": "Temps de cuisson maximum",
   "maxPrepTime": "Temps de préparation maximum",
+  "hours": "heure(s)",
   "pages": {
     "auth": {
       "title": "Connexion",

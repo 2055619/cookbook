@@ -89,7 +89,7 @@ public class CookbookApplication implements CommandLineRunner {
     private void createRecipes() {
         cookService.createRecipe(RecipeDTO.builder()
                 .title("Foie Gras")
-                .description("C'est le foie gras de ma maraine, donc la meilleure recette de foie gras")
+                .description("C'est le foie gras de ma marraine, donc la meilleure recette de foie gras")
                 .cookUsername("TheCook")
                 .visibility(Visibility.PUBLIC)
                 .instructions(Set.of("Mettre le foie gras en puré à l'aide d'un couteau pour séparer les nerfs",
@@ -166,7 +166,7 @@ public class CookbookApplication implements CommandLineRunner {
                                 .unit(Unit.KILOGRAM)
                                 .build(),
                         IngredientDTO.builder()
-                                .name("Cassonage")
+                                .name("Cassonade")
                                 .quantity(6).ingredientState(IngredientState.POWDER)
                                 .unit(Unit.KILOGRAM)
                                 .build(),
@@ -186,7 +186,7 @@ public class CookbookApplication implements CommandLineRunner {
                                 .unit(Unit.TABLESPOON)
                                 .build(),
                         IngredientDTO.builder()
-                                .name("Fenouille en grain moulu grossièrement")
+                                .name("Fenouil en grain moulu grossièrement")
                                 .quantity(2).ingredientState(IngredientState.POWDER)
                                 .unit(Unit.TABLESPOON)
                                 .build(),

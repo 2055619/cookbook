@@ -85,6 +85,7 @@
   "maxCookingTime": "Maximum Preparation and Cooking Time",
   "maxCookTime": "Maximum Cooking Time",
   "maxPrepTime": "Maximum Preparation Time",
+  "hours": "hour(s)",
   "pages": {
     "auth": {
       "title": "Login",
