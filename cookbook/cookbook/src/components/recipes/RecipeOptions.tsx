@@ -70,18 +70,15 @@ function RecipeOptions({username, publication}: IRecipeOptionsProps) {
     }
 
     function handleConfirmDelete() {
-        cookbookService.deleteRecipeById(publication.id!)
+        cookbookService.deletePublicationById(publication.id!)
             .then(r => {
-                toast.success("Delete")
-                setShowDeleteModal(false);
                 window.location.reload();
+                toast.success(t('input.delete'))
             })
             .catch(error => {
                 if (error.response?.data.message !== "NoToken")
                     toast.error(t(error.response?.data.message));
-                setShowDeleteModal(false);
             });
-
     }
 
     function handleOptionClick(e: React.MouseEvent) {

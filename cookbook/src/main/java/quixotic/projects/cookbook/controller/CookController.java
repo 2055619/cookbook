@@ -2,6 +2,7 @@ package quixotic.projects.cookbook.controller;
 
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.mapping.Any;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -96,6 +97,12 @@ public class CookController {
     public ResponseEntity<PublicationDTO> getPublicationByTitle(@PathVariable String title, @RequestHeader("Authorization") String token){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.getPublicationByTitle(title, token));
+    }
+
+    @DeleteMapping("/publication")
+    public ResponseEntity<Any> deletePublicationById(@PathParam("id") Long id, @RequestHeader("Authorization") String token){
+        cookService.deletePublicationById(token, id);
+        return ResponseEntity.noContent().build();
     }
 
 //    Tricks

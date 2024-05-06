@@ -270,4 +270,13 @@ export class CookBookService {
                 return response.data;
             });
     }
+
+    async deletePublicationById(id: number) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.delete(`/cook/publication?id=${id}`).then((response) => {
+            return response.data;
+        });
+    }
 }

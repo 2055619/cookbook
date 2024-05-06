@@ -72,30 +72,15 @@ function PublicationOption({username, publication}: IPublicationOptionsProps) {
     }
 
     function handleConfirmDelete() {
-        if (publication.publicationType === "RECIPE"){
-            cookbookService.deleteRecipeById(publication.id!)
-                .then(r => {
-                    window.location.reload();
-                    toast.success(t('input.delete'))
-                })
-                .catch(error => {
-                    if (error.response?.data.message !== "NoToken")
-                        toast.error(t(error.response?.data.message));
-                });
-            return;
-        } else if (publication.publicationType === "TRICK"){
-            cookbookService.deleteTrickById(publication.id!)
-                .then(r => {
-                    window.location.reload();
-                    toast.success(t('input.delete'))
-                })
-                .catch(error => {
-                    if (error.response?.data.message !== "NoToken")
-                        toast.error(t(error.response?.data.message));
-                });
-            return;
-
-        }
+        cookbookService.deletePublicationById(publication.id!)
+            .then(r => {
+                window.location.reload();
+                toast.success(t('input.delete'))
+            })
+            .catch(error => {
+                if (error.response?.data.message !== "NoToken")
+                    toast.error(t(error.response?.data.message));
+            });
         setShowDeleteModal(false);
     }
 

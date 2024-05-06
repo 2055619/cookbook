@@ -110,23 +110,23 @@ public class CookService {
 
     public void deleteRecipeById(Long id, String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook cook = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+        Publication publication = publicationRepository.findById(id).orElseThrow(PublicationNotFoundException::new);
 
-        System.out.println("id: " + id + "Username: " + username);
-        System.out.println("Recipe: " + recipeRepository.findById(id).get().getCook().getUsername());
+        if (!publication.getCook().equals(cook))
+            throw new WrongUserException();
 
-        if (recipeRepository.existsById(id) && recipeRepository.findById(id).get().getCook().getUsername().equals(username)) {
-            publicationRepository.deleteById(id);
-            recipeRepository.deleteById(id);
-            return;
-        }
-        throw new RecipeNotFoundException();
+        cook.removePublication(publication);
+        publicationRepository.delete(publication);
     }
 
     public void deleteRecipeByTitle(String title, String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
 
-        if (recipeRepository.existsByTitle(title) && recipeRepository.findByTitle(title).get().getCook().getUsername().equals(username))
+        if (recipeRepository.existsByTitle(title) && recipeRepository.findByTitle(title).get().getCook().getUsername().equals(username)){
+//            TODO: Remove user from recipe
             recipeRepository.deleteByTitle(title);
+        }
         else throw new RecipeNotFoundException();
     }
 
@@ -237,6 +237,20 @@ public class CookService {
                 .stream().findFirst()
                 .orElseThrow(PublicationNotFoundException::new);
     }
+
+    @Transactional
+    public void deletePublicationById(String token, Long id) {
+        String username = jwtTokenProvider.getUsernameFromJWT(token);
+        Cook cook = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
+        Publication publication = publicationRepository.findById(id).orElseThrow(PublicationNotFoundException::new);
+
+        if (!publication.getCook().equals(cook))
+            throw new WrongUserException();
+
+        cook.removePublication(publication);
+        publicationRepository.delete(publication);
+    }
+
 
     //    Reaction
     public List<ReactionDTO> getReactionsByPublication(Long pubId) {
