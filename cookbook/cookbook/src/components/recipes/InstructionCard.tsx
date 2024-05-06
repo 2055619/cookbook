@@ -31,17 +31,23 @@ function InstructionCard({recipe}: IInstructionCardProps) {
             {/*TODO: Add Image / Gifs    */}
 
             <div className={" mt-2"}>
-                <button
-                    className={"border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 py-1 px-3 mx-10"}
-                    onClick={handlePrevious} disabled={currentInstructionIndex === 0}>
-                    {t('Previous')}
-                </button>
+                {
+                    currentInstructionIndex >= 1 ?
+                        <button
+                            className={"border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 py-1 px-3 mx-10"}
+                            onClick={handlePrevious}>
+                            {t('Previous')}
+                        </button> : <button className={"invisible mx-16"}></button>
+                }
                 <span>instruction # {currentInstructionIndex + 1}</span>
-                <button
-                    className={"border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 py-1 px-3 mx-10"}
-                    onClick={handleNext} disabled={currentInstructionIndex === recipe.instructions.length - 1}>
-                    {t('Next')}
-                </button>
+                {
+                    currentInstructionIndex < recipe.instructions.length - 1 ?
+                        <button
+                            className={"border border-cook text-cook hover:bg-cook hover:text-cook-orange rounded transition ease-in duration-200 py-1 px-3 mx-10"}
+                            onClick={handleNext}>
+                            {t('Next')}
+                        </button> : <button className={"invisible mx-16"}></button>
+                }
             </div>
         </div>
     );

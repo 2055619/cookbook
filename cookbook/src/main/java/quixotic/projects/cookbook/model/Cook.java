@@ -58,6 +58,7 @@ public class Cook implements UserDetails {
     }
 
     public void removePublication(Publication publication) {
+        publication.setCook(null);
         publications.remove(publication);
     }
 

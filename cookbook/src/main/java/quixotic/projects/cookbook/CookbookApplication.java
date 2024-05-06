@@ -83,6 +83,16 @@ public class CookbookApplication implements CommandLineRunner {
                         .build()
                 )
         );
+        cookService.createTrick(
+                new TrickDTO(
+                        Trick.builder()
+                                .title("Une autre astuce")
+                                .description("Ne pas mettre de sel dans l'eau pour faire bouillir des pâtes")
+                                .visibility(Visibility.PUBLIC)
+                                .cook(Cook.builder().username("TheChef").build())
+                                .build()
+                )
+        );
 
     }
 

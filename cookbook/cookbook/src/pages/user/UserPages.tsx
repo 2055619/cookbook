@@ -19,7 +19,7 @@ import Loading from "../../components/Utils/Loading";
 
 interface IUserPage {
     user: IUser | null;
-    setUser: (user: IUser) => void;
+    setUser: (user: IUser | null) => void;
     filters: IFilters;
 }
 
@@ -28,7 +28,7 @@ function UserPages({user, setUser, filters}: IUserPage) {
     const navigate = useNavigate();
     const {t} = useTranslation()
 
-    setInterval(checkToken, 100000);
+    const interval = setInterval(checkToken, 100000);
 
     function checkToken() {
         cookbookService.getUser()
@@ -37,7 +37,9 @@ function UserPages({user, setUser, filters}: IUserPage) {
             })
             .catch((error) => {
                 toast.error(t(error.response?.data.message));
+                setUser(null);
                 navigate('/authentication/signin');
+                interval && clearInterval(interval);
             });
     }
 

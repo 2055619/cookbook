@@ -1,5 +1,6 @@
 package quixotic.projects.cookbook.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.data.domain.Page;
@@ -110,9 +111,15 @@ public class CookService {
     public void deleteRecipeById(Long id, String token) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
 
-        if (recipeRepository.existsById(id) && recipeRepository.findById(id).get().getCook().getUsername().equals(username))
+        System.out.println("id: " + id + "Username: " + username);
+        System.out.println("Recipe: " + recipeRepository.findById(id).get().getCook().getUsername());
+
+        if (recipeRepository.existsById(id) && recipeRepository.findById(id).get().getCook().getUsername().equals(username)) {
+            publicationRepository.deleteById(id);
             recipeRepository.deleteById(id);
-        else throw new RecipeNotFoundException();
+            return;
+        }
+        throw new RecipeNotFoundException();
     }
 
     public void deleteRecipeByTitle(String title, String token) {
@@ -184,16 +191,17 @@ public class CookService {
         return filterPublicationsByVisibility(List.of(publicationRepository.findByTitle(title).orElseThrow(PublicationNotFoundException::new)), cook).get(0);
     }
 
+    @Transactional
     public boolean deleteTrickById(String token, Long id) {
         String username = jwtTokenProvider.getUsernameFromJWT(token);
         Cook cook = cookRepository.findCookByUsername(username).orElseThrow(UserNotFoundException::new);
-
         Trick trick = (Trick) publicationRepository.findById(id).orElseThrow(PublicationNotFoundException::new);
+
         if (!trick.getCook().equals(cook))
             throw new WrongUserException();
 
-        publicationRepository.deleteById(id);
-
+        cook.removePublication(trick);
+        publicationRepository.delete(trick);
         return true;
     }
 

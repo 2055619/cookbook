@@ -117,8 +117,8 @@ public class CookController {
                 .body(cookService.updateTrick(trickDTO));
     }
 
-    @DeleteMapping("/trick/{id}")
-    public ResponseEntity<Boolean> getTricks(@RequestHeader("Authorization") String token, @PathVariable Long id){
+    @DeleteMapping("/trick")
+    public ResponseEntity<Boolean> getTricks(@RequestHeader("Authorization") String token, @PathParam("id") Long id){
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.deleteTrickById(token, id));
     }

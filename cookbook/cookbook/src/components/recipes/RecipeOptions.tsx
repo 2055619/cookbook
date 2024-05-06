@@ -42,7 +42,7 @@ function RecipeOptions({username, publication}: IRecipeOptionsProps) {
     }
 
     function handleEdit() {
-        navigate(`/u/recipesModification?title=${publication.title}`);
+        navigate(`/u/publicationModification?title=${publication.title}`);
     }
 
     function handleDelete() {
