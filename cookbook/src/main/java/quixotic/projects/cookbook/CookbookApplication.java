@@ -59,25 +59,14 @@ public class CookbookApplication implements CommandLineRunner {
                 .solidUnit(Unit.GRAM)
                 .otherUnit(Unit.CUP)
                 .build());
-        userService.createCook(SignUpDTO.builder()
-                .username("testCook")
-                .email("asd@asd.com")
-                .password("Nonne123!")
-                .firstName("BlaBla")
-                .lastName("BlaBlaLast")
-                .powderUnit(Unit.GRAM)
-                .liquidUnit(Unit.LITER)
-                .solidUnit(Unit.KILOGRAM)
-                .otherUnit(Unit.CUP)
-                .build());
     }
 
     private void createTricks() {
         cookService.createTrick(
                 new TrickDTO(
                     Trick.builder()
-                        .title("This is it")
-                        .description("Don't cook your steak in olive oil")
+                        .title("Ne pas cuire votre steak dans l'huile d'olive")
+                        .description("L'huile d'olive a un point de fumée bas, ce qui signifie qu'elle brûle à des températures élevées. Pour cuire un steak, utilisez plutôt de l'huile végétale ou de l'huile de canola, qui ont un point de fumée plus élevé.")
                         .visibility(Visibility.PUBLIC)
                         .cook(Cook.builder().username("TheCook").build())
                         .build()
@@ -86,8 +75,49 @@ public class CookbookApplication implements CommandLineRunner {
         cookService.createTrick(
                 new TrickDTO(
                         Trick.builder()
-                                .title("Une autre astuce")
-                                .description("Ne pas mettre de sel dans l'eau pour faire bouillir des pâtes")
+                                .title("Aiguisez vos couteaux régulièrement")
+                                .description("Des couteaux bien aiguisés facilitent la coupe et réduisent les risques de blessures. Investissez dans un bon aiguiseur et prenez l'habitude d'aiguiser vos couteaux avant chaque utilisation.")
+                                .visibility(Visibility.PUBLIC)
+                                .cook(Cook.builder().username("TheCook").build())
+                                .build()
+                )
+        );
+        cookService.createTrick(
+                new TrickDTO(
+                        Trick.builder()
+                                .title("Organisez votre espace de travail")
+                                .description("Avant de commencer à cuisiner, assurez-vous que votre espace de travail est propre et bien organisé. Cela vous permettra de travailler efficacement et en toute sécurité.")
+                                .visibility(Visibility.PUBLIC)
+                                .cook(Cook.builder().username("TheCook").build())
+                                .build()
+                )
+        );
+        cookService.createTrick(
+                new TrickDTO(
+                        Trick.builder()
+                                .title("Préparez vos ingrédients à l'avance")
+                                .description("Avant de commencer à cuisiner, mesurez et préparez tous vos ingrédients. Cela vous évitera d'être pris au dépourvu et vous permettra de vous concentrer sur la cuisson.")
+                                .visibility(Visibility.PUBLIC)
+                                .cook(Cook.builder().username("TheCook").build())
+                                .build()
+                )
+        );
+        cookService.createTrick(
+                new TrickDTO(
+                        Trick.builder()
+                                .title("Utilisez des herbes fraîches")
+                                .description("Les herbes fraîches ajoutent une touche de fraîcheur et de saveur à vos plats. Essayez d'ajouter du basilic, du persil, de la coriandre ou d'autres herbes fraîches à vos recettes pour rehausser leurs arômes.")
+                                .visibility(Visibility.PUBLIC)
+                                .cook(Cook.builder().username("TheCook").build())
+                                .build()
+                )
+        );
+
+        cookService.createTrick(
+                new TrickDTO(
+                        Trick.builder()
+                                .title("Ne pas mettre de sel dans l'eau pour faire bouillir des pâtes")
+                                .description("Contrairement à la croyance populaire, ajouter du sel à l'eau pour faire bouillir des pâtes ne les empêche pas de coller. En fait, cela peut même endommager votre casserole. Pour éviter que les pâtes ne collent, remuez-les régulièrement pendant la cuisson.")
                                 .visibility(Visibility.PUBLIC)
                                 .cook(Cook.builder().username("TheChef").build())
                                 .build()
@@ -222,8 +252,11 @@ public class CookbookApplication implements CommandLineRunner {
                 .cookUsername("TheCook")
                 .visibility(Visibility.PUBLIC)
                 .instructions(Set.of(
-                        "À REMPLIR",
-                        "Mélanger tous les ingrédients ensemble"
+                        "Préchauffer le four à 350°F",
+                        "Battre les oeufs et ajouter la citrouille et l'huile",
+                        "Mélanger les ingrédients secs ensemble",
+                        "Ajouter les ingrédients secs aux ingrédients liquides pour obtenir un mélange homogène",
+                        "Mettre au four pendant 60 minutes ou jusqu'à ce qu'un cure-dent en ressorte propre"
                 ))
                 .ingredients(Set.of(
                         IngredientDTO.builder()
@@ -278,14 +311,69 @@ public class CookbookApplication implements CommandLineRunner {
                 .build());
 
         cookService.createRecipe(RecipeDTO.builder()
-                .title("Pancakes")
-                .description("The best pancakes you'll ever eat")
-                .cookUsername("TheChef")
+                .title("Crêpes bretonnes")
+                .description("Excellente crêpes bretonnes")
+                .cookUsername("TheCook")
                 .visibility(Visibility.PUBLIC)
-                .instructions(Set.of("Mix the ingredients", "Cook the pancakes"))
+                .instructions(Set.of(
+                        "Dans un bol, mélanger au fouet la farine, le sucre, les oeufs, la vanille et 375 ml (1 1/2 tasse) du lait jusqu'à ce que la pâte soit lisse et homogène. Ajouter le reste du lait graduellement, en fouettant.",
+                        "Chauffer une poêle antiadhésive d’environ 20 cm (8 po) de diamètre à feu moyen. Lorsque la poêle est chaude, la badigeonner de beurre avec un pinceau. Pour chaque crêpe, verser environ 60 ml (1/4 tasse) de pâte au centre de la poêle. En faisant pivoter la poêle, répandre la pâte également pour recouvrir tout le fond.",
+                        "Lorsque le rebord se décolle facilement et commence à dorer, retourner la crêpe à l'aide d'une spatule. Poursuivre la cuisson 30 secondes ou jusqu'à ce qu'elle soit légèrement dorée. Déposer les crêpes sur une assiette au fur et à mesure et couvrir de papier d'aluminium."
+                ))
                 .ingredients(Set.of(
                         IngredientDTO.builder()
-                                .name("Farine")
+                                .name("Farine tout usage")
+                                .quantity(2).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.CUP)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Oeuf")
+                                .quantity(3).ingredientState(IngredientState.COUNTABLE)
+                                .unit(Unit.NUMBER)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Lait")
+                                .quantity(2.5f).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.CUP)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Poudre à pâte")
+                                .quantity(2).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.TEASPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Sucre")
+                                .quantity(2).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.TABLESPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Extrait de vanille")
+                                .quantity(10).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.MILLILITER)
+                                .build()
+                ))
+                .category(RecipeType.BREAKFAST)
+                .serving(18)
+                .prepTime(5)
+                .cookTime(36)
+                .difficulty(DifficultyLevel.EASY)
+                .portionSize(PortionSize.MEDIUM)
+                .dietTypes(List.of(DietType.OTHER))
+                .image(getImage())
+                .build());
+
+        cookService.createRecipe(RecipeDTO.builder()
+                .title("Pancakes dodus")
+                .description("Les meilleures et les plus grosse pancakes que vous aurez jamais mangé")
+                .cookUsername("TheChef")
+                .visibility(Visibility.PUBLIC)
+                .instructions(Set.of(
+                        "Mix the ingredients",
+                        "Cook the pancakes"
+                ))
+                .ingredients(Set.of(
+                        IngredientDTO.builder()
+                                .name("Farine tout usage")
                                 .quantity(2).ingredientState(IngredientState.LIQUID)
                                 .unit(Unit.CUP)
                                 .build(),
@@ -295,18 +383,33 @@ public class CookbookApplication implements CommandLineRunner {
                                 .unit(Unit.NUMBER)
                                 .build(),
                         IngredientDTO.builder()
-                                .name("Milk")
-                                .quantity(1).ingredientState(IngredientState.LIQUID)
+                                .name("Lait")
+                                .quantity(1.75f).ingredientState(IngredientState.LIQUID)
                                 .unit(Unit.CUP)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Poudre à pâte")
+                                .quantity(2).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.TEASPOON)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Sucre")
+                                .quantity(55).ingredientState(IngredientState.POWDER)
+                                .unit(Unit.GRAM)
+                                .build(),
+                        IngredientDTO.builder()
+                                .name("Extrait de vanille")
+                                .quantity(5).ingredientState(IngredientState.LIQUID)
+                                .unit(Unit.MILLILITER)
                                 .build()
                 ))
                 .category(RecipeType.BREAKFAST)
-                .serving(4)
+                .serving(12)
                 .prepTime(10)
-                .cookTime(10)
+                .cookTime(40)
                 .difficulty(DifficultyLevel.EASY)
-                .portionSize(PortionSize.SMALL)
-                .dietTypes(List.of(DietType.CARNIVORE))
+                .portionSize(PortionSize.MEDIUM)
+                .dietTypes(List.of(DietType.OTHER))
                 .image(getImage())
                 .build());
     }

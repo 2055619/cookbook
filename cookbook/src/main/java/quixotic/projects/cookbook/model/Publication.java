@@ -23,8 +23,9 @@ public abstract class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, length = 500)
     private String title;
+    @Column(length = 1000)
     private String description;
     @ManyToOne(cascade = CascadeType.ALL)
     @ToString.Exclude

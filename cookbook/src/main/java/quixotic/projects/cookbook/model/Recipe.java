@@ -11,6 +11,7 @@ import java.util.*;
 @Entity
 public class Recipe extends Publication {
     @ElementCollection
+    @Column(length = 1000)
     private Set<String> instructions = new HashSet<>();
     @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Ingredient> ingredients = new HashSet<>();
