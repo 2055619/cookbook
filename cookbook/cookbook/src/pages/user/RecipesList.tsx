@@ -14,7 +14,7 @@ interface IUserRecipesProps {
     user: IUser;
 }
 
-function RecipesList({user}: IUserRecipesProps){
+function RecipesList({user}: IUserRecipesProps) {
     const {t} = useTranslation();
     const cookbookService = new CookBookService();
     const navigate = useNavigate();
@@ -49,18 +49,21 @@ function RecipesList({user}: IUserRecipesProps){
             {
                 recipes.length === 0 ?
                     <h1 className={"text-4xl mt-10"}>{t('noSavedRecipes')}</h1> :
-                    <div className={"grid grid-cols-1 gap-4"}>
-                        {
-                            recipes.map((recipe, index) => {
-                                // return <div className={`flex justify-center `} key={index}>
-                                return <div className={`border rounded-lg px-4 mx-auto my-2 lg:w-3/5 w-full flex flex-col h-full justify-between `} key={index}>
-                                    <RecipeCard recipe={recipe} username={user?.username} key={index}/>
-                                </div>
-                            })
-                        }
-                    </div>
+                    <>
+                        <div className={"grid grid-cols-1 gap-4"}>
+                            {
+                                recipes.map((recipe, index) => {
+                                    return <div
+                                        className={`border rounded-lg px-4 mx-auto my-2 lg:w-3/5 w-full flex flex-col h-full justify-between `}
+                                        key={index}>
+                                        <RecipeCard recipe={recipe} username={user?.username} key={index}/>
+                                    </div>
+                                })
+                            }
+                        </div>
+                        {/*<Loading/>*/}
+                    </>
             }
-            <Loading/>
         </div>
     );
 }

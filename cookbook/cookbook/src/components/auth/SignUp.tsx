@@ -19,6 +19,7 @@ function SignUp({setUser}: ISignUpProps) {
     const navigate = useNavigate();
 
     const [lawCheck, setLawCheck] = useState(false);
+    const [lawWarning, setLawWarning] = useState("");
 
     const [emailReg, setEmailReg] = useState(new RegExp(''));
     const [passwordReg, setPasswordReg] = useState(new RegExp(''));
@@ -130,6 +131,13 @@ function SignUp({setUser}: ISignUpProps) {
             }))
             isValid = false;
         }
+
+        if (!lawCheck) {
+            toast.error(t('message.law25'));
+            setLawWarning('message.law25');
+            isValid = false;
+        }
+
         return isValid;
     }
 
@@ -235,9 +243,13 @@ function SignUp({setUser}: ISignUpProps) {
                         </select>
                     </div>
                 </div>
-                <div className="clickable" onClick={() => setLawCheck(!lawCheck)}>
-                    <input  type={"checkbox"} checked={lawCheck} className={"mx-2 clickable"} />
+                <div className="clickable" onClick={() => {
+                    setLawCheck(!lawCheck)
+                    lawCheck ? setLawWarning("message.law25") : setLawWarning("")
+                }}>
+                    <input type={"checkbox"} checked={lawCheck} className={"mx-2 clickable"}/>
                     <label className={"mx-2 clickable"}>{t('pages.auth.law25')}</label>
+                    <h5 className="text-red-500">{t(lawWarning)}</h5>
                 </div>
                 <span className={"clickable "} onClick={() => navigate("/policies")}>{t('seePolicy')}</span>
             </div>

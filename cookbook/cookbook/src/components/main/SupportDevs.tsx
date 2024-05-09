@@ -27,12 +27,16 @@ function SupportDevs(){
 
     return (
         <div className={"text-cook"}>
-            <h1>{t('supportDevs')} </h1>
+            <h1 className={"font-bold"}>{t('supportDevs')} </h1>
             <ul className={"text-start ms-20 "}>
                 <li>{t('paypal')}: <a href="https://www.paypal.com/paypalme/QuixoticQC" target="_blank"
                                       rel="noreferrer">
                     {t('paypalLink')}</a>
                 </li>
+            </ul>
+
+            <h1 className={"text-center font-bold"}>{t('cryptoSupport')}:</h1>
+            <ul className={"text-start ms-20 "}>
                 <li className={"clickable"}
                     onClick={handleCopyEthAddress}>{t('eth')}: <span>{t('ethWallet')}</span>
                 </li>

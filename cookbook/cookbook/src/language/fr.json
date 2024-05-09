@@ -86,6 +86,7 @@
   "maxCookTime": "Temps de cuisson maximum",
   "maxPrepTime": "Temps de préparation maximum",
   "hours": "heure(s)",
+  "cryptoSupport": "Soutenez les développeurs avec des dons en cryptomonnaie",
   "pages": {
     "auth": {
       "title": "Connexion",
@@ -152,6 +153,7 @@
     "react": "Réagir"
   },
   "message": {
+    "law25": "Vous devez accepter les conditions d'utilisation pour continuer",
     "ethAddressCopied": "Adresse Ethereum copiée",
     "btcAddressCopied": "Adresse Bitcoin copiée",
     "notImplemented": "Désolé cette fonctionnalité n'est pas encore implémentée",

@@ -9,6 +9,7 @@ import {IUser} from "../../assets/models/Authentication";
 import OtherInfo from "../../components/recipes/OtherInfo";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
+import Fraction from "fraction.js";
 
 interface IConcoctRecipeProps {
     user: IUser;
@@ -149,8 +150,23 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
         }
     }
 
+    // function revisedQuantity(quantity: number) {
+    //     let fraction = new Fraction(quantity).simplify(0.1);
+    //     return fraction.toFraction(true);
+    // }
+
     function revisedQuantity(quantity: number) {
-        return Math.round(quantity * 4) / 4;
+        const fractions = [0, 1/4, 1/3, 1/2, 2/3, 3/4, 1];
+
+        let wholeNumber = Math.floor(quantity);
+        let decimalPart = quantity - wholeNumber;
+
+        let closestFraction = fractions.reduce((prev, curr) => {
+            return (Math.abs(curr - decimalPart) < Math.abs(prev - decimalPart) ? curr : prev);
+        }, Number.MAX_SAFE_INTEGER);
+
+        let fraction = new Fraction(wholeNumber + closestFraction).simplify(0.01);
+        return fraction.toFraction(true);
     }
 
     return (
