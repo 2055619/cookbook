@@ -1,6 +1,5 @@
 package quixotic.projects.cookbook;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -135,11 +134,11 @@ public class CookbookApplication implements CommandLineRunner {
                 .instructions(Set.of("Mettre le foie gras en puré à l'aide d'un couteau pour séparer les nerfs",
                         "Mettre le foie gras dans un plat. Le mieux est de faire en sorte que le foie gras soit bombé au centre",
                         "Ajouter du sel et du poivre et le porto sur le dessus et laisser mariner 24h",
-                        "Rincer à l'eau froide pour retirer l'exès de sel",
+                        "Rincer à l'eau froide pour retirer l'excès de sel",
                         "Mettre le foie gras dans un petit plat de céramique avec un couvercle. Placer le foie gras de manière à ce qu'il soit le plus compacter possible, donc bien tasser les coins et le fond",
-                        "Créer une pate de sel pour bien celler le plat. La pate de sel ce fait avec la farine de l'eau et du sel",
+                        "Créer une pate de sel pour bien seller le plat. La pate de sel ce fait avec la farine de l'eau et du sel",
                         "Dans un bain marie, mettre le plat de foie gras et cuire à 400°F pendant 10 à 15 minutes. Bien important de ne pas dépasser 20 minutes au four",
-                        "Retirer grossièrement l'exès de gras avec une cuillère sans toucher au foie gras",
+                        "Retirer grossièrement l'excès de gras avec une cuillère sans toucher au foie gras",
                         "Mettre un poid sur le dessus du foie gras pour bien le compacter et le laisser refroidir. Recommandation: Utiliser une petite cane",
                         "Une fois refroidi, retirer le poid et ajouter le gras excédentaire sur le dessus du foie gras",
                         "Mettre au frigo jusqu'au jour de la dégustation"
@@ -280,7 +279,7 @@ public class CookbookApplication implements CommandLineRunner {
                                 .unit(Unit.TEASPOON)
                                 .build(),
                         IngredientDTO.builder()
-                                .name("Canelle")
+                                .name("Cannelle")
                                 .quantity(3).ingredientState(IngredientState.POWDER)
                                 .unit(Unit.TEASPOON)
                                 .build(),
