@@ -34,12 +34,13 @@ function App() {
 export default App;
 
 export const cookServerInstance = axios.create({
-    baseURL: 'http://localhost:8084/api/v1/',
+    // baseURL: 'http://localhost:8084/api/v1/',
+    baseURL: 'https://cookapi.quixotic.date/api/v1/',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     },
     params: {}
 });
-export const webBaseUrl = 'http://localhost:3000';
+export const webBaseUrl = 'https://cookbook.quixotic.date';
 
