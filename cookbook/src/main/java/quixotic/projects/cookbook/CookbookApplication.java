@@ -30,9 +30,9 @@ public class CookbookApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        createCooks();
-        createRecipes();
-        createTricks();
+//        createCooks();
+//        createRecipes();
+//        createTricks();
     }
 
     private void createCooks() {

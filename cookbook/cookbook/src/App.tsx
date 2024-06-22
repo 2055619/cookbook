@@ -34,7 +34,7 @@ function App() {
 export default App;
 
 export const cookServerInstance = axios.create({
-    baseURL: 'http://localhost:8080/api/v1/',
+    baseURL: 'http://localhost:8084/api/v1/',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -42,3 +42,4 @@ export const cookServerInstance = axios.create({
     params: {}
 });
 export const webBaseUrl = 'http://localhost:3000';
+
