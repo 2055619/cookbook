@@ -7,9 +7,8 @@ function Footer() {
     return (
         <footer className="bg-cook-light mx-auto p-1 flex items-center justify-center text-center">
             <div>
-                <p className="py-4 m-0 text-cook fw-semibold h6">{t('copyright')}</p>
                 <SupportDevs />
-
+                <p className="py-4 m-0 text-cook fw-semibold h6">{t('copyright')}</p>
             </div>
         </footer>
     );

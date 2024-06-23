@@ -1,6 +1,7 @@
 import {useTranslation} from "react-i18next";
 import React from "react";
 import SupportDevs from "../../components/main/SupportDevs";
+import ContactButton from "../../components/Utils/ContactButton";
 
 function Home() {
     const {t} = useTranslation();

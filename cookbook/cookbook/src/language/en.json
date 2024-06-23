@@ -11,7 +11,7 @@
   "usrRecipes": "My Recipes",
   "cookWelcome": "Welcome to Cookbook",
   "intro": "Cookbook is a recipe sharing application. You can create, modify, and share your recipes with the community. You can also browse recipes from other users and add them to your favorites.",
-  "reachOut": "Feel free to contact us if you have any questions or comments at the following email: buzzwares@gmail.com",
+  "reachOut": "Feel free to contact us if you have any questions or comments at the following email: quixotics317@gmail.com",
   "supportDevs": "Support the developers with donations by clicking on the following link: ",
   "paypal": "On Paypal",
   "eth": "In Ethereum",
@@ -87,6 +87,7 @@
   "maxPrepTime": "Maximum Preparation Time",
   "hours": "hour(s)",
   "cryptoSupport": "Support the developers with donations in cryptocurrency",
+  "contact": "Contact us",
   "pages": {
     "auth": {
       "title": "Login",
@@ -153,6 +154,7 @@
     "react": "React"
   },
   "message": {
+    "phoneNumber": "this is not a valid phone number",
     "law25": "You must agree to the terms of use",
     "ethAddressCopied": "Ethereum Address Copied",
     "btcAddressCopied": "Bitcoin Address Copied",

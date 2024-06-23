@@ -35,3 +35,10 @@ class FormInput implements IFormInput {
 }
 
 export default FormInput;
+
+export interface IContact {
+    name: string;
+    email: string;
+    phoneNumber: string;
+    message: string;
+}

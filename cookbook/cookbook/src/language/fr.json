@@ -11,7 +11,7 @@
   "usrRecipes": "Mes recettes",
   "cookWelcome": "Bienvenue sur Cookbook",
   "intro": "Cookbook est une application de partage de recettes de cuisine. Vous pouvez créer, modifier et partager vos recettes avec la communauté. Vous pouvez également consulter les recettes des autres utilisateurs et les ajouter à vos favoris.",
-  "reachOut": "N'hésitez pas à nous contacter si vous avez des questions ou des commentaires au courriel suivant: buzzwares@gmail.com",
+  "reachOut": "N'hésitez pas à nous contacter si vous avez des questions ou des commentaires au courriel suivant: quixotics317@gmail.com",
   "supportDevs": "Soutenez les développeurs avec des dons en cliquant sur le lien suivant: ",
   "paypal": "Sur Paypal",
   "eth": "En Ethereum",
@@ -87,10 +87,17 @@
   "maxPrepTime": "Temps de préparation maximum",
   "hours": "heure(s)",
   "cryptoSupport": "Soutenez les développeurs avec des dons en cryptomonnaie",
+  "contact": "Contactez-nous",
+
+  "contactDesc": "N'hésitez pas à nous contacter si vous avez des questions ou des commentaires. Ici, vous pouvez nous envoyer un courriel en remplissant le formulaire ci-dessous.",
+  "fullName": "Nom complet",
+  "phoneNumber": "Numéro de téléphone",
+  "sendMessage": "Envoyer le message",
+
   "pages": {
     "auth": {
       "title": "Connexion",
-      "email": "Adresse email",
+      "email": "Adresse courriel",
       "username": "Nom d'utilisateur",
       "password": "Mot de passe",
       "confirmPassword": "Confirmer le mot de passe",
@@ -153,6 +160,7 @@
     "react": "Réagir"
   },
   "message": {
+    "phoneNumber": "Le numéro de téléphone est invalide",
     "law25": "Vous devez accepter les conditions d'utilisation pour continuer",
     "ethAddressCopied": "Adresse Ethereum copiée",
     "btcAddressCopied": "Adresse Bitcoin copiée",

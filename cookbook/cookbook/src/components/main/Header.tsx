@@ -5,8 +5,9 @@ import logo from "../../assets/image/cookbookIcon.jpg";
 import {IUser} from "../../assets/models/Authentication";
 import ProfileSummary from "../ProfileSummary";
 import SearchBox from "./SearchBox";
-import {faBars, faBurger, faHeart, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faHeart, faPlus} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import ContactButton from "../Utils/ContactButton";
 
 
 interface IHeaderProps {
@@ -30,6 +31,7 @@ function Header({user, setUser, setShowFilters, showFilters}: IHeaderProps) {
                 <div className="text-center lg:block hidden">
                     <p className="text-sm">{t('summedDescription')}</p>
                 </div>
+
                 <div className="flex items-center space-x-4">
                     <LanguageSelector/>
                     <NavLink
@@ -37,6 +39,8 @@ function Header({user, setUser, setShowFilters, showFilters}: IHeaderProps) {
                         to="/authentication/signin">
                         {t('signin')}
                     </NavLink>
+
+                    <ContactButton/>
                 </div>
             </>
         );
@@ -51,6 +55,7 @@ function Header({user, setUser, setShowFilters, showFilters}: IHeaderProps) {
                     <img alt="Logo" className="h-10 w-10" src={logo}/>
                     <h1 className="text-xl font-semibold hidden md:block">{t('name')}</h1>
                 </NavLink>
+                <ContactButton/>
 
                 <SearchBox/>
                 <div className="flex justify-end items-center space-x-3">

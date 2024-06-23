@@ -34,8 +34,8 @@ function App() {
 export default App;
 
 export const cookServerInstance = axios.create({
-    // baseURL: 'http://localhost:8084/api/v1/',
-    baseURL: 'https://cookapi.quixotic.date/api/v1/',
+    baseURL: 'http://localhost:8084/api/v1/',
+    // baseURL: 'https://cookapi.quixotic.date/api/v1/',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
