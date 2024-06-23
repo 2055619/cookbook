@@ -5,6 +5,7 @@ public enum ValidationPattern{
 	PASSWORD_PATTERN("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$"),
 	USERNAME_PATTERN("^[A-Za-z0-9._%+-]{3,}$"),
 	NAME_PATTERN("^.{3,}$"),
+	PHONE_NUMBER_PATTERN("^[0-9]{9,}$"),
     DESCRIPTION_PATTERN("^.{10,}$"),
     COMMENT_PATTERN("^.{1,}$"),;
 

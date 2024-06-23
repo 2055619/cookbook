@@ -40,6 +40,7 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(GET, "/api/v1/utils/**").permitAll()
+                        .requestMatchers(POST, "/api/v1/utils/contact").permitAll()
 
                         .requestMatchers(POST, "/api/v1/cook/auth/signin").permitAll()
                         .requestMatchers(POST, "/api/v1/cook/auth/signup").permitAll()
