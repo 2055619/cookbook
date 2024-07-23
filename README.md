@@ -12,6 +12,7 @@ La page d'accueil de l'application vous permet de voir les recettes et les astuc
 
 Les cartes pour voir un sommaire des publications sont pertinentes et bien organisées. La consultation approfondie d'une de ces publications se fait tout aussi facilement, en un click sur la publication de votre choix. Ensuite, pour une recette, vous pouvez la consulter en mode concoction pour une meilleure expérience en cuisine. Pour une astuce culinaire, vous pouvez la consulter pour en apprendre plus sur le sujet. Vous pouvez aussi consulter les suggestions pour améliorer la recette.
 
+
 Nous savons tous que les évènements tels que noël, les BBQ, les repas-partage/potluck, etc. sont des moments où nous avons besoin de recettes et ce n'est pas toujours facile de savoir lesquelles cuisiner pour plaire à tous. CookBook vous permet de créer des évènements et de gérer les recettes pour ces évènements. Le partage de cet évènement est aussi possible pour que vos amis puissent voir les recettes que vous avez choisies pour l'évènement ou en suggérer de nouvelle.
 ## Fonctionnalités
 - Créer un compte
