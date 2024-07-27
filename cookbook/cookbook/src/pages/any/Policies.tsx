@@ -24,7 +24,6 @@ function Policies() {
 
             <h1 className={"text-3xl mt-2"}>{t('pages.policy.RGPD.conclusion')}</h1>
             <span>{t('pages.policy.RGPD.conclusionDesc')}</span>
-
         </div>
     )
 }
