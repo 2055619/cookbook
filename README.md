@@ -79,7 +79,7 @@ npm install
 npm start
 ```
 ## Auteur
-- Louis-Philippe Forget
+- Louis-Philippe Forget (2055619, th3qu1x0t1c0n3)
 
 ## Utilisation
 Pour utiliser l'application, vous devez vous inscrire et vous connecter. Ensuite, vous pouvez créer, modifier, supprimer, consulter, noter, commenter et partager des recettes. Vous pouvez aussi créer, modifier, supprimer et consulter des astuces culinaires. Vous pouvez aussi créer des listes de recettes, des menus et des évènements. Vous pouvez aussi rechercher des recettes et des astuces culinaires. Vous pouvez aussi consulter les recettes et les astuces culinaires du jour. Vous pouvez aussi ajouter des suggestions pour améliorer les recettes et le site en général. L'utilisation de l'application est simple, intuitive et totalement gratuite. Sur ce mon but n'est pas de vendre l'information des utilisateurs à des compagnies tierces, mais bien de partager des recettes et des astuces culinaires.
