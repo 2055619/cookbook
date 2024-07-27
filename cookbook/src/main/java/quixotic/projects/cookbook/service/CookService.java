@@ -32,7 +32,6 @@ public class CookService {
     private final PublicationRepository publicationRepository;
     private final ReactionRepository reactionRepository;
     private final FollowerRepository followerRepository;
-    private final CommentRepository commentRepository;
 
     //    Reaction
     public List<ReactionDTO> getReactionsByPublication(Long pubId) {

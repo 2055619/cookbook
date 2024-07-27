@@ -32,7 +32,6 @@ public class PublicationService {
     private final PublicationRepository publicationRepository;
     private final FollowerRepository followerRepository;
 
-
     //    Publications
     public List<PublicationDTO> getPublicationsByPage(int page, int size, String token) {
         if (page < 0 || size < 0)
