@@ -4,9 +4,6 @@ import {IPublication} from "../../assets/models/Publication";
 import {toast} from "react-toastify";
 import {CookBookService} from "../../services/CookBookService";
 import {useTranslation} from "react-i18next";
-import {IUser} from "../../assets/models/Authentication";
-import ImageCard from "../../components/publications/ImageCard";
-import PublicationCard from "../../components/publications/PublicationCard";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
 
@@ -54,10 +51,6 @@ function ReactionsPage({username}: IReactionsPageProps) {
             <Reactions publication={publication!} username={username}/>
         </div>
     );
-// if (loading) {
-//   return <Loading />;
-// }
-
 }
 
 export default ReactionsPage;

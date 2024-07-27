@@ -20,5 +20,4 @@ function LeftAside({setFilters, user}: ILeftAside) {
     );
 }
 
-// @ts-ignore
 export default LeftAside;

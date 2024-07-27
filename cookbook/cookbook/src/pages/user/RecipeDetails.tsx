@@ -61,7 +61,6 @@ function RecipeDetails({user}: IRecipeDetailsProps) {
                 });
         } else {
             toast.error(t('noRecipeTitle'));
-            // window.history.back();
         }
     }, []);
 

@@ -16,26 +16,6 @@ interface IReactionFooterProps {
 function ReactionFooter({publication, username}: IReactionFooterProps) {
     const {t} = useTranslation();
     const navigate = useNavigate();
-    const cookbookService = new CookBookService();
-
-    // const [avgRating, setAvgRating] = useState(0);
-
-    // useEffect(() => {
-    //     cookbookService.getReactionsByPublication(publication)
-    //         .then((response) => {
-    //             let sum = 0;
-    //             response.map((reaction) => {
-    //                 sum += reaction.rating!;
-    //                 return reaction;
-    //             });
-    //             setAvgRating(sum / response.length);
-    //
-    //         })
-    //         .catch((error) => {
-    //             if (error.response?.data.message !== "NoToken")
-    //                 toast.error(t(error.response?.data.message));
-    //         });
-    // }, []);
 
     function isRecipe(publication: IPublication): publication is IRecipe {
         return (publication as IRecipe).instructions !== undefined;

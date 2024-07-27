@@ -46,7 +46,7 @@ function RecipeOptions({username, publication}: IRecipeOptionsProps) {
     }
 
     function handleDelete() {
-        setShowDeleteModal(true); // Open the delete confirmation modal
+        setShowDeleteModal(true);
     }
 
     function handleSave() {
@@ -140,7 +140,6 @@ function RecipeOptions({username, publication}: IRecipeOptionsProps) {
             {showDeleteModal && (
                 <div className="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center text-cook">
                     <div className="fixed inset-0 bg-cook opacity-50" onClick={() => setShowDeleteModal(false)}></div>
-                    {/* This line adds the grayed out background */}
                     <div
                         className="rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
                         <div

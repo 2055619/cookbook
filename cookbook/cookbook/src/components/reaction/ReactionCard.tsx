@@ -29,7 +29,6 @@ function ReactionCard({reaction}: IReactionCardProps) {
             return Math.floor(timeDiff / 3600000) + " hours ago";
         }
         return Math.floor(timeDiff / 86400000) + " days ago";
-        // return date.toLocaleDateString() + " " + date.toLocaleTimeString();
     }
 
     return (

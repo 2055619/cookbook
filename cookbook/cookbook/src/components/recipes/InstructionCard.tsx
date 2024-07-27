@@ -20,7 +20,6 @@ function InstructionCard({recipe}: IInstructionCardProps) {
     return (
         <div className="card mt-2">
             <h2 className={"text-4xl"}>{t('instructions')}</h2>
-            {/*<span className={"text-2xl"}>{currentInstructionIndex+1}. {recipe.instructions[currentInstructionIndex]}</span>*/}
 
             <div className={"text-2xl overflow-auto h-32 flex items-center justify-center"}
                  style={{maxHeight: '100px'}}>

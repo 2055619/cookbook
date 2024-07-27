@@ -61,7 +61,6 @@ function RecipesList({user}: IUserRecipesProps) {
                                 })
                             }
                         </div>
-                        {/*<Loading/>*/}
                     </>
             }
         </div>

@@ -142,11 +142,6 @@ function PublicationOption({username, publication}: IPublicationOptionsProps) {
                             </button>
                         )
                     }
-                    {/*<button*/}
-                    {/*    onClick={handleSave}*/}
-                    {/*    className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook transition ease-in duration-200 py-1 w-full">*/}
-                    {/*    {t('input.favorite')}*/}
-                    {/*</button>*/}
                     <button
                         onClick={handleReport}
                         className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook transition ease-in duration-200 py-1 w-full">
@@ -158,7 +153,6 @@ function PublicationOption({username, publication}: IPublicationOptionsProps) {
             {showDeleteModal && (
                 <div className="fixed z-10 inset-0 overflow-y-auto flex items-center justify-center text-cook">
                     <div className="fixed inset-0 bg-cook opacity-50" onClick={() => setShowDeleteModal(false)}></div>
-                    {/* This line adds the grayed out background */}
                     <div
                         className="rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
                         <div

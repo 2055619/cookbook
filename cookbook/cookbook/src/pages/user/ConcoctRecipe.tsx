@@ -150,11 +150,6 @@ function ConcoctRecipe({user}: IConcoctRecipeProps) {
         }
     }
 
-    // function revisedQuantity(quantity: number) {
-    //     let fraction = new Fraction(quantity).simplify(0.1);
-    //     return fraction.toFraction(true);
-    // }
-
     function revisedQuantity(quantity: number) {
         const fractions = [0, 1/4, 1/3, 1/2, 2/3, 3/4, 1];
 

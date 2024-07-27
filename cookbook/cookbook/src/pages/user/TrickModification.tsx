@@ -16,7 +16,6 @@ function TrickModification({user, setPubType}: TrickModificationProps) {
     const cookbookService = new CookBookService();
     const utilsService = new UtilsService();
 
-    // Define your state variables here
     const [trick, setTrick] = useState<ITrick>();
 
     const [title, setTitle] = useState('');
@@ -28,7 +27,6 @@ function TrickModification({user, setPubType}: TrickModificationProps) {
 
     const [allVisibility, setAllVisibility] = useState<string[]>([]);
 
-    // Define your useEffect hooks here
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const title = urlParams.get('title');

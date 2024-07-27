@@ -16,7 +16,7 @@ function FilterObjectList({items, renderItem, filters}: IFilterObjectList) {
                 if (filters[key]) {
                     if (Array.isArray(filters[key])) {
                         if (Array.isArray(item[key])) {
-                            if (filters[key].length !== 0 && !filters[key].some((dietType: string) => item[key].includes(dietType))) { //!filters[key].some((dietType: string) => item[key].includes(dietType))
+                            if (filters[key].length !== 0 && !filters[key].some((dietType: string) => item[key].includes(dietType))) {
                                 return false;
                             }
 

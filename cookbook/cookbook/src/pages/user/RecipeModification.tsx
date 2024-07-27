@@ -227,7 +227,6 @@ function RecipeModification({user, setPubType}: RecipeModificationProps) {
         }
     };
 
-    // Diet
     const handleDietTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
             setDietTypes([...dietTypes, event.target.value]);
@@ -236,7 +235,6 @@ function RecipeModification({user, setPubType}: RecipeModificationProps) {
         }
     };
 
-    // Instructions
     const handleInstructionChange = (index: number, newInstruction: string) => {
         const newInstructions = [...instructions];
         newInstructions[index] = newInstruction;
@@ -253,7 +251,6 @@ function RecipeModification({user, setPubType}: RecipeModificationProps) {
         setInstructions(newInstructions);
     };
 
-    // Ingredients
     const handleIngredientChange = (index: number, newIngredient: string) => {
         const newIngredients = [...ingredients];
         newIngredients[index] = {...newIngredients[index], name: newIngredient};

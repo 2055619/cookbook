@@ -73,7 +73,6 @@ function UserProfile({user}: IUserProfileProps) {
         cookbookService.getFollowing(username)
             .then((response) => {
                 setFollowingCount(response.length);
-                // console.log(response)
             })
             .catch((error) => {
                 if (error.response?.data.message !== "NoToken")
