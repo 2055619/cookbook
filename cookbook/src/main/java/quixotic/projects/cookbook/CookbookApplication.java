@@ -12,6 +12,7 @@ import quixotic.projects.cookbook.model.Cook;
 import quixotic.projects.cookbook.model.Trick;
 import quixotic.projects.cookbook.model.enums.*;
 import quixotic.projects.cookbook.service.CookService;
+import quixotic.projects.cookbook.service.PublicationService;
 import quixotic.projects.cookbook.service.UserService;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public class CookbookApplication implements CommandLineRunner {
     private CookService cookService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private PublicationService publicationService;
 
     public static void main(String[] args) {
         SpringApplication.run(CookbookApplication.class, args);
@@ -61,7 +64,7 @@ public class CookbookApplication implements CommandLineRunner {
     }
 
     private void createTricks() {
-        cookService.createTrick(
+        publicationService.createTrick(
                 new TrickDTO(
                     Trick.builder()
                         .title("Ne pas cuire votre steak dans l'huile d'olive")
@@ -71,7 +74,7 @@ public class CookbookApplication implements CommandLineRunner {
                         .build()
                 )
         );
-        cookService.createTrick(
+        publicationService.createTrick(
                 new TrickDTO(
                         Trick.builder()
                                 .title("Aiguisez vos couteaux régulièrement")
@@ -81,7 +84,7 @@ public class CookbookApplication implements CommandLineRunner {
                                 .build()
                 )
         );
-        cookService.createTrick(
+        publicationService.createTrick(
                 new TrickDTO(
                         Trick.builder()
                                 .title("Organisez votre espace de travail")
@@ -91,7 +94,7 @@ public class CookbookApplication implements CommandLineRunner {
                                 .build()
                 )
         );
-        cookService.createTrick(
+        publicationService.createTrick(
                 new TrickDTO(
                         Trick.builder()
                                 .title("Préparez vos ingrédients à l'avance")
@@ -101,7 +104,7 @@ public class CookbookApplication implements CommandLineRunner {
                                 .build()
                 )
         );
-        cookService.createTrick(
+        publicationService.createTrick(
                 new TrickDTO(
                         Trick.builder()
                                 .title("Utilisez des herbes fraîches")
@@ -112,7 +115,7 @@ public class CookbookApplication implements CommandLineRunner {
                 )
         );
 
-        cookService.createTrick(
+        publicationService.createTrick(
                 new TrickDTO(
                         Trick.builder()
                                 .title("Ne pas mettre de sel dans l'eau pour faire bouillir des pâtes")
@@ -126,7 +129,7 @@ public class CookbookApplication implements CommandLineRunner {
     }
 
     private void createRecipes() {
-        cookService.createRecipe(RecipeDTO.builder()
+        publicationService.createRecipe(RecipeDTO.builder()
                 .title("Foie Gras")
                 .description("C'est le foie gras de ma marraine, donc la meilleure recette de foie gras")
                 .cookUsername("TheCook")
@@ -180,7 +183,7 @@ public class CookbookApplication implements CommandLineRunner {
 //                .image()
                 .build());
 
-        cookService.createRecipe(RecipeDTO.builder()
+        publicationService.createRecipe(RecipeDTO.builder()
                 .title("Saumure pour saumon")
                 .description("La meilleure recette de saumure qui existe")
                 .cookUsername("TheCook")
@@ -245,7 +248,7 @@ public class CookbookApplication implements CommandLineRunner {
 //                .image()
                 .build());
 
-        cookService.createRecipe(RecipeDTO.builder()
+        publicationService.createRecipe(RecipeDTO.builder()
                 .title("Muffins à la citrouille")
                 .description("La meilleure recette de muffins à la citrouille")
                 .cookUsername("TheCook")
@@ -309,7 +312,7 @@ public class CookbookApplication implements CommandLineRunner {
 //                .image()
                 .build());
 
-        cookService.createRecipe(RecipeDTO.builder()
+        publicationService.createRecipe(RecipeDTO.builder()
                 .title("Crêpes bretonnes")
                 .description("Excellente crêpes bretonnes")
                 .cookUsername("TheCook")
@@ -361,7 +364,7 @@ public class CookbookApplication implements CommandLineRunner {
                 .image(getImage())
                 .build());
 
-        cookService.createRecipe(RecipeDTO.builder()
+        publicationService.createRecipe(RecipeDTO.builder()
                 .title("Pancakes dodus")
                 .description("Les meilleures et les plus grosse pancakes que vous aurez jamais mangé")
                 .cookUsername("TheChef")

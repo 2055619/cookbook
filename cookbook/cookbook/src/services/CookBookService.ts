@@ -4,6 +4,7 @@ import {IComment, IPublication, IReaction, IRecipe, ITrick} from "../assets/mode
 
 export class CookBookService {
 
+    // Auth / User
     async signIn(user: IsignIn) {
         return cookServerInstance.post<IUser>(`/cook/auth/signin`, user)
             .then((response) => {
@@ -52,7 +53,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.get<IRecipe[]>(`/cook/recipes?page=${page}&size=10`)
+        return cookServerInstance.get<IRecipe[]>(`/pubs/recipes?page=${page}&size=10`)
             .then((response) => {
                 return response.data;
             });
@@ -62,7 +63,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.get<IRecipe[]>(`/cook/recipes/title?title=${searchValue}`)
+        return cookServerInstance.get<IRecipe[]>(`/pubs/recipes/title?title=${searchValue}`)
             .then((response) => {
                 return response.data;
             });
@@ -72,7 +73,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.post(`/cook/recipe`, newRecipe)
+        return cookServerInstance.post(`/pubs/recipe`, newRecipe)
             .then((response) => {
                 return response.data;
             });
@@ -82,7 +83,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.get(`/cook/usr/recipes`)
+        return cookServerInstance.get(`/pubs/usr/recipes`)
             .then((response) => {
                 return response.data;
             });
@@ -92,7 +93,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.get<IRecipe>(`/cook/recipe/${title.trim()}`,)
+        return cookServerInstance.get<IRecipe>(`/pubs/recipe/${title.trim()}`,)
             .then((response) => {
                 return response.data;
             });
@@ -102,7 +103,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: null});
 
-        return cookServerInstance.put(`/cook/recipe`, newRecipe)
+        return cookServerInstance.put(`/pubs/recipe`, newRecipe)
             .then((response) => {
                 return response.data;
             });
@@ -113,7 +114,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.delete(`/cook/recipe/${title.trim()}`)
+        return cookServerInstance.delete(`/pubs/recipe/${title.trim()}`)
             .then((response) => {
                 return response.data;
             });
@@ -123,7 +124,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.delete(`/cook/recipe?id=${id}`)
+        return cookServerInstance.delete(`/pubs/recipe?id=${id}`)
             .then((response) => {
                 return response.data;
             });
@@ -133,7 +134,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.get(`/cook/usr/SavedRecipes`)
+        return cookServerInstance.get(`/pubs/usr/SavedRecipes`)
             .then((response) => {
                 return response.data;
             });
@@ -143,7 +144,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.post(`/cook/usr/save?id=${id}`)
+        return cookServerInstance.post(`/pubs/usr/save?id=${id}`)
             .then((response) => {
                 return response.data;
             });
@@ -154,25 +155,24 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.post(`/cook/trick`, trick)
+        return cookServerInstance.post(`/pubs/trick`, trick)
             .then((response) => {
                 return response.data;
             });
     }
 
     async getTrick(title: string) {
-        return cookServerInstance.get<ITrick>(`/cook/trick/${title}`)
+        return cookServerInstance.get<ITrick>(`/pubs/trick/${title}`)
             .then((response) => {
                 return response.data;
             });
     }
 
-
     async updateTrick(trick: ITrick) {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: null});
 
-        return cookServerInstance.put(`/cook/trick`, trick)
+        return cookServerInstance.put(`/pubs/trick`, trick)
             .then((response) => {
                 return response.data;
             });
@@ -182,7 +182,7 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: null});
 
-        return cookServerInstance.delete(`/cook/trick?id=${id}`)
+        return cookServerInstance.delete(`/pubs/trick?id=${id}`)
             .then((response) => {
                 return response.data;
             });
@@ -193,12 +193,32 @@ export class CookBookService {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
-        return cookServerInstance.get<IRecipe[]>(`/cook/publications?page=${page}&size=10`)
+        return cookServerInstance.get<IRecipe[]>(`/pubs/publications?page=${page}&size=10`)
             .then((response) => {
                 return response.data;
             });
     }
 
+    async getPublication(title: string) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.get<IPublication>(`/pubs/publication/${title}`)
+            .then((response) => {
+                return response.data;
+            });
+    }
+
+    async deletePublicationById(id: number) {
+        if (!cookServerInstance.defaults.headers.common[`Authorization`])
+            return Promise.reject({response: {data: {message: "NoToken"}}});
+
+        return cookServerInstance.delete(`/pubs/publication?id=${id}`).then((response) => {
+            return response.data;
+        });
+    }
+
+    // Reactions / Comments / Follows
     async getReactionsByPublication(publication: IPublication) {
         if (!cookServerInstance.defaults.headers.common[`Authorization`])
             return Promise.reject({response: {data: {message: "NoToken"}}});
@@ -216,16 +236,6 @@ export class CookBookService {
             return Promise.reject({response: {data: {message: "NoToken"}}});
 
         return cookServerInstance.post(`/cook/react`, reaction)
-            .then((response) => {
-                return response.data;
-            });
-    }
-
-    async getPublication(title: string) {
-        if (!cookServerInstance.defaults.headers.common[`Authorization`])
-            return Promise.reject({response: {data: {message: "NoToken"}}});
-
-        return cookServerInstance.get<IPublication>(`/cook/publication/${title}`)
             .then((response) => {
                 return response.data;
             });
@@ -269,14 +279,5 @@ export class CookBookService {
             .then((response) => {
                 return response.data;
             });
-    }
-
-    async deletePublicationById(id: number) {
-        if (!cookServerInstance.defaults.headers.common[`Authorization`])
-            return Promise.reject({response: {data: {message: "NoToken"}}});
-
-        return cookServerInstance.delete(`/cook/publication?id=${id}`).then((response) => {
-            return response.data;
-        });
     }
 }

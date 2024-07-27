@@ -19,6 +19,7 @@ import java.util.List;
 public class CookController {
     private final CookService cookService;
 
+/*
 //    Recipes
     @PostMapping("/recipe")
     public ResponseEntity<RecipeDTO> authenticateCook(@RequestBody RecipeDTO recipeDTO){
@@ -129,7 +130,7 @@ public class CookController {
         return ResponseEntity.accepted().contentType(MediaType.APPLICATION_JSON)
                 .body(cookService.deleteTrickById(token, id));
     }
-
+*/
 
 
 //    Reaction

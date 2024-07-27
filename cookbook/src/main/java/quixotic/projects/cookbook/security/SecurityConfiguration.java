@@ -44,9 +44,10 @@ public class SecurityConfiguration {
 
                         .requestMatchers(POST, "/api/v1/cook/auth/signin").permitAll()
                         .requestMatchers(POST, "/api/v1/cook/auth/signup").permitAll()
-                        .requestMatchers(GET, "/api/v1/cook/auth/me").hasAnyAuthority("COOK")
+                        .requestMatchers(GET, "/api/v1/cook/auth/me").hasAnyAuthority("COOK", "ADMIN")
 
-                        .requestMatchers("/api/v1/cook/**").hasAnyAuthority("COOK")
+                        .requestMatchers("/api/v1/cook/**").hasAnyAuthority("COOK", "ADMIN")
+                        .requestMatchers("/api/v1/pubs/**").hasAnyAuthority("COOK", "ADMIN")
 
                         .anyRequest().denyAll()
                 )
