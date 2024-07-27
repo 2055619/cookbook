@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import avatar from "../assets/image/avatar.jpg";
 import LanguageSelector from "./Utils/LanguageSelector";
 import {toast} from "react-toastify";
+import ContactButton from "./Utils/ContactButton";
 
 interface IProfileSummaryProps {
     setUser: (user: any) => void;
@@ -59,6 +60,9 @@ function ProfileSummary({setUser, user}: IProfileSummaryProps) {
                             }}>
                             {t('profile')}
                         </button>
+
+                        <ContactButton/>
+                        <div className={"my-2"}></div>
 
                         <button
                             className="border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook rounded transition ease-in duration-200 font-bold py-2 px-4 w-full"

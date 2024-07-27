@@ -55,7 +55,6 @@ function Header({user, setUser, setShowFilters, showFilters}: IHeaderProps) {
                     <img alt="Logo" className="h-10 w-10" src={logo}/>
                     <h1 className="text-xl font-semibold hidden md:block">{t('name')}</h1>
                 </NavLink>
-                <ContactButton/>
 
                 <SearchBox/>
                 <div className="flex justify-end items-center space-x-3">

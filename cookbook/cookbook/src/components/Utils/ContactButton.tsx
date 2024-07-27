@@ -9,7 +9,7 @@ function ContactButton() {
 
     return (
         <div onClick={() => navigate("/contact")}
-            className={"border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook rounded transition ease-in duration-200 font-bold py-2 px-4 clickable"}>
+            className={"border border-cook-orange text-cook hover:bg-cook-orange hover:text-cook rounded transition ease-in duration-200 font-bold py-2 px-3 clickable"}>
             <h1 className={"hidden sm:inline"}>{t('contact')}</h1>
             <FontAwesomeIcon icon={faEnvelope} className={"sm:ml-2"}/>
         </div>
