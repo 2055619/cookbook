@@ -1,5 +1,5 @@
 # Build stage
-FROM maven:3.9.4-openjdk-21 AS build
+FROM maven:3.8.7 AS build
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -18,7 +18,7 @@ FROM openjdk:21
 WORKDIR /app
 
 # Copy the packaged JAR file from the build stage
-COPY --from=build /app/target/cookbobok-0.0.1-SNAPSHOT.jar cookbobok.jar
+COPY --from=build ./target/cookbobok-0.0.1-SNAPSHOT.jar cookbobok.jar
 
 # Expose the port your app runs on
 EXPOSE 8084
