@@ -21,7 +21,7 @@ WORKDIR /app
 COPY --from=build /app/target/cookbobok-0.0.1-SNAPSHOT.jar cookbobok.jar
 
 # Expose the port your app runs on
-EXPOSE 8085
+EXPOSE 8084
 
 # Command to run the JAR file
 CMD ["java", "-jar", "cookbook.jar"]
