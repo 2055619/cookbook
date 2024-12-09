@@ -18,7 +18,7 @@ FROM openjdk:21
 WORKDIR /app
 
 # Copy the packaged JAR file from the build stage
-COPY --from=build /app/target/cookbook-0.0.1-SNAPSHOT.jar cookbobok.jar
+COPY --from=build /app/target/cookbook-0.0.1-SNAPSHOT.jar cookbook.jar
 
 # Expose the port your app runs on
 EXPOSE 8084
